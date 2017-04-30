@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{6be9f29b-4fc4-4e25-b35c-b6c2d454013a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine">
+      <UniqueIdentifier>{394ed7ce-4347-4795-bf07-fe5bae7b6f1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Header Files">
+      <UniqueIdentifier>{38a27739-9ed4-42f5-8e60-ed00d5b719b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Source Files">
+      <UniqueIdentifier>{a432df6f-00d1-4542-8844-49641b7913e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Interfaces">
+      <UniqueIdentifier>{3054ff0a-11cd-45f2-b835-d89885754ef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Header Files">
+      <UniqueIdentifier>{3254cfd2-4e87-4df2-b394-7ddb9e4ccb12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Source Files">
+      <UniqueIdentifier>{92c31588-08b8-4d6a-9351-1fa37205c383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Interfaces">
+      <UniqueIdentifier>{0459808b-ad6b-4fc0-8795-bc137966f744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject">
+      <UniqueIdentifier>{7bddaace-8f0d-406a-93e2-ba58b9d8dd41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Shaders">
+      <UniqueIdentifier>{0a6b81c6-dd50-46af-bc78-3e6fb7247145}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLWindow.cpp">
+      <Filter>GraphicEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputState.cpp">
+      <Filter>GraphicEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ESTree.cpp">
+      <Filter>TestProject</Filter>
+    </ClCompile>
+    <ClCompile Include="GLRenderer.cpp">
+      <Filter>GraphicEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLVertexArray.cpp">
+      <Filter>GraphicEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>GraphicEngine\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLWindow.h">
+      <Filter>GraphicEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputState.h">
+      <Filter>GraphicEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>GraphicEngine\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>GraphicEngine\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Point2d.h">
+      <Filter>GraphicEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLRenderer.h">
+      <Filter>GraphicEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Engine\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLVertexArray.h">
+      <Filter>GraphicEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>GraphicEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Engine\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexArray.h">
+      <Filter>GraphicEngine\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviour.h">
+      <Filter>Engine\Interfaces</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
