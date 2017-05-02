@@ -17,7 +17,7 @@ public:
 	/*template< class T, class std::enable_if<std::is_base_of<MyClass, T>::value>::type* = nullptr>>
 	T* getComponent<T>();*/
 	Component* getComponent(ComponentType componentType);
-	void addComponent(const Component &component);
+	void addComponent(shared_ptr<Component> component);
 
 	Uuid id;
 private:

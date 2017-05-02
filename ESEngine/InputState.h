@@ -11,6 +11,8 @@ public:
 	bool isKeyPressed(int key);
 	bool isKeyReleased(int key);
 	
+	bool mousePositionQueueEmpty();
+	bool mouseScrollQueueEmpty();
 	Point2d popMousePosition();
 	Point2d popMouseScroll();
 	Point2d peekMousePosition();

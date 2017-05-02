@@ -16,7 +16,7 @@ GameObject* Scene::createGameObject() {
 	return gameObjects[id].get();
 }
 
-void Scene::update(double dt, const InputState &inputState) {
+void Scene::update(double dt, InputState &inputState) {
 	for(const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
 		Behaviour *behaviour = (Behaviour*)go->getComponent(BEHAVIOUR);
@@ -28,14 +28,14 @@ void Scene::update(double dt, const InputState &inputState) {
 
 void Scene::renderFrame(const Renderer &renderer, float aspectRatio) {
 	
-	glm::mat4 projectionMatrix = activeCamera->getProjectionMatrix(aspectRatio);
-	glm::mat4 viewMatrix = activeCamera->getViewMatrix();
+	glm::mat4 projection = activeCamera->getProjectionMatrix(aspectRatio);
+	glm::mat4 view = activeCamera->getViewMatrix();
 
 	for(const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
 		Renderable *renderable = (Renderable*) go->getComponent(RENDERABLE);
-		if (renderable != NULL) {
-			//TODO rysowanko!
+		if (renderable != nullptr) {
+			renderable->draw(renderer, view, projection);
 		}
 	}
 }

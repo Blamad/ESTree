@@ -8,8 +8,16 @@ bool InputState::isKeyReleased(int key) {
 	return keys[key];
 }
 
+bool InputState::mousePositionQueueEmpty() {
+	return mousePosition.empty();
+}
+
+bool InputState::mouseScrollQueueEmpty() {
+	return mouseScroll.empty();
+}
+
 Point2d InputState::peekMousePosition() {
-	return mousePosition.back();
+	return mousePosition.front();
 }
 
 Point2d InputState::popMousePosition() {
@@ -19,12 +27,12 @@ Point2d InputState::popMousePosition() {
 }
 
 Point2d InputState::peekMouseScroll() {
-	return mouseScroll.back();
+	return mouseScroll.front();
 }
 
 Point2d InputState::popMouseScroll() {
 	Point2d element = peekMouseScroll();
-	mousePosition.pop();
+	mouseScroll.pop();
 	return element;
 }
 

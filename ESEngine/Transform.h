@@ -11,6 +11,12 @@ public:
 	glm::vec3 position;
 	glm::vec4 rotation;
 	glm::vec3 scale;
+
+	glm::mat4 getModelMatrix() 
+	{
+		//TODO poprawne liczenie macierzy modelu!
+		return glm::mat4();
+	};
 };
 
 #endif

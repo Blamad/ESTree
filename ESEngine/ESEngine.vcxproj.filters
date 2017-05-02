@@ -66,6 +66,15 @@
     <ClCompile Include="Shader.cpp">
       <Filter>GraphicEngine\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraBehaviour.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -98,9 +107,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>Engine\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Engine\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>Engine\Header Files</Filter>
     </ClInclude>
@@ -125,5 +131,22 @@
     <ClInclude Include="Behaviour.h">
       <Filter>Engine\Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraBehaviour.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenericShader.vert">
+      <Filter>TestProject\Shaders</Filter>
+    </None>
+    <None Include="GenericShader.frag">
+      <Filter>TestProject\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

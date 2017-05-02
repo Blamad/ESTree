@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraBehaviour.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="ESTree.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -27,6 +29,7 @@
     <ClCompile Include="GLVertexArray.cpp" />
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="InputState.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -34,6 +37,7 @@
   <ItemGroup>
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraBehaviour.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GameObject.h" />
@@ -41,6 +45,7 @@
     <ClInclude Include="GLVertexArray.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="InputState.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="Point2d.h" />
     <ClInclude Include="Renderable.h" />
@@ -51,6 +56,10 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenericShader.frag" />
+    <None Include="GenericShader.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

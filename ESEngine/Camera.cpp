@@ -1,6 +1,10 @@
 #include "Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
+Camera::~Camera() {
+
+}
+
 glm::mat4 Camera::getViewMatrix()
 {
 	return glm::lookAt(this->position, this->position + this->front, this->up);

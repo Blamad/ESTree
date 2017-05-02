@@ -20,7 +20,7 @@ class Scene {
 public:
 	Scene();
 
-	void update(double dt, const InputState &inputState);
+	void update(double dt, InputState &inputState);
 	void renderFrame(const Renderer &renderer, float aspectRatio);
 
 	GameObject* createGameObject();

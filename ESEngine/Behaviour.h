@@ -8,7 +8,7 @@ class Behaviour : public Component {
 public:
 	Behaviour() : Component(BEHAVIOUR) {};
 
-	virtual void update(double dt, const InputState &inputState) = 0;
+	virtual void update(double dt, InputState &inputState) = 0;
 };
 
 #endif
