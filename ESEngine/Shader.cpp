@@ -7,8 +7,7 @@
 Shader::Shader()
 {
 	Program = 0;
-
-}
+};
 
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 {
@@ -91,25 +90,24 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	glDeleteShader(fragment);
 
 	initialized = true;
-}
+};
 
 void Shader::RegisterAttribute(const char* attrib) {
 	_attribList[attrib] = glGetAttribLocation(Program, attrib);
-}
+};
 
 void Shader::RegisterUniform(const char* unif) {
 	_unifLocationList[unif] = glGetUniformLocation(Program, unif);
-}
+};
 
 GLuint Shader::GetAttribLocation(const char* attrib) {
 	return _attribList[attrib];
-}
+};
 
 GLuint Shader::GetUniformLocation(const char* unif) {
 	return _unifLocationList[unif];
-}
+};
 
 void Shader::Use() {
 	glUseProgram(this->Program);
-
-}
+};

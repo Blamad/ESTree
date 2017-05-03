@@ -22,7 +22,7 @@ enum CameraDirectory {
 class Camera : public Component {
 public:
  
-	Camera(glm::vec3 position, glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH) : position(position), up(up), yaw(yaw), pitch(pitch), Component(CAMERA) {
+	Camera(glm::vec3 position, glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH) : position(position), worldUp(up), yaw(yaw), pitch(pitch), Component(CAMERA), movementSpeed(SPEED), mouseSensitivity(SENSITIVTY), zoom(ZOOM) {
 		this->updateCameraVectors();
 	};
 

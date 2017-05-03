@@ -11,6 +11,12 @@ public:
 
 private:
 	Camera *camera;
+	double lastXPos = NULL;
+	double lastYPos = NULL;
+
+	void processMouseMove(InputState &inputState);
+	void processMouseScroll(InputState &inputState);
+	void processKeypad(double dt, InputState &inputState);
 };
 
 #endif

@@ -1,15 +1,36 @@
 #include "CameraBehaviour.h"
+#include <GLFW/glfw3.h>
 
 void CameraBehaviour::update(double dt, InputState &inputState) {
-	while (!inputState.mousePositionQueueEmpty()) {
-		std::cout << "Ruch mysza" << std::endl;
-		Point2d movement = inputState.popMousePosition();
-		camera->processMouseMovement(movement.x, movement.y);
-	}
+	processMouseMove(inputState);
+	processMouseScroll(inputState);
+	processKeypad(dt, inputState);
+};
 
-	while (!inputState.mouseScrollQueueEmpty()) {
-		std::cout << "Ruch scrollem" << std::endl;
-		Point2d movement = inputState.popMouseScroll();
-		camera->processMouseScroll(movement.y);
+void CameraBehaviour::processMouseMove(InputState &inputState) {
+	while (!inputState.mousePositionQueueEmpty()) {
+		Point2d mousePos = inputState.popMousePosition();
+		if (lastXPos != NULL && lastYPos != NULL)
+			camera->processMouseMovement(mousePos.x - lastXPos, mousePos.y - lastYPos);
+		lastXPos = mousePos.x;
+		lastYPos = mousePos.y;
 	}
+};
+
+void CameraBehaviour::processMouseScroll(InputState &inputState) {
+	while (!inputState.mouseScrollQueueEmpty()) {
+		Point2d scrollVal = inputState.popMouseScroll();
+		camera->processMouseScroll(scrollVal.y);
+	}
+};
+
+void CameraBehaviour::processKeypad(double dt, InputState &inputState) {
+	if (inputState.isKeyPressed(GLFW_KEY_W))
+		camera->processKeyboard(FORWARD, dt);
+	if (inputState.isKeyPressed(GLFW_KEY_S))
+		camera->processKeyboard(BACKWARD, dt);
+	if (inputState.isKeyPressed(GLFW_KEY_A))
+		camera->processKeyboard(LEFT, dt);
+	if (inputState.isKeyPressed(GLFW_KEY_D))
+		camera->processKeyboard(RIGHT, dt);
 };

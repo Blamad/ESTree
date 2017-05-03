@@ -30,6 +30,7 @@
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="InputState.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="QuadBehaviour.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="InputState.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="QuadBehaviour.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="Point2d.h" />
     <ClInclude Include="Renderable.h" />

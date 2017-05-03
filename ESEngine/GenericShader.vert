@@ -10,12 +10,12 @@ out VS_OUT {
 } vs_out;
 
 uniform mat4 model;
-uniform mat4 projection;
 uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
-	gl_Position = vec4(position, 1.0f);//projection * view * model * vec4(position, 1.0f);
+	gl_Position = projection * view * model * vec4(position, 1.0f); // 
 	//vs_out.fragPosition = vec3(model * vec4(position, 1.0f));
 	//vs_out.Normal = mat3(transpose(inverse(model))) * normal;
 	vs_out.Color = color;

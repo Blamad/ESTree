@@ -31,6 +31,12 @@
     <Filter Include="TestProject\Shaders">
       <UniqueIdentifier>{0a6b81c6-dd50-46af-bc78-3e6fb7247145}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TestProject\Header Files">
+      <UniqueIdentifier>{16af2619-ce00-499f-8e38-e71d6473da18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Sources">
+      <UniqueIdentifier>{0c076b35-875c-49d7-8513-cfa984825fa2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -74,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="CameraBehaviour.cpp">
       <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadBehaviour.cpp">
+      <Filter>TestProject\Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="CameraBehaviour.h">
       <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadBehaviour.h">
+      <Filter>TestProject\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

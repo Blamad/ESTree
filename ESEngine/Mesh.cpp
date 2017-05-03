@@ -14,10 +14,10 @@ void Mesh::draw(const Renderer &renderer, glm::mat4 view, glm::mat4 projection) 
 	glm::mat4 model = transform->getModelMatrix();
 
 	shader.Use();
-	glBindVertexArray(va->VAO);
 	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glBindVertexArray(va->VAO);
 	glDrawElements(GL_TRIANGLES, va->indiciesNum, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }

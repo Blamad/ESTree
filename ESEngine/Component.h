@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include <iostream>
+#include <iomanip>
 
 class GameObject;
 

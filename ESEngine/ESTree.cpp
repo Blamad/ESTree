@@ -4,6 +4,7 @@
 #include "Vertex.h"
 #include "Shader.h"
 #include "CameraBehaviour.h"
+#include "QuadBehaviour.h"
 
 void createCamera(Scene* scene);
 void createSquare(Scene* scene);
@@ -29,7 +30,7 @@ Engine* initEngine() {
 void createCamera(Scene *scene) {
 	GameObject *go = scene->createGameObject();
 
-	shared_ptr<Camera> camera = shared_ptr<Camera>(new Camera(glm::vec3(0.0f, 0.0f, -3.0f)));
+	shared_ptr<Camera> camera = shared_ptr<Camera>(new Camera(glm::vec3(0.0f, 0.0f, 3.0f)));
 	go->addComponent(camera);
 
 	shared_ptr<CameraBehaviour> cameraBehaviour = shared_ptr<CameraBehaviour>(new CameraBehaviour(camera.get()));
@@ -62,8 +63,11 @@ void createSquare(Scene* scene) {
 	shared_ptr<Mesh> mesh = shared_ptr<Mesh>(new Mesh(verticies, indicies, shader));
 	go->addComponent(mesh);
 
-	shared_ptr<Transform> transform = shared_ptr<Transform>(new Transform(glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),
-		glm::vec3(1.0f, 1.0f, 1.0f)));
+	shared_ptr<Transform> transform = shared_ptr<Transform>(new Transform(glm::vec3(0.25f, -0.25f, -2.0f),
+		glm::vec4(0.0f, 0.2f, 1.0f, 0.0f),
+		glm::vec3(0.7f, 1.0f, 1.2f)));
 	go->addComponent(transform);
+
+	shared_ptr<Behaviour> behaviour = shared_ptr<Behaviour>(new QuadBehaviour());
+	go->addComponent(behaviour);
 }
