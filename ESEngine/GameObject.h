@@ -2,6 +2,7 @@
 #define GAMEOBJECT_H
 
 #include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
 #include <map>
 #include <memory>
 
@@ -12,7 +13,7 @@ typedef boost::uuids::uuid Uuid;
 
 class GameObject {
 public:
-	GameObject(const Uuid &id);
+	GameObject();
 
 	/*template< class T, class std::enable_if<std::is_base_of<MyClass, T>::value>::type* = nullptr>>
 	T* getComponent<T>();*/
@@ -22,6 +23,8 @@ public:
 	Uuid id;
 private:
 	map<ComponentType, shared_ptr<Component>> components;
+
+	static boost::uuids::random_generator uuidGenerator;
 };
 
 #endif GAMEOBJECT_H

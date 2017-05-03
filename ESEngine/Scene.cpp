@@ -1,6 +1,5 @@
 #include "Scene.h"
 
-boost::uuids::random_generator Scene::uuidGenerator;
 
 Scene::Scene() {
 
@@ -10,10 +9,17 @@ void Scene::setActiveCamera(GameObject *gameObject) {
 	activeCamera = (Camera*)gameObject->getComponent(CAMERA);
 }
 
+GameObject* Scene::addGameObject(unique_ptr<GameObject> go) {
+	Uuid uuid = go->id;
+	gameObjects[uuid] = std::move(go);
+	return gameObjects[uuid].get();
+}
+
 GameObject* Scene::createGameObject() {
-	Uuid id = generateUuid();
-	gameObjects[id] = unique_ptr<GameObject>(new GameObject(id));
-	return gameObjects[id].get();
+	unique_ptr<GameObject> go = unique_ptr<GameObject>(new GameObject());
+	Uuid uuid = go->id;
+	gameObjects[uuid] = std::move(go);
+	return gameObjects[uuid].get();
 }
 
 void Scene::update(double dt, InputState &inputState) {
@@ -38,8 +44,4 @@ void Scene::renderFrame(const Renderer &renderer, float aspectRatio) {
 			renderable->draw(renderer, view, projection);
 		}
 	}
-}
-
-Uuid Scene::generateUuid() {
-	return uuidGenerator();
 }

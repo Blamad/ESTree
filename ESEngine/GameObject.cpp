@@ -1,7 +1,9 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const Uuid &id) {
-	this->id = id;
+boost::uuids::random_generator GameObject::uuidGenerator;
+
+GameObject::GameObject() {
+	this->id = uuidGenerator();
 }
 
 Component* GameObject::getComponent(ComponentType type) {
