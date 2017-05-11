@@ -81,7 +81,13 @@
     <ClCompile Include="CameraBehaviour.cpp">
       <Filter>Engine\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QuadBehaviour.cpp">
+    <ClCompile Include="Cube.cpp">
+      <Filter>TestProject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeBehaviour.cpp">
+      <Filter>TestProject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LampCube.cpp">
       <Filter>TestProject\Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,7 +155,13 @@
     <ClInclude Include="CameraBehaviour.h">
       <Filter>Engine\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QuadBehaviour.h">
+    <ClInclude Include="Cube.h">
+      <Filter>TestProject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeBehaviour.h">
+      <Filter>TestProject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LampCube.h">
       <Filter>TestProject\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -158,6 +170,12 @@
       <Filter>TestProject\Shaders</Filter>
     </None>
     <None Include="GenericShader.frag">
+      <Filter>TestProject\Shaders</Filter>
+    </None>
+    <None Include="LampShader.frag">
+      <Filter>TestProject\Shaders</Filter>
+    </None>
+    <None Include="LampShader.vert">
       <Filter>TestProject\Shaders</Filter>
     </None>
   </ItemGroup>

@@ -9,7 +9,7 @@
 class GLRenderer : public Renderer {
 	
 public:
-	void renderObject(const VertexArray &vertexArray, Shader &shader);
+	void renderObject(VertexArray &vertexArray, Shader &shader);
 };
 
 #endif // !GLRENDERER_H

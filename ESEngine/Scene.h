@@ -17,10 +17,12 @@ using namespace std;
 
 class Scene {
 public:
+	bool initialized;
+
 	Scene();
 
 	void update(double dt, InputState &inputState);
-	void renderFrame(const Renderer &renderer, float aspectRatio);
+	void renderFrame(Renderer &renderer);
 
 	GameObject* addGameObject(unique_ptr<GameObject> go);
 	GameObject* createGameObject();

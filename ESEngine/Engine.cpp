@@ -30,8 +30,10 @@ Window* Engine::initialize(int width, int height) {
 #endif
 	window->initialize();
 	inputState = window->registerInputManager();
-
 	sceneManager.reset(new SceneManager());
+
+	Shader::initializeMatricesUBO();
+	Shader::updateProjectionMatrix(Camera::getProjectionMatrix(width / height));
 
 	return window.get();
 }
@@ -41,18 +43,18 @@ SceneManager* Engine::getSceneManager() {
 }
 
 void Engine::renderingLoop() {
+
 	while (!window->shouldClose()) {
 		double currentTime = window->getTime();
 		double deltaTime = currentTime - lastTime;
-
 		lastTime = currentTime;
 
-		sceneManager->getActiveScene()->update(deltaTime, *inputState);
 		window->poolInputEvents();
-		
-		window->prepareFrameRendering();
-		sceneManager->getActiveScene()->renderFrame(*renderer, window->getAspectRatio());
-		window->finishFrameRendering();
+		sceneManager->getActiveScene()->update(deltaTime, *inputState);
+		inputState->clearMouseEvents();
 
+		window->prepareFrameRendering();
+		sceneManager->getActiveScene()->renderFrame(*renderer);
+		window->finishFrameRendering();
 	}
 }

@@ -8,8 +8,7 @@ void CameraBehaviour::update(double dt, InputState &inputState) {
 };
 
 void CameraBehaviour::processMouseMove(InputState &inputState) {
-	while (!inputState.mousePositionQueueEmpty()) {
-		Point2d mousePos = inputState.popMousePosition();
+	for (Point2d const& mousePos : inputState.getMousePositionEvents()) {
 		if (lastXPos != NULL && lastYPos != NULL)
 			camera->processMouseMovement(mousePos.x - lastXPos, mousePos.y - lastYPos);
 		lastXPos = mousePos.x;
@@ -18,8 +17,7 @@ void CameraBehaviour::processMouseMove(InputState &inputState) {
 };
 
 void CameraBehaviour::processMouseScroll(InputState &inputState) {
-	while (!inputState.mouseScrollQueueEmpty()) {
-		Point2d scrollVal = inputState.popMouseScroll();
+	for (Point2d const& scrollVal : inputState.getMouseScrollEvents()) {
 		camera->processMouseScroll(scrollVal.y);
 	}
 };

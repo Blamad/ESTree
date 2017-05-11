@@ -4,10 +4,8 @@
 #include <sstream>
 #include <iostream>
 
-Shader::Shader()
-{
-	Program = 0;
-};
+GLuint Shader::matricesBlockBinding = 0;
+GLuint Shader::matricesUBO = 0;
 
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 {
@@ -73,15 +71,15 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 
 
 	// Shader Program
-	this->Program = glCreateProgram();
-	glAttachShader(this->Program, vertex);
-	glAttachShader(this->Program, fragment);
-	glLinkProgram(this->Program);
+	this->program = glCreateProgram();
+	glAttachShader(this->program, vertex);
+	glAttachShader(this->program, fragment);
+	glLinkProgram(this->program);
 	// Print linking errors if any
-	glGetProgramiv(this->Program, GL_LINK_STATUS, &success);
+	glGetProgramiv(this->program, GL_LINK_STATUS, &success);
 	if (!success)
 	{
-		glGetProgramInfoLog(this->Program, 512, NULL, infoLog);
+		glGetProgramInfoLog(this->program, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
 
@@ -90,24 +88,49 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	glDeleteShader(fragment);
 
 	initialized = true;
-};
+}
 
-void Shader::RegisterAttribute(const char* attrib) {
-	_attribList[attrib] = glGetAttribLocation(Program, attrib);
-};
+void Shader::use() {
+	glUseProgram(this->program);
+}
 
-void Shader::RegisterUniform(const char* unif) {
-	_unifLocationList[unif] = glGetUniformLocation(Program, unif);
-};
+void Shader::registerAttribute(const char* attrib) {
+	attribList[attrib] = glGetAttribLocation(program, attrib);
+}
 
-GLuint Shader::GetAttribLocation(const char* attrib) {
-	return _attribList[attrib];
-};
+void Shader::registerUniform(const char* unif) {
+	unifLocationList[unif] = glGetUniformLocation(program, unif);
+}
 
-GLuint Shader::GetUniformLocation(const char* unif) {
-	return _unifLocationList[unif];
-};
+GLuint Shader::getAttribLocation(const char* attrib) {
+	return attribList[attrib];
+}
 
-void Shader::Use() {
-	glUseProgram(this->Program);
-};
+GLuint Shader::getUniformLocation(const char* unif) {
+	return unifLocationList[unif];
+}
+
+void Shader::registerMatriciesUBO() {
+	GLuint uniformBlockIndex = glGetUniformBlockIndex(program, "Matrices");
+	glUniformBlockBinding(program, uniformBlockIndex, matricesBlockBinding);
+}
+
+void Shader::initializeMatricesUBO() {
+	glGenBuffers(1, &matricesUBO);
+	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
+	glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	glBindBufferRange(GL_UNIFORM_BUFFER, 0, matricesUBO, 0, 2 * sizeof(glm::mat4));
+}
+
+void Shader::updateProjectionMatrix(glm::mat4 projection) {
+	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+void Shader::updateViewMatrix(glm::mat4 view) {
+	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
+	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}

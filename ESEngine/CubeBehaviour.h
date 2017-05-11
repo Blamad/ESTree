@@ -3,7 +3,7 @@
 #include "Behaviour.h"
 #include "Transform.h"
 
-class QuadBehaviour : public Behaviour {
+class CubeBehaviour : public Behaviour {
 public:
 	void update(double dt, InputState &inputState);
 private:

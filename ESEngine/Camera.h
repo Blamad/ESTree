@@ -47,7 +47,7 @@ public:
 	void processMouseScroll(GLfloat yoffset);
 
 	glm::mat4 getViewMatrix();
-	glm::mat4 getProjectionMatrix(float aspectRatio);
+	static glm::mat4 getProjectionMatrix(float aspectRatio);
 
 private:
 	// Calculates the front vector from the Camera's (updated) Eular Angles

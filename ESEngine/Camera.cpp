@@ -11,7 +11,7 @@ glm::mat4 Camera::getViewMatrix()
 }
 
 glm::mat4 Camera::getProjectionMatrix(float aspectRatio) {
-	return glm::perspective(this->zoom, aspectRatio, 0.1f, 100.0f);
+	return glm::perspective(ZOOM, aspectRatio, 0.1f, 100.0f);
 }
 
 void Camera::processKeyboard(CameraDirectory direction, GLfloat deltaTime)

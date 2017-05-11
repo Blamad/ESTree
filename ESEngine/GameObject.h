@@ -5,6 +5,7 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <map>
 #include <memory>
+#include <typeinfo>
 
 #include "Component.h"
 
@@ -14,9 +15,7 @@ typedef boost::uuids::uuid Uuid;
 class GameObject {
 public:
 	GameObject();
-
-	/*template< class T, class std::enable_if<std::is_base_of<MyClass, T>::value>::type* = nullptr>>
-	T* getComponent<T>();*/
+	
 	Component* getComponent(ComponentType componentType);
 	void addComponent(shared_ptr<Component> component);
 

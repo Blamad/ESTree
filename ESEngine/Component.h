@@ -7,7 +7,7 @@
 class GameObject;
 
 enum ComponentType {
-	RENDERABLE, TRANSFORM, CAMERA, BEHAVIOUR
+	RENDERABLE, TRANSFORM, CAMERA, BEHAVIOUR, Lamp
 };
 
 class Component {

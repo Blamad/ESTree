@@ -1,7 +1,7 @@
 #ifndef INPUTSTATE_H
 #define INPUTSTATE_H
 
-#include <queue>
+#include <deque>
 #include "Point2d.h"
 
 using namespace std;
@@ -11,12 +11,10 @@ public:
 	bool isKeyPressed(int key);
 	bool isKeyReleased(int key);
 	
-	bool mousePositionQueueEmpty();
-	bool mouseScrollQueueEmpty();
-	Point2d popMousePosition();
-	Point2d popMouseScroll();
-	Point2d peekMousePosition();
-	Point2d peekMouseScroll();
+	const deque<Point2d> InputState::getMousePositionEvents();
+	const deque<Point2d> InputState::getMouseScrollEvents();
+
+	void clearMouseEvents();
 
 	void setKeyPressed(int key);
 	void setKeyReleased(int key);
@@ -25,8 +23,8 @@ public:
 
 private:
 	bool keys[1024];
-	queue<Point2d> mousePosition;
-	queue<Point2d> mouseScroll;
+	deque<Point2d> mousePosition;
+	deque<Point2d> mouseScroll;
 
 };
 

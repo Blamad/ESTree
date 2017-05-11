@@ -1,8 +1,7 @@
 #include "Scene.h"
 
-
 Scene::Scene() {
-
+	initialized = false;
 }
 
 void Scene::setActiveCamera(GameObject *gameObject) {
@@ -22,26 +21,29 @@ GameObject* Scene::createGameObject() {
 	return gameObjects[uuid].get();
 }
 
+void initializeScene(Renderer &renderer, float aspectRatio) {
+
+}
+
 void Scene::update(double dt, InputState &inputState) {
 	for(const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
 		Behaviour *behaviour = (Behaviour*)go->getComponent(BEHAVIOUR);
-		if (behaviour != NULL) {
+		if (behaviour != nullptr) {
 			behaviour->update(dt, inputState);
 		}
 	}
 }
 
-void Scene::renderFrame(const Renderer &renderer, float aspectRatio) {
-	
-	glm::mat4 projection = activeCamera->getProjectionMatrix(aspectRatio);
-	glm::mat4 view = activeCamera->getViewMatrix();
+void Scene::renderFrame(Renderer &renderer) {
+
+	Shader::updateViewMatrix(activeCamera->getViewMatrix());
 
 	for(const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
 		Renderable *renderable = (Renderable*) go->getComponent(RENDERABLE);
 		if (renderable != nullptr) {
-			renderable->draw(renderer, view, projection);
+			renderable->draw(renderer);
 		}
 	}
 }

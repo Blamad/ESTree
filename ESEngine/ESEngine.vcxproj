@@ -22,6 +22,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraBehaviour.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="ESTree.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -29,8 +30,9 @@
     <ClCompile Include="GLVertexArray.cpp" />
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="InputState.cpp" />
+    <ClCompile Include="LampCube.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="QuadBehaviour.cpp" />
+    <ClCompile Include="CubeBehaviour.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -40,14 +42,16 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBehaviour.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GLRenderer.h" />
     <ClInclude Include="GLVertexArray.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="InputState.h" />
+    <ClInclude Include="LampCube.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="QuadBehaviour.h" />
+    <ClInclude Include="CubeBehaviour.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="Point2d.h" />
     <ClInclude Include="Renderable.h" />
@@ -62,6 +66,8 @@
   <ItemGroup>
     <None Include="GenericShader.frag" />
     <None Include="GenericShader.vert" />
+    <None Include="LampShader.frag" />
+    <None Include="LampShader.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -127,6 +133,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>

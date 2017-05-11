@@ -8,32 +8,17 @@ bool InputState::isKeyReleased(int key) {
 	return keys[key];
 }
 
-bool InputState::mousePositionQueueEmpty() {
-	return mousePosition.empty();
+const deque<Point2d> InputState::getMousePositionEvents() {
+	return mousePosition;
 }
 
-bool InputState::mouseScrollQueueEmpty() {
-	return mouseScroll.empty();
+const deque<Point2d> InputState::getMouseScrollEvents() {
+	return mouseScroll;
 }
 
-Point2d InputState::peekMousePosition() {
-	return mousePosition.front();
-}
-
-Point2d InputState::popMousePosition() {
-	Point2d element = peekMousePosition();
-	mousePosition.pop();
-	return element;
-}
-
-Point2d InputState::peekMouseScroll() {
-	return mouseScroll.front();
-}
-
-Point2d InputState::popMouseScroll() {
-	Point2d element = peekMouseScroll();
-	mouseScroll.pop();
-	return element;
+void InputState::clearMouseEvents() {
+	mousePosition.clear();
+	mouseScroll.clear();
 }
 
 void InputState::setKeyPressed(int key) {
@@ -45,9 +30,9 @@ void InputState::setKeyReleased(int key) {
 }
 
 void InputState::pushMousePosition(double x, double y) {
-	mousePosition.push(Point2d(x, y));
+	mousePosition.push_back(Point2d(x, y));
 }
 
 void InputState::pushMouseScroll(double x, double y) {
-	mouseScroll.push(Point2d(x, y));
+	mouseScroll.push_back(Point2d(x, y));
 }

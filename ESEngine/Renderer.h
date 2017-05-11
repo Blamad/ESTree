@@ -6,7 +6,7 @@
 
 class Renderer {
 public:
-	virtual void renderObject(const VertexArray &vertexArray, Shader &shader) = 0;
+	virtual void renderObject(VertexArray &vertexArray, Shader &shader) = 0;
 };
 
 #endif // !RENDERER_H

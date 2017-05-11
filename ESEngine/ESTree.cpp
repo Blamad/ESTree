@@ -1,23 +1,41 @@
 #include "Engine.h"
 #include "Window.h"
-#include "Mesh.h"
-#include "Vertex.h"
-#include "Shader.h"
-#include "CameraBehaviour.h"
-#include "QuadBehaviour.h"
+#include "Cube.h"
+#include "LampCube.h"
 
 using namespace glm;
 
-GameObject* createCamera(SceneManager *sceneManager);
-Vertex createVertex(glm::vec3 position, glm::vec4 color);
-GameObject* createSquare(SceneManager *sceneManager);
+GameObject* createCamera(SceneManager *sceneManager, vec3 position, float pitch, float yaw);
+GameObject* createCube(SceneManager *sceneManager);
+GameObject* createColoredCube(SceneManager *sceneManager, vec4 color);
+GameObject* createLampCube(SceneManager *sceneManager, vec4 color);
+Transform* getTransform(GameObject* gameObject);
+
 Engine* initEngine();
 
 int main() {
 	Engine* engine = initEngine();
 	SceneManager* sceneManager = engine->getSceneManager();
-	createCamera(sceneManager);
-	createSquare(sceneManager);
+	createCamera(sceneManager, vec3(0.0f, 1.0f, -8.0f), 90, 0);
+	Transform* transform;
+
+	GameObject* cube = createColoredCube(sceneManager, vec4(1, 0, 0, 1));
+	transform = getTransform(cube);
+	transform->position = vec3(2, .0, .0);
+	transform->rotation = vec4(.2f, .3f, .4f, 1);
+	transform->scale = vec3(.5, .5, .5);
+
+	GameObject* cube1 = createCube(sceneManager);
+	transform = getTransform(cube1);
+	transform->position = vec3(-2, .0, .0);
+	transform->rotation = vec4(-.2f, -.3f, -.4f, 1);
+	transform->scale = vec3(.5, .5, .5);
+
+	GameObject* lampCube = createLampCube(sceneManager, vec4(1,1,1,1));
+	transform = getTransform(lampCube);
+	transform->position = vec3(0, 2.0, .0);
+	transform->rotation = vec4(1, 1, 1, 0);
+	transform->scale = vec3(.2, .2, .2);
 
 	engine->startRendering();
 
@@ -26,48 +44,28 @@ int main() {
 	return 0;
 }
 
-GameObject* createCamera(SceneManager *sceneManager) {
-	return sceneManager->createCamera(vec3(0.0f, 0.0f, 2.0f), -90.0f, 0.0f);
+Transform* getTransform(GameObject* gameObject) {
+	return (Transform*)gameObject->getComponent(TRANSFORM);
 }
 
-GameObject* createSquare(SceneManager *sceneManager) {
-	//GameObject *go = sceneManager->createEmptyGameObject();
-	GameObject* go = sceneManager->addGameObject(unique_ptr<GameObject>(new GameObject()));
+GameObject* createCamera(SceneManager *sceneManager, vec3 position, float pitch, float yaw) {
+	return sceneManager->createCamera(position, pitch, yaw);
+}
 
-	vector<Vertex> verticies = {
-		createVertex(glm::vec3(0.5f, 0.5f, 0.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)),
-		createVertex(glm::vec3(0.5f, -0.5f, 0.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)),
-		createVertex(glm::vec3(-0.5f, -0.5f, 0.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)),
-		createVertex(glm::vec3(-0.5f, 0.5f, 0.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f))
-	};
-	vector<int> indicies = { 0, 1, 3, 1, 2, 3 };
-	Shader shader("GenericShader.vert", "GenericShader.frag");
-	shared_ptr<Mesh> mesh = shared_ptr<Mesh>(new Mesh(verticies, indicies, shader));
-	go->addComponent(mesh);
+GameObject* createCube(SceneManager *sceneManager) {
+	return sceneManager->addGameObject(unique_ptr<GameObject>(new Cube(true)));
+}
 
-	shared_ptr<Transform> transform = shared_ptr<Transform>(new Transform(glm::vec3(0.25f, -0.25f, -2.0f),
-		glm::vec4(0.0f, 0.2f, 1.0f, 0.0f),
-		glm::vec3(0.7f, 1.0f, 1.2f)));
-	go->addComponent(transform);
+GameObject* createColoredCube(SceneManager *sceneManager, vec4 color) {
+	return sceneManager->addGameObject(unique_ptr<GameObject>(new Cube(color)));
+}
 
-	shared_ptr<Behaviour> behaviour = shared_ptr<Behaviour>(new QuadBehaviour());
-	go->addComponent(behaviour);
-
-	return go;
+GameObject* createLampCube(SceneManager *sceneManager, vec4 color) {
+	return sceneManager->addGameObject(unique_ptr<GameObject>(new LampCube(color)));
 }
 
 Engine* initEngine() {
 	Engine* engine = new Engine();
 	Window* window = engine->initialize(800, 600);
 	return engine;
-}
-
-Vertex createVertex(glm::vec3 position, glm::vec4 color) {
-	Vertex vert;
-	vert.position = position;
-	vert.color = color;
-	vert.type[POSITION] = 1;
-	vert.type[COLOR] = 1;
-
-	return vert;
 }

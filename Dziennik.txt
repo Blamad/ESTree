@@ -1,0 +1,50 @@
+//TODO
+- Oświetlenie i materiały
+- Tekstury
+- Cubemap i Skybox
+- cieniowanie?
+- Ładowanie modeli
+
+- Rozpoczęcie prac nad generacją kształtów morfujących (wczesne drzewa)
+
+//DONE
+- Klasa engine i zarządzanie silnikiem
+- Renderer
+- GameObject i zarządzanie komponentami
+- rysowanie i komponent kamery (Renderable, Camera, Transform)
+- UBO do mPV
+
+14.04.2017
+Zrobiony kontekst, podstawowa architektura. InputManager wtopiony w GLWindow, including loop. 
+Co następne?
+1. rysowanie i komponent kamera (Renderable, Camera)
+
+20.03.2017
+Wtop inputManagera w GLWindow, niech zwraca tylko InputState.
+Ciekawy pomysł: dodawanie komponentu inputlistener który reagowałby na klawisze.
+
+15.03.2017
+Problem:
+jak ładnie zdefiniować obiekt stanu wejścia ze statycznymi metodami akcji na tym obiekcie?
+inputmanager -> inputlistener
+
+03.05.2017
+Tyły w pisaniu dziennika (POPRAWIĆ!). Projekt zaczyna wyglądać. Utworzona abstrakcja renderingu (wymagana optymalizacja view projection matrix),
+utworzona schludna struktura obiektu gry i komponentów, trochę refaktoru. PIERWSZY KWADRAT
+Uwaga:
+OpenGL rysuje regułą prawej ręki! Front zawsze leci kolejnością przeciwną do wsk. zegara! Koordynaty ekranu zaczynają się od górnego lewego (0,0) w dół!
+
+10.05.2017
+Jak zrobić update UBO macierzy widoku i perspektywy.. Każda scena ma własną macierz widoku, perspektywy pewnie też.
+Trzeba zrobić init UBO na samym początku, najlepiej wołać bezpośrednio z funkcji. Wtedy też od razu wołam ustawienie macierzy projekcji.
+Później w każdej klatce ustawiam nową macierz widoku.
+
+Każdy shader będzie to miał obowiązkowo, można więc taką rezerwacje pamięci zrobić w shaderze.
+
+Scena chyba sama powinna się inicjalizować..
+
+UBO będzie statyczny - dzielony między wszystkie shadery - więc shader powinien sam wiedzieć o tym ubo i go ustawiać i pilnować!
+
+11.05.2017
+Fix do input managera (behaviour nie może usuwać eventów!), fix do komunikacji między shaderem i obiektem, dodanie UBO jako statycznego dla wszystkich rejestrowanych shaderów.
+Przygotowanie obiektu emitującego światło wraz z shaderami do modyfikacji.

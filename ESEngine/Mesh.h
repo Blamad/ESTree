@@ -18,10 +18,7 @@ public:
 	Mesh(vector<Vertex> vertices, vector<int> indices, Shader shader);
 	~Mesh();
 
-	void draw(const Renderer &renderer);
-	void draw(const Renderer &renderer, glm::mat4 view, glm::mat4 projection);
-
-	void shout() { std::cout << "Mesh" << std::endl; };
+	void draw(Renderer &renderer);
 
 private:
 	unique_ptr<VertexArray> vertexArray;
