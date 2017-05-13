@@ -1,7 +1,7 @@
 #include "Scene.h"
 
 Scene::Scene() {
-	initialized = false;
+	lightsManager.reset(new LightsManager());
 }
 
 void Scene::setActiveCamera(GameObject *gameObject) {
@@ -14,6 +14,11 @@ GameObject* Scene::addGameObject(unique_ptr<GameObject> go) {
 	return gameObjects[uuid].get();
 }
 
+Light* Scene::addLight(shared_ptr<Light> light) {
+	lightsManager->addLight(light);
+	return light.get();
+}
+
 GameObject* Scene::createGameObject() {
 	unique_ptr<GameObject> go = unique_ptr<GameObject>(new GameObject());
 	Uuid uuid = go->id;
@@ -21,8 +26,13 @@ GameObject* Scene::createGameObject() {
 	return gameObjects[uuid].get();
 }
 
-void initializeScene(Renderer &renderer, float aspectRatio) {
+//TODO Na razie to lezy!
+void Scene::removeGameObject(GameObject *gameObject) {
+	Uuid uuid = gameObject->id;
 
+	if (gameObjects[uuid]->getComponent(LIGHT) != nullptr)
+		//lightsManager->removeLight(dynamic_pointer_cast<Light> (gameObjects[uuid]->getComponent(LIGHT)));
+	gameObjects.erase(uuid);
 }
 
 void Scene::update(double dt, InputState &inputState) {
@@ -38,6 +48,7 @@ void Scene::update(double dt, InputState &inputState) {
 void Scene::renderFrame(Renderer &renderer) {
 
 	Shader::updateViewMatrix(activeCamera->getViewMatrix());
+	lightsManager->updateLights(activeCamera->position);
 
 	for(const auto &node : gameObjects) {
 		GameObject *go = node.second.get();

@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "LightsManager.h"
 
 #define OPENGL
 
@@ -33,6 +34,7 @@ Window* Engine::initialize(int width, int height) {
 	sceneManager.reset(new SceneManager());
 
 	Shader::initializeMatricesUBO();
+	LightsManager::initializeLightsUBO();
 	Shader::updateProjectionMatrix(Camera::getProjectionMatrix(width / height));
 
 	return window.get();

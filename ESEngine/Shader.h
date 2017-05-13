@@ -9,6 +9,9 @@
 class Shader
 {
 public:
+	static GLuint matricesBlockBinding;
+	static GLuint lightBlockBinding;
+
 	bool initialized = false;
 	GLuint program;
 	
@@ -16,25 +19,26 @@ public:
 
 	void registerAttribute(const char* attrib);
 	void registerUniform(const char* uniform);
-	void registerMatriciesUBO();
-
+	
 	GLuint getAttribLocation(const char* attrib);
 	GLuint getUniformLocation(const char* unif);
 
 	void use();
 
+	//	UBO
+	//	Model View Matricies
+	void registerMatriciesUBO();
 	static void initializeMatricesUBO();
 	static void updateProjectionMatrix(glm::mat4 projection);
 	static void updateViewMatrix(glm::mat4 view);
+	//	Lights
+	void registerLightsUBO();
 
 private:
-	/*  Shader data  */
 	std::map<std::string, GLuint> attribList;
 	std::map<std::string, GLuint> unifLocationList;
 
 	static GLuint matricesUBO;
-	static GLuint matricesBlockBinding;
-
 };
 
 #endif

@@ -8,6 +8,7 @@
 #include "GameObject.h"
 #include "InputState.h"
 #include "Renderer.h"
+#include "LightsManager.h"
 
 #include "Renderable.h"
 #include "Behaviour.h"
@@ -17,19 +18,21 @@ using namespace std;
 
 class Scene {
 public:
-	bool initialized;
-
 	Scene();
 
 	void update(double dt, InputState &inputState);
 	void renderFrame(Renderer &renderer);
 
 	GameObject* addGameObject(unique_ptr<GameObject> go);
+	Light* addLight(shared_ptr<Light> light);
 	GameObject* createGameObject();
+	void removeGameObject(GameObject *gameObject);
+
 	void setActiveCamera(GameObject *gameObject);
 
 private:
 	Camera *activeCamera;
+	unique_ptr<LightsManager> lightsManager;
 	std::map<Uuid, unique_ptr<GameObject>> gameObjects;
 };
 

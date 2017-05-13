@@ -7,18 +7,17 @@
 class GameObject;
 
 enum ComponentType {
-	RENDERABLE, TRANSFORM, CAMERA, BEHAVIOUR, Lamp
+	RENDERABLE, TRANSFORM, CAMERA, BEHAVIOUR, LIGHT
 };
 
 class Component {
 public:
 	ComponentType type;
 	void setParent(GameObject &parent);
+	Component* getComponent(const ComponentType &type);
 
 protected:
 	Component(const ComponentType &type) : type(type) {};
-
-	Component* getComponent(const ComponentType &type);
 
 private:
 	GameObject *parent;

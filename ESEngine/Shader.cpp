@@ -5,6 +5,8 @@
 #include <iostream>
 
 GLuint Shader::matricesBlockBinding = 0;
+GLuint Shader::lightBlockBinding = 1;
+
 GLuint Shader::matricesUBO = 0;
 
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
@@ -118,9 +120,9 @@ void Shader::registerMatriciesUBO() {
 void Shader::initializeMatricesUBO() {
 	glGenBuffers(1, &matricesUBO);
 	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
-	glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-	glBindBufferRange(GL_UNIFORM_BUFFER, 0, matricesUBO, 0, 2 * sizeof(glm::mat4));
+	glBindBufferRange(GL_UNIFORM_BUFFER, matricesBlockBinding, matricesUBO, 0, 2 * sizeof(glm::mat4));
 }
 
 void Shader::updateProjectionMatrix(glm::mat4 projection) {
@@ -133,4 +135,9 @@ void Shader::updateViewMatrix(glm::mat4 view) {
 	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
 	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+void Shader::registerLightsUBO() {
+	GLuint uniformBlockIndex = glGetUniformBlockIndex(program, "Lights");
+	glUniformBlockBinding(program, uniformBlockIndex, lightBlockBinding);
 }

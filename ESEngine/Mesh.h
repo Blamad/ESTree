@@ -4,14 +4,17 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
 #include <memory>
+
 #include "Renderable.h"
 #include "Renderer.h"
 #include "Transform.h"
+#include "Material.h"
 
 using namespace std;
 
 class Mesh : public Renderable {
 public:
+	Material material;
 	vector<Vertex> vertices;
 	vector<int> indices;
 

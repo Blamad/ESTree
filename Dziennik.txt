@@ -1,5 +1,6 @@
 //TODO
-- Oświetlenie i materiały
+- Optymalizacja wysyłania danych oświetletlenia
+- Przeniesienie obliczeń normalnych modelu z shadera do cpu.
 - Tekstury
 - Cubemap i Skybox
 - cieniowanie?
@@ -13,6 +14,7 @@
 - GameObject i zarządzanie komponentami
 - rysowanie i komponent kamery (Renderable, Camera, Transform)
 - UBO do mPV
+- Oświetlenie i materiały jako UBO
 
 14.04.2017
 Zrobiony kontekst, podstawowa architektura. InputManager wtopiony w GLWindow, including loop. 
@@ -48,3 +50,25 @@ UBO będzie statyczny - dzielony między wszystkie shadery - więc shader powini
 11.05.2017
 Fix do input managera (behaviour nie może usuwać eventów!), fix do komunikacji między shaderem i obiektem, dodanie UBO jako statycznego dla wszystkich rejestrowanych shaderów.
 Przygotowanie obiektu emitującego światło wraz z shaderami do modyfikacji.
+
+Praca nad oświetleniem:
+na razie oświetlenie statyczne, paskudnie zakodowane ale DZIAŁA!
+Notatki na przyszłość:
+Do oświetlenia diffuse ważne są wektory normalne do danego fragmentu aby prawidłowo je pozyskać należy obciąć translację z macierzy modelu (normalne nie posiadają pozycji, jedynie obrót i skalowanie).
+Załatwia nam to obcięcie kolumny i wiersza 'w' z macierzy modelu. Ze skalowaniem też jest problem, nierównomierne skalowanie zakrzywia płaszczyznę do wekt. normalnego. Załatwia to transpose(inverse(model)).
+
+UWAGA!!!!
+Po implementacji modułu oświetlenia konieczna optymalizacja obliczania macierzy normalnych! mat3(transpose(inverse((model)) to bardzo droga operacja! Lepiej obliczyć to za wczasu raz na procku niż dla każdego wierzchołka!
+Więcej info tutaj: https://learnopengl.com/#!Lighting/Basic-Lighting
+
+
+13.05.2017
+Ciężka szkoła nauki komunikacji CPU-GPU. Nauka po 2 dniach kombinowania z UBO? 
+1. Narzędzia nvidii nie wspierają vs2017, 
+2. Do przesyłania danych używać tylko skalarów (ułożonych po 4 lub z paddingiem) oraz wektorów lub macierzy 2 lub 4 elementowych. 
+Inaczej CPU czyta swoje a GPU swoje, wszystko dzięki innym zasadom lokowania danych. std140 po stronie GPU wymusza dzielenie danych na bloki po 4N danych.
+W końcu udało się stworzyć moduł oświetlenia z dynamiczną ilością lamp. Na razie jest oświetlenie punktowe i kierunkowe, na tym chyba na tę chwilę poprzestanę. Ew. można kiedyś rozbudować to o spotlight.
+TODO:
+po co za każdym razem wysyłać cały bufor? Wystarczy update bierzących lamp i indeksów, nie wpadną mi śmieciowe dane.
+
+14.05

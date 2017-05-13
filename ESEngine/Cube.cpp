@@ -1,10 +1,9 @@
 #include "Cube.h"
 
 Cube::Cube(vec4 color) : GameObject() {
-	cout << "colored" << endl;
-
 	Shader shader("GenericShader.vert", "GenericShader.frag");
 	shared_ptr<Mesh> mesh = createMesh(shader, color);
+	mesh->material = Material::cyanPlastic();
 	shared_ptr<Transform> transform = shared_ptr<Transform>(new Transform());
 	shared_ptr<Behaviour> behaviour = shared_ptr<Behaviour>(new CubeBehaviour());
 
@@ -14,8 +13,6 @@ Cube::Cube(vec4 color) : GameObject() {
 }
 
 Cube::Cube(bool any) : GameObject() {
-	cout << "any" << endl;
-
 	Shader shader("GenericShader.vert", "GenericShader.frag");
 	shared_ptr<Mesh> mesh = createMesh(shader);
 	shared_ptr<Transform> transform = shared_ptr<Transform>(new Transform());

@@ -1,9 +1,11 @@
 #include "GameObject.h"
+#include "Transform.h"
 
 boost::uuids::random_generator GameObject::uuidGenerator;
 
 GameObject::GameObject() {
 	this->id = uuidGenerator();
+	addComponent(shared_ptr<Transform>(new Transform()));
 }
 
 Component* GameObject::getComponent(ComponentType type) {
