@@ -31,4 +31,8 @@ void CameraBehaviour::processKeypad(double dt, InputState &inputState) {
 		camera->processKeyboard(LEFT, dt);
 	if (inputState.isKeyPressed(GLFW_KEY_D))
 		camera->processKeyboard(RIGHT, dt);
+	if (inputState.isKeyPressed(GLFW_KEY_SPACE))
+		camera->position += glm::vec3(0, 1, 0) * camera->movementSpeed * (GLfloat)dt;
+	if (inputState.isKeyPressed(GLFW_KEY_LEFT_CONTROL))
+		camera->position += glm::vec3(0, -1, 0) * camera->movementSpeed * (GLfloat)dt;
 };

@@ -3,7 +3,7 @@
 Cube::Cube(vec4 color) : GameObject() {
 	Shader shader("GenericShader.vert", "GenericShader.frag");
 	shared_ptr<Mesh> mesh = createMesh(shader, color);
-	mesh->material = Material::cyanPlastic();
+	mesh->material = Material::ruby();
 	shared_ptr<Transform> transform = shared_ptr<Transform>(new Transform());
 	shared_ptr<Behaviour> behaviour = shared_ptr<Behaviour>(new CubeBehaviour());
 

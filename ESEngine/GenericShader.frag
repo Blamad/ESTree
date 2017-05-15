@@ -29,6 +29,7 @@ struct DirectionalLight {
 in VS_OUT {
   vec3 fragPos;
   vec3 normal;
+  vec3 color;
 } vs_in;
 
 layout (std140, binding = 1) uniform Lights
@@ -63,12 +64,6 @@ void main()
     //Calc point lights
 	for(int i = 0; i < lights.pointLightsLength; i++)
         result += calcPointLight(lights.pointLights[i], normal, vs_in.fragPos, viewDir);
-	
-	/*if(pointLights.lightsSize == 2)
-		result = vec3(0, 1, 0);
-	else
-		result = vec3(1, 0, 0);
-	*/
 
 	color = vec4(result, 1.0);
 }

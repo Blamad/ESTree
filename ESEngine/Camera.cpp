@@ -5,8 +5,7 @@ Camera::~Camera() {
 
 }
 
-glm::mat4 Camera::getViewMatrix()
-{
+glm::mat4 Camera::getViewMatrix() {
 	return glm::lookAt(this->position, this->position + this->front, this->up);
 }
 

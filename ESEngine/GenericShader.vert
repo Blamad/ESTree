@@ -15,12 +15,14 @@ layout (std140, binding = 0) uniform Matricies
 };
 
 uniform mat4 model;
+uniform mat3 normalModel;
 
 void main()
 {
-	gl_Position = projection * view * model * vec4(position, 1.0f);
+	vec4 modelSpacePos = model * vec4(position, 1.0f);
+	vec4 viewSpacePos = view * modelSpacePos;
+	gl_Position = projection * viewSpacePos;
+
 	vs_out.fragPos = vec3(model * vec4(position, 1.0f));
-	//Jezeli skalowanie bylo nierownomierne to normalne sa kopniete. transpose(inverse(macierz)) ustawia normalne prostopadle do zamierzonej powierzchni
-	//Zabieg mat3(macierz) obetnie nam translacje na modelu bo nie chcemy jej w obliczeniach swiatla
-	vs_out.normal = mat3(transpose(inverse(model))) * normal;
+	vs_out.normal = normalModel * normal;
 }

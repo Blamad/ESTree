@@ -3,7 +3,6 @@
 
 void Mesh::draw(Renderer &renderer) {
 	Transform *transform = (Transform*)this->getComponent(TRANSFORM);
-	glm::mat4 model = transform->getModelMatrix();
 	GLuint program = shader.program;
 	shader.use();
 
@@ -12,8 +11,13 @@ void Mesh::draw(Renderer &renderer) {
 	glUniform3fv(glGetUniformLocation(program, "material.specular"), 1, glm::value_ptr(material.specular));
 	glUniform1f(glGetUniformLocation(program, "material.shininess"), material.shininess);
 
-	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+	GLuint modelLocation = glGetUniformLocation(program, "model");
+	GLuint modelNormalLocation = glGetUniformLocation(program, "normalModel");
 
+
+	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, glm::value_ptr(transform->getModelMatrix()));
+	glUniformMatrix3fv(glGetUniformLocation(program, "normalModel"), 1, GL_FALSE, glm::value_ptr(transform->getNormalModelMatrix()));
+	
 	renderer.renderObject(*vertexArray, shader);
 }
 

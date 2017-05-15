@@ -21,6 +21,15 @@ public:
 
 		return model;
 	};
+
+	glm::mat3 getNormalModelMatrix() {
+		glm::mat4 model(1.0f);
+		model = glm::rotate(model, rotation.w, glm::vec3(rotation));
+		model = glm::scale(model, scale);
+		model = glm::inverse(glm::transpose(model));//glm::transpose(glm::inverse(model));
+
+		return glm::mat3(model);
+	};
 };
 
 #endif

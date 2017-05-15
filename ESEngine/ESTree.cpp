@@ -16,7 +16,7 @@ Engine* initEngine();
 int main() {
 	Engine* engine = initEngine();
 	SceneManager* sceneManager = engine->getSceneManager();
-	createCamera(sceneManager, vec3(0.0f, 1.0f, -8.0f), 90, 0);
+	createCamera(sceneManager, vec3(0.0f, 1.0f, 8.0f), -90, 0);
 	Transform* transform;
 
 	GameObject* cube = createColoredCube(sceneManager, vec4(1, 0, 0, 1));
@@ -35,10 +35,16 @@ int main() {
 	transform = getTransform(lampCube);
 	transform->position = vec3(0, 2.0, .0);
 	transform->scale = vec3(.2, .2, .2);
+	PointLight *pLight = (PointLight*)lampCube->getComponent(LIGHT);
 	
 	GameObject* lampCube2 = createLampCube(sceneManager, vec4(1, 1, 1, 1));
 	transform = getTransform(lampCube2);
-	transform->position = vec3(0, -2.0, .0);
+	transform->position = vec3(0, -4.0, .0);
+	transform->scale = vec3(.2, .2, .2);
+
+	GameObject* lampCube3 = createLampCube(sceneManager, vec4(1, 1, 1, 1));
+	transform = getTransform(lampCube3);
+	transform->position = vec3(-2.0, -1.0, 4.0);
 	transform->scale = vec3(.2, .2, .2);
 
 	GameObject* dirLightObject = sceneManager->addGameObject(unique_ptr<GameObject>(new GameObject()));
@@ -77,6 +83,6 @@ GameObject* createLampCube(SceneManager *sceneManager, vec4 color) {
 
 Engine* initEngine() {
 	Engine* engine = new Engine();
-	Window* window = engine->initialize(1920, 1080);
+	Window* window = engine->initialize(800, 600);
 	return engine;
 }

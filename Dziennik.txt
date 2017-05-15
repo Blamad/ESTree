@@ -1,12 +1,13 @@
 //TODO
 - Optymalizacja wysyłania danych oświetletlenia
-- Przeniesienie obliczeń normalnych modelu z shadera do cpu.
+- Implementacja generacji sfery
+
+- Rozpoczęcie prac nad generacją kształtów morfujących (wczesne drzewa)
+
 - Tekstury
 - Cubemap i Skybox
 - cieniowanie?
 - Ładowanie modeli
-
-- Rozpoczęcie prac nad generacją kształtów morfujących (wczesne drzewa)
 
 //DONE
 - Klasa engine i zarządzanie silnikiem
@@ -15,6 +16,7 @@
 - rysowanie i komponent kamery (Renderable, Camera, Transform)
 - UBO do mPV
 - Oświetlenie i materiały jako UBO
+- Przeniesienie obliczeń normalnych modelu z shadera do cpu
 
 14.04.2017
 Zrobiony kontekst, podstawowa architektura. InputManager wtopiony w GLWindow, including loop. 
@@ -69,6 +71,7 @@ Ciężka szkoła nauki komunikacji CPU-GPU. Nauka po 2 dniach kombinowania z UBO
 Inaczej CPU czyta swoje a GPU swoje, wszystko dzięki innym zasadom lokowania danych. std140 po stronie GPU wymusza dzielenie danych na bloki po 4N danych.
 W końcu udało się stworzyć moduł oświetlenia z dynamiczną ilością lamp. Na razie jest oświetlenie punktowe i kierunkowe, na tym chyba na tę chwilę poprzestanę. Ew. można kiedyś rozbudować to o spotlight.
 TODO:
-po co za każdym razem wysyłać cały bufor? Wystarczy update bierzących lamp i indeksów, nie wpadną mi śmieciowe dane.
+po co za każdym razem wysyłać cały bufor? Wystarczy update bieżących lamp i indeksów, nie wpadną mi śmieciowe dane.
 
 14.05
+Zmęczony człek też myśli.. Obliczenia translacji normalnych przeniesione do cpu
