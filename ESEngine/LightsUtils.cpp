@@ -13,7 +13,7 @@ LightsData LightsUtils::extractData(set<shared_ptr<Light>> &pLights, set<shared_
 PointLightData LightsUtils::extractData(PointLight *light) {
 	Transform *transform = (Transform*)light->getComponent(TRANSFORM);
 	PointLightData data;
-	data.position =	vec4(transform->position, 0);
+	data.position =	vec4(transform->getPosition(), 0);
 	data.ambient = vec4(light->ambient, 0);
 	data.specular = vec4(light->specular, 0);
 	data.diffuse =	vec4(light->diffuse, 0);

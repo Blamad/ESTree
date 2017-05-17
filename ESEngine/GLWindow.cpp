@@ -40,7 +40,7 @@ bool GLWindow::initialize()
 
 	//Ustawienie opcji openGLa
 	glEnable(GL_DEPTH_TEST);
-
+	glEnable(GL_CULL_FACE);
 	return true;
 }
 

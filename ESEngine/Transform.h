@@ -7,29 +7,22 @@
 
 class Transform : public Component {
 public:
-	Transform(glm::vec3 position = glm::vec3(.0f, .0f, .0f), glm::vec4 rotation = glm::vec4(1.0f, 1.0f, 1.0f, .0f), glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f)) : position(position), rotation(rotation), scale(scale), Component(TRANSFORM) {};
+	Transform() : Component(TRANSFORM) {};
 	
-	glm::vec3 position;
-	glm::vec4 rotation;
-	glm::vec3 scale;
+	glm::mat4 getModelMatrix();
+	glm::mat3 getNormalModelMatrix();
+	glm::vec3 getPosition();
+	glm::vec3 getScale();
 
-	glm::mat4 getModelMatrix() {
-		glm::mat4 model;
-		model = glm::translate(model, position);
-		model = glm::rotate(model, rotation.w, glm::vec3(rotation));
-		model = glm::scale(model, scale);
+	void rotate(float angle, glm::vec3 axis);
+	void translate(glm::vec3 position);
+	void scale(glm::vec3 scale);
+	void clearRotation();
 
-		return model;
-	};
-
-	glm::mat3 getNormalModelMatrix() {
-		glm::mat4 model(1.0f);
-		model = glm::rotate(model, rotation.w, glm::vec3(rotation));
-		model = glm::scale(model, scale);
-		model = glm::inverse(glm::transpose(model));//glm::transpose(glm::inverse(model));
-
-		return glm::mat3(model);
-	};
+private:
+	glm::vec3 positionVec;
+	glm::mat4 rotationMatrix;
+	glm::vec3 scaleVec = glm::vec3(1, 1, 1);
 };
 
 #endif

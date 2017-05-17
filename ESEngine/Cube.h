@@ -16,7 +16,8 @@ public:
 	Cube(bool any);
 	Cube(vec4 color);
 protected:
-	Vertex createVertex(vec3 position, vec4 color, vec3 normal);
+	Vertex createVertex(vec3 position, vec3 normal, vec4 color);
+	Vertex createVertex(vec3 position, vec3 normal);
 	shared_ptr<Mesh> createMesh(Shader shader);
 	shared_ptr<Mesh> createMesh(Shader shader, vec4 color);
 };

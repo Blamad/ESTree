@@ -29,7 +29,6 @@ struct DirectionalLight {
 in VS_OUT {
   vec3 fragPos;
   vec3 normal;
-  vec3 color;
 } vs_in;
 
 layout (std140, binding = 1) uniform Lights
@@ -55,7 +54,7 @@ void main()
     vec3 normal = normalize(vs_in.normal);
     vec3 viewDir = normalize(lights.viewPos.xyz - vs_in.fragPos);
 
-	vec3 result;
+	vec3 result = vec3(0.0, 0.0, 0.0);
 
 	//Calc diffuse lights
 	for(int i = 0; i < lights.directionalLightsLength; i++)
