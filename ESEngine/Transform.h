@@ -20,7 +20,7 @@ public:
 	void clearRotation();
 
 private:
-	glm::vec3 positionVec;
+	glm::vec3 positionVec = glm::vec3(0, 0, 0);
 	glm::mat4 rotationMatrix;
 	glm::vec3 scaleVec = glm::vec3(1, 1, 1);
 };

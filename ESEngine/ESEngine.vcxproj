@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LampCube.cpp" />
+    <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraBehaviour.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -30,19 +32,23 @@
     <ClCompile Include="GLVertexArray.cpp" />
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="InputState.cpp" />
-    <ClCompile Include="LampCube.cpp" />
     <ClCompile Include="LightsManager.cpp" />
     <ClCompile Include="LightsUtils.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="CubeBehaviour.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="TreeBehaviour.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviour.h" />
+    <ClInclude Include="Split.h" />
+    <ClInclude Include="Stem.h" />
+    <ClInclude Include="LampCube.h" />
+    <ClInclude Include="Segment.h" />
+    <ClInclude Include="Tree.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBehaviour.h" />
     <ClInclude Include="Component.h" />
@@ -54,14 +60,14 @@
     <ClInclude Include="GLVertexArray.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="InputState.h" />
-    <ClInclude Include="LampCube.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightsUtils.h" />
     <ClInclude Include="LightsManager.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="CubeBehaviour.h" />
+    <ClInclude Include="RotationBehaviour.h" />
     <ClInclude Include="PointLight.h" />
+    <ClInclude Include="TreeBehaviour.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="Point2d.h" />
     <ClInclude Include="Renderable.h" />

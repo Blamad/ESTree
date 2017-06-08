@@ -18,10 +18,11 @@ public:
 	vector<Vertex> vertices;
 	vector<int> indices;
 
-	Mesh(vector<Vertex> vertices, vector<int> indices, Shader shader);
+	Mesh(vector<Vertex> &vertices, vector<int> &indices, Shader &shader, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
 	~Mesh();
 
 	void draw(Renderer &renderer);
+	void updateMesh();
 
 private:
 	unique_ptr<VertexArray> vertexArray;

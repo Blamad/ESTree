@@ -41,6 +41,12 @@ bool GLWindow::initialize()
 	//Ustawienie opcji openGLa
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	//Ustawienie koloru czyszczenia ekranu
+	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+
 	return true;
 }
 
@@ -53,7 +59,6 @@ double GLWindow::getTime() {
 }
 
 void GLWindow::prepareFrameRendering() {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

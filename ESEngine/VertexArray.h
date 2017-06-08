@@ -7,6 +7,7 @@
 class VertexArray {
 public:
 	virtual void setVertexArray(const std::vector<Vertex> & vertices, const std::vector<int> & indices) = 0;
+	virtual void updateVertexArray(const std::vector<Vertex> &vertices, const std::vector<int> &indices) = 0;
 };
 
 #endif

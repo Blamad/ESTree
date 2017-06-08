@@ -15,5 +15,8 @@ public:
 
 	static Material cyanPlastic();
 	static Material ruby();
+	static Material obsidian();
+	static Material brass();
+	static Material copper();
 };
 #endif

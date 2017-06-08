@@ -21,7 +21,13 @@ void Mesh::draw(Renderer &renderer) {
 	renderer.renderObject(*vertexArray, shader);
 }
 
-Mesh::Mesh(vector<Vertex> vertices, vector<int> indices, Shader shader) : vertices(vertices), indices(indices), Renderable(shader) {
+Mesh::Mesh(vector<Vertex> &vertices, vector<int> &indices, Shader &shader, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shader) {
+	if (vBufferSize == -1)
+		vBufferSize = vertices.size();
+	if (iBufferSize == -1)
+		iBufferSize = indices.size();
+
+	vertexArray = unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
 	setupMesh();
 }
 
@@ -30,8 +36,11 @@ Mesh::~Mesh() {
 }
 
 void Mesh::setupMesh() {
-	vertexArray = unique_ptr<VertexArray>(new GLVertexArray());
 	vertexArray->setVertexArray(vertices, indices);
 	shader.registerMatriciesUBO();
 	shader.registerLightsUBO();
+}
+
+void Mesh::updateMesh() {
+	vertexArray->updateVertexArray(vertices, indices);
 }

@@ -1,15 +1,18 @@
 #pragma once
-
 #include "Behaviour.h"
 #include "Transform.h"
+#include "Mesh.h"
+
+#include <GLFW\glfw3.h>
 
 using namespace glm;
 
-class CubeBehaviour : public Behaviour {
+class TreeBehaviour : public Behaviour {
 public:
+
 	void update(double dt, InputState &inputState);
+
 private:
-	vec4 baseRotation;
-	double angle = 0;
+	Mesh *mesh = nullptr;
 	Transform *transform = nullptr;
 };
