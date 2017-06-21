@@ -1,6 +1,7 @@
 #ifndef TREE_H
 #define TREE_H
 #include <vector>
+#include <boost/thread/thread.hpp>
 
 #include "Mesh.h"
 #include "Vertex.h"
@@ -9,9 +10,6 @@
 #include "Material.h"
 
 #include "Segment.h"
-#include "Split.h"
-#include "Stem.h"
-
 
 using namespace glm;
 
@@ -21,24 +19,24 @@ public:
 
 protected:
 	shared_ptr<Mesh> mesh;
-	shared_ptr<Stem> root;
+	shared_ptr<Segment> root;
 
 	int vBufferSize = 1000;
 	int iBufferSize = 4000;
 	int segments = 30;
 
-	shared_ptr<Stem> addStem(shared_ptr<Stem> parent, float radius, vec3 center, vec3 rotation);
-	shared_ptr<Split> splitStem(shared_ptr<Stem> parent, float radius, vec3 position, vec3 rotation);
-	//W przyszlosci kazda galaz bedzie musiala miec nowa podstawe, nie ta sama ktora ma split.
-	shared_ptr<Stem> addBranch(shared_ptr<Split> parent, float radius, vec3 position, vec3 rotation);
+	void createMeshComponent();
+
+	void createRoot(float &radius, quat &rotation);
+	void createRing(float &radius, mat4 &transform);
+	shared_ptr<Segment> addSegment(shared_ptr<Segment> parent, float &radius, float &length, quat &rotation);
+	
 	void linkSegmentWithParent(shared_ptr<Segment> segment);
-	void createRing(float radius, vec3 center, quat rotation);
-	void createRoot(float radius, vec3 center);
-
-	void createMesh();
-	void generateTree(vec3 startPos);
-
 	Vertex createVertex(vec3 position, vec3 normal);
+
+	//Parallel ring
+	void createParallelRing(float &radius, mat4 &transform);
+	void computeRingPoint(float &theta, float &radius, mat4 &transform, int &offset, int index);
 };
 
 #endif

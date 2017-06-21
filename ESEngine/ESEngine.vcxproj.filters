@@ -34,20 +34,20 @@
     <Filter Include="TestProject\Header Files">
       <UniqueIdentifier>{16af2619-ce00-499f-8e38-e71d6473da18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TestProject\tree">
-      <UniqueIdentifier>{4c951b2b-3b9b-4c45-be27-4d946b110979}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TestProject\tree\Header Files">
-      <UniqueIdentifier>{b2a49ab2-11c2-44ad-b106-1c3903cc8627}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TestProject\tree\Intefraces">
-      <UniqueIdentifier>{d81c9267-543c-4135-8eda-dab1ccfa6380}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TestProject\tree\Source Files">
-      <UniqueIdentifier>{406a2661-b17b-49bf-902a-ac7603ed4ef1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="TestProject\Source Files">
       <UniqueIdentifier>{0c076b35-875c-49d7-8513-cfa984825fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Tree">
+      <UniqueIdentifier>{4c951b2b-3b9b-4c45-be27-4d946b110979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Tree\Header Files">
+      <UniqueIdentifier>{b2a49ab2-11c2-44ad-b106-1c3903cc8627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Tree\Intefraces">
+      <UniqueIdentifier>{d81c9267-543c-4135-8eda-dab1ccfa6380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Tree\Source Files">
+      <UniqueIdentifier>{406a2661-b17b-49bf-902a-ac7603ed4ef1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,10 +112,13 @@
       <Filter>TestProject\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Tree.cpp">
-      <Filter>TestProject\tree\Source Files</Filter>
+      <Filter>TestProject\Tree\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TreeBehaviour.cpp">
-      <Filter>TestProject\tree\Source Files</Filter>
+      <Filter>TestProject\Tree\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LindenmayerTree.cpp">
+      <Filter>TestProject\Tree\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -210,19 +213,19 @@
       <Filter>TestProject\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tree.h">
-      <Filter>TestProject\tree\Header Files</Filter>
+      <Filter>TestProject\Tree\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TreeBehaviour.h">
-      <Filter>TestProject\tree\Header Files</Filter>
+      <Filter>TestProject\Tree\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Segment.h">
-      <Filter>TestProject\tree\Header Files</Filter>
+      <Filter>TestProject\Tree\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Stem.h">
-      <Filter>TestProject\tree\Header Files</Filter>
+    <ClInclude Include="LindenmayerTree.h">
+      <Filter>TestProject\Tree\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Split.h">
-      <Filter>TestProject\tree\Header Files</Filter>
+    <ClInclude Include="LindenmayerTreeParams.h">
+      <Filter>TestProject\Tree\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

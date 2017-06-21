@@ -18,5 +18,6 @@ public:
 	static Material obsidian();
 	static Material brass();
 	static Material copper();
+	static Material greenRubber();
 };
 #endif

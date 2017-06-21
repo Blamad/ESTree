@@ -44,3 +44,12 @@ Material Material::copper() {
 	material.shininess = 12.8f;
 	return material;
 }
+
+Material Material::greenRubber() {
+	Material material;
+	material.ambient = vec3(0, 0.05, 0);
+	material.diffuse = vec3(0.4, 0.5, 0.4);
+	material.specular = vec3(0.04, 0.7, 0.04);
+	material.shininess = .078125 * 128;
+	return material;
+}
