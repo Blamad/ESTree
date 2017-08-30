@@ -1,6 +1,7 @@
 #pragma once
 #include "Behaviour.h"
 #include "Transform.h"
+#include "RigidBody.h"
 
 using namespace glm;
 
@@ -28,4 +29,5 @@ private:
 	vec4 baseRotation;
 	double angle = 0;
 	Transform *transform = nullptr;
+	RigidBody *rigidBody = nullptr;
 };

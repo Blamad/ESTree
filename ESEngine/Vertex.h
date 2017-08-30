@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <bitset>
 
+using namespace glm;
+
 enum VertexFlag {
 	POSITION, NORMAL, TEXCOORDS, COLOR
 };
@@ -11,11 +13,28 @@ enum VertexFlag {
 struct Vertex {
 
 	std::bitset<4> type;
-	glm::vec3 position;
-	glm::vec3 normal;
-	glm::vec2 texCoords;
-	glm::vec4 color;
+	vec3 position;
+	vec3 normal;
+	vec2 texCoords;
+	vec4 color;
 
+	Vertex copy() {
+		Vertex v;
+		v.type = type;
+		v.position = position;
+		v.normal = normal;
+		v.texCoords = texCoords;
+		v.color = color;
+
+		return v;
+	}
+
+	void transform(mat4 modelMatrix) {
+		vec4 tmpPosition = vec4(position, 1);
+		position = vec3(modelMatrix * tmpPosition);
+		tmpPosition.z = 0;
+		normal = normalize(vec3(modelMatrix * tmpPosition));
+	}
 };
 
 #endif

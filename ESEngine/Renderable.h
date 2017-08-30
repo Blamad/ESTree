@@ -10,7 +10,7 @@ public:
 	Shader shader;
 	virtual void draw(Renderer &renderer) = 0;
 protected:
-	Renderable(Shader &shader) : shader(shader), Component(RENDERABLE) {};
+	Renderable(Shader &shader) : shader(shader), Component(RENDERABLE) { };
 };
 
 #endif

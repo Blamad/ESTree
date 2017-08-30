@@ -2,10 +2,12 @@
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
 layout(location = 2) in vec4 color;
+layout(location = 3) in vec2 texCoords;
 
 out VS_OUT {
   vec3 fragPos;
   vec3 normal;
+  vec2 texCoords;
 } vs_out;
 
 layout (std140, binding = 0) uniform Matricies
@@ -25,4 +27,5 @@ void main()
 
 	vs_out.fragPos = vec3(model * vec4(position, 1.0f));
 	vs_out.normal = normalModel * normal;
+	vs_out.texCoords = texCoords;
 }

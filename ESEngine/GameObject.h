@@ -7,7 +7,8 @@
 #include <memory>
 #include <typeinfo>
 
-#include "Component.h"
+class Component;
+enum ComponentType;
 
 using namespace std;
 typedef boost::uuids::uuid Uuid;
@@ -16,12 +17,13 @@ class GameObject {
 public:
 	GameObject();
 	
+	vector<Component*> getComponents(ComponentType componentType);
 	Component* getComponent(ComponentType componentType);
 	void addComponent(shared_ptr<Component> component);
 
 	Uuid id;
 private:
-	map<ComponentType, shared_ptr<Component>> components;
+	vector<shared_ptr<Component>> components;
 
 	static boost::uuids::random_generator uuidGenerator;
 };

@@ -13,6 +13,7 @@ public:
 	static GLuint lightBlockBinding;
 
 	bool initialized = false;
+	bool active = true;
 	GLuint program;
 	
 	Shader(const GLchar* vertexPath, const GLchar* fragmentPath);

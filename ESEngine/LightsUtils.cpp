@@ -1,12 +1,12 @@
 #include "LightsUtils.h"
 
-LightsData LightsUtils::extractData(set<shared_ptr<Light>> &pLights, set<shared_ptr<Light>> &dLights, glm::vec3 &viewPos) {
+LightsData LightsUtils::extractData(set<Light*> &pLights, set<Light*> &dLights, glm::vec3 &viewPos) {
 	LightsData data;
 	data.viewPos = vec4(viewPos, 0);
 	for (const auto &node : pLights)
-		data.pointData[data.pointLength++] = extractData(((PointLight*)node.get()));
+		data.pointData[data.pointLength++] = extractData(((PointLight*)node));
 	for (const auto &node : dLights)
-		data.directionalData[data.directionalLength++] = extractData(((DirectionalLight*)node.get()));
+		data.directionalData[data.directionalLength++] = extractData(((DirectionalLight*)node));
 	return data;
 }
 

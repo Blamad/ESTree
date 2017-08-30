@@ -15,12 +15,15 @@ public:
 	
 	void addChild(shared_ptr<Segment> child) {
 		children.push_back(child);
-		
 		type = children.size() == 1 ? STEM : SPLIT;
 	}
 
 	shared_ptr<Segment> parent;
 	vector<shared_ptr<Segment>> children;
+
+	bool isLastStem() {
+		return children.empty();
+	}
 
 	SegmentType type;
 

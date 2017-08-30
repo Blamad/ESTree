@@ -4,17 +4,23 @@
 GLuint LightsManager::lightsUBO = 0;
 
 LightsManager::LightsManager() {
-	lights[POINT] = set<shared_ptr<Light>>();
-	lights[SPOT] = set<shared_ptr<Light>>();
-	lights[DIRECTIONAL] = set<shared_ptr<Light>>();
+	lights[POINT] = set<Light*>();
+	lights[SPOT] = set<Light*>();
+	lights[DIRECTIONAL] = set<Light*>();
 }
 
-void LightsManager::addLight(shared_ptr<Light> light) {
+void LightsManager::addLight(Light* light) {
 	lights[light->lightType].insert(light);
 }
 
-void LightsManager::removeLight(shared_ptr<Light> light) {
-	lights[light->lightType].erase(light);
+void LightsManager::removeLight(Light* light) {
+	Light* removedLight;
+	for (auto & l : lights[light->lightType])
+		if (light == l) {
+			removedLight = l;
+			break;
+		}
+	lights[light->lightType].erase(removedLight);
 }
 
 void LightsManager::updateLights(vec3 &viewPos) {

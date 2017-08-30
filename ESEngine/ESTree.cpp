@@ -4,31 +4,34 @@
 #include "LindenmayerTree.h"
 #include "LampCube.h"
 #include "Cube.h"
+#include "InstancedCube.h"
 #include "RotationBehaviour.h"
+#include "RigidBody.h"
 
 using namespace glm;
 
 GameObject* createCamera(SceneManager *sceneManager, vec3 position, float pitch, float yaw);
-GameObject* createLindenmayerTree(SceneManager *sceneManager, LindenmayerTreeParams &params, vec3 &position);
+GameObject* createLindenmayerTree(SceneManager *sceneManager, LindenmayerTreeParams &params, vec3 &position, Material &material = Material::copper());
+GameObject* createLindenmayerTree(SceneManager *sceneManager, string configurationFileName, vec3 &position, Material &material, Material &leavesMaterial);
 
 GameObject* createCube(SceneManager *sceneManager, Material material);
 GameObject* createRotatingCube(SceneManager *sceneManager, Material material);
 
-GameObject* createWhiteLampCube(SceneManager *sceneManager, vec3 position);
+GameObject* createWhiteLampCube(SceneManager *sceneManager, vec3 position, PointLightStrength str);
+GameObject* createWhiteLampCube(SceneManager *sceneManager, vec3 position, vec3 ambient, vec3 specular, vec3 diffuse, float constant, float linear, float quadratic);
 GameObject* createDirectionalLight(SceneManager *sceneManager, vec3 direction);
 
 Transform* getTransform(GameObject *gameObject);
-void createLights(SceneManager *sceneManager);
 void testScene(SceneManager *sceneManager);
 void treeScene(SceneManager *sceneManager);
+void generateTerrain(SceneManager *sceneManager);
 
 Engine* initEngine();
 
 int main() {
-
 	Engine* engine = initEngine();
 	SceneManager* sceneManager = engine->getSceneManager();
-	
+
 	treeScene(sceneManager);
 	//testScene(sceneManager);
 
@@ -42,107 +45,156 @@ int main() {
 void treeScene(SceneManager *sceneManager) {
 	createCamera(sceneManager, vec3(0, 15, -45), 90, -10);
 	GameObject* go;
+	vec3 position;
+	string paramsFileName;
 
-	//2D
+	paramsFileName = "symetricTree.l";
+	position = vec3(-15, 0, -7);
+	go = createLindenmayerTree(sceneManager, paramsFileName, position, Material::bark4(), Material::leaves3());
 
-	LindenmayerTreeParams params = LindenmayerTreeParams("f", 4, 0.5f, 0.2f, 15.0f);
-	params.addRule(Rule("f", "f[+f]f[-f]f", .33));
-	params.addRule(Rule("f", "f[+f]f", .33));
-	params.addRule(Rule("f", "f[-f]f", .34));
-	vec3 position = vec3(-10, 0, -20);
-	go = createLindenmayerTree(sceneManager, params, position);
+	paramsFileName = "advancedTree.l";
+	position = vec3(0, 0, 0);
+	go = createLindenmayerTree(sceneManager, paramsFileName, position, Material::bark2(), Material::leaves1());
 
-	position = vec3(0, 0, -20);
-	go = createLindenmayerTree(sceneManager, params, position);
+	paramsFileName = "randomTree.l";
+	position = vec3(15, 0, -7);
+	go = createLindenmayerTree(sceneManager, paramsFileName, position, Material::bark5(), Material::leaves3());
 
-	params = LindenmayerTreeParams("f", 3, 0.5f, 0.2f, 15.0f);
-	params.addRule(Rule("f", "ff + [+f - f - f] - [-f + f + f]"));
-	position = vec3(10, 0, -20);
-	go = createLindenmayerTree(sceneManager, params, position);
+	generateTerrain(sceneManager);
 
-	//3D
-	
-	params = LindenmayerTreeParams("fffa", 4, 1.5f, 0.4f, 15.0f);
-	params.addRule(Rule("a", "\"[&&fffa][//fffa][\\\\fffa][^^fffa]"));
-	position = vec3(-15, 0, -10); 
-	go = createLindenmayerTree(sceneManager, params, position);
-
-	params = LindenmayerTreeParams("F", 4, 0.8, 0.35f, 7.0f);
-	params.addRule(Rule("F", "\"Y[++++++MF][-----NF][^^^^^OF][&&&&&PF]"));
-	params.addRule(Rule("M", "Z-M"));
-	params.addRule(Rule("N", "Z+N"));
-	params.addRule(Rule("O", "Z&O"));
-	params.addRule(Rule("P", "Z^P"));
-	params.addRule(Rule("Y", "Z-ZY+"));
-	params.addRule(Rule("Z", "ZZ"));
-	position = vec3(-5, 0, -10);
-	go = createLindenmayerTree(sceneManager, params, position);
-
-	params = LindenmayerTreeParams("fffa", 4, 1.5f, 0.4f, 15.0f);
-	params.addRule(Rule("a", "\"[&&fffa][//fffa][\\\\fffa][^^fffa]", .33));
-	params.addRule(Rule("a", "\"[\\\\fffa][//ffa]", .33));
-	params.addRule(Rule("a", "\"[&&ffa][^^fffa]", .34));
-	position = vec3(5, 0, -10);
-	go = createLindenmayerTree(sceneManager, params, position);
-
-	params = LindenmayerTreeParams("f", 3, 0.5f, 0.2f, 15.0f);
-	params.addRule(Rule("f", "ff + [+f - f - f] - [-f + f + f]", .5));
-	params.addRule(Rule("f", "ff^ [^f &f &f] &[&f ^f ^f]", .5));
-	position = vec3(15, 0, -10);
-	go = createLindenmayerTree(sceneManager, params, position);
-
-	createWhiteLampCube(sceneManager, vec3(0, 20, -15));
+	//Light
+	createWhiteLampCube(sceneManager, vec3(-15, 20, 0), MEDIUM);
+	createWhiteLampCube(sceneManager, vec3(15, 20, 0), MEDIUM);
+	createWhiteLampCube(sceneManager, vec3(0, -5, 0), WEAK);
 	createDirectionalLight(sceneManager, vec3(0, -1, -1));
 
-	go = createCube(sceneManager, Material::greenRubber());
-	Transform *transform = getTransform(go);
-	transform->translate(vec3(0, 0, -10));
-	transform->scale(vec3(30, 0.3, 30));
 }
 
-GameObject* createLindenmayerTree(SceneManager *sceneManager, LindenmayerTreeParams &params, vec3 &position) {
-	GameObject* go = sceneManager->addGameObject(unique_ptr<GameObject>(new LindenmayerTree(params)));
+GameObject* createLindenmayerTree(SceneManager *sceneManager, LindenmayerTreeParams &params, vec3 &position, Material &material) {
+	GameObject* go = sceneManager->addGameObject(unique_ptr<GameObject>(new LindenmayerTree(params, material)));
 	Transform *transform = getTransform(go);
 	transform->translate(position);
+	((LindenmayerTree*)go)->generate();
+	return go;
+}
+
+GameObject* createLindenmayerTree(SceneManager *sceneManager, string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial) {
+	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
+	GameObject* go = sceneManager->addGameObject(unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial)));
+	Transform *transform = getTransform(go);
+	transform->translate(position);
+	((LindenmayerTree*)go)->generate();
 	return go;
 }
 
 void testScene(SceneManager *sceneManager) {
-	createCamera(sceneManager, vec3(8, 3, 8), -140, -10);
+	createCamera(sceneManager, vec3(0, 5, -12), 90, -10);
 	Transform* transform;
-	GameObject* go;
+	shared_ptr<RigidBody> rigidBody;
 
-	go = createRotatingCube(sceneManager, Material::brass());
-	transform = getTransform(go);
-	transform->translate(vec3(-8, 2, 0));
+	/*unique_ptr<GameObject> go(new Cube(Material::stem1()));
+	transform = getTransform(go.get());
+	transform->translate(vec3(0, 1, 0));
+	go->addComponent(shared_ptr<Behaviour>(new RotationBehaviour()));
+	rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	go->addComponent(rigidBody);
+	rigidBody->initAsBox(0, vec3(1, 1, 1));
+	sceneManager->addGameObject(move(go));
 
-	go = createRotatingCube(sceneManager, Material::ruby());
-	transform = getTransform(go);
-	transform->translate(vec3(-12, 2, 0));
+	go = unique_ptr<GameObject>(new Cube(Material::container()));
+	transform = getTransform(go.get());
+	transform->translate(vec3(0, 6, -2));
+	transform->rotate(45.0f, vec3(1, 1, 1));
+	rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	go->addComponent(rigidBody);
+	rigidBody->initAsBox(1, vec3(1, 1, 1));
+	sceneManager->addGameObject(move(go));
 
-	/*go = createCube(sceneManager, Material::obsidian());
-	transform = getTransform(go);
-	transform->translate(vec3(0, 0, 0));
-	transform->scale(vec3(20, 0.1, 20));*/
+	go = unique_ptr<GameObject>(new Cube(Material::container()));
+	transform = getTransform(go.get());
+	transform->translate(vec3(0, 10, 0));
+	transform->rotate(45.0f, vec3(1, 1, 1));
+	rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	go->addComponent(rigidBody);
+	rigidBody->initAsBox(1, vec3(1, 1, 1));
+	sceneManager->addGameObject(move(go));
 
-	createLights(sceneManager);
+	go = unique_ptr<GameObject>(new Cube(Material::ruby()));
+	transform = getTransform(go.get());
+	transform->translate(vec3(5, 12, 2));
+	transform->rotate(45.0f, vec3(1, 1, 1));
+	rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	go->addComponent(rigidBody);
+	rigidBody->initAsBox(1, vec3(1, 1, 1));
+	sceneManager->addGameObject(move(go));
+
+	go = unique_ptr<GameObject>(new Cube(Material::container()));
+	transform = getTransform(go.get());
+	transform->translate(vec3(1, 6, 1));
+	transform->rotate(45.0f, vec3(1, 1, 1));
+	rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	go->addComponent(rigidBody);
+	rigidBody->initAsBox(1, vec3(1, 1, 1));
+	sceneManager->addGameObject(move(go));*/
+	vector<InstancedTransform> transforms;
+	InstancedTransform it;
+	it.translateModel(vec3(0, 1, 0));
+	it.generateNormalModelMatrix();
+	transforms.push_back(it);
+
+	unique_ptr<InstancedCube> ic(new InstancedCube(Material::leaves2(), transforms));
+	sceneManager->addGameObject(move(ic));
+
+	unique_ptr<GameObject> go(new Cube(Material::leaves2()));
+	transform = getTransform(go.get());
+	transform->translate(vec3(0, 1, 0));
+	sceneManager->addGameObject(move(go));
+
+	//generateTerrain(sceneManager);
+
+	//Light
+	int distance = 15;
+	int height = 15;
+
+	createWhiteLampCube(sceneManager, vec3(distance, height, distance), vec3(0.05f, 0.05f, 0.05f), vec3(1,1,1), vec3(1,1,1), 1, 0.022, 0.0019);
+	createWhiteLampCube(sceneManager, vec3(-distance, height, distance), vec3(0.05f, 0.05f, 0.05f), vec3(1,1,1), vec3(1,1,1), 1, 0.022, 0.0019);
+	createWhiteLampCube(sceneManager, vec3(distance, height, -distance), vec3(0.05f, 0.05f, 0.05f), vec3(1,1,1), vec3(1,1,1), 1, 0.022, 0.0019);
+	createWhiteLampCube(sceneManager, vec3(-distance, height, -distance), vec3(0.05f, 0.05f, 0.05f), vec3(1,1,1), vec3(1,1,1), 1, 0.022, 0.0019);
+	createDirectionalLight(sceneManager, vec3(0, -1, 0));
 }
 
-void createLights(SceneManager *sceneManager) {
-	createWhiteLampCube(sceneManager, vec3(0, 4.0, .0));
-	createWhiteLampCube(sceneManager, vec3(0, -2.0, .0));
-	createWhiteLampCube(sceneManager, vec3(-2.0, 1.0, 4.0));
-	createWhiteLampCube(sceneManager, vec3(14.0, 4.0, -14.0));
-	createDirectionalLight(sceneManager, vec3(-0.2f, -1.0f, -0.3f));
+void generateTerrain(SceneManager* sceneManager) {
+	Transform* transform;
+	shared_ptr<RigidBody> rigidBody;
+	unique_ptr<GameObject> go;
+
+	int segmentSize = 6;
+	int segWidth = 6;
+	int segHeight = 6;
+
+	int segPosX = -1 * segmentSize * segWidth;
+	int segPosZ = -1 * segmentSize * segHeight;
+
+	for (int i = 0; i < segWidth; i++) {
+		for (int j = 0; j < segHeight; j++) {
+			go = unique_ptr<GameObject>(new Cube(Material::grass()));
+			transform = getTransform(go.get());
+			transform->translate(vec3(segPosX + segmentSize * i * 2, 0, segPosZ + segmentSize * j * 2));
+			transform->scale(vec3(segmentSize, 0.1, segmentSize));
+			rigidBody = shared_ptr<RigidBody>(new RigidBody());
+			go->addComponent(rigidBody);
+			rigidBody->initAsBox(0, transform->getScale());
+			sceneManager->addGameObject(move(go));
+		}
+	}
 }
 
 GameObject* createDirectionalLight(SceneManager *sceneManager, vec3 directory) {
-	GameObject* dirLightObject = sceneManager->addGameObject(unique_ptr<GameObject>(new GameObject()));
-	dirLightObject->addComponent(sceneManager->createDirectionalLight());
-	DirectionalLight *light = (DirectionalLight*)dirLightObject->getComponent(LIGHT);
+	unique_ptr<GameObject> go(new GameObject());
+	go->addComponent(shared_ptr<DirectionalLight>(new DirectionalLight()));
+	DirectionalLight *light = (DirectionalLight*)go->getComponent(LIGHT);
 	light->directory = directory;
-
-	return dirLightObject;
+	return sceneManager->addGameObject(move(go));
 }
 
 Transform* getTransform(GameObject* gameObject) {
@@ -164,14 +216,25 @@ GameObject* createRotatingCube(SceneManager *sceneManager, Material material) {
 	return go;
 }
 
-GameObject* createWhiteLampCube(SceneManager *sceneManager,  vec3 position) {
+GameObject* createWhiteLampCube(SceneManager *sceneManager, vec3 position, PointLightStrength str) {
 	vec4 color = vec4(1, 1, 1, 1);
-	GameObject* go = sceneManager->addGameObject(unique_ptr<GameObject>(new LampCube(color)));
-	go->addComponent(sceneManager->createPointLight());
-	Transform* transform = getTransform(go);
+	unique_ptr<GameObject> go(new LampCube(color));
+	go->addComponent(shared_ptr<PointLight>(new PointLight(str)));
+	Transform* transform = getTransform(go.get());
 	transform->translate(position);
-	transform->scale(vec3(.2, .2, .2));
-	return go;
+	transform->scale(vec3(.4, .4, .4));
+	return sceneManager->addGameObject(move(go));
+}
+
+GameObject* createWhiteLampCube(SceneManager *sceneManager, vec3 position, vec3 ambient, vec3 specular, vec3 diffuse, float constant, float linear, float quadratic) {
+	vec4 color = vec4(1, 1, 1, 1);
+	unique_ptr<GameObject> go(new LampCube(color));
+	go->addComponent(shared_ptr<PointLight>(new PointLight(constant, linear, quadratic, ambient, diffuse, specular)));
+	Transform* transform = getTransform(go.get());
+	transform->translate(position);
+	transform->scale(vec3(.4, .4, .4));
+	
+	return sceneManager->addGameObject(move(go));
 }
 
 Engine* initEngine() {

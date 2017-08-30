@@ -19,12 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CubeMap.cpp" />
+    <ClCompile Include="InstancedMesh.cpp" />
+    <ClCompile Include="InstancedCube.cpp" />
+    <ClCompile Include="LindenmayerTreeParams.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="TextureBuffer.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="LampCube.cpp" />
     <ClCompile Include="LindenmayerTree.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraBehaviour.cpp" />
-    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="ESTree.cpp" />
@@ -45,10 +53,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviour.h" />
+    <ClInclude Include="CubeMap.h" />
+    <ClInclude Include="InstancedCube.h" />
+    <ClInclude Include="InstancedMesh.h" />
+    <ClInclude Include="InstancedTransform.h" />
     <ClInclude Include="LindenmayerTree.h" />
     <ClInclude Include="LampCube.h" />
     <ClInclude Include="LindenmayerTreeParams.h" />
+    <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Segment.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Texture2D.h" />
+    <ClInclude Include="TextureBuffer.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBehaviour.h" />
@@ -81,10 +99,36 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="advancedTree.l" />
     <None Include="GenericShader.frag" />
     <None Include="GenericShader.vert" />
+    <None Include="InstancedShader.frag" />
+    <None Include="InstancedShader.vert" />
     <None Include="LampShader.frag" />
     <None Include="LampShader.vert" />
+    <None Include="MeshWiringShader.frag" />
+    <None Include="MeshWiringShader.geom" />
+    <None Include="MeshWiringShader.vert" />
+    <None Include="randomTree.l" />
+    <None Include="symetricTree.l" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="barkTexture1.jpg" />
+    <Image Include="barkTexture2.jpg" />
+    <Image Include="barkTexture3.jpg" />
+    <Image Include="barkTexture4.jpg" />
+    <Image Include="barkTexture5.jpg" />
+    <Image Include="container_d.jpg" />
+    <Image Include="container_s.jpg" />
+    <Image Include="grassTexture.jpeg" />
+    <Image Include="grassTexture.jpg" />
+    <Image Include="leaves1.png" />
+    <Image Include="leaves2.png" />
+    <Image Include="leaves3.png" />
+    <Image Include="stem1.png" />
+    <Image Include="stem2.png" />
+    <Image Include="treeTexture1.jpg" />
+    <Image Include="treeTexture2.jpg" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -138,12 +182,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(BOOST_LIB)\Includes;$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(BULLET_LIB)\Libs;$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
-    <LibraryPath>$(OPENGL_LIB)\Libs;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(BULLET_LIB)\Libs;$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -151,9 +195,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;libboost_thread-vc140-mt-gd-1_64.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;glew32s.lib;glfw3.lib;libboost_thread-vc140-mt-gd-1_64.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -170,11 +216,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

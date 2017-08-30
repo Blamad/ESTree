@@ -8,16 +8,25 @@ GameObject::GameObject() {
 	addComponent(shared_ptr<Transform>(new Transform()));
 }
 
-Component* GameObject::getComponent(ComponentType type) {
-	map<ComponentType, shared_ptr<Component>>::iterator it = components.find(type);
-	Component *comp = nullptr;
-	if (it != components.end())
-		comp = it->second.get();
+vector<Component*> GameObject::getComponents(ComponentType type) {
+	vector<Component*> filteredComponents;
+	for (auto & comp : components) {
+		if(comp->type == type)
+			filteredComponents.push_back(comp.get());
+	}
+	return filteredComponents;
+}
 
-	return comp;
+Component* GameObject::getComponent(ComponentType type) {
+	Component* component = nullptr;
+	for (auto & comp : components) {
+		if (comp->type == type)
+			component = comp.get();
+	}
+	return component;
 }
 
 void GameObject::addComponent(shared_ptr<Component> component) {
 	component->setParent(*this);
-	components[component->type] = component;
+	components.push_back(component);
 }

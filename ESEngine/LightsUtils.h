@@ -41,7 +41,7 @@ struct LightsData {
 
 class LightsUtils {
 public:
-	static LightsData extractData(set<shared_ptr<Light>> &pLights, set<shared_ptr<Light>> &dLights, glm::vec3 &viewPos);
+	static LightsData extractData(set<Light*> &pLights, set<Light*> &dLights, glm::vec3 &viewPos);
 private:
 	static PointLightData extractData(PointLight *light);
 	static DirectionalLightData extractData(DirectionalLight *light);

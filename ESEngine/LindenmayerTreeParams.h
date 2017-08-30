@@ -3,6 +3,11 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <fstream>
+#include <iostream>
+
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/classification.hpp>
 
 using namespace std;
 
@@ -19,20 +24,19 @@ public:
 	LindenmayerTreeParams(string axiom, int depth, float initialLength = 1.0f, float initialRadius = 1.0f, float defaultAngle = 15.0f)
 		: axiom(axiom), depth(depth), initialLength(initialLength), initialRadius(initialRadius), angle(radians(defaultAngle)) { };
 
+	LindenmayerTreeParams(string filePath);
+
 	string axiom;
 	int depth;
 	float initialLength;
 	float initialRadius;
 	float angle;
 
-	void addRule(Rule &rule) {
-		rules[rule.symbol].push_back(rule);
-	}
-
-	vector<Rule> getRules(string &symbol) {
-		return rules[symbol];
-	}
+	void addRule(Rule &rule);
+	vector<Rule> getRules(string &symbol);
+	double radians(double angle);
 
 protected:
 	map<string, vector<Rule>> rules;
+	vector<string> split(string lane);
 };

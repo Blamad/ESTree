@@ -9,6 +9,7 @@
 #include "InputState.h"
 #include "Renderer.h"
 #include "LightsManager.h"
+#include "PhysicsManager.h"
 
 #include "Renderable.h"
 #include "Behaviour.h"
@@ -24,7 +25,6 @@ public:
 	void renderFrame(Renderer &renderer);
 
 	GameObject* addGameObject(unique_ptr<GameObject> go);
-	Light* addLight(shared_ptr<Light> light);
 	GameObject* createGameObject();
 	void removeGameObject(GameObject *gameObject);
 
@@ -33,6 +33,7 @@ public:
 private:
 	Camera *activeCamera;
 	unique_ptr<LightsManager> lightsManager;
+	unique_ptr<PhysicsManager> physicsManager;
 	std::map<Uuid, unique_ptr<GameObject>> gameObjects;
 };
 

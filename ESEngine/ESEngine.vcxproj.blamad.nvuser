@@ -8,4 +8,7 @@
             </Property.Value>
         </Property>
     </SettingsPointModel>
+    <SettingsPointModel DefinitionId="4ae4108e-96a4-491d-99d1-3697cd027eb7" DisplayName="Shader Compilation">
+        <Property Name="GlobalIncludes" Value="D:\Workspace\Visual Studio 2015\Projects\ESTree" />
+    </SettingsPointModel>
 </ProjectSettingsModel>

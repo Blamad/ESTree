@@ -14,6 +14,7 @@ public:
 	Cube(Material material);
 
 protected:
+	Vertex createVertex(vec3 position, vec3 normal, vec2 texCoords);
 	Vertex createVertex(vec3 position, vec3 normal, vec4 color);
 	Vertex createVertex(vec3 position, vec3 normal);
 	shared_ptr<Mesh> createMesh(Shader shader);

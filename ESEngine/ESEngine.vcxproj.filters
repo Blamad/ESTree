@@ -49,6 +49,12 @@
     <Filter Include="TestProject\Tree\Source Files">
       <UniqueIdentifier>{406a2661-b17b-49bf-902a-ac7603ed4ef1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TestProject\Textures">
+      <UniqueIdentifier>{3e99ae6e-7e4f-4d90-bde9-aa27cef42cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Tree Models">
+      <UniqueIdentifier>{373f0f8f-f53f-477a-a919-33c5bc5e8347}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -87,9 +93,6 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Engine\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CameraBehaviour.cpp">
       <Filter>Engine\Source Files</Filter>
     </ClCompile>
@@ -118,6 +121,33 @@
       <Filter>TestProject\Tree\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LindenmayerTree.cpp">
+      <Filter>TestProject\Tree\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeMap.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureBuffer.cpp">
+      <Filter>GraphicEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsManager.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InstancedMesh.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InstancedCube.cpp">
+      <Filter>TestProject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LindenmayerTreeParams.cpp">
       <Filter>TestProject\Tree\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -227,6 +257,36 @@
     <ClInclude Include="LindenmayerTreeParams.h">
       <Filter>TestProject\Tree\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeMap.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureBuffer.h">
+      <Filter>GraphicEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsManager.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedMesh.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedCube.h">
+      <Filter>TestProject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedTransform.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="GenericShader.vert">
@@ -241,5 +301,79 @@
     <None Include="LampShader.vert">
       <Filter>TestProject\Shaders</Filter>
     </None>
+    <None Include="InstancedShader.frag">
+      <Filter>TestProject\Shaders</Filter>
+    </None>
+    <None Include="InstancedShader.vert">
+      <Filter>TestProject\Shaders</Filter>
+    </None>
+    <None Include="randomTree.l">
+      <Filter>TestProject\Tree Models</Filter>
+    </None>
+    <None Include="advancedTree.l">
+      <Filter>TestProject\Tree Models</Filter>
+    </None>
+    <None Include="symetricTree.l">
+      <Filter>TestProject\Tree Models</Filter>
+    </None>
+    <None Include="MeshWiringShader.vert">
+      <Filter>TestProject\Shaders</Filter>
+    </None>
+    <None Include="MeshWiringShader.frag">
+      <Filter>TestProject\Shaders</Filter>
+    </None>
+    <None Include="MeshWiringShader.geom">
+      <Filter>TestProject\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="container_d.jpg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="container_s.jpg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="treeTexture1.jpg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="treeTexture2.jpg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="grassTexture.jpg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="leaves1.png">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="stem1.png">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="stem2.png">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="barkTexture1.jpg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="barkTexture2.jpg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="barkTexture3.jpg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="barkTexture4.jpg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="barkTexture5.jpg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="grassTexture.jpeg">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="leaves2.png">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
+    <Image Include="leaves3.png">
+      <Filter>TestProject\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

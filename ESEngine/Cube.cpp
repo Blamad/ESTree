@@ -7,6 +7,18 @@ Cube::Cube(Material material) : GameObject() {
 	addComponent(mesh);
 };
 
+Vertex Cube::createVertex(vec3 position, vec3 normal, vec2 texCoords) {
+	Vertex vert;
+	vert.position = position;
+	vert.normal = normal;
+	vert.texCoords = texCoords;
+	vert.type[POSITION] = 1;
+	vert.type[NORMAL] = 1;
+	vert.type[TEXCOORDS] = 1;
+
+	return vert;
+}
+
 Vertex Cube::createVertex(vec3 position, vec3 normal, vec4 color) {
 	Vertex vert;
 	vert.position = position;
@@ -40,35 +52,35 @@ shared_ptr<Mesh> Cube::createMesh(Shader shader) {
 
 	vector<Vertex> vertices = {
 		//front
-		createVertex(vec3(1.0f, -1.0f, 1.0f),	vec3(0.0f, 0.0f, 1.0f)),
-		createVertex(vec3(1.0f, 1.0f, 1.0f),	vec3(0.0f, 0.0f, 1.0f)),
-		createVertex(vec3(-1.0f, 1.0f, 1.0f),	vec3(0.0f, 0.0f, 1.0f)),
-		createVertex(vec3(-1.0f, -1.0f, 1.0f),	vec3(0.0f, 0.0f, 1.0f)),
+		createVertex(vec3( 1.0f, -1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 0)),
+		createVertex(vec3( 1.0f,  1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 1)),
+		createVertex(vec3(-1.0f,  1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 1)),
+		createVertex(vec3(-1.0f, -1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 0)),
 		//back
-		createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(0.0f, 0.0f, -1.0f)),
-		createVertex(vec3(-1.0f, 1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f)),
-		createVertex(vec3(1.0f, 1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f)),
-		createVertex(vec3(1.0f, -1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f)),
+		createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(0.0f, 0.0f, -1.0f),	vec2(0, 0)),
+		createVertex(vec3(-1.0f,  1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(0, 1)),
+		createVertex(vec3( 1.0f,  1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 1)),
+		createVertex(vec3( 1.0f, -1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 0)),
 		//left
-		createVertex(vec3(-1.0f, -1.0f, 1.0f),	vec3(-1.0f, 0.0f, 0.0f)),
-		createVertex(vec3(-1.0f, 1.0f, 1.0f),	vec3(-1.0f, 0.0f, 0.0f)),
-		createVertex(vec3(-1.0f, 1.0f, -1.0f),	vec3(-1.0f, 0.0f, 0.0f)),
-		createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(-1.0f, 0.0f, 0.0f)),
+		createVertex(vec3(-1.0f, -1.0f,  1.0f),	vec3(-1.0f, 0.0f, 0.0f),	vec2(0, 1)),
+		createVertex(vec3(-1.0f,  1.0f,  1.0f),	vec3(-1.0f, 0.0f, 0.0f),	vec2(1, 1)),
+		createVertex(vec3(-1.0f,  1.0f, -1.0f),	vec3(-1.0f, 0.0f, 0.0f),	vec2(1, 0)),
+		createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(-1.0f, 0.0f, 0.0f),	vec2(0, 0)),
 		//right
-		createVertex(vec3(1.0f, -1.0f, -1.0f),	vec3(1.0f, 0.0f, 0.0f)),
-		createVertex(vec3(1.0f, 1.0f, -1.0f),	vec3(1.0f, 0.0f, 0.0f)),
-		createVertex(vec3(1.0f, 1.0f, 1.0f),	vec3(1.0f, 0.0f, 0.0f)),
-		createVertex(vec3(1.0f, -1.0f, 1.0f),	vec3(1.0f, 0.0f, 0.0f)),
+		createVertex(vec3(1.0f, -1.0f, -1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(0, 0)),
+		createVertex(vec3(1.0f,  1.0f, -1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(1, 0)),
+		createVertex(vec3(1.0f,  1.0f,  1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(1, 1)),
+		createVertex(vec3(1.0f, -1.0f,  1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(0, 1)),
 		//top
-		createVertex(vec3(1.0f, 1.0f, 1.0f),	vec3(0.0f, 1.0f, 0.0f)),
-		createVertex(vec3(1.0f, 1.0f, -1.0f),	vec3(0.0f, 1.0f, 0.0f)),
-		createVertex(vec3(-1.0f, 1.0f, -1.0f),	vec3(0.0f, 1.0f, 0.0f)),
-		createVertex(vec3(-1.0f, 1.0f, 1.0f),	vec3(0.0f, 1.0f, 0.0f)),
+		createVertex(vec3( 1.0f, 1.0f,  1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(1, 1)),
+		createVertex(vec3( 1.0f, 1.0f, -1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(1, 0)),
+		createVertex(vec3(-1.0f, 1.0f, -1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(0, 0)),
+		createVertex(vec3(-1.0f, 1.0f,  1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(0, 1)),
 		//bottom
-		createVertex(vec3(-1.0f, -1.0f, 1.0f),	vec3(0.0f, -1.0f, 0.0f)),
-		createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(0.0f, -1.0f, 0.0f)),
-		createVertex(vec3(1.0f, -1.0f, -1.0f),	vec3(0.0f, -1.0f, 0.0f)),
-		createVertex(vec3(1.0f, -1.0f, 1.0f),	vec3(0.0f, -1.0f, 0.0f)),
+		createVertex(vec3(-1.0f, -1.0f,  1.0f),	vec3(0.0f, -1.0f, 0.0f),	vec2(0, 1)),
+		createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(0.0f, -1.0f, 0.0f),	vec2(0, 0)),
+		createVertex(vec3( 1.0f, -1.0f, -1.0f),	vec3(0.0f, -1.0f, 0.0f),	vec2(1, 0)),
+		createVertex(vec3( 1.0f, -1.0f,  1.0f),	vec3(0.0f, -1.0f, 0.0f),	vec2(1, 1)),
 	};
 
 	vector<int> indices = {
