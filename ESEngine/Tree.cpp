@@ -74,7 +74,7 @@ void Tree::createRing(float &radius, mat4 &transform) {
 		vec3 position = vec3(transform * tmpPosition);
 		tmpPosition.z = 0;
 		vec3 normal = normalize(vec3(transform * tmpPosition));
-		
+
 		//output verticies
 		mesh->vertices.push_back(createVertex(position, normal));
 	}
@@ -92,7 +92,7 @@ void Tree::createParallelRing(float &radius, mat4 &transform) {
 	group.join_all();
 }
 
-void Tree::computeRingPoint(float &theta, float &radius, mat4 &transform, int &offset, int index) {
+void Tree::computeRingPoint(float &theta, float &radius, mat4 &transform, int &offset, int &index) {
 	float sin = sinf(theta*index);
 	float cos = cosf(theta*index);
 
@@ -128,7 +128,7 @@ shared_ptr<Segment> Tree::addSegment(shared_ptr<Segment> parent, float &radius, 
 	if (rotation.w != 1)
 		transform = transform * mat4_cast(rotation);
 	transform = translate(transform, vec3(0, length, 0));
-	
+
 
 	shared_ptr<Segment> stem = shared_ptr<Segment>(new Segment(parent));
 	stem->indiciesOffset = mesh->indices.size();
@@ -149,7 +149,7 @@ void Tree::createTexturedRoot(float &radius, quat &rotation) {
 	if (rotation.w != 1)
 		transform = transform * mat4_cast(rotation);
 
-	float theta = 2 * 3.1415926 / float(segments-1);
+	float theta = 2 * 3.1415926 / float(segments - 1);
 	float c = cosf(theta);
 	float s = sinf(theta);
 	float t;
@@ -187,14 +187,15 @@ shared_ptr<Segment> Tree::createSegment(shared_ptr<Segment> parent, float &radiu
 	transform = translate(transform, vec3(0, length, 0));
 
 	//Create textured bottom ring:
-	float textureStep = 1.0f/segments;
+	float textureStep = 1.0f / segments;
 	//Copy end of last segment
 	for (int i = 0; i < segments; i++)
 	{
 		if (parent->parent == nullptr) {
 			mesh->vertices[parent->verticiesOffset + i].texCoords.x = i*textureStep;
 			mesh->vertices[parent->verticiesOffset + i].texCoords.y = 0;
-		} else {
+		}
+		else {
 			Vertex v = mesh->vertices[parent->verticiesOffset + i].copy();
 			v.texCoords.x = i*textureStep;
 			v.texCoords.y = 0;
@@ -209,7 +210,7 @@ shared_ptr<Segment> Tree::createSegment(shared_ptr<Segment> parent, float &radiu
 	stem->radius = radius;
 	stem->segments = segments;
 
-	float theta = 2 * 3.1415926 / float(segments-1);
+	float theta = 2 * 3.1415926 / float(segments - 1);
 	float c = cosf(theta);
 	float s = sinf(theta);
 	float t;
@@ -237,7 +238,7 @@ shared_ptr<Segment> Tree::createSegment(shared_ptr<Segment> parent, float &radiu
 	//Link two rings
 	int bottomOffset = mesh->vertices.size() - 2 * segments;
 	int topOffset = bottomOffset + segments;
-	for (int i = 0; i < segments-1; i++) {
+	for (int i = 0; i < segments - 1; i++) {
 		mesh->indices.push_back(bottomOffset + i);
 		mesh->indices.push_back(topOffset + i);
 		mesh->indices.push_back(bottomOffset + i + 1);

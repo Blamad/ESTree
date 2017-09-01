@@ -35,13 +35,19 @@ LindenmayerTreeParams::LindenmayerTreeParams(string filePath) {
 				vector<string> splitLane = split(lane);
 
 				string symbol = splitLane[0];
+				int allowedDepth = 0;
+				if (symbol.length() > 1) {
+					allowedDepth = atoi(symbol.substr(2, symbol.length() - 2).c_str());
+					symbol = symbol.substr(0, 1);
+				}
+
 				string replacement = splitLane[1];
 				double probability = 1.0;
 
 				if (splitLane.size() == 3)
 					probability = atof(splitLane[2].c_str());
 
-				addRule(Rule(symbol, replacement, probability));
+				addRule(Rule(symbol, replacement, probability, allowedDepth));
 			}
 
 			parsedLineCounter++;

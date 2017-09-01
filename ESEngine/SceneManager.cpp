@@ -27,3 +27,8 @@ GameObject* SceneManager::createCamera(glm::vec3 position, float yaw, float pitc
 
 	return go;
 }
+
+Scene* SceneManager::setActiveScene(shared_ptr<Scene> scene) {
+	currentScene = scene;
+	return currentScene.get();
+}

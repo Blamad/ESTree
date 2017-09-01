@@ -33,8 +33,6 @@ public:
 	static Material leaves1();
 	static Material leaves2();
 	static Material leaves3();
-	static Material stem1();
-	static Material stem2();
 	static Material bark1();
 	static Material bark2();
 	static Material bark3();

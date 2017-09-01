@@ -17,6 +17,7 @@ public:
 	GLuint program;
 	
 	Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
+	Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath);
 
 	void registerAttribute(const char* attrib);
 	void registerUniform(const char* uniform);

@@ -13,8 +13,9 @@ using namespace std;
 
 class Rule {
 public:
-	Rule(string symbol, string replacement, float probability = 1.0f) : symbol(symbol), replacement(replacement), probability(probability) { };
+	Rule(string symbol, string replacement, float probability = 1.0f, int allowedDepth = 0) : symbol(symbol), replacement(replacement), probability(probability), allowedDepth(allowedDepth) { };
 	string symbol;
+	int allowedDepth;
 	string replacement;
 	float probability;
 };

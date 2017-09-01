@@ -23,8 +23,10 @@
     <ClCompile Include="InstancedMesh.cpp" />
     <ClCompile Include="InstancedCube.cpp" />
     <ClCompile Include="LindenmayerTreeParams.cpp" />
+    <ClCompile Include="LTree.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TextureBuffer.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -50,6 +52,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TreeBehaviour.cpp" />
+    <ClCompile Include="TreeScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviour.h" />
@@ -60,9 +63,11 @@
     <ClInclude Include="LindenmayerTree.h" />
     <ClInclude Include="LampCube.h" />
     <ClInclude Include="LindenmayerTreeParams.h" />
+    <ClInclude Include="LTree.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Segment.h" />
+    <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureBuffer.h" />
@@ -87,6 +92,7 @@
     <ClInclude Include="RotationBehaviour.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="TreeBehaviour.h" />
+    <ClInclude Include="TreeScene.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="Point2d.h" />
     <ClInclude Include="Renderable.h" />
@@ -100,6 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="advancedTree.l" />
+    <None Include="advancedTree2.l" />
+    <None Include="advancedTree3.l" />
+    <None Include="fibbonacciTree.l" />
     <None Include="GenericShader.frag" />
     <None Include="GenericShader.vert" />
     <None Include="InstancedShader.frag" />
@@ -111,6 +120,7 @@
     <None Include="MeshWiringShader.vert" />
     <None Include="randomTree.l" />
     <None Include="symetricTree.l" />
+    <None Include="willow.l" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="barkTexture1.jpg" />
@@ -125,8 +135,8 @@
     <Image Include="leaves1.png" />
     <Image Include="leaves2.png" />
     <Image Include="leaves3.png" />
-    <Image Include="stem1.png" />
-    <Image Include="stem2.png" />
+    <Image Include="leaves4.png" />
+    <Image Include="leaves5.png" />
     <Image Include="treeTexture1.jpg" />
     <Image Include="treeTexture2.jpg" />
   </ItemGroup>

@@ -9,6 +9,15 @@ enum SegmentType {
 	STEM, SPLIT
 };
 
+class SegmentTransform {
+public:
+	SegmentTransform(quat &rotation, float length, float radius, float lengthScale) : rotation(rotation), length(length), radius(radius), lengthScale(lengthScale) {};
+	quat rotation;
+	float length;
+	float lengthScale;
+	float radius;
+};
+
 class Segment {
 public:
 	Segment(shared_ptr<Segment> parent = nullptr) : parent(parent) { };

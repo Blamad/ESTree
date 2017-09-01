@@ -104,20 +104,6 @@ Material Material::leaves3() {
 	return material;
 }
 
-Material Material::stem1() {
-	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("stem1.png", DIFFUSE);
-	material.shininess = 64.0f;
-	return material;
-}
-
-Material Material::stem2() {
-	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("stem2.png", DIFFUSE);
-	material.shininess = 64.0f;
-	return material;
-}
-
 Material Material::bark1() {
 	Material material;
 	material.texDiffuse = TextureManager::getInstance().createTexture("barkTexture1.jpg", DIFFUSE);
@@ -153,7 +139,7 @@ Material Material::bark5() {
 	return material;
 }
 
-static Material diffuseTextureOnly(string fileName) {
+Material Material::diffuseTextureOnly(string fileName) {
 	Material material;
 	material.texDiffuse = TextureManager::getInstance().createTexture(fileName, DIFFUSE);
 	material.shininess = 64.0f;

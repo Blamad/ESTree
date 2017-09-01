@@ -9,14 +9,6 @@
 #include "InstancedMesh.h"
 #include "LindenmayerTreeParams.h"
 
-class SegmentTransform {
-public:
-	SegmentTransform(quat &rotation, float length, float radius) : rotation(rotation), length(length), radius(radius) {};
-	quat rotation;
-	float length;
-	float radius;
-};
-
 class LindenmayerTree : public Tree {
 public: 
 	LindenmayerTree(LindenmayerTreeParams &params, Material &material = Material::copper(), Material &leavesMaterial = Material::leaves2());
@@ -31,12 +23,13 @@ private:
 	
 	static boost::variate_generator<boost::mt19937, boost::uniform_real<>> randomGenerator;
 
-	void generateTree();
 	void generateTexturedTree();
+	float getNumericParameter(string product, int index);
+	float returnNewIndexAfterParameter(string product, int index);
+	float toRadians(float angle);
 
 	void generateProduct();
-	string parseRule(string &symbol);
-	void generateMesh();
+	string parseRule(string &symbol, int &depth);
 	void generateTexturedMesh();
 
 	void generateInstancedLeaves();

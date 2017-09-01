@@ -1,39 +1,45 @@
 #include "InstancedMesh.h"
+#include <boost/foreach.hpp>
 
 void InstancedMesh::draw(Renderer &renderer) {
-	GLuint program = shader.program;
-	shader.use();
+	BOOST_FOREACH(Shader shader, shaders) {
+		if (!shader.active)
+			continue;
 
-	if (!initialized) {
-		glUniform3fv(glGetUniformLocation(program, "material.ambient"), 1, glm::value_ptr(material.ambient));
-		glUniform3fv(glGetUniformLocation(program, "material.diffuse"), 1, glm::value_ptr(material.diffuse));
-		glUniform3fv(glGetUniformLocation(program, "material.specular"), 1, glm::value_ptr(material.specular));
-		glUniform1f(glGetUniformLocation(program, "material.shininess"), material.shininess);
-		glUniform1f(glGetUniformLocation(program, "material.texDiffuse"), 0);
-		glUniform1f(glGetUniformLocation(program, "material.texSpecular"), 1);
-		initialized = true;
-	}
+		GLuint program = shader.program;
+		shader.use();
 
-	if (material.texDiffuse != nullptr) {
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, material.texDiffuse->textureBuffer->id);
-	}
+		if (!initialized) {
+			glUniform3fv(glGetUniformLocation(program, "material.ambient"), 1, glm::value_ptr(material.ambient));
+			glUniform3fv(glGetUniformLocation(program, "material.diffuse"), 1, glm::value_ptr(material.diffuse));
+			glUniform3fv(glGetUniformLocation(program, "material.specular"), 1, glm::value_ptr(material.specular));
+			glUniform1f(glGetUniformLocation(program, "material.shininess"), material.shininess);
+			glUniform1f(glGetUniformLocation(program, "material.texDiffuse"), 0);
+			glUniform1f(glGetUniformLocation(program, "material.texSpecular"), 1);
+			initialized = true;
+		}
 
-	if (material.texSpecular != nullptr) {
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, material.texSpecular->textureBuffer->id);
-	}
-	int numberOfInstances = instanceMatricies.size();
-	renderer.renderInstancedObject(*vertexArray, shader, numberOfInstances);
+		if (material.texDiffuse != nullptr) {
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, material.texDiffuse->textureBuffer->id);
+		}
 
-	if (material.texDiffuse != nullptr) {
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
+		if (material.texSpecular != nullptr) {
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, material.texSpecular->textureBuffer->id);
+		}
+		int numberOfInstances = instanceMatricies.size();
+		renderer.renderInstancedObject(*vertexArray, shader, numberOfInstances);
 
-	if (material.texSpecular != nullptr) {
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		if (material.texDiffuse != nullptr) {
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+
+		if (material.texSpecular != nullptr) {
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 	}
 }
 
@@ -59,12 +65,15 @@ void InstancedMesh::addInstance(InstancedTransform instancedTransform) {
 	instanceMatricies.push_back(instancedTransform);
 }
 
-void InstancedMesh::setupMesh() {
-	vertexArray->setInstancedVertexArray(vertices, indices, instanceMatricies);
-	shader.registerMatriciesUBO();
-	shader.registerLightsUBO();
-}
-
 void InstancedMesh::updateMesh() {
 	vertexArray->updateInstancedVertexArray(vertices, indices, instanceMatricies);
+}
+
+void InstancedMesh::setupMesh()
+{
+	BOOST_FOREACH(Shader shader, shaders) {
+		vertexArray->setInstancedVertexArray(vertices, indices, instanceMatricies);
+		shader.registerMatriciesUBO();
+		shader.registerLightsUBO();
+	}
 }

@@ -38,7 +38,7 @@ protected:
 
 	//Parallel ring
 	void createParallelRing(float &radius, mat4 &transform);
-	void computeRingPoint(float &theta, float &radius, mat4 &transform, int &offset, int index);
+	void computeRingPoint(float &theta, float &radius, mat4 &transform, int &offset, int &index);
 
 	//Textured segments
 	void createTexturedRoot(float &radius, quat &rotation);

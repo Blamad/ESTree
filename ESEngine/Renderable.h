@@ -5,12 +5,22 @@
 #include "Renderer.h"
 #include "Shader.h"
 
+#include <boost/foreach.hpp>
+
 class Renderable : public Component {
 public:
-	Shader shader;
+	vector<Shader> shaders;
 	virtual void draw(Renderer &renderer) = 0;
 protected:
-	Renderable(Shader &shader) : shader(shader), Component(RENDERABLE) { };
+	Renderable(Shader &shader) : Component(RENDERABLE) {
+		this->shaders.push_back(shader);
+	};
+
+	Renderable(vector<Shader> &shaders) : Component(RENDERABLE) {
+		BOOST_FOREACH(Shader shader, shaders) {
+			this->shaders.push_back(shader);
+		}
+	};
 };
 
 #endif

@@ -4,7 +4,7 @@
 0.5
 7
 F
-F "Y[++++++MF][-----NF][^^^^^OF][&&&&&PF]
+F "Y[++++++MF][-----NF][^^^^^OF][vvvvvPF]
 M Z-M
 N Z+N
 O Z&O

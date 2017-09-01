@@ -28,32 +28,47 @@
     <Filter Include="TestProject">
       <UniqueIdentifier>{7bddaace-8f0d-406a-93e2-ba58b9d8dd41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TestProject\Shaders">
+    <Filter Include="TestProject\Models">
+      <UniqueIdentifier>{a895d2ed-ea64-4d9a-8c8f-eed444c8c2b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Scenes">
+      <UniqueIdentifier>{08aa546b-1f19-464e-aff8-c03a808a7a27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Models\Shaders">
       <UniqueIdentifier>{0a6b81c6-dd50-46af-bc78-3e6fb7247145}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TestProject\Header Files">
-      <UniqueIdentifier>{16af2619-ce00-499f-8e38-e71d6473da18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TestProject\Source Files">
-      <UniqueIdentifier>{0c076b35-875c-49d7-8513-cfa984825fa2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TestProject\Tree">
+    <Filter Include="TestProject\Models\Trees">
       <UniqueIdentifier>{4c951b2b-3b9b-4c45-be27-4d946b110979}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TestProject\Tree\Header Files">
+    <Filter Include="TestProject\Models\Trees\Header Files">
       <UniqueIdentifier>{b2a49ab2-11c2-44ad-b106-1c3903cc8627}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TestProject\Tree\Intefraces">
-      <UniqueIdentifier>{d81c9267-543c-4135-8eda-dab1ccfa6380}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TestProject\Tree\Source Files">
+    <Filter Include="TestProject\Models\Trees\Source Files">
       <UniqueIdentifier>{406a2661-b17b-49bf-902a-ac7603ed4ef1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TestProject\Textures">
+    <Filter Include="TestProject\Models\Trees\Tree Models">
+      <UniqueIdentifier>{373f0f8f-f53f-477a-a919-33c5bc5e8347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Models\Trees\Textures">
+      <UniqueIdentifier>{0ee4301b-13f2-4113-82f6-e81d7320104e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Models\General">
+      <UniqueIdentifier>{83715dbc-74da-4e5d-8501-a3a7ff3c3974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Models\General\Header Files">
+      <UniqueIdentifier>{16af2619-ce00-499f-8e38-e71d6473da18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Models\General\Source Files">
+      <UniqueIdentifier>{0c076b35-875c-49d7-8513-cfa984825fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Models\General\Textures">
       <UniqueIdentifier>{3e99ae6e-7e4f-4d90-bde9-aa27cef42cf3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TestProject\Tree Models">
-      <UniqueIdentifier>{373f0f8f-f53f-477a-a919-33c5bc5e8347}</UniqueIdentifier>
+    <Filter Include="TestProject\Scenes\Source Files">
+      <UniqueIdentifier>{b1f6bbdf-8163-4916-baec-bfe1bd442630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Scenes\Header Files">
+      <UniqueIdentifier>{389cab42-a262-46c1-b207-33e47cae06a5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +112,7 @@
       <Filter>Engine\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
-      <Filter>TestProject\Source Files</Filter>
+      <Filter>TestProject\Models\General\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LightsManager.cpp">
       <Filter>Engine\Source Files</Filter>
@@ -112,16 +127,16 @@
       <Filter>Engine\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LampCube.cpp">
-      <Filter>TestProject\Source Files</Filter>
+      <Filter>TestProject\Models\General\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Tree.cpp">
-      <Filter>TestProject\Tree\Source Files</Filter>
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TreeBehaviour.cpp">
-      <Filter>TestProject\Tree\Source Files</Filter>
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LindenmayerTree.cpp">
-      <Filter>TestProject\Tree\Source Files</Filter>
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Engine\Source Files</Filter>
@@ -145,10 +160,19 @@
       <Filter>Engine\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InstancedCube.cpp">
-      <Filter>TestProject\Source Files</Filter>
+      <Filter>TestProject\Models\General\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LindenmayerTreeParams.cpp">
-      <Filter>TestProject\Tree\Source Files</Filter>
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeScene.cpp">
+      <Filter>TestProject\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>TestProject\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LTree.cpp">
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,7 +240,7 @@
       <Filter>Engine\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>TestProject\Header Files</Filter>
+      <Filter>TestProject\Models\General\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>Engine\Header Files</Filter>
@@ -237,25 +261,25 @@
       <Filter>Engine\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RotationBehaviour.h">
-      <Filter>TestProject\Header Files</Filter>
+      <Filter>TestProject\Models\General\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LampCube.h">
-      <Filter>TestProject\Header Files</Filter>
+      <Filter>TestProject\Models\General\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tree.h">
-      <Filter>TestProject\Tree\Header Files</Filter>
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TreeBehaviour.h">
-      <Filter>TestProject\Tree\Header Files</Filter>
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Segment.h">
-      <Filter>TestProject\Tree\Header Files</Filter>
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LindenmayerTree.h">
-      <Filter>TestProject\Tree\Header Files</Filter>
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LindenmayerTreeParams.h">
-      <Filter>TestProject\Tree\Header Files</Filter>
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Engine\Header Files</Filter>
@@ -282,98 +306,119 @@
       <Filter>Engine\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InstancedCube.h">
-      <Filter>TestProject\Header Files</Filter>
+      <Filter>TestProject\Models\General\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InstancedTransform.h">
       <Filter>Engine\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TreeScene.h">
+      <Filter>TestProject\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>TestProject\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LTree.h">
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="GenericShader.vert">
-      <Filter>TestProject\Shaders</Filter>
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="GenericShader.frag">
-      <Filter>TestProject\Shaders</Filter>
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="LampShader.frag">
-      <Filter>TestProject\Shaders</Filter>
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="LampShader.vert">
-      <Filter>TestProject\Shaders</Filter>
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="InstancedShader.frag">
-      <Filter>TestProject\Shaders</Filter>
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="InstancedShader.vert">
-      <Filter>TestProject\Shaders</Filter>
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="randomTree.l">
-      <Filter>TestProject\Tree Models</Filter>
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
     </None>
     <None Include="advancedTree.l">
-      <Filter>TestProject\Tree Models</Filter>
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
     </None>
     <None Include="symetricTree.l">
-      <Filter>TestProject\Tree Models</Filter>
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
     </None>
     <None Include="MeshWiringShader.vert">
-      <Filter>TestProject\Shaders</Filter>
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="MeshWiringShader.frag">
-      <Filter>TestProject\Shaders</Filter>
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="MeshWiringShader.geom">
-      <Filter>TestProject\Shaders</Filter>
+      <Filter>TestProject\Models\Shaders</Filter>
+    </None>
+    <None Include="willow.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="advancedTree2.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="advancedTree3.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="fibbonacciTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="container_d.jpg">
-      <Filter>TestProject\Textures</Filter>
+      <Filter>TestProject\Models\General\Textures</Filter>
     </Image>
     <Image Include="container_s.jpg">
-      <Filter>TestProject\Textures</Filter>
-    </Image>
-    <Image Include="treeTexture1.jpg">
-      <Filter>TestProject\Textures</Filter>
-    </Image>
-    <Image Include="treeTexture2.jpg">
-      <Filter>TestProject\Textures</Filter>
-    </Image>
-    <Image Include="grassTexture.jpg">
-      <Filter>TestProject\Textures</Filter>
-    </Image>
-    <Image Include="leaves1.png">
-      <Filter>TestProject\Textures</Filter>
-    </Image>
-    <Image Include="stem1.png">
-      <Filter>TestProject\Textures</Filter>
-    </Image>
-    <Image Include="stem2.png">
-      <Filter>TestProject\Textures</Filter>
+      <Filter>TestProject\Models\General\Textures</Filter>
     </Image>
     <Image Include="barkTexture1.jpg">
-      <Filter>TestProject\Textures</Filter>
+      <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
     <Image Include="barkTexture2.jpg">
-      <Filter>TestProject\Textures</Filter>
+      <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
     <Image Include="barkTexture3.jpg">
-      <Filter>TestProject\Textures</Filter>
+      <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
     <Image Include="barkTexture4.jpg">
-      <Filter>TestProject\Textures</Filter>
+      <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
     <Image Include="barkTexture5.jpg">
-      <Filter>TestProject\Textures</Filter>
+      <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
     <Image Include="grassTexture.jpeg">
-      <Filter>TestProject\Textures</Filter>
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="grassTexture.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="leaves1.png">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
     <Image Include="leaves2.png">
-      <Filter>TestProject\Textures</Filter>
+      <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
     <Image Include="leaves3.png">
-      <Filter>TestProject\Textures</Filter>
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="treeTexture1.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="treeTexture2.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="leaves5.png">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="leaves4.png">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
   </ItemGroup>
 </Project>

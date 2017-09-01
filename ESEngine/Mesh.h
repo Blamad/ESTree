@@ -23,6 +23,7 @@ public:
 
 	Mesh(Shader &shader, int bufferUsage = GL_STATIC_DRAW) : bufferUsage(bufferUsage), Renderable(shader) {};
 	Mesh(vector<Vertex> &vertices, vector<int> &indices, Shader &shader, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
+	Mesh(vector<Vertex> &vertices, vector<int> &indices, vector<Shader> &shaders, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
 	~Mesh();
 
 	void draw(Renderer &renderer);
@@ -33,7 +34,8 @@ protected:
 	int bufferUsage = GL_STATIC_DRAW;
 	unique_ptr<VertexArray> vertexArray;
 
-	void setupMesh();
+	void setupMeshes();
+	void setupMesh(Shader &shader);
 };
 
 #endif
