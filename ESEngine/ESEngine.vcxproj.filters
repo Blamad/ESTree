@@ -129,13 +129,7 @@
     <ClCompile Include="LampCube.cpp">
       <Filter>TestProject\Models\General\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tree.cpp">
-      <Filter>TestProject\Models\Trees\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TreeBehaviour.cpp">
-      <Filter>TestProject\Models\Trees\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LindenmayerTree.cpp">
       <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
@@ -171,7 +165,7 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>TestProject\Scenes\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LTree.cpp">
+    <ClCompile Include="LindenmayerTree.cpp">
       <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -266,16 +260,10 @@
     <ClInclude Include="LampCube.h">
       <Filter>TestProject\Models\General\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tree.h">
-      <Filter>TestProject\Models\Trees\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TreeBehaviour.h">
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Segment.h">
-      <Filter>TestProject\Models\Trees\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LindenmayerTree.h">
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LindenmayerTreeParams.h">
@@ -317,7 +305,7 @@
     <ClInclude Include="TestScene.h">
       <Filter>TestProject\Scenes\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LTree.h">
+    <ClInclude Include="LindenmayerTree.h">
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -368,6 +356,9 @@
       <Filter>TestProject\Models\Trees\Tree Models</Filter>
     </None>
     <None Include="fibbonacciTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="test.l">
       <Filter>TestProject\Models\Trees\Tree Models</Filter>
     </None>
   </ItemGroup>

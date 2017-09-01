@@ -23,7 +23,7 @@
     <ClCompile Include="InstancedMesh.cpp" />
     <ClCompile Include="InstancedCube.cpp" />
     <ClCompile Include="LindenmayerTreeParams.cpp" />
-    <ClCompile Include="LTree.cpp" />
+    <ClCompile Include="LindenmayerTree.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="TestScene.cpp" />
@@ -31,8 +31,6 @@
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="LampCube.cpp" />
-    <ClCompile Include="LindenmayerTree.cpp" />
-    <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraBehaviour.cpp" />
     <ClCompile Include="Cube.cpp" />
@@ -60,10 +58,9 @@
     <ClInclude Include="InstancedCube.h" />
     <ClInclude Include="InstancedMesh.h" />
     <ClInclude Include="InstancedTransform.h" />
-    <ClInclude Include="LindenmayerTree.h" />
     <ClInclude Include="LampCube.h" />
     <ClInclude Include="LindenmayerTreeParams.h" />
-    <ClInclude Include="LTree.h" />
+    <ClInclude Include="LindenmayerTree.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Segment.h" />
@@ -72,7 +69,6 @@
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureBuffer.h" />
     <ClInclude Include="TextureManager.h" />
-    <ClInclude Include="Tree.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBehaviour.h" />
     <ClInclude Include="Component.h" />
@@ -120,6 +116,7 @@
     <None Include="MeshWiringShader.vert" />
     <None Include="randomTree.l" />
     <None Include="symetricTree.l" />
+    <None Include="test.l" />
     <None Include="willow.l" />
   </ItemGroup>
   <ItemGroup>

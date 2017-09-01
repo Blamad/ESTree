@@ -1,21 +1,29 @@
 #include "LindenmayerTree.h"
 
-#include <boost/foreach.hpp>
-
 boost::variate_generator<boost::mt19937, boost::uniform_real<> > LindenmayerTree::randomGenerator(boost::mt19937(time(0)), boost::uniform_real<>(0, 1));
 
-LindenmayerTree::LindenmayerTree(LindenmayerTreeParams &params, Material &material, Material &leavesMaterial) : params(params), leavesMaterial(leavesMaterial), Tree(material) {
+LindenmayerTree::LindenmayerTree(LindenmayerTreeParams &params, Material &material, Material &leavesMaterial, bool useMeshWiring) : params(params), material(material), leavesMaterial(leavesMaterial), meshWiring(useMeshWiring), GameObject() {
 	this->vBufferSize = 100000;
 	this->iBufferSize = 4000000;
 	this->segments = 10;
+	this->textureXStep = 1.0f / (segments - 1);
 }
 
 void LindenmayerTree::generate() {
 	createMeshComponent();
-	generateTexturedTree();
+	generateTree();
 }
 
-void LindenmayerTree::generateProduct() {
+void LindenmayerTree::generateTree() {
+	generateMeshSkeleton();
+	generateMeshData();
+	generateInstancedLeaves();
+	cout << "Vert: " << mesh->vertices.size() << "\nInd:" << mesh->indices.size() << "\nTris:" << mesh->indices.size() / 3 << endl;
+}
+
+//PARSING L DATA
+
+void LindenmayerTree::generateMeshSkeleton() {
 
 	product = params.axiom;
 
@@ -57,7 +65,45 @@ string LindenmayerTree::parseRule(string &symbol, int &depth) {
 	return symbol;
 }
 
-void LindenmayerTree::generateTexturedMesh() {
+float LindenmayerTree::getNumericParameter(string product, int index) {
+	float value = -1;
+
+	if (product.length() > (index + 1) && product.at(index + 1) == '(') {
+		int offset = 0;
+		while (product.length() > (index + offset) && product.at(index + offset) != ')')
+			offset++;
+		value = atof(product.substr(index + 2, offset - 2).c_str());
+	}
+	return value;
+}
+
+float LindenmayerTree::returnNewIndexAfterParameter(string product, int index) {
+	int endIndex = index;
+	while (product.at(endIndex) != ')')
+		endIndex++;
+	return endIndex;
+}
+
+//MESH AND VERTICES STUFF
+
+void LindenmayerTree::createMeshComponent() {
+	vector<Vertex> v;
+	vector<int> i;
+
+	v.reserve(vBufferSize);
+	i.reserve(iBufferSize);
+
+	vector<Shader> shaders;
+	shaders.push_back(Shader("GenericShader.vert", "GenericShader.frag"));
+	//if (meshWiring)
+		shaders.push_back(Shader("MeshWiringShader.vert", "MeshWiringShader.frag", "MeshWiringShader.geom"));
+
+	mesh = shared_ptr<Mesh>(new Mesh(v, i, shaders, vBufferSize, iBufferSize, GL_STREAM_DRAW));
+	mesh->material = material;
+	addComponent(mesh);
+}
+
+void LindenmayerTree::generateMeshData() {
 
 	//Translate results of generation to mesh
 	stack<shared_ptr<Segment>> segmentStack;
@@ -67,8 +113,8 @@ void LindenmayerTree::generateTexturedMesh() {
 
 	float customParameter = -1;
 
-	SegmentTransform transform = SegmentTransform(quat(), params.initialLength, params.initialRadius, 1);
-	createTexturedRoot(transform.radius, transform.rotation);
+	SegmentTransform transform = SegmentTransform(quat(), params.initialLength, params.initialRadius, 1, 0);
+	createRoot(transform);
 	currentSegment = root;
 	segmentsVec.push_back(currentSegment);
 
@@ -77,7 +123,7 @@ void LindenmayerTree::generateTexturedMesh() {
 		switch (character) {
 		case '[':
 			segmentStack.push(currentSegment);
-			transformStack.push(SegmentTransform(transform.rotation, transform.length, transform.radius, transform.lengthScale));
+			transformStack.push(SegmentTransform(transform.rotation, transform.length, transform.radius, transform.lengthScale, transform.yawRotation));
 			break;
 		case ']':
 			currentSegment = segmentStack.top();
@@ -138,6 +184,7 @@ void LindenmayerTree::generateTexturedMesh() {
 				customParameter = toRadians(customParameter);
 			}
 
+			transform.yawRotation += customParameter;
 			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));
 			break;
 		case 'v': //pitch down
@@ -149,6 +196,7 @@ void LindenmayerTree::generateTexturedMesh() {
 				customParameter = toRadians(customParameter);
 			}
 
+			transform.yawRotation -= customParameter;
 			transform.rotation *= angleAxis(-customParameter, vec3(0, 1, 0));
 			break;
 		case '\"': //scale down
@@ -178,48 +226,143 @@ void LindenmayerTree::generateTexturedMesh() {
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = transform.length;
-			else
+			else {
 				i = returnNewIndexAfterParameter(product, i);
-			float lengthAfterScaling = transform.lengthScale * customParameter;
+				customParameter *= transform.lengthScale;
+			}
 
-			currentSegment = createSegment(currentSegment, transform.radius, lengthAfterScaling, transform.rotation);
+			transform.length = customParameter;
+			currentSegment = createSegment(currentSegment, transform);
 			segmentsVec.push_back(currentSegment);
-			transform = SegmentTransform(quat(), customParameter, transform.radius, transform.lengthScale);
+			transform = SegmentTransform(quat(), transform.length, transform.radius, transform.lengthScale, transform.yawRotation);
 			break;
 		}
 	}
+	//TODO usun to pozniej!
+	generateVertices();
 	mesh->updateMesh();
 }
 
-float LindenmayerTree::getNumericParameter(string product, int index) {
-	float value = -1;
+void LindenmayerTree::createRoot(SegmentTransform &transform) {
+	mat4 segmentMatrix = mat4();
+	if (transform.rotation.w != 1)
+		segmentMatrix = segmentMatrix * mat4_cast(transform.rotation);
 
-	if (product.length() > (index + 1) && product.at(index + 1) == '(') {
-		int offset = 0;
-		while (product.length() > (index + offset) && product.at(index + offset) != ')')
-			offset++;
-		value = atof(product.substr(index + 2, offset - 2).c_str());
+	root = shared_ptr<Segment>(new Segment());
+	root->indiciesOffset = 0;
+	root->verticiesOffset = 0;
+	root->radius = transform.radius;
+	root->segments = 0;
+	root->modelMatrix = segmentMatrix;
+}
+
+Vertex LindenmayerTree::createVertex(vec3 position, vec3 normal, vec2 texCoords) {
+	Vertex vert;
+	vert.position = position;
+	vert.normal = normal;
+	vert.texCoords = texCoords;
+	vert.type[POSITION] = 1;
+	vert.type[NORMAL] = 1;
+	vert.type[TEXCOORDS] = 1;
+
+	return vert;
+}
+
+shared_ptr<Segment> LindenmayerTree::createSegment(shared_ptr<Segment> parent, SegmentTransform &segTransform) {
+	mat4 segmentMatrix = mat4();
+	if (segTransform.rotation.w != 1)
+		segmentMatrix = segmentMatrix * mat4_cast(segTransform.rotation);
+	segmentMatrix = translate(segmentMatrix, vec3(0, segTransform.length, 0));
+
+	//Create textured bottom ring and rotate it to match top ring rotation:
+	float yaw = segTransform.yawRotation - parent->yawRotation;
+	
+	mat4 alignmentTransform = parent->modelMatrix * mat4_cast(quat(vec3(0, yaw, 0)));
+	enqueueGenerationData(parent->radius, alignmentTransform, 0);
+
+	shared_ptr<Segment> stem = shared_ptr<Segment>(new Segment(parent));
+	stem->indiciesOffset = mesh->indices.size();
+	stem->verticiesOffset = mesh->vertices.size();
+	stem->modelMatrix = parent->modelMatrix * segmentMatrix;
+	stem->radius = segTransform.radius;
+	stem->segments = segments;
+	stem->yawRotation = segTransform.yawRotation;
+
+	//Create top ring:
+	enqueueGenerationData(stem->radius, stem->modelMatrix, 1);
+
+	//Link two rings
+	int bottomOffset = mesh->vertices.size() - 2 * segments;
+	int topOffset = bottomOffset + segments;
+	for (int i = 0; i < segments - 1; i++) {
+		mesh->indices.push_back(bottomOffset + i);
+		mesh->indices.push_back(topOffset + i);
+		mesh->indices.push_back(bottomOffset + i + 1);
+
+		mesh->indices.push_back(topOffset + i);
+		mesh->indices.push_back(topOffset + i + 1);
+		mesh->indices.push_back(bottomOffset + i + 1);
 	}
-	return value;
+
+	parent->addChild(stem);
+
+	return stem;
 }
 
-float LindenmayerTree::returnNewIndexAfterParameter(string product, int index) {
-	int endIndex = index;
-	while (product.at(endIndex) != ')')
-		endIndex++;
-	return endIndex;
+//PARALLEL RING COMPUTATIONS
+
+void LindenmayerTree::enqueueGenerationData(float &radius, mat4 &transform, int textureY) {
+	float theta = 2 * pi<float>() / float(segments - 1);
+	int verticesOffset = mesh->vertices.size();
+
+	for (int j = 0; j < segments; j++) {
+		mesh->vertices.push_back(Vertex());
+		threadGenerationData.push_back(VertexGenerationAttributes(verticesOffset, j, theta, radius, transform, textureY));
+	}
 }
 
-float LindenmayerTree::toRadians(float angle) {
-	return (angle * 3.14159265359) / 180;
+void LindenmayerTree::generateVertices() {
+	int coresAvailable = boost::thread::hardware_concurrency();
+	int numberOfVerticesPerCore = threadGenerationData.size() / coresAvailable;
+
+	boost::thread_group group;
+	for (int j = 0; j < coresAvailable - 1; j++) 
+		group.create_thread(boost::bind(&LindenmayerTree::computeRingPoint, this, numberOfVerticesPerCore*j, numberOfVerticesPerCore*(j+1)));
+	group.create_thread(boost::bind(&LindenmayerTree::computeRingPoint, this, numberOfVerticesPerCore*(coresAvailable - 1), threadGenerationData.size()));
+	group.join_all();
 }
 
-void LindenmayerTree::generateTexturedTree() {
-	generateProduct();
-	generateTexturedMesh();
-	generateInstancedLeaves();
-	cout << "Vert: " << mesh->vertices.size() << "\nInd:" << mesh->indices.size() << "\nTris:" << mesh->indices.size() / 3 << endl;
+void LindenmayerTree::computeRingPoint(int startIndex, int endIndex) {
+
+	float arg, sin, cos;
+	vec4 tmpPosition;
+	vec3 position, normal;
+	Vertex *vert;
+	VertexGenerationAttributes *vga;
+
+	for (int i = startIndex; i < endIndex; i++) {
+		vga = &threadGenerationData[i];
+		arg = vga->theta*vga->vertexNumber;
+		sin = sinf(arg) / 2;
+		cos = cosf(arg) / 2;
+
+		tmpPosition = vec4(vga->radius * cos, 0, vga->radius * sin, 1);
+		position = vec3(vga->transform * tmpPosition);
+		tmpPosition.z = 0;
+		normal = normalize(vec3(vga->transform * tmpPosition));
+
+		//output verticies
+		vert = &mesh->vertices[vga->verticesOffset + vga->vertexNumber];
+		vert->position = position;
+		vert->normal = normal;
+		vert->texCoords = vec2(textureXStep * vga->vertexNumber, vga->textureY);
+		vert->type[POSITION] = 1;
+		vert->type[NORMAL] = 1;
+		vert->type[TEXCOORDS] = 1;
+	}
 }
+
+// LEAVES
 
 void LindenmayerTree::generateInstancedLeaves() {
 	Transform *transform = (Transform*)getComponent(TRANSFORM);

@@ -8,12 +8,17 @@ void TreeScene::initialize() {
 	vec3 position;
 	string paramsFileName;
 
+	paramsFileName = "test.l";
+	position = vec3(0, 0, -15);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves3());
+
 	paramsFileName = "fibbonacciTree.l";
 	position = vec3(-15, 0, -15);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves3());
 
+	paramsFileName = "randomTree.l";
 	position = vec3(15, 0, -15);
-	go = createLTree(paramsFileName, position, Material::bark5(), Material::leaves3());
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves3());
 
 	/*paramsFileName = "randomTree.l";
 	position = vec3(15, 0, -15);
@@ -38,15 +43,6 @@ void TreeScene::initialize() {
 	createWhiteLampCube(vec3(15, 20, 0), MEDIUM);
 	createWhiteLampCube(vec3(0, -5, 0), WEAK);
 	createDirectionalLight(vec3(0, -1, -1));
-}
-
-GameObject* TreeScene::createLTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial) {
-	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
-	GameObject* go = addGameObject(unique_ptr<GameObject>(new LTree(params, material, leavesMaterial)));
-	Transform *transform = getTransform(go);
-	transform->translate(position);
-	((LTree*)go)->generate();
-	return go;
 }
 
 GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial) {

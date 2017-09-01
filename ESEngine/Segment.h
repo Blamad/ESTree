@@ -1,7 +1,11 @@
 #ifndef SEGMENT_H
 #define SEGMENT_H
 
-#include <GLM\glm.hpp>
+#include <vector>
+#include <memory>
+
+#include <GLM/glm.hpp>
+#include <GLM/gtc/quaternion.hpp>
 
 using namespace std;
 
@@ -11,11 +15,13 @@ enum SegmentType {
 
 class SegmentTransform {
 public:
-	SegmentTransform(quat &rotation, float length, float radius, float lengthScale) : rotation(rotation), length(length), radius(radius), lengthScale(lengthScale) {};
-	quat rotation;
+	SegmentTransform(glm::quat &rotation, float length, float radius, float lengthScale, float yawRotation = 0) : rotation(rotation), length(length), radius(radius), lengthScale(lengthScale), yawRotation(yawRotation) {};
 	float length;
 	float lengthScale;
 	float radius;
+	
+	glm::quat rotation;
+	float yawRotation;
 };
 
 class Segment {
@@ -50,6 +56,8 @@ public:
 
 	//Transform matrix
 	glm::mat4 modelMatrix;
+
+	float yawRotation;
 };
 
 #endif
