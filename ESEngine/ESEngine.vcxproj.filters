@@ -168,6 +168,9 @@
     <ClCompile Include="LindenmayerTree.cpp">
       <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -308,6 +311,9 @@
     <ClInclude Include="LindenmayerTree.h">
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="GenericShader.vert">
@@ -346,19 +352,25 @@
     <None Include="MeshWiringShader.geom">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="willow.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
     <None Include="advancedTree2.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="advancedTree3.l">
       <Filter>TestProject\Models\Trees\Tree Models</Filter>
     </None>
     <None Include="fibbonacciTree.l">
       <Filter>TestProject\Models\Trees\Tree Models</Filter>
     </None>
     <None Include="test.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="testX.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="testY.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="testZ.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="randomTree2.l">
       <Filter>TestProject\Models\Trees\Tree Models</Filter>
     </None>
   </ItemGroup>

@@ -15,13 +15,13 @@ enum SegmentType {
 
 class SegmentTransform {
 public:
-	SegmentTransform(glm::quat &rotation, float length, float radius, float lengthScale, float yawRotation = 0) : rotation(rotation), length(length), radius(radius), lengthScale(lengthScale), yawRotation(yawRotation) {};
+	SegmentTransform(glm::quat &rotation, float length, float radius, float lengthScale, float yawRotation = 0) : rotation(rotation), length(length), radius(radius), lengthScale(lengthScale), pitchRotation(yawRotation) {};
 	float length;
 	float lengthScale;
 	float radius;
 	
 	glm::quat rotation;
-	float yawRotation;
+	float pitchRotation;
 };
 
 class Segment {
@@ -57,7 +57,7 @@ public:
 	//Transform matrix
 	glm::mat4 modelMatrix;
 
-	float yawRotation;
+	float pitchRotation;
 };
 
 #endif

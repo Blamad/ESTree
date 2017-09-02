@@ -1,41 +1,35 @@
 #include "TreeScene.h"
-#include "Cube.h"
-#include "LampCube.h"
+
+Logger TreeScene::logger("TreeScene");
 
 void TreeScene::initialize() {
+
+	logger.log(INFO, "Starting scene");
 
 	GameObject* go;
 	vec3 position;
 	string paramsFileName;
-
-	paramsFileName = "test.l";
-	position = vec3(0, 0, -15);
+	
+	paramsFileName = "randomTree.l";
+	position = vec3(10, 0, 10);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves3());
 
 	paramsFileName = "fibbonacciTree.l";
-	position = vec3(-15, 0, -15);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves3());
-
-	paramsFileName = "randomTree.l";
-	position = vec3(15, 0, -15);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves3());
-
-	/*paramsFileName = "randomTree.l";
-	position = vec3(15, 0, -15);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("leaves4.png"));*/
-
-	/*paramsFileName = "advancedTree.l";
-	position = vec3(0, 0, -15);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::leaves1());
+	position = vec3(-10, 0, -10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2());
 
 	paramsFileName = "advancedTree2.l";
-	position = vec3(-15, 0, -5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::leaves1());
+	position = vec3(0, 0, 0);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("leaves3.png"));
 
-	paramsFileName = "advancedTree3.l";
-	position = vec3(15, 0, -5);
+	paramsFileName = "symetricTree.l";
+	position = vec3(-10, 0, 10);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("leaves4.png"));
-	*/
+
+	paramsFileName = "advancedTree.l";
+	position = vec3(10, 0, -10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2());
+	
 	generateTerrain();
 
 	//Light
@@ -47,7 +41,7 @@ void TreeScene::initialize() {
 
 GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial) {
 	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
-	GameObject* go = addGameObject(unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial)));
+	GameObject* go = addGameObject(unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, false)));
 	Transform *transform = getTransform(go);
 	transform->translate(position);
 	((LindenmayerTree*)go)->generate();

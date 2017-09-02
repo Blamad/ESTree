@@ -28,7 +28,7 @@ int main() {
 
 void treeScene(SceneManager *sceneManager) {
 	sceneManager->setActiveScene(shared_ptr<Scene>(new TreeScene()));
-	createCamera(sceneManager, vec3(0, 15, -45), 90, -10);
+	createCamera(sceneManager, vec3(0, 15, 35), -90, -10);
 }
 
 void testScene(SceneManager *sceneManager) {

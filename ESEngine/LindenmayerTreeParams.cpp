@@ -1,6 +1,9 @@
 #include "LindenmayerTreeParams.h"
 
 LindenmayerTreeParams::LindenmayerTreeParams(string filePath) {
+	
+	name = filePath;
+	
 	ifstream lindenFile;
 	lindenFile.exceptions(ifstream::badbit);
 	int parsedLineCounter = 0;

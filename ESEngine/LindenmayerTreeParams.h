@@ -27,6 +27,8 @@ public:
 
 	LindenmayerTreeParams(string filePath);
 
+	string name;
+
 	string axiom;
 	int depth;
 	float initialLength;

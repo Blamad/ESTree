@@ -2,8 +2,12 @@
 #define TREE_SCENE_H
 
 #include "Scene.h"
+#include "Cube.h"
+#include "LampCube.h"
 #include "LindenmayerTree.h"
 #include "Material.h"
+
+#include "Logger.h"
 
 class TreeScene : public Scene {
 public:
@@ -21,6 +25,8 @@ public:
 	void generateTerrain();
 
 protected:
+	static Logger logger;
+
 	Transform* getTransform(GameObject* gameObject) {
 		return (Transform*)gameObject->getComponent(TRANSFORM);
 	}

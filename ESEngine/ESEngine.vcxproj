@@ -24,6 +24,7 @@
     <ClCompile Include="InstancedCube.cpp" />
     <ClCompile Include="LindenmayerTreeParams.cpp" />
     <ClCompile Include="LindenmayerTree.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="TestScene.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="LampCube.h" />
     <ClInclude Include="LindenmayerTreeParams.h" />
     <ClInclude Include="LindenmayerTree.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Segment.h" />
@@ -103,7 +105,6 @@
   <ItemGroup>
     <None Include="advancedTree.l" />
     <None Include="advancedTree2.l" />
-    <None Include="advancedTree3.l" />
     <None Include="fibbonacciTree.l" />
     <None Include="GenericShader.frag" />
     <None Include="GenericShader.vert" />
@@ -115,9 +116,12 @@
     <None Include="MeshWiringShader.geom" />
     <None Include="MeshWiringShader.vert" />
     <None Include="randomTree.l" />
+    <None Include="randomTree2.l" />
     <None Include="symetricTree.l" />
     <None Include="test.l" />
-    <None Include="willow.l" />
+    <None Include="testX.l" />
+    <None Include="testY.l" />
+    <None Include="testZ.l" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="barkTexture1.jpg" />

@@ -17,6 +17,8 @@
 #include "InstancedMesh.h"
 #include "LindenmayerTreeParams.h"
 
+#include "Logger.h"
+
 class VertexGenerationAttributes {
 public:
 	VertexGenerationAttributes(int verticesOffset, int vertexNumber, float &theta, float &radius, mat4 &transform, int textureY) 
@@ -43,11 +45,14 @@ protected:
 
 	int vBufferSize = 1000;
 	int iBufferSize = 4000;
+	const float branchLeafOverlappingFactor = .8f;
 	
 	int segments;
 	float textureXStep;
 
 private:
+	static Logger logger;
+
 	LindenmayerTreeParams params;
 	string product;
 	vector<shared_ptr<Segment>> segmentsVec;
