@@ -35,6 +35,18 @@ struct Vertex {
 		tmpPosition.z = 0;
 		normal = normalize(vec3(modelMatrix * tmpPosition));
 	}
+
+	static Vertex createVertex(vec3 position, vec3 normal, vec2 texCoords) {
+		Vertex vert;
+		vert.position = position;
+		vert.normal = normal;
+		vert.texCoords = texCoords;
+		vert.type[POSITION] = 1;
+		vert.type[NORMAL] = 1;
+		vert.type[TEXCOORDS] = 1;
+
+		return vert;
+	}
 };
 
 #endif

@@ -171,6 +171,9 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Engine\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -314,64 +317,70 @@
     <ClInclude Include="Logger.h">
       <Filter>Engine\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="GenericShader.vert">
+    <None Include="LindenmayerRules\advancedTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="LindenmayerRules\advancedTree2.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="LindenmayerRules\fibbonacciTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="LindenmayerRules\randomTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="LindenmayerRules\randomTree2.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="LindenmayerRules\test.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="LindenmayerRules\testX.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="LindenmayerRules\testY.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="LindenmayerRules\testZ.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="Shaders\InstancedShader.frag">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="GenericShader.frag">
+    <None Include="Shaders\InstancedShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="LampShader.frag">
+    <None Include="Shaders\LampShader.frag">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="LampShader.vert">
+    <None Include="Shaders\LampShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="InstancedShader.frag">
+    <None Include="Shaders\MeshWiringShader.frag">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="InstancedShader.vert">
+    <None Include="Shaders\MeshWiringShader.geom">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="randomTree.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="advancedTree.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="symetricTree.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="MeshWiringShader.vert">
+    <None Include="Shaders\MeshWiringShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="MeshWiringShader.frag">
+    <None Include="Shaders\SkyboxShader.frag">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="MeshWiringShader.geom">
+    <None Include="Shaders\SkyboxShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="advancedTree2.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    <None Include="Shaders\GenericShader.frag">
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="fibbonacciTree.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="test.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="testX.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="testY.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="testZ.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="randomTree2.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    <None Include="Shaders\GenericShader.vert">
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -381,46 +390,70 @@
     <Image Include="container_s.jpg">
       <Filter>TestProject\Models\General\Textures</Filter>
     </Image>
-    <Image Include="barkTexture1.jpg">
+    <Image Include="Textures\barkTexture1.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="barkTexture2.jpg">
+    <Image Include="Textures\barkTexture2.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="barkTexture3.jpg">
+    <Image Include="Textures\barkTexture3.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="barkTexture4.jpg">
+    <Image Include="Textures\barkTexture4.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="barkTexture5.jpg">
+    <Image Include="Textures\barkTexture5.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="grassTexture.jpeg">
+    <Image Include="Textures\container_d.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="grassTexture.jpg">
+    <Image Include="Textures\container_s.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="leaves1.png">
+    <Image Include="Textures\grassTexture.jpeg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="leaves2.png">
+    <Image Include="Textures\grassTexture.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="leaves3.png">
+    <Image Include="Textures\leaves1.png">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="treeTexture1.jpg">
+    <Image Include="Textures\leaves2.png">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="treeTexture2.jpg">
+    <Image Include="Textures\leaves3.png">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="leaves5.png">
+    <Image Include="Textures\leaves4.png">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
-    <Image Include="leaves4.png">
+    <Image Include="Textures\leaves5.png">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\treeTexture1.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\treeTexture2.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\back.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\bottom.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\front.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\left.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\right.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\top.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
   </ItemGroup>

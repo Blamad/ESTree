@@ -14,6 +14,7 @@
 #include "Renderable.h"
 #include "Behaviour.h"
 #include "Camera.h"
+#include "Skybox.h"
 
 using namespace std;
 
@@ -29,9 +30,11 @@ public:
 	void removeGameObject(GameObject *gameObject);
 
 	void setActiveCamera(GameObject *gameObject);
+	void setSkybox(unique_ptr<Skybox> skybox);
 
 private:
 	Camera *activeCamera;
+	unique_ptr<Skybox> skybox;
 	unique_ptr<LightsManager> lightsManager;
 	unique_ptr<PhysicsManager> physicsManager;
 	std::map<Uuid, unique_ptr<GameObject>> gameObjects;

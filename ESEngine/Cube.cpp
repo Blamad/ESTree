@@ -1,7 +1,7 @@
 #include "Cube.h"
 
 Cube::Cube(Material material) : GameObject() {
-	Shader shader("GenericShader.vert", "GenericShader.frag");
+	Shader shader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 	shared_ptr<Mesh> mesh = createMesh(shader);
 	mesh->material = material;
 	addComponent(mesh);

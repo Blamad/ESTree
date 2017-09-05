@@ -27,12 +27,8 @@ void TextureBuffer::setCubeMapBuffer(std::vector<const unsigned char*>& textures
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, id);
 	for (GLuint i = 0; i < textures.size(); i++)
-	{
-		glTexImage2D(
-			GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
-			GL_RGB, widths[i], heights[i], 0, GL_RGB, GL_UNSIGNED_BYTE, textures[i]
-		);
-	}
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, widths[i], heights[i], 0, GL_RGB, GL_UNSIGNED_BYTE, textures[i]);
+
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

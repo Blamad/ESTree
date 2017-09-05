@@ -15,8 +15,8 @@ void Mesh::draw(Renderer &renderer) {
 			glUniform3fv(glGetUniformLocation(program, "material.diffuse"), 1, glm::value_ptr(material.diffuse));
 			glUniform3fv(glGetUniformLocation(program, "material.specular"), 1, glm::value_ptr(material.specular));
 			glUniform1f(glGetUniformLocation(program, "material.shininess"), material.shininess);
-			glUniform1f(glGetUniformLocation(program, "material.texDiffuse"), 0);
-			glUniform1f(glGetUniformLocation(program, "material.texSpecular"), 1);
+			glUniform1i(glGetUniformLocation(program, "material.texDiffuse"), 0);
+			glUniform1i(glGetUniformLocation(program, "material.texSpecular"), 1);
 			initialized = true;
 		}
 

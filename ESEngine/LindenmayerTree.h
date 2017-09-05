@@ -75,8 +75,6 @@ private:
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, float &radius, float &length, quat &rotation);
 
-	Vertex createVertex(vec3 position, vec3 normal, vec2 texCoords);
-
 	//Parallel generation
 	//2.0
 	vector<VertexGenerationAttributes> threadGenerationData;

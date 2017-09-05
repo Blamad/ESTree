@@ -24,6 +24,7 @@ shared_ptr<Texture> TextureManager::createTexture(string fileName, TextureType t
 
 	shared_ptr<Texture> texturePtr = make_shared<Texture2D>(fileName, width, height, nrChannels, data, type);
 	textureBuffers.push_back(texturePtr);
+	stbi_image_free((void*)data);
 	return texturePtr;
 }
 
@@ -40,12 +41,17 @@ shared_ptr<Texture> TextureManager::createCubeMap(string* fileNames) {
 	int widths[6], heights[6], nrChannels[6];
 	vector<const unsigned char*> tempImages;
 	for (int i = 0; i < 6; i++) {
-		unsigned char* data = stbi_load(fileName.c_str(), &widths[i], &heights[i], &nrChannels[i], 0);
+		unsigned char* data = stbi_load(fileNames[i].c_str(), &widths[i], &heights[i], &nrChannels[i], 0);
 		tempImages.push_back(data);
 	}
 
 	shared_ptr<Texture> texturePtr = make_shared<CubeMap>(fileName, widths, heights, tempImages);
 	textureBuffers.push_back(texturePtr);
+	
+	for (int i = 0; i < 6; i++) {
+		stbi_image_free((void*)tempImages[i]);
+	}
+
 	return texturePtr;
 }
 

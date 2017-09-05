@@ -10,27 +10,28 @@ void TreeScene::initialize() {
 	vec3 position;
 	string paramsFileName;
 	
-	paramsFileName = "randomTree.l";
+	paramsFileName = "LindenmayerRules/randomTree.l";
 	position = vec3(10, 0, 10);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves3());
 
-	paramsFileName = "fibbonacciTree.l";
+	paramsFileName = "LindenmayerRules/fibbonacciTree.l";
 	position = vec3(-10, 0, -10);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2());
 
-	paramsFileName = "advancedTree2.l";
+	paramsFileName = "LindenmayerRules/advancedTree2.l";
 	position = vec3(0, 0, 0);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("leaves3.png"));
+	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves3.png"));
 
-	paramsFileName = "symetricTree.l";
+	paramsFileName = "LindenmayerRules/symetricTree.l";
 	position = vec3(-10, 0, 10);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("leaves4.png"));
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("Textures/leaves4.png"));
 
-	paramsFileName = "advancedTree.l";
+	paramsFileName = "LindenmayerRules/advancedTree.l";
 	position = vec3(10, 0, -10);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2());
 	
 	generateTerrain();
+	addSkybox();
 
 	//Light
 	createWhiteLampCube(vec3(-15, 20, 0), MEDIUM);
@@ -90,4 +91,20 @@ GameObject* TreeScene::createDirectionalLight(vec3 directory) {
 	DirectionalLight *light = (DirectionalLight*)go->getComponent(LIGHT);
 	light->directory = directory;
 	return addGameObject(move(go));
+}
+
+void TreeScene::addSkybox() {
+	string skyboxTex[] = {
+		"Textures/Skybox/right.jpg",
+		"Textures/Skybox/left.jpg",
+		"Textures/Skybox/top.jpg",
+		"Textures/Skybox/bottom.jpg",
+		"Textures/Skybox/back.jpg",
+		"Textures/Skybox/front.jpg"
+	};
+
+	Shader shader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
+
+	unique_ptr<Skybox> skybox(new Skybox(skyboxTex, shader));
+	setSkybox(std::move(skybox));
 }

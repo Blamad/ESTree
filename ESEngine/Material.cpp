@@ -56,85 +56,85 @@ Material Material::greenRubber() {
 
 Material Material::textured1() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("treeTexture1.jpg", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/treeTexture1.jpg", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::textured2() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("treeTexture2.jpg", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/treeTexture2.jpg", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::grass() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("grassTexture.jpg", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/grassTexture.jpg", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::container() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("container_d.jpg", DIFFUSE);
-	material.texSpecular = TextureManager::getInstance().createTexture("container_s.jpg", SPECULAR);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/container_d.jpg", DIFFUSE);
+	material.texSpecular = TextureManager::getInstance().createTexture("Textures/container_s.jpg", SPECULAR);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::leaves1() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("leaves1.png", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/leaves1.png", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::leaves2() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("leaves2.png", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/leaves2.png", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::leaves3() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("leaves3.png", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/leaves3.png", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::bark1() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("barkTexture1.jpg", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/barkTexture1.jpg", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::bark2() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("barkTexture2.jpg", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/barkTexture2.jpg", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::bark3() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("barkTexture3.jpg", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/barkTexture3.jpg", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::bark4() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("barkTexture4.jpg", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/barkTexture4.jpg", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }
 
 Material Material::bark5() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("barkTexture5.jpg", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/barkTexture5.jpg", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }

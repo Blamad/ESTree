@@ -9,6 +9,10 @@ void Scene::setActiveCamera(GameObject *gameObject) {
 	activeCamera = (Camera*)gameObject->getComponent(CAMERA);
 }
 
+void Scene::setSkybox(unique_ptr<Skybox> skybox) {
+	this->skybox = std::move(skybox);
+}
+
 GameObject* Scene::addGameObject(unique_ptr<GameObject> go) {
 	Uuid uuid = go->id;
 	gameObjects[uuid] = std::move(go);
@@ -63,4 +67,9 @@ void Scene::renderFrame(Renderer &renderer) {
 			((Renderable*)renderable)->draw(renderer);
 		}
 	}
+	if (skybox != nullptr) {
+		skybox->updatePosition(activeCamera->position);
+		skybox->draw(renderer);
+	}
+
 }
