@@ -61,9 +61,6 @@
     <Filter Include="TestProject\Models\General\Source Files">
       <UniqueIdentifier>{0c076b35-875c-49d7-8513-cfa984825fa2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TestProject\Models\General\Textures">
-      <UniqueIdentifier>{3e99ae6e-7e4f-4d90-bde9-aa27cef42cf3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="TestProject\Scenes\Source Files">
       <UniqueIdentifier>{b1f6bbdf-8163-4916-baec-bfe1bd442630}</UniqueIdentifier>
     </Filter>
@@ -382,14 +379,14 @@
     <None Include="Shaders\GenericShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
+    <None Include="standardParametricTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="parametricTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="container_d.jpg">
-      <Filter>TestProject\Models\General\Textures</Filter>
-    </Image>
-    <Image Include="container_s.jpg">
-      <Filter>TestProject\Models\General\Textures</Filter>
-    </Image>
     <Image Include="Textures\barkTexture1.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>

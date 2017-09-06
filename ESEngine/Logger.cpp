@@ -26,7 +26,9 @@ string Logger::formatValue(int value, int space) {
 		places /= 10;
 		sstream << "0";
 	}
-	sstream << value;
+	
+	if (value != 0)
+		sstream << value;
 
 	return sstream.str();
 }

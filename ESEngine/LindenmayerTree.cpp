@@ -134,7 +134,7 @@ void LindenmayerTree::generateMeshData() {
 			transform = transformStack.top();
 			transformStack.pop();
 			break;
-		case '-': //rotate branch in left/right in x axis
+		case '-': //rotate branch in x axis
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = params.angle;
@@ -156,7 +156,7 @@ void LindenmayerTree::generateMeshData() {
 
 			transform.rotation *= angleAxis(customParameter, vec3(1, 0, 0));
 			break;
-		case '<': //twist branch in z axis
+		case '<': //rotate branch in z axis
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = params.angle;
@@ -178,7 +178,7 @@ void LindenmayerTree::generateMeshData() {
 
 			transform.rotation *= angleAxis(-customParameter, vec3(0, 0, 1));
 			break;
-		case '^': //rotate branch up/down in y axis
+		case '^': //twist branch up/down in y axis
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = params.angle;

@@ -12,32 +12,46 @@ void TreeScene::initialize() {
 	
 	paramsFileName = "LindenmayerRules/randomTree.l";
 	position = vec3(10, 0, 10);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves3());
+	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves5.png"));
 
 	paramsFileName = "LindenmayerRules/fibbonacciTree.l";
-	position = vec3(-10, 0, -10);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2());
+	position = vec3(20, 0, 0);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves1());
 
 	paramsFileName = "LindenmayerRules/advancedTree2.l";
-	position = vec3(0, 0, 0);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves3.png"));
+	position = vec3(8, 0, 0);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"));
 
 	paramsFileName = "LindenmayerRules/symetricTree.l";
 	position = vec3(-10, 0, 10);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("Textures/leaves4.png"));
 
-	paramsFileName = "LindenmayerRules/advancedTree.l";
+	paramsFileName = "LindenmayerRules/randomTree.l";
 	position = vec3(10, 0, -10);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2());
 	
+	paramsFileName = "LindenmayerRules/advancedTree2.l";
+	position = vec3(-5, 0, 0);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves5.png"));
+
+	paramsFileName = "LindenmayerRules/advancedTree2.l";
+	position = vec3(0, 0, 15);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves1.png"));
+
+	paramsFileName = "LindenmayerRules/advancedTree2.l";
+	position = vec3(0, 0, -15);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves3.png"));
+
 	generateTerrain();
 	addSkybox();
 
 	//Light
-	createWhiteLampCube(vec3(-15, 20, 0), MEDIUM);
-	createWhiteLampCube(vec3(15, 20, 0), MEDIUM);
+	createWhiteLampCube(vec3(-10, 30, 0), MEDIUM);
+	createWhiteLampCube(vec3(10, 30, 0), MEDIUM);
 	createWhiteLampCube(vec3(0, -5, 0), WEAK);
 	createDirectionalLight(vec3(0, -1, -1));
+
+	setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
 }
 
 GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial) {
@@ -93,15 +107,42 @@ GameObject* TreeScene::createDirectionalLight(vec3 directory) {
 	return addGameObject(move(go));
 }
 
+GameObject* TreeScene::createCamera(glm::vec3 position, float yaw, float pitch) {
+	unique_ptr<GameObject> go(new GameObject());
+	shared_ptr<Camera> camera = shared_ptr<Camera>(new Camera(position, glm::vec3(0.0f, 1.0f, 0.0f), yaw, pitch));
+	go->addComponent(camera);
+	shared_ptr<CameraBehaviour> cameraBehaviour = shared_ptr<CameraBehaviour>(new CameraBehaviour(camera.get()));
+	go->addComponent(cameraBehaviour);
+	return addGameObject(move(go));
+}
+
 void TreeScene::addSkybox() {
+	/*string skyboxTex[] = {
+		"Textures/Skybox_darkforest/lakes_rt.tga",
+		"Textures/Skybox_darkforest/lakes_lf.tga",
+		"Textures/Skybox_darkforest/lakes_up.tga",
+		"Textures/Skybox_darkforest/lakes_bt.tga",
+		"Textures/Skybox_darkforest/lakes_bk.tga",
+		"Textures/Skybox_darkforest/lakes_ft.tga"
+	};*/
+
 	string skyboxTex[] = {
-		"Textures/Skybox/right.jpg",
-		"Textures/Skybox/left.jpg",
-		"Textures/Skybox/top.jpg",
-		"Textures/Skybox/bottom.jpg",
-		"Textures/Skybox/back.jpg",
-		"Textures/Skybox/front.jpg"
+		"Textures/Skybox_darkforest/right.jpg",
+		"Textures/Skybox_darkforest/left.jpg",
+		"Textures/Skybox_darkforest/top.jpg",
+		"Textures/Skybox_darkforest/bottom.jpg",
+		"Textures/Skybox_darkforest/back.jpg",
+		"Textures/Skybox_darkforest/front.jpg"
 	};
+
+	/*string skyboxTex[] = {
+		"Textures/Skybox_water/right.jpg",
+		"Textures/Skybox_water/left.jpg",
+		"Textures/Skybox_water/top.jpg",
+		"Textures/Skybox_water/bottom.jpg",
+		"Textures/Skybox_water/back.jpg",
+		"Textures/Skybox_water/front.jpg"
+	};*/
 
 	Shader shader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
 

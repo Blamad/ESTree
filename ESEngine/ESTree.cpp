@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "TreeScene.h"
 #include "TestScene.h"
+#include "Logger.h"
 
 using namespace glm;
 
@@ -9,6 +10,8 @@ GameObject* createCamera(SceneManager *sceneManager, vec3 position, float pitch,
 
 void testScene(SceneManager *sceneManager);
 void treeScene(SceneManager *sceneManager);
+
+Logger logger("ESTree");
 
 Engine* initEngine();
 
@@ -18,6 +21,7 @@ int main() {
 
 	treeScene(sceneManager);
 	//testScene(sceneManager);
+	logger.log(INFO, "Scene created. Rendering..");
 
 	engine->startRendering();
 
@@ -28,7 +32,7 @@ int main() {
 
 void treeScene(SceneManager *sceneManager) {
 	sceneManager->setActiveScene(shared_ptr<Scene>(new TreeScene()));
-	createCamera(sceneManager, vec3(0, 15, 35), -90, -10);
+	//createCamera(sceneManager, vec3(0, 15, 35), -90, -10);
 }
 
 void testScene(SceneManager *sceneManager) {

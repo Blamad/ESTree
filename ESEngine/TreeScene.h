@@ -6,6 +6,8 @@
 #include "LampCube.h"
 #include "LindenmayerTree.h"
 #include "Material.h"
+#include "Camera.h"
+#include "CameraBehaviour.h"
 
 #include "Logger.h"
 
@@ -21,6 +23,7 @@ public:
 
 	GameObject* createWhiteLampCube(vec3 position, PointLightStrength str);
 	GameObject* createDirectionalLight(vec3 direction);
+	GameObject* createCamera(glm::vec3 position, float yaw, float pitch);
 
 	void generateTerrain();
 	void addSkybox();

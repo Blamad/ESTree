@@ -114,6 +114,8 @@
     <None Include="LindenmayerRules\testX.l" />
     <None Include="LindenmayerRules\testY.l" />
     <None Include="LindenmayerRules\testZ.l" />
+    <None Include="parametricTree.l" />
+    <None Include="standardParametricTree.l" />
     <None Include="Shaders\GenericShader.frag" />
     <None Include="Shaders\GenericShader.vert" />
     <None Include="Shaders\InstancedShader.frag" />
@@ -127,8 +129,6 @@
     <None Include="Shaders\SkyboxShader.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="container_d.jpg" />
-    <Image Include="container_s.jpg" />
     <Image Include="Textures\barkTexture1.jpg" />
     <Image Include="Textures\barkTexture2.jpg" />
     <Image Include="Textures\barkTexture3.jpg" />
