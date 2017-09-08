@@ -27,45 +27,9 @@ void LindenmayerTree::generateTree() {
 //PARSING L DATA
 
 void LindenmayerTree::generateMeshSkeleton() {
-
-	product = params.axiom;
-
-	//Generate tree structure from axiom and rules
-	string newProduct;
-	for (int i = 0; i < params.depth; i++) {
-		newProduct.clear();
-		for (int j = 0; j < product.size(); j++) {
-			string currentSymbol = string(1, product.at(j));
-			newProduct += parseRule(currentSymbol, i);
-		}
-		product = newProduct;
-	}
-}
-
-string LindenmayerTree::parseRule(string &symbol, int &depth) {
-	vector<Rule> rules;
-	float randomSpace = 0;
-	BOOST_FOREACH(Rule rule, params.getRules(symbol)) {
-		if (rule.allowedDepth <= depth) {
-			rules.push_back(rule);
-			randomSpace += rule.probability;
-		}
-	}
-
-	//Only one rule
-	if (rules.size() == 1)
-		return rules[0].replacement;
-	//There goes some random stuff
-	if (rules.size() > 1) {
-		float value = randomGenerator() * randomSpace;
-		for (int i = 0; i < rules.size(); i++) {
-			value -= rules[i].probability;
-			if (value <= 0)
-				return rules[i].replacement;
-		}
-	}
-	//No rules available
-	return symbol;
+	LindenmayerTreeParser parser(params);
+	product = parser.generateTreeProduction();
+	logger.log(INFO, product);
 }
 
 float LindenmayerTree::getNumericParameter(string product, int index) {
@@ -221,6 +185,9 @@ void LindenmayerTree::generateMeshData() {
 
 			transform.radius *= customParameter;
 			break;
+		case '$':
+			//TODO do zrobienia!
+			break;
 		case ' ':
 		default:
 			break;
@@ -239,7 +206,6 @@ void LindenmayerTree::generateMeshData() {
 			break;
 		}
 	}
-	//TODO usun to pozniej!
 	generateVertices();
 	mesh->updateMesh();
 }

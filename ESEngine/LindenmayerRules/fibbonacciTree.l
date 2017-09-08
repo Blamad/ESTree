@@ -1,10 +1,11 @@
 #depth, initialLength, initialRaidus, angle, axiom, rules
-5
-1.5
-0.6
-34.37
+define depth 5
+define initialLength 1.5
+define initialRadius 0.6
+define angle 34.37
+
 f(4.5)a
-a(1) "[>f(4.5)a] .125
-a(1) "[>f(4.5)a][^^^^>f(4.5)a] .225
+a{1} "[>f(4.5)a] .125
+a{1} "[>f(4.5)a][^^^^>f(4.5)a] .225
 a "[>f(4.5)a][^^^^>f(4.5)a][^^^^^^^^>f(4.5)a] .35
 a "[>f(4.5)a][^^^^>f(4.5)a][^^^^^^^^>f(4.5)a][^^^^^^^^^^^^>f(4.5)a][^^^^^^^^^^^^^^^^>f(4.5)a] .3

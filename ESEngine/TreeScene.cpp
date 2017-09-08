@@ -10,10 +10,49 @@ void TreeScene::initialize() {
 	vec3 position;
 	string paramsFileName;
 	
+	//paramsFileName = "LindenmayerRules/parametricMonopodialTreeA.l";
+	paramsFileName = "LindenmayerRules/parametricTernaryTreeA.l";
+	position = vec3(10, 0, 10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves1.png"), true);
+
+	/*paramsFileName = "LindenmayerRules/parametricSympodialTreeB.l";
+	position = vec3(-10, 0, 10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), true);
+
+	paramsFileName = "LindenmayerRules/parametricSympodialTreeC.l";
+	position = vec3(10, 0, -10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), true);
+
+	paramsFileName = "LindenmayerRules/parametricSympodialTreeD.l";
+	position = vec3(-10, 0, -10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves4.png"), true);
+
+	/*paramsFileName = "LindenmayerRules/parametricMonopodialTreeB.l";
+	position = vec3(-10, 0, 10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), true);
+
+	paramsFileName = "LindenmayerRules/parametricMonopodialTreeC.l";
+	position = vec3(10, 0, -10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), true);
+
+	paramsFileName = "LindenmayerRules/parametricMonopodialTreeD.l";
+	position = vec3(-10, 0, -10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves4.png"), true);
+
+	/*
 	paramsFileName = "LindenmayerRules/randomTree.l";
 	position = vec3(10, 0, 10);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves5.png"));
 
+	paramsFileName = "LindenmayerRules/randomTree.l";
+	position = vec3(10, 0, -10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2());
+	
+	paramsFileName = "LindenmayerRules/symetricTree.l";
+	position = vec3(-10, 0, 10);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("Textures/leaves4.png"));
+
+	
 	paramsFileName = "LindenmayerRules/fibbonacciTree.l";
 	position = vec3(20, 0, 0);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves1());
@@ -22,14 +61,6 @@ void TreeScene::initialize() {
 	position = vec3(8, 0, 0);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"));
 
-	paramsFileName = "LindenmayerRules/symetricTree.l";
-	position = vec3(-10, 0, 10);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("Textures/leaves4.png"));
-
-	paramsFileName = "LindenmayerRules/randomTree.l";
-	position = vec3(10, 0, -10);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2());
-	
 	paramsFileName = "LindenmayerRules/advancedTree2.l";
 	position = vec3(-5, 0, 0);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves5.png"));
@@ -40,7 +71,7 @@ void TreeScene::initialize() {
 
 	paramsFileName = "LindenmayerRules/advancedTree2.l";
 	position = vec3(0, 0, -15);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves3.png"));
+	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves3.png"));*/
 
 	generateTerrain();
 	addSkybox();
@@ -54,9 +85,9 @@ void TreeScene::initialize() {
 	setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
 }
 
-GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial) {
+GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial, bool debug) {
 	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
-	GameObject* go = addGameObject(unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, false)));
+	GameObject* go = addGameObject(unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, debug)));
 	Transform *transform = getTransform(go);
 	transform->translate(position);
 	((LindenmayerTree*)go)->generate();
@@ -117,15 +148,6 @@ GameObject* TreeScene::createCamera(glm::vec3 position, float yaw, float pitch) 
 }
 
 void TreeScene::addSkybox() {
-	/*string skyboxTex[] = {
-		"Textures/Skybox_darkforest/lakes_rt.tga",
-		"Textures/Skybox_darkforest/lakes_lf.tga",
-		"Textures/Skybox_darkforest/lakes_up.tga",
-		"Textures/Skybox_darkforest/lakes_bt.tga",
-		"Textures/Skybox_darkforest/lakes_bk.tga",
-		"Textures/Skybox_darkforest/lakes_ft.tga"
-	};*/
-
 	string skyboxTex[] = {
 		"Textures/Skybox_darkforest/right.jpg",
 		"Textures/Skybox_darkforest/left.jpg",
@@ -134,15 +156,6 @@ void TreeScene::addSkybox() {
 		"Textures/Skybox_darkforest/back.jpg",
 		"Textures/Skybox_darkforest/front.jpg"
 	};
-
-	/*string skyboxTex[] = {
-		"Textures/Skybox_water/right.jpg",
-		"Textures/Skybox_water/left.jpg",
-		"Textures/Skybox_water/top.jpg",
-		"Textures/Skybox_water/bottom.jpg",
-		"Textures/Skybox_water/back.jpg",
-		"Textures/Skybox_water/front.jpg"
-	};*/
 
 	Shader shader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
 

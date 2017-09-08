@@ -5,7 +5,6 @@
 #include <stack>
 #include <vector>
 
-#include <boost/random.hpp>
 #include <time.h>
 #include <boost/generator_iterator.hpp>
 #include <boost/foreach.hpp>
@@ -16,6 +15,7 @@
 #include "Segment.h"
 #include "InstancedMesh.h"
 #include "LindenmayerTreeParams.h"
+#include "LindenmayerTreeParser.h"
 
 #include "Logger.h"
 
@@ -64,7 +64,6 @@ private:
 	
 	//Parsing l-data
 	void generateMeshSkeleton();
-	string parseRule(string &symbol, int &depth);
 	float getNumericParameter(string product, int index);
 	float returnNewIndexAfterParameter(string product, int index);
 	

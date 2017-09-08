@@ -67,6 +67,9 @@
     <Filter Include="TestProject\Scenes\Header Files">
       <UniqueIdentifier>{389cab42-a262-46c1-b207-33e47cae06a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TestProject\Models\Trees\Tree Models\Parametric">
+      <UniqueIdentifier>{3a4fb0bb-e1a3-4cf4-9d7a-c978b4c21cd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -170,6 +173,9 @@
     </ClCompile>
     <ClCompile Include="Skybox.cpp">
       <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LindenmayerTreeParser.cpp">
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -317,6 +323,9 @@
     <ClInclude Include="Skybox.h">
       <Filter>Engine\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LindenmayerTreeParser.h">
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="LindenmayerRules\advancedTree.l">
@@ -379,11 +388,29 @@
     <None Include="Shaders\GenericShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="standardParametricTree.l">
+    <None Include="LindenmayerRules\parametricTree.l">
       <Filter>TestProject\Models\Trees\Tree Models</Filter>
     </None>
-    <None Include="parametricTree.l">
+    <None Include="LindenmayerRules\symetricTree.l">
       <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricTree2.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricMonopodialTreeA.l">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricMonopodialTreeB.l">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricMonopodialTreeC.l">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricMonopodialTreeD.l">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricSympodialTreeA.l">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
