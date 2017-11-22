@@ -7,4 +7,4 @@ define angle 70
 define R 1.456
 
 A(10)
-A(s) F(s)[+A(s/R)][-A(s/R)]
+A(s) F(s)[<A(s/R)][>A(s/R)]

@@ -9,5 +9,5 @@ define a1 5
 define a2 65
 define wr 0.707
 A(4,1)
-A(s,w) =(w)F(s)[+(a1)B(s*r2,w*wr)]<(90)[^(a2)B(s*r2,w*wr)]
+A(s,w) =(w)F(s)[^(a1)B(s*r2,w*wr)]<(90)[+(a2)B(s*r2,w*wr)]
 B(s,w) =(w)F(s)[<(a1)$B(s*r1,w*wr)][>(a2)$B(s*r1,w*wr)]

@@ -22,10 +22,12 @@ public:
 	void addComponent(shared_ptr<Component> component);
 
 	Uuid id;
-private:
-	vector<shared_ptr<Component>> components;
+	string name = "";
 
+private:
 	static boost::uuids::random_generator uuidGenerator;
+
+	vector<shared_ptr<Component>> components;
 };
 
 #endif GAMEOBJECT_H

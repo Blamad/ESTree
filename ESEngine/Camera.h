@@ -3,8 +3,11 @@
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <GLM/gtc/matrix_transform.hpp>
 
 #include "Component.h"
+#include "Screen.h"
+#include "Ray.h"
 
 const GLfloat YAW = -90.0f;
 const GLfloat PITCH = 0.0f;
@@ -47,7 +50,8 @@ public:
 	void processMouseScroll(GLfloat yoffset);
 
 	glm::mat4 getViewMatrix();
-	static glm::mat4 getProjectionMatrix(float aspectRatio);
+	static glm::mat4 getProjectionMatrix();
+	Ray cameraToViewportRay(Point2d mousePos);
 
 private:
 	// Calculates the front vector from the Camera's (updated) Eular Angles

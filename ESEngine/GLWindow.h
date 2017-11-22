@@ -12,6 +12,7 @@
 
 #include "Window.h"
 #include "InputState.h"
+#include "Logger.h"
 
 class GLWindow : public Window {
 public:
@@ -24,6 +25,10 @@ public:
 	void prepareFrameRendering();
 	void finishFrameRendering();
 
+	void setCursorVisible();
+	void setCursorHidden();
+	void setCursorDisabled();
+
 	double getTime();
 	InputState* registerInputManager();
 
@@ -33,8 +38,11 @@ protected:
 	static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 	static void mousePositionCallback(GLFWwindow* window, double xoffset, double yoffset);
 	static void mouseScrollCallback(GLFWwindow* window, double xpos, double ypos);
+	static void mouseClickCallback(GLFWwindow* window, int button, int action, int mods);
 
 private:
+	static Logger logger;
+
 	GLfloat lastTime;
 	GLFWwindow* glfwWindow;
 	unique_ptr<InputState> inputState;

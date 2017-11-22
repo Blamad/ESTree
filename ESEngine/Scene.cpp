@@ -3,10 +3,12 @@
 Scene::Scene() {
 	lightsManager.reset(new LightsManager());
 	physicsManager.reset(new PhysicsManager());
+	mouseManager.reset(new MouseManager(physicsManager.get()));
 }
 
 void Scene::setActiveCamera(GameObject *gameObject) {
 	activeCamera = (Camera*)gameObject->getComponent(CAMERA);
+	mouseManager->setCamera((CameraBehaviour*)gameObject->getComponent(BEHAVIOUR), activeCamera);
 }
 
 void Scene::setSkybox(unique_ptr<Skybox> skybox) {
@@ -39,15 +41,20 @@ void Scene::removeGameObject(GameObject *gameObject) {
 	gameObjects.erase(uuid);
 }
 
-void Scene::update(double dt, InputState &inputState) {
+void Scene::update(double &dt, InputState &inputState) {
 	physicsManager->step(dt);
+	mouseManager->update(dt, inputState);
 
 	for(const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
+		if (go->getComponent(CAMERA) != NULL)
+			continue;
 		
 		RigidBody *rigidBody = (RigidBody*)go->getComponent(RIGIDBODY);
 		if (rigidBody != nullptr) {
-			rigidBody->updateTransform();
+			if (rigidBody->needsReload)
+				physicsManager->reloadRigidBody(rigidBody);
+			rigidBody->update();
 		}
 		
 		for (auto & behaviour : go->getComponents(BEHAVIOUR)) {

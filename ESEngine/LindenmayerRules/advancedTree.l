@@ -4,10 +4,10 @@
 0.25
 7
 F
-F "Y[++++++MF][-----NF][^^^^^OF][vvvvvPF]
-M Zf-Mf
-N Zf+Nf
+F "Y[^^^^^^MF][vvvvvNF][+++++OF][-----PF]
+M ZfvMf
+N Zf^Nf
 O Zf>Of
 P Zf<Pf
-Y Zf-ZYf+
+Y ZfvZYf^
 Z ZZf

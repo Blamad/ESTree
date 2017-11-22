@@ -1,5 +1,7 @@
 #include "PhysicsManager.h"
 
+Logger PhysicsManager::logger("PhysicsManager");
+
 PhysicsManager::PhysicsManager() {
 	// Build the broadphase
 	broadphase = new btDbvtBroadphase();
@@ -28,6 +30,36 @@ void PhysicsManager::addRigidBody(RigidBody* rigidBody) {
 	dynamicsWorld->addRigidBody(rigidBody->rigidBody);
 }
 
+void PhysicsManager::reloadRigidBody(RigidBody* rigidBody) {
+	dynamicsWorld->removeRigidBody(rigidBody->rigidBody);
+	dynamicsWorld->addRigidBody(rigidBody->rigidBody);
+}
+
 void PhysicsManager::step(double deltaTime) {
 	dynamicsWorld->stepSimulation(deltaTime, 10);
+}
+
+GameObject* PhysicsManager::raycast(Ray &ray) {
+	btCollisionWorld::ClosestRayResultCallback RayCallback(
+		btVector3(ray.origin.x, ray.origin.y, ray.origin.z),
+		btVector3(ray.end.x, ray.end.y, ray.end.z)
+	);
+	dynamicsWorld->rayTest(
+		btVector3(ray.origin.x, ray.origin.y, ray.origin.z),
+		btVector3(ray.end.x, ray.end.y, ray.end.z),
+		RayCallback
+	);
+
+	if (RayCallback.hasHit()) {
+		GameObject *go = static_cast<GameObject*>(RayCallback.m_collisionObject->getUserPointer());
+		if(go->name.length() != 0)
+			logger.log(INFO, "Object clicked: " + go->name);
+		else
+			logger.log(INFO, "Object clicked: " + boost::uuids::to_string(go->id));
+		return go;
+	}
+	else {
+		logger.log(INFO, "Click missed");
+		return nullptr;
+	}
 }

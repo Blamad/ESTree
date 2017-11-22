@@ -177,6 +177,12 @@
     <ClCompile Include="LindenmayerTreeParser.cpp">
       <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseManager.cpp">
+      <Filter>Engine\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -326,6 +332,18 @@
     <ClInclude Include="LindenmayerTreeParser.h">
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ClickEvent.h">
+      <Filter>GraphicEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseManager.h">
+      <Filter>Engine\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="LindenmayerRules\advancedTree.l">
@@ -410,6 +428,18 @@
       <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
     </None>
     <None Include="LindenmayerRules\parametricSympodialTreeA.l">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricSympodialTreeB.l">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricSympodialTreeC.l">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricSympodialTreeD.l">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricTernaryTreeA.l">
       <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
     </None>
   </ItemGroup>

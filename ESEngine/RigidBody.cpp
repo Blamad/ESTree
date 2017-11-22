@@ -4,12 +4,21 @@ RigidBody::RigidBody() : Component(RIGIDBODY) {
 	
 }
 
+void RigidBody::update() {
+	updateTransform();
+}
+
 void RigidBody::updateTransform() {
-	rigidBody->getMotionState()->getWorldTransform(transform->getBtTransform());
+	transform->btTransform = rigidBody->getCenterOfMassTransform();
+}
+
+void RigidBody::updateRigidBody() {
+	rigidBody->setCenterOfMassTransform(transform->getBtTransform());
 }
 
 void RigidBody::initAsBox(double mass, glm::vec3 boxSize) {
-	transform = (Transform*)getComponent(TRANSFORM);
+	this->transform = (Transform*)getComponent(TRANSFORM);
+	this->mass = mass;
 
 	btCollisionShape* boxCollisionShape = new btBoxShape(btVector3(boxSize.x, boxSize.y, boxSize.z));
 
@@ -25,6 +34,46 @@ void RigidBody::initAsBox(double mass, glm::vec3 boxSize) {
 		boxCollisionShape,
 		fallInertia
 	);
+
 	rigidBody = new btRigidBody(rigidBodyCI);
-	rigidBody->setUserPointer((void*)this);
+	rigidBody->setUserPointer((void*)parent);
+}
+
+void RigidBody::initAsAHullShape() {
+	btCollisionShape* boxCollisionShape = new btConvexHullShape();
+
+	//TODO ogarnij bardziej skomplikowane figury fizyczne
+	//create a hull approximation
+	/*btConvexHullShape* hull = new btConvexHullShape(boxCollisionShape);
+	btScalar margin = boxCollisionShape->getMargin();
+	hull->buildHull(margin);
+	btConvexHullShape* simplifiedConvexShape = new btConvexHullShape(hull->getVertexPointer(), hull->numVertices());*/
+}
+
+void RigidBody::makeDynamic() {
+	pickable = true;
+	rigidBody->setActivationState(DISABLE_DEACTIVATION);
+}
+
+double RigidBody::getCurrentMass() {
+	return this->mass;
+}
+
+void RigidBody::changeMass(double mass) {
+	btVector3 fallInertia(0, 0, 0);
+	rigidBody->getCollisionShape()->calculateLocalInertia(mass, fallInertia);
+	rigidBody->setMassProps(mass, fallInertia);
+	rigidBody->clearForces();
+
+	needsReload = true;
+}
+
+void RigidBody::translate(glm::vec3 position) {
+	this->transform->translate(position);
+	updateRigidBody();
+}
+
+void RigidBody::rotate(float angle, glm::vec3 axis) {
+	this->transform->rotate(angle, axis);
+	updateRigidBody();
 }

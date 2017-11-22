@@ -1,5 +1,4 @@
 #include "Engine.h"
-#include "LightsManager.h"
 
 #define OPENGL
 
@@ -7,6 +6,8 @@
 #include "GLWindow.h"
 #include "GLRenderer.h"
 #endif
+
+Logger Engine::logger("Engine");
 
 Engine::Engine() {
 
@@ -20,6 +21,7 @@ Engine::~Engine() {
 
 void Engine::startRendering() {
 	if (window) {
+		logger.log(INFO, "Rendering started");
 		renderingLoop();
 	}
 }
@@ -31,11 +33,12 @@ Window* Engine::initialize(int width, int height) {
 #endif
 	window->initialize();
 	inputState = window->registerInputManager();
+	Screen::setInstance(window.get());
 	sceneManager.reset(new SceneManager());
 
 	Shader::initializeMatricesUBO();
 	LightsManager::initializeLightsUBO();
-	Shader::updateProjectionMatrix(Camera::getProjectionMatrix(width / height));
+	Shader::updateProjectionMatrix(Camera::getProjectionMatrix());
 
 	return window.get();
 }

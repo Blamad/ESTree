@@ -10,6 +10,6 @@ define a2 45
 define d 137.5
 define wr 0.707
 A(5,1)
-A(s,w) =(w)F(s)[+(a0)B(s*r2,w*wr)]^(d)A(s*r1,w*wr)
+A(s,w) =(w)F(s)[^(a0)B(s*r2,w*wr)]+(d)A(s*r1,w*wr)
 B(s,w) =(w)F(s)[<(a2)C(s*r2,w*wr)]C(s*r1,w*wr)
 C(s,w) =(w)F(s)[>(a2)B(s*r2,w*wr)]B(s*r1,w*wr)

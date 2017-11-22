@@ -7,6 +7,8 @@
 #include <btBulletDynamicsCommon.h>
 #include "Component.h"
 
+class RigidBody;
+
 class Transform : public Component {
 public:
 	Transform() : Component(TRANSFORM) {};
@@ -19,13 +21,14 @@ public:
 
 	btTransform& getBtTransform();
 
+	btTransform btTransform = btTransform::getIdentity();
+
 	void rotate(float angle, glm::vec3 axis);
 	void translate(glm::vec3 position);
 	void scale(glm::vec3 scale);
 	void clearRotation();
 
 private:
-	btTransform btTransform = btTransform::getIdentity();
 	glm::vec3 scaleVec = glm::vec3(1, 1, 1);
 
 	glm::vec3 bulletToGlm(const btVector3& v) {

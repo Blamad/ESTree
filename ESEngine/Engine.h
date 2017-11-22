@@ -1,10 +1,12 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include "Screen.h"
 #include "Window.h"
 #include "Renderer.h"
 #include "SceneManager.h"
-
+#include "LightsManager.h"
+#include "Logger.h"
 
 class Engine {
 public:
@@ -17,6 +19,8 @@ public:
 	void startRendering();
 
 private:
+	static Logger logger;
+
 	unique_ptr<Window> window;
 	unique_ptr<Renderer> renderer;
 	unique_ptr<SceneManager> sceneManager;

@@ -3,13 +3,13 @@
 
 GLWindow* GLWindow::instance;
 
-GLWindow::~GLWindow()
-{
+Logger GLWindow::logger("GLWindow");
+
+GLWindow::~GLWindow() {
 	glfwTerminate();
 }
 
-bool GLWindow::initialize()
-{
+bool GLWindow::initialize() {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -25,12 +25,11 @@ bool GLWindow::initialize()
 		return false;
 	}
 	glfwMakeContextCurrent(glfwWindow);
-	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	setCursorVisible();
 
 	//Inicjalizacja GLEW
 	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK)
-	{
+	if (glewInit() != GLEW_OK) {
 		std::cout << "Failed to initialize GLEW" << std::endl;
 		return false;
 	}
@@ -70,6 +69,18 @@ void GLWindow::finishFrameRendering() {
 	glfwSwapBuffers(glfwWindow);
 }
 
+void GLWindow::setCursorVisible() {
+	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+void GLWindow::setCursorHidden() {
+	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+}
+
+void GLWindow::setCursorDisabled() {
+	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
 InputState* GLWindow::registerInputManager() {
 	instance = this;
 	inputState.reset(new InputState());
@@ -77,6 +88,7 @@ InputState* GLWindow::registerInputManager() {
 	glfwSetKeyCallback(glfwWindow, GLWindow::keyCallback);
 	glfwSetCursorPosCallback(glfwWindow, GLWindow::mousePositionCallback);
 	glfwSetScrollCallback(glfwWindow, GLWindow::mouseScrollCallback);
+	glfwSetMouseButtonCallback(glfwWindow, GLWindow::mouseClickCallback);
 
 	return inputState.get();
 }
@@ -106,5 +118,31 @@ void GLWindow::mousePositionCallback(GLFWwindow* window, double xpos, double ypo
 void GLWindow::mouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	if (instance) {
 		instance->inputState->pushMouseScroll(xoffset, yoffset);
+	}
+}
+
+void GLWindow::mouseClickCallback(GLFWwindow* window, int button, int action, int mods) {
+	if (instance) {
+		MouseButton clickedButton = MOUSE_BUTTON_MIDDLE;
+		bool pressed = false;
+		
+		if (button == GLFW_MOUSE_BUTTON_LEFT)
+			clickedButton = MOUSE_BUTTON_LEFT;
+		else if (button == GLFW_MOUSE_BUTTON_RIGHT)
+			clickedButton = MOUSE_BUTTON_RIGHT;
+		
+		if (action == GLFW_PRESS)
+			pressed = true;
+
+		ClickEvent click(clickedButton, pressed, instance->inputState->getLastMousePosition());
+
+		if (mods == GLFW_MOD_SHIFT)
+			click.modifier = MOUSE_MOD_SHIFT;
+		else if (mods == GLFW_MOD_ALT)
+			click.modifier = MOUSE_MOD_ALT;
+		else if (mods == GLFW_MOD_CONTROL)
+			click.modifier = MOUSE_MOD_CONTROL;
+
+		instance->inputState->pushMouseClick(click);
 	}
 }

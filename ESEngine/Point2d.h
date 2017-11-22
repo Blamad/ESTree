@@ -3,11 +3,8 @@
 
 class Point2d {
 public:
-	Point2d(double x, double y) : x(x), y(y) {};
+	Point2d(double x = -1.0, double y = -1.0) : x(x), y(y) {};
 	double x, y;
-
-private:
-	Point2d() {};
 };
 
 #endif

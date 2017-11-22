@@ -11,6 +11,6 @@ define vr 1.132		define vr 1.732		/* width increase rate */
 define startLength 1.2
 
 B(1)F(startLength)+(45)A
-A B(vr)F(startLength)[^(a)F(startLength)A]+(d1)[^(a)F(startLength)A]+(d2)[^(a)F(0.5)A]
+A B(vr)F(startLength)[^+a)F(startLength)A]^(d1)[+(a)F(startLength)A]^(d2)[+(a)F(0.5)A]
 F(l) F(l*lr)
 B(w) B(w*vr)

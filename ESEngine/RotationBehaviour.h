@@ -13,15 +13,19 @@ public:
 			transform = (Transform*)getComponent(TRANSFORM);
 			angle = 0;
 		}
+		if (rigidBody == nullptr) {
+			rigidBody = (RigidBody*)getComponent(RIGIDBODY);
+		}
 
-		angle += dt;
-
-		transform->clearRotation();
-		transform->rotate(angle, vec3(0, 1, 0));
-		transform->rotate(radians(45.0f), vec3(1, 0, 1));
-
-		for (Point2d const& scrollVal : inputState.getMouseScrollEvents()) {
-			transform->scale(vec3(1 + 0.1*scrollVal.y));
+		angle += dt*0.01;
+		angle = fmod(angle, 360);
+		if (rigidBody != nullptr) {
+			rigidBody->rotate(radians(angle), vec3(0, 1, 0));
+		}
+		else {
+			transform->clearRotation();
+			transform->rotate(angle, vec3(0, 1, 0));
+			transform->rotate(radians(45.0f), vec3(1, 0, 1));
 		}
 	}
 

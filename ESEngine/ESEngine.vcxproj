@@ -26,8 +26,10 @@
     <ClCompile Include="LindenmayerTree.cpp" />
     <ClCompile Include="LindenmayerTreeParser.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="MouseManager.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TextureBuffer.cpp" />
@@ -57,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviour.h" />
+    <ClInclude Include="ClickEvent.h" />
     <ClInclude Include="CubeMap.h" />
     <ClInclude Include="InstancedCube.h" />
     <ClInclude Include="InstancedMesh.h" />
@@ -66,8 +69,11 @@
     <ClInclude Include="LindenmayerTree.h" />
     <ClInclude Include="LindenmayerTreeParser.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="MouseManager.h" />
     <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="Screen.h" />
     <ClInclude Include="Segment.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="TestScene.h" />
@@ -115,6 +121,10 @@
     <None Include="LindenmayerRules\parametricMonopodialTreeC.l" />
     <None Include="LindenmayerRules\parametricMonopodialTreeD.l" />
     <None Include="LindenmayerRules\parametricSympodialTreeA.l" />
+    <None Include="LindenmayerRules\parametricSympodialTreeB.l" />
+    <None Include="LindenmayerRules\parametricSympodialTreeC.l" />
+    <None Include="LindenmayerRules\parametricSympodialTreeD.l" />
+    <None Include="LindenmayerRules\parametricTernaryTreeA.l" />
     <None Include="LindenmayerRules\parametricTree.l" />
     <None Include="LindenmayerRules\randomTree.l" />
     <None Include="LindenmayerRules\randomTree2.l" />

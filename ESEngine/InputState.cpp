@@ -5,20 +5,29 @@ bool InputState::isKeyPressed(int key) {
 }
 
 bool InputState::isKeyReleased(int key) {
-	return keys[key];
+	return !keys[key];
 }
 
 const deque<Point2d> InputState::getMousePositionEvents() {
 	return mousePosition;
 }
 
+const Point2d InputState::getLastMousePosition() {
+	return lastMousePosition;
+}
+
 const deque<Point2d> InputState::getMouseScrollEvents() {
 	return mouseScroll;
+}
+
+const deque<ClickEvent> InputState::getMouseClickEvents() {
+	return mouseClick;
 }
 
 void InputState::clearMouseEvents() {
 	mousePosition.clear();
 	mouseScroll.clear();
+	mouseClick.clear();
 }
 
 void InputState::setKeyPressed(int key) {
@@ -31,8 +40,13 @@ void InputState::setKeyReleased(int key) {
 
 void InputState::pushMousePosition(double x, double y) {
 	mousePosition.push_back(Point2d(x, y));
+	lastMousePosition = Point2d(x, y);
 }
 
 void InputState::pushMouseScroll(double x, double y) {
 	mouseScroll.push_back(Point2d(x, y));
+}
+
+void InputState::pushMouseClick(ClickEvent click) {
+	mouseClick.push_back(click);
 }

@@ -2,7 +2,13 @@
 #define PHYSICS_MANAGER_H
 
 #include <btBulletDynamicsCommon.h>
+
+#include <boost/uuid/uuid_io.hpp>
+
 #include "RigidBody.h"
+#include "Ray.h"
+
+#include "Logger.h"
 
 class PhysicsManager {
 public:
@@ -10,7 +16,9 @@ public:
 	~PhysicsManager();
 
 	void addRigidBody(RigidBody* rigidBody);
+	void reloadRigidBody(RigidBody* rigidBody);
 	void step(double deltaTime);
+	GameObject* raycast(Ray &ray);
 
 private:
 	btBroadphaseInterface* broadphase;
@@ -18,6 +26,8 @@ private:
 	btCollisionDispatcher* dispatcher;
 	btSequentialImpulseConstraintSolver* solver;
 	btDiscreteDynamicsWorld* dynamicsWorld;
+
+	static Logger logger;
 };
 
 #endif

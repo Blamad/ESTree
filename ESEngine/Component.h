@@ -30,8 +30,6 @@ public:
 
 protected:
 	Component(const ComponentType &type) : type(type) {};
-
-private:
 	GameObject *parent = nullptr;
 };
 

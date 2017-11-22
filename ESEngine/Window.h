@@ -9,7 +9,9 @@ using namespace std;
 
 class Window {
 public:
-	Window(int width, int height) : width(width), height(height) { aspectRatio = width / height; };
+	Window(int width, int height) : width(width), height(height) { 
+		aspectRatio = width / height;
+	};
 
 	virtual bool initialize() = 0;
 	virtual bool shouldClose() = 0;
@@ -17,14 +19,20 @@ public:
 	virtual void prepareFrameRendering() = 0;
 	virtual void finishFrameRendering() = 0;
 
+	virtual void setCursorVisible() = 0;
+	virtual void setCursorHidden() = 0;
+	virtual void setCursorDisabled() = 0;
+
+	int getWidth() { return width; }
+	int getHeight() { return height; }
 	float getAspectRatio() { return aspectRatio; };
 
 	virtual double getTime() = 0;
 	virtual InputState* registerInputManager() = 0;
 
 protected:
-	int width, height;
 	float aspectRatio;
+	int width, height;
 private:
 	Window();
 };

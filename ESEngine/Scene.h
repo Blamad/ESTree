@@ -10,6 +10,7 @@
 #include "Renderer.h"
 #include "LightsManager.h"
 #include "PhysicsManager.h"
+#include "MouseManager.h"
 
 #include "Renderable.h"
 #include "Behaviour.h"
@@ -22,7 +23,7 @@ class Scene {
 public:
 	Scene();
 
-	void update(double dt, InputState &inputState);
+	void update(double &dt, InputState &inputState);
 	void renderFrame(Renderer &renderer);
 
 	GameObject* addGameObject(unique_ptr<GameObject> go);
@@ -35,6 +36,7 @@ public:
 private:
 	Camera *activeCamera;
 	unique_ptr<Skybox> skybox;
+	unique_ptr<MouseManager> mouseManager;
 	unique_ptr<LightsManager> lightsManager;
 	unique_ptr<PhysicsManager> physicsManager;
 	std::map<Uuid, unique_ptr<GameObject>> gameObjects;
