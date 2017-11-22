@@ -309,9 +309,6 @@ void LindenmayerTree::computeRingPoint(int startIndex, int endIndex) {
 		vert->position = position;
 		vert->normal = normal;
 		vert->texCoords = vec2(textureXStep * vga->vertexNumber, vga->textureY);
-		vert->type[POSITION] = 1;
-		vert->type[NORMAL] = 1;
-		vert->type[TEXCOORDS] = 1;
 	}
 }
 

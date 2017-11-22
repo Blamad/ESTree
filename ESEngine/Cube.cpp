@@ -12,9 +12,6 @@ Vertex Cube::createVertex(vec3 position, vec3 normal, vec2 texCoords) {
 	vert.position = position;
 	vert.normal = normal;
 	vert.texCoords = texCoords;
-	vert.type[POSITION] = 1;
-	vert.type[NORMAL] = 1;
-	vert.type[TEXCOORDS] = 1;
 
 	return vert;
 }
@@ -24,9 +21,6 @@ Vertex Cube::createVertex(vec3 position, vec3 normal, vec4 color) {
 	vert.position = position;
 	vert.color = color;
 	vert.normal = normal;
-	vert.type[POSITION] = 1;
-	vert.type[COLOR] = 1;
-	vert.type[NORMAL] = 1;
 
 	return vert;
 }
@@ -35,8 +29,6 @@ Vertex Cube::createVertex(vec3 position, vec3 normal) {
 	Vertex vert;
 	vert.position = position;
 	vert.normal = normal;
-	vert.type[POSITION] = 1;
-	vert.type[NORMAL] = 1;
 
 	return vert;
 }

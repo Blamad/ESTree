@@ -14,9 +14,6 @@ Vertex InstancedCube::createVertex(vec3 position, vec3 normal, vec2 texCoords) {
 	vert.position = position;
 	vert.normal = normal;
 	vert.texCoords = texCoords;
-	vert.type[POSITION] = 1;
-	vert.type[NORMAL] = 1;
-	vert.type[TEXCOORDS] = 1;
 
 	return vert;
 }
