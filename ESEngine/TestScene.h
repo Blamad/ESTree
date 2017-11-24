@@ -19,6 +19,9 @@ public:
 	GameObject* createDirectionalLight(vec3 direction);
 
 	void generateTerrain();
+	void generateSkybox();
+
+	void generateFrameBuffer();
 
 protected:
 	Transform* getTransform(GameObject* gameObject) {

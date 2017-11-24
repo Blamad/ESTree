@@ -14,6 +14,12 @@ int Screen::getScreenHeight() {
 	}
 }
 
+void Screen::setViewport(int width, int height) {
+	if (instance) {
+		instance->setViewport(width, height);
+	}
+}
+
 void Screen::setCursorState(CursorState state) {
 	switch (state) {
 		case VISIBLE:

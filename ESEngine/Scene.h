@@ -3,10 +3,12 @@
 
 #include <memory>
 #include <map>
+#include <functional>
 #include <GLM/gtc/matrix_transform.hpp>
 
 #include "GameObject.h"
 #include "InputState.h"
+#include "FrameBuffer.h"
 #include "Renderer.h"
 #include "LightsManager.h"
 #include "PhysicsManager.h"
@@ -24,6 +26,8 @@ public:
 	Scene();
 
 	void update(double &dt, InputState &inputState);
+	void renderObjectsUsingShader(Renderer &renderer, Shader &shader);
+	void renderObjects(Renderer &renderer);
 	void renderFrame(Renderer &renderer);
 
 	GameObject* addGameObject(unique_ptr<GameObject> go);
@@ -32,6 +36,7 @@ public:
 
 	void setActiveCamera(GameObject *gameObject);
 	void setSkybox(unique_ptr<Skybox> skybox);
+	void setFrameBuffer(unique_ptr<FrameBuffer> frameBuffer);
 
 private:
 	Camera *activeCamera;
@@ -39,7 +44,11 @@ private:
 	unique_ptr<MouseManager> mouseManager;
 	unique_ptr<LightsManager> lightsManager;
 	unique_ptr<PhysicsManager> physicsManager;
-	std::map<Uuid, unique_ptr<GameObject>> gameObjects;
+	map<Uuid, unique_ptr<GameObject>> gameObjects;
+	unique_ptr<FrameBuffer> sceneFrameBuffer;
+
+	void renderSkybox(Renderer &renderer);
+	function<void(Renderer&, Shader&)> prepareDrawObjectsCall();
 };
 
 #endif

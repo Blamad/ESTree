@@ -2,6 +2,7 @@
 #define MOUSE_MANAGER_H
 
 #include <glm/glm.hpp>
+#include <boost/foreach.hpp>
 #include "PhysicsManager.h"
 #include "CameraBehaviour.h"
 #include "Camera.h"
@@ -29,10 +30,11 @@ private:
 	CameraBehaviour *cameraBehaviour;
 	bool objectPickingMode;
 
-	void processKeyboardShortcuts(InputState & inputState);
+	void processTriggeringInputEvents(InputState & inputState);
 	void updateCameraBehaviour(double dt, InputState & inputState);
 	void updatePhysicsWorld(double dt, InputState & inputState);
 
+	bool checkIfMouseRightClickEventHappened(InputState& inputState, bool pressed);
 	//RigidBody stuff
 
 	GameObject *pickedGameObject;

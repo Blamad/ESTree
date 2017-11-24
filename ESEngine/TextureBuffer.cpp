@@ -3,22 +3,33 @@
 void TextureBuffer::setTextureBuffer(const unsigned char* const texture, const int& width, const int& height, const int& channels, TextureType type)
 {
 	glGenTextures(1, &id);
-
 	glBindTexture(GL_TEXTURE_2D, id);
 	
-	GLenum format;
-	if (channels == 3)
-		format = GL_RGB;
-	if (channels == 4)
-		format = GL_RGBA;
+	switch(type) {
+	case 5: //DEPTH_BUFFER
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		break;
+	default:
+		GLenum format;
+		if (channels == 3)
+			format = GL_RGB;
+		if (channels == 4)
+			format = GL_RGBA;
 
-	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, texture);
-	glGenerateMipmap(GL_TEXTURE_2D);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, texture);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		break;
+	}
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

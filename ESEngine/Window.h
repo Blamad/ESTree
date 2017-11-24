@@ -23,6 +23,8 @@ public:
 	virtual void setCursorHidden() = 0;
 	virtual void setCursorDisabled() = 0;
 
+	virtual void setViewport(int width, int height) = 0;
+
 	int getWidth() { return width; }
 	int getHeight() { return height; }
 	float getAspectRatio() { return aspectRatio; };

@@ -28,6 +28,8 @@ public:
 	void generateTerrain();
 	void addSkybox();
 
+	void generateTestBox(vec3 pos, vec3 scale);
+
 protected:
 	static Logger logger;
 

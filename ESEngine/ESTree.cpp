@@ -16,7 +16,9 @@ Logger logger("ESTree");
 Engine* initEngine();
 
 int main() {
+	logger.log(INFO, "Starting engine..");
 	Engine* engine = initEngine();
+	logger.log(INFO, "Creating scene..");
 	SceneManager* sceneManager = engine->getSceneManager();
 
 	//treeScene(sceneManager);

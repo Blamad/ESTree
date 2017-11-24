@@ -1,5 +1,5 @@
-#ifndef GLWINDOW_H
-#define GLWINDOW_H
+#ifndef GL_WINDOW_H
+#define GL_WINDOW_H
 //GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -24,6 +24,7 @@ public:
 	void poolInputEvents();
 	void prepareFrameRendering();
 	void finishFrameRendering();
+	void setViewport(int width, int height);
 
 	void setCursorVisible();
 	void setCursorHidden();

@@ -78,6 +78,7 @@ void TreeScene::initialize() {
 	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves3.png"));
 
 	/**/
+	generateTestBox(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5));
 
 	generateTerrain();
 	addSkybox();
@@ -94,11 +95,18 @@ void TreeScene::initialize() {
 
 GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial, bool debug) {
 	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
-	GameObject* go = addGameObject(unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, debug)));
-	Transform *transform = getTransform(go);
+
+	unique_ptr<GameObject> go = unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, debug));
+	go->name = "Tree";
+	Transform *transform = getTransform(go.get());
 	transform->translate(position);
-	((LindenmayerTree*)go)->generate();
-	return go;
+	((LindenmayerTree*)go.get())->generate();
+
+	shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	go->addComponent(rigidBody);
+	rigidBody->initAsAHullShape(0);
+
+	return addGameObject(move(go));
 }
 
 void TreeScene::generateTerrain() {
@@ -121,7 +129,7 @@ void TreeScene::generateTerrain() {
 			transform->scale(vec3(segmentSize, 0.1, segmentSize));
 			rigidBody = shared_ptr<RigidBody>(new RigidBody());
 			go->addComponent(rigidBody);
-			rigidBody->initAsBox(0, transform->getScale());
+			rigidBody->initAsBox(0);
 			addGameObject(move(go));
 		}
 	}
@@ -152,6 +160,19 @@ GameObject* TreeScene::createCamera(glm::vec3 position, float yaw, float pitch) 
 	shared_ptr<CameraBehaviour> cameraBehaviour = shared_ptr<CameraBehaviour>(new CameraBehaviour(camera.get()));
 	go->addComponent(cameraBehaviour);
 	return addGameObject(move(go));
+}
+
+void TreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1,1,1)) {
+	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container()));
+	go->name = "CrateCube";
+	Transform* transform = getTransform(go.get());
+	transform->translate(pos);
+	shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	go->addComponent(rigidBody);
+	rigidBody->initAsBox(1);
+	rigidBody->makeDynamic();
+
+	addGameObject(move(go));
 }
 
 void TreeScene::addSkybox() {

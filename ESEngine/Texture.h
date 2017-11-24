@@ -11,7 +11,9 @@ enum TextureType {
 	DIFFUSE,
 	SPECULAR,
 	AMBIENT,
-	CUBEMAP
+	CUBEMAP,
+	BUFFER,
+	DEPTH_BUFFER
 };
 
 class Texture {

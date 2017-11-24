@@ -13,6 +13,7 @@ public:
 
 	static int getScreenWidth();
 	static int getScreenHeight();
+	static void setViewport(int width, int height);
 	static void setCursorState(CursorState state);
 
 private:

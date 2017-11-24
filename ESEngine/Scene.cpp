@@ -41,6 +41,10 @@ void Scene::removeGameObject(GameObject *gameObject) {
 	gameObjects.erase(uuid);
 }
 
+void Scene::setFrameBuffer(unique_ptr<FrameBuffer> frameBuffer) {
+	this->sceneFrameBuffer = move(frameBuffer);
+}
+
 void Scene::update(double &dt, InputState &inputState) {
 	physicsManager->step(dt);
 	mouseManager->update(dt, inputState);
@@ -63,20 +67,50 @@ void Scene::update(double &dt, InputState &inputState) {
 	}
 }
 
-void Scene::renderFrame(Renderer &renderer) {
-
-	Shader::updateViewMatrix(activeCamera->getViewMatrix());
-	lightsManager->updateLights(activeCamera->position);
-
-	for(const auto &node : gameObjects) {
+void Scene::renderObjects(Renderer &renderer) {
+	for (const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
-		for (auto &	renderable : go->getComponents(RENDERABLE)) {
+		for (auto & renderable : go->getComponents(RENDERABLE)) {
 			((Renderable*)renderable)->draw(renderer);
 		}
 	}
+}
+
+void Scene::renderObjectsUsingShader(Renderer &renderer, Shader &shader) {
+	for (const auto &node : gameObjects) {
+		GameObject *go = node.second.get();
+		for (auto & renderable : go->getComponents(RENDERABLE)) {
+			((Renderable*)renderable)->draw(renderer, shader);
+		}
+	}
+}
+
+void Scene::renderSkybox(Renderer &renderer) {
 	if (skybox != nullptr) {
 		skybox->updatePosition(activeCamera->position);
 		skybox->draw(renderer);
 	}
+}
 
+function<void(Renderer&, Shader&)> Scene::prepareDrawObjectsCall() {
+	function<void(Renderer&, Shader&)> renderObjectsFunction;
+	renderObjectsFunction = [this](Renderer& renderer, Shader& shader) { renderObjectsUsingShader(renderer, shader); };
+	return renderObjectsFunction;
+}
+
+void Scene::renderFrame(Renderer &renderer) {
+	lightsManager->updateLights(activeCamera->position, renderer, prepareDrawObjectsCall());
+	Shader::updateViewMatrix(activeCamera->getViewMatrix());
+
+	if (sceneFrameBuffer != nullptr) {
+		sceneFrameBuffer->mountFrameBuffer();
+	}
+
+	renderObjects(renderer);
+	renderSkybox(renderer);
+
+	if (sceneFrameBuffer != nullptr) {
+		sceneFrameBuffer->unmountFrameBuffer();
+		sceneFrameBuffer->executeFrameBuffer(renderer);
+	}
 }

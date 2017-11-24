@@ -40,6 +40,7 @@ bool GLWindow::initialize() {
 	//Ustawienie opcji openGLa
 	glEnable(GL_DEPTH_TEST);
 
+	//Deprecated
 	bool linesOnly = false;
 	if(linesOnly)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -47,10 +48,13 @@ bool GLWindow::initialize() {
 		glEnable(GL_CULL_FACE);
 	
 	//Ustawienie koloru czyszczenia ekranu
-	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
 	return true;
+}
+
+void GLWindow::setViewport(int width, int height) {
+	glViewport(0, 0, width, height);
 }
 
 void GLWindow::poolInputEvents() {

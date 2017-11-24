@@ -2,17 +2,19 @@
 #define RIGIDBODY_H
 
 #include <btBulletDynamicsCommon.h>
+#include <BulletCollision\CollisionShapes\btShapeHull.h>
 
 #include <GLM\glm.hpp>
 
-#include "Component.h"
+#include "Logger.h"
 #include "Transform.h"
+#include "Mesh.h"
 
 class RigidBody : public Component {
 public:
 	RigidBody();
-	void initAsBox(double mass, glm::vec3 boxSize);
-	void initAsAHullShape();
+	void initAsBox(double mass);
+	void initAsAHullShape(double mass);
 	
 	btRigidBody* rigidBody;
 	bool pickable = false;
@@ -32,8 +34,12 @@ protected:
 	void updateRigidBody();
 
 private:
+	static Logger logger;
+
 	double mass;
 	Transform* transform;
+
+	btCollisionShape* calculateHullCollisionShape(Mesh* mesh);
 };
 
 #endif

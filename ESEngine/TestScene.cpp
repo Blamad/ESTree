@@ -17,7 +17,7 @@ void TestScene::initialize() {
 	go->addComponent(shared_ptr<Behaviour>(new RotationBehaviour()));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
-	rigidBody->initAsBox(1, vec3(1, 1, 1));
+	rigidBody->initAsBox(2);
 	rigidBody->makeDynamic();
 	addGameObject(move(go));
 
@@ -28,7 +28,7 @@ void TestScene::initialize() {
 	transform->rotate(45.0f, vec3(1, 1, 1));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
-	rigidBody->initAsBox(1, vec3(1, 1, 1));
+	rigidBody->initAsBox(2);
 	rigidBody->makeDynamic();
 	addGameObject(move(go));
 
@@ -39,7 +39,7 @@ void TestScene::initialize() {
 	transform->rotate(45.0f, vec3(1, 1, 1));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
-	rigidBody->initAsBox(1, vec3(1, 1, 1));
+	rigidBody->initAsBox(2);
 	rigidBody->makeDynamic();
 
 	addGameObject(move(go));
@@ -51,7 +51,7 @@ void TestScene::initialize() {
 	transform->rotate(45.0f, vec3(1, 1, 1));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
-	rigidBody->initAsBox(1, vec3(1, 1, 1));
+	rigidBody->initAsBox(2);
 	rigidBody->makeDynamic();
 
 	addGameObject(move(go));
@@ -63,18 +63,21 @@ void TestScene::initialize() {
 	transform->rotate(45.0f, vec3(1, 1, 1));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
-	rigidBody->initAsBox(1, vec3(1, 1, 1));
+	rigidBody->initAsBox(2);
 	rigidBody->makeDynamic();
 
 	addGameObject(move(go));
 
 	generateTerrain();
+	generateSkybox();
 
 	//Light
 	createWhiteLampCube(vec3(-15, 20, 0), MEDIUM);
 	createWhiteLampCube(vec3(15, 20, 0), MEDIUM);
 	createWhiteLampCube(vec3(0, -5, 0), WEAK);
 	createDirectionalLight(vec3(0, -1, -1));
+
+	generateFrameBuffer();
 }
 
 void TestScene::generateTerrain() {
@@ -98,7 +101,7 @@ void TestScene::generateTerrain() {
 			transform->scale(vec3(segmentSize, 0.1, segmentSize));
 			rigidBody = shared_ptr<RigidBody>(new RigidBody());
 			go->addComponent(rigidBody);
-			rigidBody->initAsBox(0, transform->getScale());
+			rigidBody->initAsBox(0);
 			addGameObject(move(go));
 		}
 	}
@@ -135,4 +138,27 @@ GameObject* TestScene::createCube(Material material) {
 	GameObject* go = addGameObject(unique_ptr<GameObject>(new Cube(material)));
 	go->name = "Cube";
 	return go;
+}
+
+void TestScene::generateSkybox() {
+	string skyboxTex[] = {
+		"Textures/Skybox_darkforest/right.jpg",
+		"Textures/Skybox_darkforest/left.jpg",
+		"Textures/Skybox_darkforest/top.jpg",
+		"Textures/Skybox_darkforest/bottom.jpg",
+		"Textures/Skybox_darkforest/back.jpg",
+		"Textures/Skybox_darkforest/front.jpg"
+	};
+
+	Shader shader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
+
+	unique_ptr<Skybox> skybox(new Skybox(skyboxTex, shader));
+	setSkybox(std::move(skybox));
+}
+
+void TestScene::generateFrameBuffer() {
+	unique_ptr<Shader> shader(new Shader("Shaders/PostEffectShader.vert", "Shaders/PostEffectShader.frag"));
+	unique_ptr<FrameBuffer> fb(new FrameBuffer(move(shader)));
+	fb->initAsColorBuffer();
+	setFrameBuffer(move(fb));
 }

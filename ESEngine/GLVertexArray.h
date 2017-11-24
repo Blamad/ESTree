@@ -1,5 +1,5 @@
-#ifndef GLVERTEXARRAY_H
-#define GLVERTEXARRAY_H
+#ifndef GL_VERTEXARRAY_H
+#define GL_VERTEXARRAY_H
 
 #include <GL/glew.h>
 #include "VertexArray.h"

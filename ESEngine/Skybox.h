@@ -10,6 +10,7 @@ class Skybox : public Renderable
 public:
 	Skybox(string* paths, Shader shader);
 	void draw(Renderer &renderer);
+	void draw(Renderer &renderer, Shader &shader);
 	
 	void updatePosition(vec3 position) {
 		this->position = position;

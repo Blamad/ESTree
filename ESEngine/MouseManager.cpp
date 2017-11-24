@@ -4,7 +4,7 @@
 Logger MouseManager::logger("MouseManager");
 
 void MouseManager::update(double dt, InputState &inputState) {
-	processKeyboardShortcuts(inputState);
+	processTriggeringInputEvents(inputState);
 	if (objectPickingMode)
 		updatePhysicsWorld(dt, inputState);
 	else
@@ -36,7 +36,7 @@ GameObject* MouseManager::raycastClickToGameObject(Point2d mousePos) {
 }
 
 void MouseManager::updatePickedObject(double dt, InputState& inputState) {
-	for (Point2d const& mousePos : inputState.getMousePositionEvents()) {
+	BOOST_FOREACH (Point2d const& mousePos, inputState.getMousePositionEvents()) {
 		if (lastXPos != NULL && lastYPos != NULL)
 			moveGameObject(pickedGameObject, mousePos.x - lastXPos, mousePos.y - lastYPos);
 		lastXPos = mousePos.x;
@@ -97,9 +97,17 @@ void MouseManager::updateCameraBehaviour(double dt, InputState &inputState) {
 	cameraBehaviour->update(dt, inputState);
 }
 
-void MouseManager::processKeyboardShortcuts(InputState &inputState) {
+bool MouseManager::checkIfMouseRightClickEventHappened(InputState& inputState, bool pressed) {
+	BOOST_FOREACH(ClickEvent const& click, inputState.getMouseClickEvents()) {
+		if (click.button == MOUSE_BUTTON_RIGHT && click.pressed == pressed)
+			return true;
+	}
+	return false;
+}
+
+void MouseManager::processTriggeringInputEvents(InputState &inputState) {
 	//Enter camera control mode
-	if ((inputState.isKeyPressed(GLFW_KEY_LEFT_CONTROL) || inputState.isKeyPressed(GLFW_KEY_RIGHT_CONTROL)) && objectPickingMode) {
+	if (checkIfMouseRightClickEventHappened(inputState, true) && objectPickingMode) {
 		objectPickingMode = false;
 		if (pickedGameObject != nullptr)
 			releaseObject();
@@ -110,7 +118,7 @@ void MouseManager::processKeyboardShortcuts(InputState &inputState) {
 	}
 
 	//Enter object picking mode
-	if ((inputState.isKeyReleased(GLFW_KEY_LEFT_CONTROL) && inputState.isKeyReleased(GLFW_KEY_RIGHT_CONTROL)) && !objectPickingMode) {
+	if (checkIfMouseRightClickEventHappened(inputState, false) && !objectPickingMode) {
 		objectPickingMode = true;
 		Screen::setCursorState(VISIBLE);
 	}

@@ -1,5 +1,5 @@
-#ifndef GLRENDERER_H
-#define GLRENDERER_H
+#ifndef GL_RENDERER_H
+#define GL_RENDERER_H
 
 #include "GLVertexArray.h"
 #include "Renderer.h"

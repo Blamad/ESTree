@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CubeMap.cpp" />
+    <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="InstancedMesh.cpp" />
     <ClCompile Include="InstancedCube.cpp" />
     <ClCompile Include="LindenmayerTreeParams.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="ClickEvent.h" />
     <ClInclude Include="CubeMap.h" />
+    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="InstancedCube.h" />
     <ClInclude Include="InstancedMesh.h" />
     <ClInclude Include="InstancedTransform.h" />
@@ -134,6 +136,8 @@
     <None Include="LindenmayerRules\testX.l" />
     <None Include="LindenmayerRules\testY.l" />
     <None Include="LindenmayerRules\testZ.l" />
+    <None Include="Shaders\DirectionalShadowShader.frag" />
+    <None Include="Shaders\DirectionalShadowShader.vert" />
     <None Include="Shaders\GenericShader.frag" />
     <None Include="Shaders\GenericShader.vert" />
     <None Include="Shaders\InstancedShader.frag" />
@@ -143,6 +147,8 @@
     <None Include="Shaders\MeshWiringShader.frag" />
     <None Include="Shaders\MeshWiringShader.geom" />
     <None Include="Shaders\MeshWiringShader.vert" />
+    <None Include="Shaders\PostEffectShader.frag" />
+    <None Include="Shaders\PostEffectShader.vert" />
     <None Include="Shaders\SkyboxShader.frag" />
     <None Include="Shaders\SkyboxShader.vert" />
   </ItemGroup>

@@ -183,6 +183,9 @@
     <ClCompile Include="MouseManager.cpp">
       <Filter>Engine\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FrameBuffer.cpp">
+      <Filter>GraphicEngine\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -344,6 +347,9 @@
     <ClInclude Include="MouseManager.h">
       <Filter>Engine\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FrameBuffer.h">
+      <Filter>GraphicEngine\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="LindenmayerRules\advancedTree.l">
@@ -441,6 +447,18 @@
     </None>
     <None Include="LindenmayerRules\parametricTernaryTreeA.l">
       <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="Shaders\PostEffectShader.frag">
+      <Filter>TestProject\Models\Shaders</Filter>
+    </None>
+    <None Include="Shaders\PostEffectShader.vert">
+      <Filter>TestProject\Models\Shaders</Filter>
+    </None>
+    <None Include="Shaders\DirectionalShadowShader.frag">
+      <Filter>TestProject\Models\Shaders</Filter>
+    </None>
+    <None Include="Shaders\DirectionalShadowShader.vert">
+      <Filter>TestProject\Models\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
