@@ -8,7 +8,7 @@
 
 #include "Shader.h"
 #include "Renderer.h"
-#include "FrameBuffer.h"
+#include "DepthFrameBuffer.h"
 #include "Light.h"
 #include "PointLight.h"
 #include "Transform.h"

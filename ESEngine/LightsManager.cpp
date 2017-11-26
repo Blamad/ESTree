@@ -65,6 +65,5 @@ void LightsManager::initializeLightsUBO() {
 
 void LightsManager::initialize() {
 	unique_ptr<Shader> shader = unique_ptr<Shader>(new Shader("Shaders/DirectionalShadowShader.vert", "Shaders/DirectionalShadowShader.frag"));
-	depthBuffer = unique_ptr<FrameBuffer>(new FrameBuffer(move(shader)));
-	depthBuffer->initAsDepthBuffer(2048, 2048);
+	depthBuffer = unique_ptr<FrameBuffer>(new DepthFrameBuffer(move(shader), 2048, 2048));
 }

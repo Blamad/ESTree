@@ -1,5 +1,4 @@
 #include "Texture2D.h"
-#include "TextureBuffer.h"
 
 Texture2D::Texture2D(string fileName, int width, int height, int channels, const unsigned char* const texture, TextureType type)
 {

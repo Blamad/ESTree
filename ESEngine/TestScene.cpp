@@ -1,9 +1,4 @@
 #include "TestScene.h"
-#include "Cube.h"
-#include "LampCube.h"
-#include "InstancedCube.h"
-#include "RotationBehaviour.h"
-#include "RigidBody.h"
 
 void TestScene::initialize() {
 
@@ -72,10 +67,10 @@ void TestScene::initialize() {
 	generateSkybox();
 
 	//Light
-	createWhiteLampCube(vec3(-15, 20, 0), MEDIUM);
-	createWhiteLampCube(vec3(15, 20, 0), MEDIUM);
-	createWhiteLampCube(vec3(0, -5, 0), WEAK);
-	createDirectionalLight(vec3(0, -1, -1));
+	createWhiteLampCube(vec3(-15, 20, 0), WEAK);
+	//createWhiteLampCube(vec3(15, 20, 0), WEAK);
+	//createWhiteLampCube(vec3(0, -5, 0), WEAK);
+	createDirectionalLight(vec3(-1, -0.5, -1));
 
 	generateFrameBuffer();
 }
@@ -157,8 +152,5 @@ void TestScene::generateSkybox() {
 }
 
 void TestScene::generateFrameBuffer() {
-	unique_ptr<Shader> shader(new Shader("Shaders/PostEffectShader.vert", "Shaders/PostEffectShader.frag"));
-	unique_ptr<FrameBuffer> fb(new FrameBuffer(move(shader)));
-	fb->initAsColorBuffer();
-	setFrameBuffer(move(fb));
+	setFrameBuffer(unique_ptr<FrameBuffer>(new HDRFrameBuffer()));
 }

@@ -7,24 +7,6 @@
     <Filter Include="GraphicEngine">
       <UniqueIdentifier>{394ed7ce-4347-4795-bf07-fe5bae7b6f1e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Header Files">
-      <UniqueIdentifier>{38a27739-9ed4-42f5-8e60-ed00d5b719b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Source Files">
-      <UniqueIdentifier>{a432df6f-00d1-4542-8844-49641b7913e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Interfaces">
-      <UniqueIdentifier>{3054ff0a-11cd-45f2-b835-d89885754ef5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GraphicEngine\Header Files">
-      <UniqueIdentifier>{3254cfd2-4e87-4df2-b394-7ddb9e4ccb12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GraphicEngine\Source Files">
-      <UniqueIdentifier>{92c31588-08b8-4d6a-9351-1fa37205c383}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GraphicEngine\Interfaces">
-      <UniqueIdentifier>{0459808b-ad6b-4fc0-8795-bc137966f744}</UniqueIdentifier>
-    </Filter>
     <Filter Include="TestProject">
       <UniqueIdentifier>{7bddaace-8f0d-406a-93e2-ba58b9d8dd41}</UniqueIdentifier>
     </Filter>
@@ -70,61 +52,103 @@
     <Filter Include="TestProject\Models\Trees\Tree Models\Parametric">
       <UniqueIdentifier>{3a4fb0bb-e1a3-4cf4-9d7a-c978b4c21cd5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameObject">
+      <UniqueIdentifier>{121b900a-08ff-40e7-b7f8-f4b1fbe2bb74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\Header Files">
+      <UniqueIdentifier>{753f7a17-c6dd-4463-8f3a-b8ab50df2043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\Source Files">
+      <UniqueIdentifier>{b20aab75-162b-4485-a505-44ea6e63bafb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\Interfaces">
+      <UniqueIdentifier>{4c69441b-ab89-4ca5-9e20-03dcab2ee3f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager">
+      <UniqueIdentifier>{b985904d-2137-4d6a-b5c6-68aee897c73c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\Header Files">
+      <UniqueIdentifier>{ea1a8c52-d788-42c3-bd36-4323c58d282a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\Source Files">
+      <UniqueIdentifier>{5cd841f5-2dbb-4765-90d0-2b969fe5cf25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core">
+      <UniqueIdentifier>{7261d0dc-164d-4bf4-9888-2a1726061df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Header Files">
+      <UniqueIdentifier>{38a27739-9ed4-42f5-8e60-ed00d5b719b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Source Files">
+      <UniqueIdentifier>{a432df6f-00d1-4542-8844-49641b7913e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene">
+      <UniqueIdentifier>{896276d5-0d2e-4b5e-b934-4734a1962782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Header Files">
+      <UniqueIdentifier>{ff336391-d2a0-41b2-8c56-88bea72cf0a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Source Files">
+      <UniqueIdentifier>{cafda411-fc1f-49cd-af87-af6eafc72e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Input">
+      <UniqueIdentifier>{ea171643-9a30-458c-b8bc-ad60a67c630a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Input\Source Files">
+      <UniqueIdentifier>{80068229-42da-4f46-b80a-443904aa7cda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Input\Header Files">
+      <UniqueIdentifier>{f78e6b7f-07c2-4370-b02c-8172995f0d65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Core">
+      <UniqueIdentifier>{f01a2c68-7257-4328-9860-ef7883b50e24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Core\Header Files">
+      <UniqueIdentifier>{3254cfd2-4e87-4df2-b394-7ddb9e4ccb12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Core\Source Files">
+      <UniqueIdentifier>{92c31588-08b8-4d6a-9351-1fa37205c383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Core\Interfaces">
+      <UniqueIdentifier>{0459808b-ad6b-4fc0-8795-bc137966f744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Framebuffer">
+      <UniqueIdentifier>{fada0d81-7897-4b9f-9f93-39c0f3de035d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Framebuffer\Header Files">
+      <UniqueIdentifier>{43e2901c-87a1-47bb-8e3a-9a5b8b9d5d0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Framebuffer\Interfaces">
+      <UniqueIdentifier>{7e8d850a-8db6-464d-8174-c26dd6dca1a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Framebuffer\Source Files">
+      <UniqueIdentifier>{b97045cf-8c66-4f04-914a-8cfef7697e1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicEngine\Shaders">
+      <UniqueIdentifier>{a1891227-bf0c-4e3e-9a43-4ea4b3589a54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
-      <Filter>Engine\Source Files</Filter>
+      <Filter>Engine\Core\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GLWindow.cpp">
-      <Filter>GraphicEngine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputState.cpp">
-      <Filter>GraphicEngine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Engine\Source Files</Filter>
+      <Filter>GraphicEngine\Core\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ESTree.cpp">
       <Filter>TestProject</Filter>
     </ClCompile>
     <ClCompile Include="GLRenderer.cpp">
-      <Filter>GraphicEngine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Engine\Source Files</Filter>
+      <Filter>GraphicEngine\Core\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GLVertexArray.cpp">
-      <Filter>GraphicEngine\Source Files</Filter>
+      <Filter>GraphicEngine\Core\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>GraphicEngine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraBehaviour.cpp">
-      <Filter>Engine\Source Files</Filter>
+      <Filter>GraphicEngine\Core\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
       <Filter>TestProject\Models\General\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LightsManager.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LightsUtils.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Engine\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LampCube.cpp">
       <Filter>TestProject\Models\General\Source Files</Filter>
@@ -132,26 +156,11 @@
     <ClCompile Include="TreeBehaviour.cpp">
       <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Texture2D.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CubeMap.cpp">
-      <Filter>Engine\Source Files</Filter>
+      <Filter>Engine\Core\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TextureBuffer.cpp">
-      <Filter>GraphicEngine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RigidBody.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsManager.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InstancedMesh.cpp">
-      <Filter>Engine\Source Files</Filter>
+      <Filter>GraphicEngine\Core\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InstancedCube.cpp">
       <Filter>TestProject\Models\General\Source Files</Filter>
@@ -169,108 +178,108 @@
       <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
-      <Filter>Engine\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>Engine\Source Files</Filter>
+      <Filter>Engine\Core\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LindenmayerTreeParser.cpp">
       <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Screen.cpp">
-      <Filter>Engine\Source Files</Filter>
+      <Filter>Engine\Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraBehaviour.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeMap.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InstancedMesh.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LightsManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LightsUtils.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MouseManager.cpp">
-      <Filter>Engine\Source Files</Filter>
+      <Filter>Engine\Manager\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FrameBuffer.cpp">
-      <Filter>GraphicEngine\Source Files</Filter>
+    <ClCompile Include="PhysicsManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Engine\Scene\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputState.cpp">
+      <Filter>GraphicEngine\Input\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HDRFrameBuffer.cpp">
+      <Filter>GraphicEngine\Framebuffer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PostEffectFrameBuffer.cpp">
+      <Filter>GraphicEngine\Framebuffer\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthFrameBuffer.cpp">
+      <Filter>GraphicEngine\Framebuffer\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
-      <Filter>Engine\Header Files</Filter>
+      <Filter>Engine\Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GLWindow.h">
-      <Filter>GraphicEngine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputState.h">
-      <Filter>GraphicEngine\Header Files</Filter>
+      <Filter>GraphicEngine\Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
-      <Filter>GraphicEngine\Interfaces</Filter>
+      <Filter>GraphicEngine\Core\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
-      <Filter>GraphicEngine\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Point2d.h">
-      <Filter>GraphicEngine\Header Files</Filter>
+      <Filter>GraphicEngine\Core\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="GLRenderer.h">
-      <Filter>GraphicEngine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Engine\Header Files</Filter>
+      <Filter>GraphicEngine\Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vertex.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Engine\Header Files</Filter>
+      <Filter>Engine\Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GLVertexArray.h">
-      <Filter>GraphicEngine\Header Files</Filter>
+      <Filter>GraphicEngine\Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>GraphicEngine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderable.h">
-      <Filter>Engine\Interfaces</Filter>
+      <Filter>GraphicEngine\Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VertexArray.h">
-      <Filter>GraphicEngine\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Behaviour.h">
-      <Filter>Engine\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraBehaviour.h">
-      <Filter>Engine\Header Files</Filter>
+      <Filter>GraphicEngine\Core\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>TestProject\Models\General\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LightsManager.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PointLight.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectionalLight.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LightsUtils.h">
-      <Filter>Engine\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RotationBehaviour.h">
       <Filter>TestProject\Models\General\Header Files</Filter>
@@ -288,34 +297,16 @@
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Engine\Header Files</Filter>
+      <Filter>Engine\Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeMap.h">
-      <Filter>Engine\Header Files</Filter>
+      <Filter>Engine\Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextureBuffer.h">
-      <Filter>GraphicEngine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RigidBody.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsManager.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InstancedMesh.h">
-      <Filter>Engine\Header Files</Filter>
+      <Filter>GraphicEngine\Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InstancedCube.h">
       <Filter>TestProject\Models\General\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InstancedTransform.h">
-      <Filter>Engine\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TreeScene.h">
       <Filter>TestProject\Scenes\Header Files</Filter>
@@ -327,28 +318,109 @@
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Skybox.h">
-      <Filter>Engine\Header Files</Filter>
+      <Filter>Engine\Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LindenmayerTreeParser.h">
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ClickEvent.h">
-      <Filter>GraphicEngine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ray.h">
-      <Filter>Engine\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Screen.h">
-      <Filter>Engine\Header Files</Filter>
+      <Filter>Engine\Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Engine\GameObject\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviour.h">
+      <Filter>Engine\GameObject\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraBehaviour.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeMap.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionalLight.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedMesh.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedTransform.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightsManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightsUtils.h">
+      <Filter>Engine\Manager\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MouseManager.h">
-      <Filter>Engine\Header Files</Filter>
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Engine\GameObject\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClickEvent.h">
+      <Filter>GraphicEngine\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputState.h">
+      <Filter>GraphicEngine\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Point2d.h">
+      <Filter>GraphicEngine\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HDRFrameBuffer.h">
+      <Filter>GraphicEngine\Framebuffer\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FrameBuffer.h">
-      <Filter>GraphicEngine\Header Files</Filter>
+      <Filter>GraphicEngine\Framebuffer\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="PostEffectFrameBuffer.h">
+      <Filter>GraphicEngine\Framebuffer\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthFrameBuffer.h">
+      <Filter>GraphicEngine\Framebuffer\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -389,15 +461,6 @@
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="Shaders\LampShader.vert">
-      <Filter>TestProject\Models\Shaders</Filter>
-    </None>
-    <None Include="Shaders\MeshWiringShader.frag">
-      <Filter>TestProject\Models\Shaders</Filter>
-    </None>
-    <None Include="Shaders\MeshWiringShader.geom">
-      <Filter>TestProject\Models\Shaders</Filter>
-    </None>
-    <None Include="Shaders\MeshWiringShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="Shaders\SkyboxShader.frag">
@@ -455,10 +518,25 @@
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="Shaders\DirectionalShadowShader.frag">
-      <Filter>TestProject\Models\Shaders</Filter>
+      <Filter>GraphicEngine\Shaders</Filter>
     </None>
     <None Include="Shaders\DirectionalShadowShader.vert">
-      <Filter>TestProject\Models\Shaders</Filter>
+      <Filter>GraphicEngine\Shaders</Filter>
+    </None>
+    <None Include="Shaders\HDRShader.frag">
+      <Filter>GraphicEngine\Shaders</Filter>
+    </None>
+    <None Include="Shaders\HDRShader.vert">
+      <Filter>GraphicEngine\Shaders</Filter>
+    </None>
+    <None Include="Shaders\MeshWiringShader.frag">
+      <Filter>GraphicEngine\Shaders</Filter>
+    </None>
+    <None Include="Shaders\MeshWiringShader.geom">
+      <Filter>GraphicEngine\Shaders</Filter>
+    </None>
+    <None Include="Shaders\MeshWiringShader.vert">
+      <Filter>GraphicEngine\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

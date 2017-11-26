@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DepthFrameBuffer.cpp" />
+    <ClCompile Include="PostEffectFrameBuffer.cpp" />
     <ClCompile Include="CubeMap.cpp" />
-    <ClCompile Include="FrameBuffer.cpp" />
+    <ClCompile Include="HDRFrameBuffer.cpp" />
     <ClCompile Include="InstancedMesh.cpp" />
     <ClCompile Include="InstancedCube.cpp" />
     <ClCompile Include="LindenmayerTreeParams.cpp" />
@@ -61,8 +63,11 @@
   <ItemGroup>
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="ClickEvent.h" />
+    <ClInclude Include="DepthFrameBuffer.h" />
+    <ClInclude Include="PostEffectFrameBuffer.h" />
     <ClInclude Include="CubeMap.h" />
     <ClInclude Include="FrameBuffer.h" />
+    <ClInclude Include="HDRFrameBuffer.h" />
     <ClInclude Include="InstancedCube.h" />
     <ClInclude Include="InstancedMesh.h" />
     <ClInclude Include="InstancedTransform.h" />
@@ -140,6 +145,8 @@
     <None Include="Shaders\DirectionalShadowShader.vert" />
     <None Include="Shaders\GenericShader.frag" />
     <None Include="Shaders\GenericShader.vert" />
+    <None Include="Shaders\HDRShader.frag" />
+    <None Include="Shaders\HDRShader.vert" />
     <None Include="Shaders\InstancedShader.frag" />
     <None Include="Shaders\InstancedShader.vert" />
     <None Include="Shaders\LampShader.frag" />

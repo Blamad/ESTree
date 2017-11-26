@@ -13,7 +13,8 @@ enum TextureType {
 	AMBIENT,
 	CUBEMAP,
 	BUFFER,
-	DEPTH_BUFFER
+	DEPTH_BUFFER,
+	FLOATING_POINT_COLOR_BUFFER
 };
 
 class Texture {

@@ -3,6 +3,12 @@
 
 #include "Scene.h"
 #include "Material.h"
+#include "Cube.h"
+#include "LampCube.h"
+#include "InstancedCube.h"
+#include "RotationBehaviour.h"
+#include "RigidBody.h"
+#include "HDRFrameBuffer.h"
 
 class TestScene : public Scene {
 public:
