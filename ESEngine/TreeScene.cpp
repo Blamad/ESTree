@@ -84,13 +84,16 @@ void TreeScene::initialize() {
 	addSkybox();
 
 	//Light
-	createWhiteLampCube(vec3(-20, 30, 0), MEDIUM);
+	/*createWhiteLampCube(vec3(-20, 30, 0), MEDIUM);
 	createWhiteLampCube(vec3(-10, 30, 0), MEDIUM);
 	createWhiteLampCube(vec3(10, 40, 0), MEDIUM);
-	createWhiteLampCube(vec3(0, -5, 0), WEAK);
-	createDirectionalLight(vec3(0, -1, -1));
+	createWhiteLampCube(vec3(0, -5, 0), WEAK);*/
+	vec3 dir = normalize(vec3(-1, -0.5, -1));
+	createDirectionalLight(vec3(dir.x * -10, 15, dir.z * -10), dir);
 
 	setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
+
+	generateFrameBuffer();
 }
 
 GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial, bool debug) {
@@ -145,9 +148,14 @@ GameObject* TreeScene::createWhiteLampCube(vec3 position, PointLightStrength str
 	return addGameObject(move(go));
 }
 
-GameObject* TreeScene::createDirectionalLight(vec3 directory) {
+GameObject* TreeScene::createDirectionalLight(vec3 position, vec3 directory) {
+	DirectionalLight::setProjectionParams(20.0f, 60.0f);
+	
 	unique_ptr<GameObject> go(new GameObject());
 	go->addComponent(shared_ptr<DirectionalLight>(new DirectionalLight()));
+	go->name = "DirLight";
+	Transform* transform = getTransform(go.get());
+	transform->translate(position);
 	DirectionalLight *light = (DirectionalLight*)go->getComponent(LIGHT);
 	light->directory = directory;
 	return addGameObject(move(go));
@@ -189,4 +197,8 @@ void TreeScene::addSkybox() {
 
 	unique_ptr<Skybox> skybox(new Skybox(skyboxTex, shader));
 	setSkybox(std::move(skybox));
+}
+
+void TreeScene::generateFrameBuffer() {
+	setFrameBuffer(unique_ptr<FrameBuffer>(new HDRFrameBuffer()));
 }

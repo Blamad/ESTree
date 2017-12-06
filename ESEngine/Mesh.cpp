@@ -1,15 +1,19 @@
 #include "Mesh.h"
-#include <boost/foreach.hpp>
+
+Logger Mesh::logger("Mesh");
 
 void Mesh::draw(Renderer &renderer) {
 	BOOST_FOREACH(Shader& shader, shaders) {
-		if (!shader.active)
-			continue;
 		draw(renderer, shader);
 	}
 }
 
 void Mesh::draw(Renderer &renderer, Shader &shader) {
+	if (!shader.active) {
+		logger.log(WARN, "Trying to draw with inactive shader!");
+		return;
+	}
+
 	Transform *transform = (Transform*)this->getComponent(TRANSFORM);
 
 	GLuint program = shader.program;
@@ -22,16 +26,21 @@ void Mesh::draw(Renderer &renderer, Shader &shader) {
 		glUniform1f(glGetUniformLocation(program, "material.shininess"), material.shininess);
 		glUniform1i(glGetUniformLocation(program, "material.texDiffuse"), 0);
 		glUniform1i(glGetUniformLocation(program, "material.texSpecular"), 1);
-		initialized = true;
+		glUniform1i(glGetUniformLocation(program, "directionalShadingSamples[0]"), 2);
+
+
+		initialized;
 	}
 
 	if (material.texDiffuse != nullptr) {
 		glActiveTexture(GL_TEXTURE0);
+		glUniform1i(glGetUniformLocation(program, "material.texDiffuse"), 0);
 		glBindTexture(GL_TEXTURE_2D, material.texDiffuse->textureBuffer->id);
 	}
 
 	if (material.texSpecular != nullptr) {
 		glActiveTexture(GL_TEXTURE1);
+		glUniform1i(glGetUniformLocation(program, "material.texSpecular"), 1);
 		glBindTexture(GL_TEXTURE_2D, material.texSpecular->textureBuffer->id);
 	}
 
@@ -83,12 +92,12 @@ void Mesh::setupMeshes() {
 	}
 }
 
+void Mesh::updateMesh() {
+	vertexArray->updateVertexArray(vertices, indices);
+}
+
 void Mesh::setupMesh(Shader &shader) {
 	vertexArray->setVertexArray(vertices, indices);
 	shader.registerMatriciesUBO();
 	shader.registerLightsUBO();
-}
-
-void Mesh::updateMesh() {
-	vertexArray->updateVertexArray(vertices, indices);
 }

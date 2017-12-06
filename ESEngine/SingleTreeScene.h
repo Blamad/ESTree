@@ -1,5 +1,5 @@
-#ifndef TREE_SCENE_H
-#define TREE_SCENE_H
+#ifndef SINGLE_TREE_SCENE_H
+#define SINGLE_TREE_SCENE_H
 
 #include "Scene.h"
 #include "Cube.h"
@@ -12,9 +12,9 @@
 
 #include "Logger.h"
 
-class TreeScene : public Scene {
+class SingleTreeScene : public Scene {
 public:
-	TreeScene() : Scene() { 
+	SingleTreeScene() : Scene() {
 		initialize();
 	};
 

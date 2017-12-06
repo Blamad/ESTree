@@ -29,6 +29,7 @@ struct DirectionalLightData {
 	vec4 ambient;
 	vec4 diffuse;
 	vec4 specular;
+	mat4 lightSpace;
 };
 
 struct LightsData {

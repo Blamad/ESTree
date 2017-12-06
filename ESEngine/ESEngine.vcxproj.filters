@@ -249,6 +249,12 @@
     <ClCompile Include="DepthFrameBuffer.cpp">
       <Filter>GraphicEngine\Framebuffer\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SingleTreeScene.cpp">
+      <Filter>TestProject\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionalLight.cpp">
+      <Filter>Engine\GameObject\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -422,6 +428,9 @@
     <ClInclude Include="DepthFrameBuffer.h">
       <Filter>GraphicEngine\Framebuffer\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SingleTreeScene.h">
+      <Filter>TestProject\Scenes\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="LindenmayerRules\advancedTree.l">
@@ -450,9 +459,6 @@
     </None>
     <None Include="LindenmayerRules\testZ.l">
       <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="Shaders\InstancedShader.frag">
-      <Filter>TestProject\Models\Shaders</Filter>
     </None>
     <None Include="Shaders\InstancedShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
@@ -536,6 +542,12 @@
       <Filter>GraphicEngine\Shaders</Filter>
     </None>
     <None Include="Shaders\MeshWiringShader.vert">
+      <Filter>GraphicEngine\Shaders</Filter>
+    </None>
+    <None Include="Shaders\DepthQuadDebug.frag">
+      <Filter>GraphicEngine\Shaders</Filter>
+    </None>
+    <None Include="Shaders\DepthQuadDebug.vert">
       <Filter>GraphicEngine\Shaders</Filter>
     </None>
   </ItemGroup>

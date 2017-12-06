@@ -9,7 +9,7 @@ void TestScene::initialize() {
 	go->name = "WoodenCube";
 	transform = getTransform(go.get());
 	transform->translate(vec3(3, 1, 3));
-	go->addComponent(shared_ptr<Behaviour>(new RotationBehaviour()));
+	//go->addComponent(shared_ptr<Behaviour>(new RotationBehaviour()));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(2);
@@ -70,7 +70,8 @@ void TestScene::initialize() {
 	createWhiteLampCube(vec3(-15, 20, 0), WEAK);
 	//createWhiteLampCube(vec3(15, 20, 0), WEAK);
 	//createWhiteLampCube(vec3(0, -5, 0), WEAK);
-	createDirectionalLight(vec3(-1, -0.5, -1));
+	vec3 dir = normalize(vec3(-1, -0.5, -1));
+	createDirectionalLight(vec3(dir.x * -10, 15, dir.z * -10), dir);
 
 	generateFrameBuffer();
 }
@@ -113,10 +114,14 @@ GameObject* TestScene::createWhiteLampCube(vec3 position, PointLightStrength str
 	return addGameObject(move(go));
 }
 
-GameObject* TestScene::createDirectionalLight(vec3 directory) {
+GameObject* TestScene::createDirectionalLight(vec3 position, vec3 directory) {
+	DirectionalLight::setProjectionParams(20.0f, 60.0f);
+
 	unique_ptr<GameObject> go(new GameObject());
 	go->addComponent(shared_ptr<DirectionalLight>(new DirectionalLight()));
 	go->name = "DirLight";
+	Transform* transform = getTransform(go.get());
+	transform->translate(position);
 	DirectionalLight *light = (DirectionalLight*)go->getComponent(LIGHT);
 	light->directory = directory;
 	return addGameObject(move(go));

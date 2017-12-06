@@ -9,6 +9,7 @@
 class FrameBuffer {
 public:
 	GLuint FBO;
+	GLuint quadVAO;
 	unique_ptr<Shader> shader;
 
 	FrameBuffer() : width(Screen::getScreenWidth()), height(Screen::getScreenHeight()) {};
@@ -38,7 +39,7 @@ public:
 protected:
 	int width, height;
 	unique_ptr<TextureBuffer> buffer;
-	GLuint quadVAO;
+	
 
 	virtual void init() = 0;
 

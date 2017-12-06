@@ -5,11 +5,13 @@ Camera::~Camera() {
 }
 
 glm::mat4 Camera::getViewMatrix() {
-	return glm::lookAt(this->position, this->position + this->front, this->up);
+	mat4 view = lookAt(this->position, this->position + this->front, this->up);
+	return view;
 }
 
 glm::mat4 Camera::getProjectionMatrix() {
-	return glm::perspective(ZOOM, float(Screen::getScreenWidth())/Screen::getScreenHeight(), 0.1f, 100.0f);
+	mat4 projection = perspective(ZOOM, float(Screen::getScreenWidth()) / Screen::getScreenHeight(), 0.1f, 100.0f);
+	return projection;
 }
 
 void Camera::processKeyboard(CameraDirectory direction, GLfloat deltaTime)
