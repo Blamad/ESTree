@@ -11,7 +11,8 @@ void RigidBody::update() {
 }
 
 void RigidBody::updateTransform() {
-	transform->btTransform = rigidBody->getCenterOfMassTransform();
+	transform->transform = rigidBody->getCenterOfMassTransform();
+	transform->updateModelMatrix();
 }
 
 void RigidBody::updateRigidBody() {

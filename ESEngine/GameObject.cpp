@@ -30,3 +30,8 @@ void GameObject::addComponent(shared_ptr<Component> component) {
 	component->setParent(*this);
 	components.push_back(component);
 }
+
+void GameObject::addGameObject(shared_ptr<GameObject> go) {
+	this->children.push_back(go);
+	go->parent = this;
+}

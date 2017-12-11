@@ -33,12 +33,12 @@ void SingleTreeScene::initialize() {
 
 	GameObject* go;
 	Material barkMaterial;
-	vec3 position = vec3(0,0,0);
+	vec3 position = vec3(3,0,3);
 	string paramsFileName;
 	string leavesTextureName;
 	bool debug;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[0];
+	paramsFileName = "LindenmayerRules/" + treeParams[2];
 	leavesTextureName = "Textures/" + leavesParams[0];
 	barkMaterial = Material::bark1();
 	debug = false;
@@ -51,7 +51,7 @@ void SingleTreeScene::initialize() {
 	addSkybox();
 
 	//Light
-	vec3 dir = normalize(vec3(-1, -0.5, -1));
+	vec3 dir = normalize(vec3(-1, -0.8, -1));
 	createDirectionalLight(vec3(dir.x * -14, dir.y * -14, dir.z * -14), dir);
 
 	setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
@@ -130,6 +130,11 @@ void SingleTreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1, 1, 1)) {
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(1);
 	rigidBody->makeDynamic();
+
+	shared_ptr<GameObject> child = shared_ptr<GameObject>(new Cube(Material::greenRubber()));
+	transform = getTransform(child.get());
+	transform->translate(vec3(0, 2, 0));
+	go->addGameObject(child);
 
 	addGameObject(move(go));
 }

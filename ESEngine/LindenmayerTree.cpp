@@ -1,4 +1,5 @@
 #include "LindenmayerTree.h"
+#include <glm/gtx/matrix_decompose.hpp>
 
 boost::variate_generator<boost::mt19937, boost::uniform_real<> > LindenmayerTree::randomGenerator(boost::mt19937(time(0)), boost::uniform_real<>(0, 1));
 
@@ -20,7 +21,8 @@ void LindenmayerTree::generateTree() {
 	logger.log(INFO, "Generation started: " + params.name);
 	generateMeshSkeleton();
 	generateMeshData();
-	generateInstancedLeaves();
+	//generateInstancedLeaves();
+	generateLeaves();
 	logger.log(INFO, "Generation finished. " + to_string(mesh->indices.size() / 3) + " tris.");
 }
 
@@ -313,6 +315,60 @@ void LindenmayerTree::computeRingPoint(int startIndex, int endIndex) {
 }
 
 // LEAVES
+
+void LindenmayerTree::generateLeaves() {
+	for (auto & seg : segmentsVec) {
+		if (!seg->isLastStem())
+			continue;
+		if (randomGenerator() > 0.33f) {
+			shared_ptr<GameObject> go (new GameObject());
+			Transform* leafTransform = (Transform*) go->getComponent(TRANSFORM);
+			
+			leafTransform->setModelMatrix(seg->modelMatrix);
+			/*glm::vec3 scale;
+			glm::quat rotation;
+			glm::vec3 translation;
+			glm::vec3 skew;
+			glm::vec4 perspective;
+			glm::decompose(seg->modelMatrix, scale, rotation, translation, skew, perspective);
+			rotation = glm::conjugate(rotation);
+			
+			leafTransform->translate(translation);
+			leafTransform->rotate(rotation);*/
+
+			shared_ptr<Mesh> leafMesh = generateLeaf();
+			go->addComponent(leafMesh);
+
+			this->addGameObject(go);
+		}
+	}
+}
+
+shared_ptr<Mesh> LindenmayerTree::generateLeaf() {
+	Shader shader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+
+	vector<Vertex> vertices = {
+		//front
+		Vertex::createVertex(vec3(1.0f, -1.0f,  0.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 1)),
+		Vertex::createVertex(vec3(1.0f,  1.0f,  0.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 0)),
+		Vertex::createVertex(vec3(-1.0f,  1.0f,  0.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 0)),
+		Vertex::createVertex(vec3(-1.0f, -1.0f,  0.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 1)),
+		//back
+		Vertex::createVertex(vec3(-1.0f, -1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(0, 1)),
+		Vertex::createVertex(vec3(-1.0f,  1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(0, 0)),
+		Vertex::createVertex(vec3(1.0f,  1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 0)),
+		Vertex::createVertex(vec3(1.0f, -1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 1)),
+	};
+
+	vector<int> indices = {
+		0, 1, 3, 1, 2, 3,
+		4, 5, 7, 5, 6, 7,
+	};
+
+	shared_ptr<Mesh> mesh = shared_ptr<Mesh>(new Mesh(vertices, indices, shader, vertices.size(), indices.size(), GL_STREAM_DRAW));
+	mesh->material = leavesMaterial;
+	return mesh;
+}
 
 void LindenmayerTree::generateInstancedLeaves() {
 	Transform *transform = (Transform*)getComponent(TRANSFORM);

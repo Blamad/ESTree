@@ -14,6 +14,12 @@ void Mesh::draw(Renderer &renderer, Shader &shader) {
 		return;
 	}
 
+	BOOST_FOREACH(shared_ptr<GameObject> child, parent->children) {
+		if (child->getComponent(RENDERABLE) != nullptr) {
+			((Renderable*)child->getComponent(RENDERABLE))->draw(renderer, shader);
+		}
+	}
+
 	Transform *transform = (Transform*)this->getComponent(TRANSFORM);
 
 	GLuint program = shader.program;

@@ -15,21 +15,31 @@ public:
 	
 	glm::mat4 getModelMatrix();
 	glm::mat3 getNormalModelMatrix();
+	void setModelMatrix(glm::mat4 modelMatrix);
 	glm::vec3 getPosition();
 	glm::quat getRotation();
 	glm::vec3 getScale();
 
 	btTransform& getBtTransform();
+	void updateModelMatrix();
 
-	btTransform btTransform = btTransform::getIdentity();
+	btTransform transform = btTransform::getIdentity();
+
 
 	void rotate(float angle, glm::vec3 axis);
 	void translate(glm::vec3 position);
+	void rotate(glm::quat rotation);
 	void scale(glm::vec3 scale);
 	void clearRotation();
 
 private:
 	glm::vec3 scaleVec = glm::vec3(1, 1, 1);
+	glm::mat4 modelMatrix = glm::mat4(1);
+	glm::mat3 normalModelMatrix = glm::mat3(1);
+
+	bool modelValueChanged = true;
+
+	void updateNormalModelMatrix(glm::mat4 modelMatrix);
 
 	glm::vec3 bulletToGlm(const btVector3& v) {
 		glm::vec3 vec(v.getX(), v.getY(), v.getZ());

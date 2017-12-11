@@ -21,12 +21,17 @@ public:
 	Component* getComponent(ComponentType componentType);
 	void addComponent(shared_ptr<Component> component);
 
+	void addGameObject(shared_ptr<GameObject> go);
+
 	Uuid id;
 	string name = "";
 
+	GameObject* parent = nullptr;
+	vector<shared_ptr<GameObject>> children;
+
 private:
 	static boost::uuids::random_generator uuidGenerator;
-
+	
 	vector<shared_ptr<Component>> components;
 };
 

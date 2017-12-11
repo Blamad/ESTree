@@ -23,9 +23,9 @@ int main() {
 	logger.log(INFO, "Creating scene..");
 	SceneManager* sceneManager = engine->getSceneManager();
 
-	singleTreeScene(sceneManager);
+	//singleTreeScene(sceneManager);
 	//treeScene(sceneManager);
-	//testScene(sceneManager);
+	testScene(sceneManager);
 	logger.log(INFO, "Scene created. Rendering..");
 
 	engine->startRendering();

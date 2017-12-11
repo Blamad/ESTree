@@ -81,6 +81,9 @@ private:
 	void generateVertices();
 	void computeRingPoint(int startIndex, int endIndex);
 	
+	void generateLeaves();
+	shared_ptr<Mesh> generateLeaf();
+
 	//Leaves generation
 	void generateInstancedLeaves();
 	shared_ptr<InstancedMesh> createInstancedLeavesCubeMesh(vector<InstancedTransform> &instancedTransforms);
