@@ -11,6 +11,7 @@ GameObject* createCamera(SceneManager *sceneManager, vec3 position, float pitch,
 
 void testScene(SceneManager *sceneManager);
 void treeScene(SceneManager *sceneManager);
+void singleTreeScene(SceneManager *sceneManager);
 
 Logger logger("ESTree");
 
@@ -22,8 +23,9 @@ int main() {
 	logger.log(INFO, "Creating scene..");
 	SceneManager* sceneManager = engine->getSceneManager();
 
+	singleTreeScene(sceneManager);
 	//treeScene(sceneManager);
-	testScene(sceneManager);
+	//testScene(sceneManager);
 	logger.log(INFO, "Scene created. Rendering..");
 
 	engine->startRendering();
@@ -35,11 +37,16 @@ int main() {
 
 void treeScene(SceneManager *sceneManager) {
 	sceneManager->setActiveScene(shared_ptr<Scene>(new TreeScene()));
-	//createCamera(sceneManager, vec3(0, 15, 35), -90, -10);
+	createCamera(sceneManager, vec3(0, 15, 35), -90, -10);
 }
 
 void testScene(SceneManager *sceneManager) {
 	sceneManager->setActiveScene(shared_ptr<Scene>(new TestScene()));
+	createCamera(sceneManager, vec3(0, 5, -12), 90, -10);
+}
+
+void singleTreeScene(SceneManager *sceneManager) {
+	sceneManager->setActiveScene(shared_ptr<Scene>(new SingleTreeScene()));
 	createCamera(sceneManager, vec3(0, 5, -12), 90, -10);
 }
 
