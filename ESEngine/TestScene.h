@@ -22,7 +22,7 @@ public:
 	GameObject* createRotatingCube(Material material);
 
 	GameObject* createWhiteLampCube(vec3 position, PointLightStrength str);
-	GameObject* createDirectionalLight(vec3 direction);
+	GameObject* createDirectionalLight(vec3 position, vec3 direction);
 
 	void generateTerrain();
 	void generateSkybox();

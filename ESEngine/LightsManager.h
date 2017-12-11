@@ -21,7 +21,6 @@ class LightsManager {
 public:
 	LightsManager();
 
-
 	void updateLights(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader&)> renderObjectsFunction);
 
 	void addLight(Light* light);
@@ -31,7 +30,7 @@ public:
 private:
 	static GLuint lightsUBO;
 
-	unique_ptr<FrameBuffer> depthBuffer;
+	unique_ptr<DepthFrameBuffer> depthBuffer;
 	map<LightType, set<Light*>> lights;
 
 	void initialize();

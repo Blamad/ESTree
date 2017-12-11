@@ -1,8 +1,4 @@
 #include "Shader.h"
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
 
 GLuint Shader::matricesBlockBinding = 0;
 GLuint Shader::lightBlockBinding = 1;
@@ -183,7 +179,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 }
 
 void Shader::use() {
-	glUseProgram(this->program);
+	glUseProgram(program);
 }
 
 void Shader::registerAttribute(const char* attrib) {

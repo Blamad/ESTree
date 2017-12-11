@@ -16,16 +16,19 @@ void InstancedMesh::draw(Renderer &renderer) {
 			glUniform1f(glGetUniformLocation(program, "material.shininess"), material.shininess);
 			glUniform1f(glGetUniformLocation(program, "material.texDiffuse"), 0);
 			glUniform1f(glGetUniformLocation(program, "material.texSpecular"), 1);
-			initialized = true;
+			glUniform1i(glGetUniformLocation(program, "directionalShadingSamples[0]"), 2);
+			initialized;
 		}
 
 		if (material.texDiffuse != nullptr) {
 			glActiveTexture(GL_TEXTURE0);
+			glUniform1i(glGetUniformLocation(program, "material.texDiffuse"), 0);
 			glBindTexture(GL_TEXTURE_2D, material.texDiffuse->textureBuffer->id);
 		}
 
 		if (material.texSpecular != nullptr) {
 			glActiveTexture(GL_TEXTURE1);
+			glUniform1i(glGetUniformLocation(program, "material.texSpecular"), 1);
 			glBindTexture(GL_TEXTURE_2D, material.texSpecular->textureBuffer->id);
 		}
 		int numberOfInstances = instanceMatricies.size();

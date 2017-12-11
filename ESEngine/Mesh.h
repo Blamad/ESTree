@@ -1,6 +1,11 @@
 #ifndef MESH_H
 #define MESH_H
 
+#include <glm/gtc/type_ptr.hpp>
+#include <vector>
+#include <memory>
+#include <boost/foreach.hpp>
+
 #include "Renderable.h"
 #include "Renderer.h"
 #include "Transform.h"
@@ -9,9 +14,7 @@
 #include "TextureBuffer.h"
 #include "GLVertexArray.h"
 
-#include <glm/gtc/type_ptr.hpp>
-#include <vector>
-#include <memory>
+#include "Logger.h"
 
 using namespace std;
 
@@ -31,6 +34,8 @@ public:
 	void updateMesh();
 
 protected:
+	static Logger logger;
+
 	bool initialized = false;
 	int bufferUsage = GL_STATIC_DRAW;
 	unique_ptr<VertexArray> vertexArray;

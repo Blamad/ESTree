@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DepthFrameBuffer.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="PostEffectFrameBuffer.cpp" />
     <ClCompile Include="CubeMap.cpp" />
     <ClCompile Include="HDRFrameBuffer.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="SingleTreeScene.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TextureBuffer.cpp" />
@@ -82,6 +84,7 @@
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Segment.h" />
+    <ClInclude Include="SingleTreeScene.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
@@ -141,13 +144,14 @@
     <None Include="LindenmayerRules\testX.l" />
     <None Include="LindenmayerRules\testY.l" />
     <None Include="LindenmayerRules\testZ.l" />
+    <None Include="Shaders\DepthQuadDebug.frag" />
+    <None Include="Shaders\DepthQuadDebug.vert" />
     <None Include="Shaders\DirectionalShadowShader.frag" />
     <None Include="Shaders\DirectionalShadowShader.vert" />
     <None Include="Shaders\GenericShader.frag" />
     <None Include="Shaders\GenericShader.vert" />
     <None Include="Shaders\HDRShader.frag" />
     <None Include="Shaders\HDRShader.vert" />
-    <None Include="Shaders\InstancedShader.frag" />
     <None Include="Shaders\InstancedShader.vert" />
     <None Include="Shaders\LampShader.frag" />
     <None Include="Shaders\LampShader.vert" />

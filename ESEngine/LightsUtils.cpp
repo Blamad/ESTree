@@ -29,5 +29,6 @@ DirectionalLightData LightsUtils::extractData(DirectionalLight *light) {
 	data.ambient = vec4(light->ambient, 0);
 	data.specular = vec4(light->specular, 0);
 	data.diffuse = vec4(light->diffuse, 0);
+	data.lightSpace = light->lightSpace;
 	return data;
 }

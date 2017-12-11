@@ -26,22 +26,26 @@ void LightsManager::removeLight(Light* light) {
 }
 
 void LightsManager::updateLights(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader&)> renderObjectsFunction) {
-	
-	depthBuffer->mountFrameBuffer();
-	Shader::updateProjectionMatrix(DirectionalLight::getProjectionMatrix());
-
+	mat4 lightProjection = DirectionalLight::getProjectionMatrix();
 	mat4 lightView;
+
+	Shader::updateProjectionMatrix(lightProjection);
+
+	depthBuffer->mountFrameBuffer();
 	
 	BOOST_FOREACH(Light* light, lights[DIRECTIONAL]) {
-		DirectionalLight* dLight = (DirectionalLight*) light;
-		lightView = DirectionalLight::getViewMatrix(dLight);
-		
+		DirectionalLight* dLight = (DirectionalLight*)light;
+		mat4 lightView = DirectionalLight::getViewMatrix(dLight);
+
 		Shader::updateViewMatrix(lightView);
-		//renderObjectsFunction(renderer, *depthBuffer->shader);
+		dLight->lightSpace = lightProjection * lightView;
+
+		renderObjectsFunction(renderer, *depthBuffer->shader);
 	}
 
 	depthBuffer->unmountFrameBuffer();
 	Shader::updateProjectionMatrix(Camera::getProjectionMatrix());
+	depthBuffer->executeFrameBuffer(renderer);
 
 	updateLightsUBO(viewPos);
 }
@@ -52,6 +56,11 @@ void LightsManager::updateLightsUBO(vec3 &viewPos) {
 	glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(LightsData), &data);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+	for (int i = 2; i < lights[DIRECTIONAL].size() + 2; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, depthBuffer->getBuffer()->id);
+	}
 }
 
 void LightsManager::initializeLightsUBO() {
@@ -64,6 +73,8 @@ void LightsManager::initializeLightsUBO() {
 }
 
 void LightsManager::initialize() {
+	float sizeMod = 6;
 	unique_ptr<Shader> shader = unique_ptr<Shader>(new Shader("Shaders/DirectionalShadowShader.vert", "Shaders/DirectionalShadowShader.frag"));
-	depthBuffer = unique_ptr<FrameBuffer>(new DepthFrameBuffer(move(shader), 2048, 2048));
+	shader->initializeMatricesUBO();
+	depthBuffer = unique_ptr<DepthFrameBuffer>(new DepthFrameBuffer(move(shader), Screen::getScreenWidth() * sizeMod, Screen::getScreenHeight() * sizeMod));
 }

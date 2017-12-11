@@ -336,7 +336,7 @@ void LindenmayerTree::generateInstancedLeaves() {
 }
 
 shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms) {
-	Shader shader("Shaders/InstancedShader.vert", "Shaders/InstancedShader.frag");
+	Shader shader("Shaders/InstancedShader.vert", "Shaders/GenericShader.frag");
 
 	vector<Vertex> vertices = {
 		//front
@@ -362,7 +362,7 @@ shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesPanelMesh(vector
 }
 
 shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesCubeMesh(vector<InstancedTransform> &instancedTransforms) {
-	Shader shader("Shaders/InstancedShader.vert", "Shaders/InstancedShader.frag");
+	Shader shader("Shaders/InstancedShader.vert", "Shaders/GenericShader.frag");
 
 	vector<Vertex> vertices = {
 		//front

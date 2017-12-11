@@ -108,7 +108,7 @@ void Scene::renderFrame(Renderer &renderer) {
 
 	renderObjects(renderer);
 	renderSkybox(renderer);
-
+	
 	if (sceneFrameBuffer != nullptr) {
 		sceneFrameBuffer->unmountFrameBuffer();
 		sceneFrameBuffer->executeFrameBuffer(renderer);
