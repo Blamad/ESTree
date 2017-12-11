@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "TreeScene.h"
 #include "TestScene.h"
+#include "SingleTreeScene.h"
 #include "Logger.h"
 
 using namespace glm;
