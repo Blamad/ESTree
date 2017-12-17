@@ -34,9 +34,10 @@ public:
 
 class LindenmayerTree : public GameObject {
 public:
-	LindenmayerTree(LindenmayerTreeParams &params, Material &material = Material::bark5(), Material &leavesMaterial = Material::leaves2(), bool useMeshWiring = false);
+	LindenmayerTree(LindenmayerTreeParams &params, Material &material = Material::bark5(), Material &leavesMaterial = Material::leaves2(), bool useMeshWiring = false, bool normalVisualisation = false);
 	void generate();
 	bool meshWiring;
+	bool normalVisualisation;
 
 protected:
 	Material material;

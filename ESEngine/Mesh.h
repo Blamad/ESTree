@@ -32,6 +32,8 @@ public:
 	void draw(Renderer &renderer);
 	void draw(Renderer &renderer, Shader &shader);
 	void updateMesh();
+	void showMeshWiring();
+	void showNormalVisualisation();
 
 protected:
 	static Logger logger;
@@ -42,6 +44,7 @@ protected:
 
 	void setupMeshes();
 	void setupMesh(Shader &shader);
+	void addNewShader(Shader & shader);
 };
 
 #endif

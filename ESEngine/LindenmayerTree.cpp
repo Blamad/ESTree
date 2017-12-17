@@ -5,10 +5,10 @@ boost::variate_generator<boost::mt19937, boost::uniform_real<> > LindenmayerTree
 
 Logger LindenmayerTree::logger("LindenmayerTree");
 
-LindenmayerTree::LindenmayerTree(LindenmayerTreeParams &params, Material &material, Material &leavesMaterial, bool useMeshWiring) : params(params), material(material), leavesMaterial(leavesMaterial), meshWiring(useMeshWiring), GameObject() {
+LindenmayerTree::LindenmayerTree(LindenmayerTreeParams &params, Material &material, Material &leavesMaterial, bool useMeshWiring, bool normalVisualisation) : params(params), material(material), leavesMaterial(leavesMaterial), meshWiring(useMeshWiring), normalVisualisation(normalVisualisation), GameObject() {
 	this->vBufferSize = 100000;
 	this->iBufferSize = 4000000;
-	this->segments = 10;
+	this->segments = 5;
 	this->textureXStep = 1.0f / (segments - 1);
 }
 
@@ -62,12 +62,15 @@ void LindenmayerTree::createMeshComponent() {
 	v.reserve(vBufferSize);
 	i.reserve(iBufferSize);
 
-	vector<Shader> shaders;
-	shaders.push_back(Shader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag"));
-	if (meshWiring)
-		shaders.push_back(Shader("Shaders/MeshWiringShader.vert", "Shaders/MeshWiringShader.frag", "Shaders/MeshWiringShader.geom"));
 
-	mesh = shared_ptr<Mesh>(new Mesh(v, i, shaders, vBufferSize, iBufferSize, GL_STREAM_DRAW));
+	Shader shader = Shader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	mesh = shared_ptr<Mesh>(new Mesh(v, i, shader, vBufferSize, iBufferSize, GL_STREAM_DRAW));
+
+	if (meshWiring)
+		mesh->showMeshWiring();
+	if (normalVisualisation)
+		mesh->showNormalVisualisation();
+
 	mesh->material = material;
 	addComponent(mesh);
 }

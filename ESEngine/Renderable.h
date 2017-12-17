@@ -23,6 +23,10 @@ protected:
 			this->shaders.push_back(shader);
 		}
 	};
+
+	void addShader(Shader &shader) {
+		this->shaders.push_back(shader);
+	}
 };
 
 #endif

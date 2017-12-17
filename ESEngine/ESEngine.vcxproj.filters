@@ -127,6 +127,9 @@
     <Filter Include="GraphicEngine\Shaders">
       <UniqueIdentifier>{a1891227-bf0c-4e3e-9a43-4ea4b3589a54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GraphicEngine\Shaders\Debug">
+      <UniqueIdentifier>{a8212551-3977-4d21-b07a-c6eaa34b4ba8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -535,20 +538,26 @@
     <None Include="Shaders\HDRShader.vert">
       <Filter>GraphicEngine\Shaders</Filter>
     </None>
-    <None Include="Shaders\MeshWiringShader.frag">
-      <Filter>GraphicEngine\Shaders</Filter>
-    </None>
-    <None Include="Shaders\MeshWiringShader.geom">
-      <Filter>GraphicEngine\Shaders</Filter>
-    </None>
-    <None Include="Shaders\MeshWiringShader.vert">
-      <Filter>GraphicEngine\Shaders</Filter>
-    </None>
     <None Include="Shaders\DepthQuadDebug.frag">
-      <Filter>GraphicEngine\Shaders</Filter>
+      <Filter>GraphicEngine\Shaders\Debug</Filter>
     </None>
     <None Include="Shaders\DepthQuadDebug.vert">
-      <Filter>GraphicEngine\Shaders</Filter>
+      <Filter>GraphicEngine\Shaders\Debug</Filter>
+    </None>
+    <None Include="Shaders\GeometryDebugShader.vert">
+      <Filter>GraphicEngine\Shaders\Debug</Filter>
+    </None>
+    <None Include="Shaders\GeometryDebugShader.frag">
+      <Filter>GraphicEngine\Shaders\Debug</Filter>
+    </None>
+    <None Include="Shaders\MeshWiringShader.geom">
+      <Filter>GraphicEngine\Shaders\Debug</Filter>
+    </None>
+    <None Include="LindenmayerRules\normalTest.l">
+      <Filter>TestProject\Models\Trees\Tree Models</Filter>
+    </None>
+    <None Include="Shaders\NormalVisualisationShader.geom">
+      <Filter>GraphicEngine\Shaders\Debug</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,13 @@
 #include "Cube.h"
 
-Cube::Cube(Material material) : GameObject() {
+Cube::Cube(Material material, bool useMeshWiring, bool useNormalVisualisation) : GameObject() {
 	Shader shader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 	shared_ptr<Mesh> mesh = createMesh(shader);
 	mesh->material = material;
+	if (useMeshWiring)
+		mesh->showMeshWiring();
+	if (useNormalVisualisation)
+		mesh->showNormalVisualisation();
 	addComponent(mesh);
 };
 

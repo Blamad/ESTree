@@ -12,6 +12,6 @@ uniform Material material;*/
 
 void main() 
 {             
-	//if(texture(material.texDiffuse, fs_in.texCoords).a < 0.1)
-    //    discard;
+	/*if(texture(material.texDiffuse, fs_in.texCoords).a < 0.1)
+        discard;*/
 }

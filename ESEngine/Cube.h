@@ -11,7 +11,7 @@ class Cube : public GameObject {
 public:
 	//Default constr. for overriding
 	Cube() : GameObject() { };
-	Cube(Material material);
+	Cube(Material material, bool useMeshWiring = false, bool useNormalVisualisation = false);
 
 protected:
 	Vertex createVertex(vec3 position, vec3 normal, vec2 texCoords);

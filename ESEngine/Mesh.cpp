@@ -107,3 +107,16 @@ void Mesh::setupMesh(Shader &shader) {
 	shader.registerMatriciesUBO();
 	shader.registerLightsUBO();
 }
+
+void Mesh::addNewShader(Shader &shader) {
+	addShader(shader);
+	setupMesh(shader);
+}
+
+void Mesh::showMeshWiring() {
+	addNewShader(Shader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/MeshWiringShader.geom"));
+}
+
+void Mesh::showNormalVisualisation() {
+	addNewShader(Shader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/NormalVisualisationShader.geom"));
+}

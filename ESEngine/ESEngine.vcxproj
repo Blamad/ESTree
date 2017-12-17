@@ -126,6 +126,7 @@
     <None Include="LindenmayerRules\advancedTree.l" />
     <None Include="LindenmayerRules\advancedTree2.l" />
     <None Include="LindenmayerRules\fibbonacciTree.l" />
+    <None Include="LindenmayerRules\normalTest.l" />
     <None Include="LindenmayerRules\parametricMonopodialTreeA.l" />
     <None Include="LindenmayerRules\parametricMonopodialTreeB.l" />
     <None Include="LindenmayerRules\parametricMonopodialTreeC.l" />
@@ -155,9 +156,10 @@
     <None Include="Shaders\InstancedShader.vert" />
     <None Include="Shaders\LampShader.frag" />
     <None Include="Shaders\LampShader.vert" />
-    <None Include="Shaders\MeshWiringShader.frag" />
+    <None Include="Shaders\GeometryDebugShader.frag" />
     <None Include="Shaders\MeshWiringShader.geom" />
-    <None Include="Shaders\MeshWiringShader.vert" />
+    <None Include="Shaders\GeometryDebugShader.vert" />
+    <None Include="Shaders\NormalVisualisationShader.geom" />
     <None Include="Shaders\PostEffectShader.frag" />
     <None Include="Shaders\PostEffectShader.vert" />
     <None Include="Shaders\SkyboxShader.frag" />

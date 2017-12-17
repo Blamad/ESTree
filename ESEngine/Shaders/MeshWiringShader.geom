@@ -6,8 +6,9 @@ in VS_OUT {
     vec3 normal;
 } gs_in[];
 
+const float MAGNITUDE = 0.4;
+
 void drawNormal(int index) {
-	float MAGNITUDE = 0.4;
 
     gl_Position = gl_in[index].gl_Position;
     EmitVertex();

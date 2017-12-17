@@ -12,15 +12,20 @@ void SingleTreeScene::initialize() {
 		"fibbonacciTree.l",
 		"advancedTree.l",
 		"advancedTree2.l",
+		//5
 		"parametricMonopodialTreeA.l",
 		"parametricMonopodialTreeB.l",
 		"parametricMonopodialTreeC.l",
 		"parametricMonopodialTreeD.l",
 		"parametricMonopodialTreeA.l",
+		//10
 		"parametricSympodialTreeA.l",
 		"parametricSympodialTreeB.l",
 		"parametricSympodialTreeC.l",
 		"parametricSympodialTreeD.l",
+		"test.l",
+		//15
+		"normalTest.l"
 	};
 
 	vector<string> leavesParams = {
@@ -36,19 +41,22 @@ void SingleTreeScene::initialize() {
 	vec3 position = vec3(3,0,3);
 	string paramsFileName;
 	string leavesTextureName;
-	bool debug;
+	bool normalVisualisation;
+	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[2];
+	paramsFileName = "LindenmayerRules/" + treeParams[15];
 	leavesTextureName = "Textures/" + leavesParams[0];
 	barkMaterial = Material::bark1();
-	debug = false;
+	normalVisualisation = true;
+	meshWiring = true;
+	
 
-	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), debug);
+	//go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
-	generateTestBox(vec3(5, 5, 5), vec3(0.5, 0.5, 0.5));
+	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 
-	generateTerrain();
-	addSkybox();
+	//generateTerrain();
+	//addSkybox();
 
 	//Light
 	vec3 dir = normalize(vec3(-1, -0.8, -1));
@@ -59,10 +67,10 @@ void SingleTreeScene::initialize() {
 	generateFrameBuffer();
 }
 
-GameObject* SingleTreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial, bool debug) {
+GameObject* SingleTreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial, bool meshWiring, bool normalVisualisation) {
 	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
 
-	unique_ptr<GameObject> go = unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, debug));
+	unique_ptr<GameObject> go = unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, meshWiring, normalVisualisation));
 	go->name = "Tree";
 	Transform *transform = getTransform(go.get());
 	transform->translate(position);
@@ -122,19 +130,14 @@ GameObject* SingleTreeScene::createCamera(glm::vec3 position, float yaw, float p
 }
 
 void SingleTreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1, 1, 1)) {
-	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container()));
+	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container(), false, true));
 	go->name = "CrateCube";
 	Transform* transform = getTransform(go.get());
 	transform->translate(pos);
-	shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	/*shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(1);
-	rigidBody->makeDynamic();
-
-	shared_ptr<GameObject> child = shared_ptr<GameObject>(new Cube(Material::greenRubber()));
-	transform = getTransform(child.get());
-	transform->translate(vec3(0, 2, 0));
-	go->addGameObject(child);
+	rigidBody->makeDynamic();*/
 
 	addGameObject(move(go));
 }
@@ -156,5 +159,5 @@ void SingleTreeScene::addSkybox() {
 }
 
 void SingleTreeScene::generateFrameBuffer() {
-	setFrameBuffer(unique_ptr<FrameBuffer>(new HDRFrameBuffer()));
+	//setFrameBuffer(unique_ptr<FrameBuffer>(new HDRFrameBuffer()));
 }
