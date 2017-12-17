@@ -11,10 +11,11 @@ void old();
 void none();
 
 void main() {
-	//none();
+	none();
 	//old();
 	//example1();
-	example2();
+	//example2();
+
 }
 
 void example1() {

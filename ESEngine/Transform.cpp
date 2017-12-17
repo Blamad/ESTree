@@ -23,8 +23,6 @@ glm::mat3 Transform::getNormalModelMatrix() {
 
 	glm::mat4 model(1.0f);
 	model *= mat4_cast(getRotation());
-	model = glm::scale(model, scaleVec);
-	model = glm::transpose(glm::inverse(model));
 
 	normalModelMatrix = glm::mat3(model);
 
@@ -32,7 +30,7 @@ glm::mat3 Transform::getNormalModelMatrix() {
 		Transform* pTransform = (Transform*)parent->parent->getComponent(TRANSFORM);
 		normalModelMatrix = pTransform->getNormalModelMatrix() * normalModelMatrix;
 	}
-		
+
 	return normalModelMatrix;
 }
 

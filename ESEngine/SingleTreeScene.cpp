@@ -48,15 +48,15 @@ void SingleTreeScene::initialize() {
 	leavesTextureName = "Textures/" + leavesParams[0];
 	barkMaterial = Material::bark1();
 	normalVisualisation = true;
-	meshWiring = true;
+	meshWiring = false;
 	
 
-	//go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 
 	//generateTerrain();
-	//addSkybox();
+	addSkybox();
 
 	//Light
 	vec3 dir = normalize(vec3(-1, -0.8, -1));
@@ -159,5 +159,5 @@ void SingleTreeScene::addSkybox() {
 }
 
 void SingleTreeScene::generateFrameBuffer() {
-	//setFrameBuffer(unique_ptr<FrameBuffer>(new HDRFrameBuffer()));
+	setFrameBuffer(unique_ptr<FrameBuffer>(new HDRFrameBuffer()));
 }

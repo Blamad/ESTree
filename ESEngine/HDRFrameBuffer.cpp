@@ -1,8 +1,8 @@
 #include "HDRFrameBuffer.h"
 
 HDRFrameBuffer::HDRFrameBuffer() : FrameBuffer() {
-	this->width = Screen::getScreenWidth() * 2;
-	this->height = Screen::getScreenHeight() * 2;
+	this->width = Screen::getScreenWidth();
+	this->height = Screen::getScreenHeight();
 	this->shader = unique_ptr<Shader>(new Shader("Shaders/HDRShader.vert", "Shaders/HDRShader.frag"));
 	init();
 };
