@@ -44,19 +44,19 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[15];
+	paramsFileName = "LindenmayerRules/" + treeParams[2];
 	leavesTextureName = "Textures/" + leavesParams[0];
 	barkMaterial = Material::bark1();
-	normalVisualisation = true;
-	meshWiring = true;
+	normalVisualisation = false;
+	meshWiring = false;
 	
 
-	//go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 
-	//generateTerrain();
-	//addSkybox();
+	generateTerrain();
+	addSkybox();
 
 	//Light
 	vec3 dir = normalize(vec3(-1, -0.8, -1));
@@ -134,10 +134,10 @@ void SingleTreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1, 1, 1)) {
 	go->name = "CrateCube";
 	Transform* transform = getTransform(go.get());
 	transform->translate(pos);
-	/*shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(1);
-	rigidBody->makeDynamic();*/
+	rigidBody->makeDynamic();
 
 	addGameObject(move(go));
 }
@@ -159,5 +159,5 @@ void SingleTreeScene::addSkybox() {
 }
 
 void SingleTreeScene::generateFrameBuffer() {
-	//setFrameBuffer(unique_ptr<FrameBuffer>(new HDRFrameBuffer()));
+	setFrameBuffer(unique_ptr<FrameBuffer>(new HDRFrameBuffer()));
 }

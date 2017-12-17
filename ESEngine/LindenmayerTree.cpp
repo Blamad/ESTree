@@ -8,7 +8,7 @@ Logger LindenmayerTree::logger("LindenmayerTree");
 LindenmayerTree::LindenmayerTree(LindenmayerTreeParams &params, Material &material, Material &leavesMaterial, bool useMeshWiring, bool normalVisualisation) : params(params), material(material), leavesMaterial(leavesMaterial), meshWiring(useMeshWiring), normalVisualisation(normalVisualisation), GameObject() {
 	this->vBufferSize = 100000;
 	this->iBufferSize = 4000000;
-	this->segments = 5;
+	this->segments = 9;
 	this->textureXStep = 1.0f / (segments - 1);
 }
 
@@ -307,7 +307,7 @@ void LindenmayerTree::computeRingPoint(int startIndex, int endIndex) {
 		tmpPosition = vec4(vga->radius * cos, 0, vga->radius * sin, 1);
 		position = vec3(vga->transform * tmpPosition);
 		tmpPosition.z = 0;
-		normal = normalize(vec3(vga->transform * tmpPosition));
+		normal = normalize(vec3(tmpPosition) * vec3(2, 2, 2));
 
 		//output verticies
 		vert = &mesh->vertices[vga->verticesOffset + vga->vertexNumber];
