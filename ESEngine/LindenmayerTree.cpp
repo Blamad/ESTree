@@ -22,7 +22,7 @@ void LindenmayerTree::generateTree() {
 	generateMeshSkeleton();
 	generateMeshData();
 	//generateInstancedLeaves();
-	//generateLeaves();
+	generateLeaves();
 	logger.log(INFO, "Generation finished. " + to_string(mesh->indices.size() / 3) + " tris.");
 }
 
