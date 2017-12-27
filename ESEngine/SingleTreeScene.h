@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "CameraBehaviour.h"
 #include "HDRFrameBuffer.h"
+#include "RotationBehaviour.h"
 
 #include "Logger.h"
 
