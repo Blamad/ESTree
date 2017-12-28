@@ -70,7 +70,7 @@ void GLVertexArray::setInstancedVertexArray(const std::vector<Vertex> &vertices,
 
 	//Normal model matrix
 
-	/*GLuint vec3Size = sizeof(glm::vec3);
+	GLuint vec3Size = sizeof(glm::vec3);
 	glEnableVertexAttribArray(8);
 	glVertexAttribPointer(8, 3, GL_FLOAT, GL_FALSE, 3 * vec3Size, (void*)0);
 	glEnableVertexAttribArray(9);
@@ -80,21 +80,7 @@ void GLVertexArray::setInstancedVertexArray(const std::vector<Vertex> &vertices,
 
 	glVertexAttribDivisor(8, 1);
 	glVertexAttribDivisor(9, 1);
-	glVertexAttribDivisor(10, 1);*/
-
-	/*glEnableVertexAttribArray(8);
-	glVertexAttribPointer(8, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)0);
-	glEnableVertexAttribArray(9);
-	glVertexAttribPointer(9, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(vec4Size));
-	glEnableVertexAttribArray(10);
-	glVertexAttribPointer(10, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(2 * vec4Size));
-	glEnableVertexAttribArray(11);
-	glVertexAttribPointer(11, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(3 * vec4Size));
-
-	glVertexAttribDivisor(8, 1);
-	glVertexAttribDivisor(9, 1);
 	glVertexAttribDivisor(10, 1);
-	glVertexAttribDivisor(11, 1);*/
 
 	glBindVertexArray(0);
 }

@@ -16,14 +16,17 @@ void Skybox::draw(Renderer &renderer, Shader *shader) {
 
 	shader->use();
 
-	if (!initialized) {
-		glUniform1i(glGetUniformLocation(shader->program, "cubemap"), 0);
-		initialized = true;
+	if (!shader->initialized) {
+		shader->registerUniform("cubemap");
+		shader->registerUniform("model");
+		shader->initialized = true;
 	}
+	shader->updateShaderSubroutine();
 
-	glUniformMatrix4fv(glGetUniformLocation(shader->program, "model"), 1, GL_FALSE, glm::value_ptr(getModelMatrix()));
+	glUniformMatrix4fv(shader->getUniformLocation("model"), 1, GL_FALSE, glm::value_ptr(getModelMatrix()));
 
 	glActiveTexture(GL_TEXTURE0);
+	glUniform1i(shader->getUniformLocation("cubemap"), 0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap->textureBuffer->id);
 	renderer.renderObject(*vertexArray, shaders[0].get());
 	glDepthFunc(GL_LESS);

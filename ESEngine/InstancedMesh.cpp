@@ -9,7 +9,7 @@ void InstancedMesh::draw(Renderer &renderer) {
 		GLuint program = shader->program;
 		shader->use();
 
-		if (!initialized) {
+		if (!shader->initialized) {
 			shader->registerUniform("material.ambient");
 			shader->registerUniform("material.diffuse");
 			shader->registerUniform("material.specular");
@@ -18,27 +18,19 @@ void InstancedMesh::draw(Renderer &renderer) {
 			shader->registerUniform("material.texSpecular");
 			shader->registerUniform("directionalShadingSamples[0]");
 
-			shader->registerSubroutine("shadowDepthPass");
-			shader->registerSubroutine("renderPass");
+			shader->registerSubroutine("shadowDepthPass", GL_FRAGMENT_SHADER);
+			shader->registerSubroutine("renderPass", GL_FRAGMENT_SHADER);
+			shader->registerSubroutine("instancedMesh", GL_VERTEX_SHADER);
+			shader->registerSubroutine("singleMesh", GL_VERTEX_SHADER);
 
 			glUniform3fv(shader->getUniformLocation("material.ambient"), 1, glm::value_ptr(material.ambient));
 			glUniform3fv(shader->getUniformLocation("material.diffuse"), 1, glm::value_ptr(material.diffuse));
 			glUniform3fv(shader->getUniformLocation("material.specular"), 1, glm::value_ptr(material.specular));
 			glUniform1f(shader->getUniformLocation("material.shininess"), material.shininess);
 			glUniform1i(shader->getUniformLocation("directionalShadingSamples[0]"), 2);
-			initialized = true;
-
-			/*
-			glUniform3fv(glGetUniformLocation(program, "material.ambient"), 1, glm::value_ptr(material.ambient));
-			glUniform3fv(glGetUniformLocation(program, "material.diffuse"), 1, glm::value_ptr(material.diffuse));
-			glUniform3fv(glGetUniformLocation(program, "material.specular"), 1, glm::value_ptr(material.specular));
-			glUniform1f(glGetUniformLocation(program, "material.shininess"), material.shininess);
-			glUniform1f(glGetUniformLocation(program, "material.texDiffuse"), 0);
-			glUniform1f(glGetUniformLocation(program, "material.texSpecular"), 1);
-			glUniform1i(glGetUniformLocation(program, "directionalShadingSamples[0]"), 2);
-			*/
+			shader->initialized = true;
 		}
-
+		shader->setShaderSubroutine(INSTANCED_MESH_MODE);
 		shader->updateShaderSubroutine();
 
 		if (material.texDiffuse != nullptr) {

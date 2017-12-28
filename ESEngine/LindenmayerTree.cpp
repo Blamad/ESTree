@@ -21,8 +21,8 @@ void LindenmayerTree::generateTree() {
 	logger.log(INFO, "Generation started: " + params.name);
 	generateMeshSkeleton();
 	generateMeshData();
-	//generateInstancedLeaves();
-	generateLeaves();
+	generateInstancedLeaves();
+	//generateLeaves();
 	logger.log(INFO, "Generation finished. " + to_string(mesh->indices.size() / 3) + " tris.");
 }
 
@@ -395,7 +395,7 @@ void LindenmayerTree::generateInstancedLeaves() {
 }
 
 shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms) {
-	shared_ptr<Shader> shader = ShaderManager::getInstance().getShader("Shaders/InstancedShader.vert", "Shaders/GenericShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getInstance().getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 
 	vector<Vertex> vertices = {
 		//front
@@ -421,7 +421,7 @@ shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesPanelMesh(vector
 }
 
 shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesCubeMesh(vector<InstancedTransform> &instancedTransforms) {
-	shared_ptr<Shader> shader = ShaderManager::getInstance().getShader("Shaders/InstancedShader.vert", "Shaders/GenericShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getInstance().getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 
 	vector<Vertex> vertices = {
 		//front

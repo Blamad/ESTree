@@ -12,8 +12,7 @@ out VS_OUT {
   vec2 texCoords;
 } vs_out;
 
-layout (std140, binding = 0) uniform Matricies
-{
+layout (std140, binding = 0) uniform Matricies {
 	uniform mat4 projection;
 	uniform mat4 view;
 };

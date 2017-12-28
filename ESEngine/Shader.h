@@ -2,6 +2,7 @@
 #define SHADER_H
 
 #include <map>
+#include <vector>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -9,9 +10,10 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <boost\foreach.hpp>
 
 enum ShaderSubroutine {
-	RENDER_PASS, SHADOW_DEPTH_PASS
+	RENDER_PASS, SHADOW_DEPTH_PASS, SINGLE_MESH_MODE, INSTANCED_MESH_MODE
 };
 
 class Shader
@@ -29,7 +31,7 @@ public:
 
 	void registerAttribute(const char* attrib);
 	void registerUniform(const char* uniform);
-	void registerSubroutine(const char* uniform);
+	void registerSubroutine(const char * subroutine, GLenum shaderType);
 	
 	GLuint getSubroutineLocation(const char* subroutine);
 	GLuint getAttribLocation(const char* attrib);
@@ -55,7 +57,7 @@ private:
 	std::map<std::string, GLuint> unifLocationList;
 	std::map<std::string, GLuint> subroutineList;
 
-	ShaderSubroutine shaderSubroutine = RENDER_PASS;
+	std::vector<ShaderSubroutine> shaderSubroutines;
 
 	static GLuint matricesUBO;
 };

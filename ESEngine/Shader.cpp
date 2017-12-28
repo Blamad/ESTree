@@ -52,6 +52,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+		std::cout << vertexPath << std::endl;
 		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 	};
 
@@ -64,6 +65,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
+		std::cout << fragmentPath << std::endl;
 		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
@@ -181,17 +183,23 @@ void Shader::use() {
 }
 
 void Shader::updateShaderSubroutine() {
-	GLuint index;
-	switch (this->shaderSubroutine) {
-	case RENDER_PASS:
-		index = getSubroutineLocation("renderPass");
-		glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &index);
-		break;
-	case SHADOW_DEPTH_PASS:
-		index = getSubroutineLocation("shadowDepthPass");
-		glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &index);
-		break;
+
+	GLuint indexes[2] = { getSubroutineLocation("renderPass"), getSubroutineLocation("singleMesh") };
+	BOOST_FOREACH(ShaderSubroutine shaderSubroutine, shaderSubroutines) {
+		switch (shaderSubroutine) {
+		case SHADOW_DEPTH_PASS:
+			indexes[0] = getSubroutineLocation("shadowDepthPass");
+			break;
+		case INSTANCED_MESH_MODE:
+			indexes[1] = getSubroutineLocation("instancedMesh");
+		default:
+			break;
+		}
 	}
+
+	glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &indexes[0]);
+	glUniformSubroutinesuiv(GL_VERTEX_SHADER, 1, &indexes[1]);
+	shaderSubroutines.clear();
 }
 
 void Shader::registerAttribute(const char* attrib) {
@@ -202,8 +210,8 @@ void Shader::registerUniform(const char* unif) {
 	unifLocationList[unif] = glGetUniformLocation(program, unif);
 }
 
-void Shader::registerSubroutine(const char* subroutine) {
-	subroutineList[subroutine] = glGetSubroutineIndex(program, GL_FRAGMENT_SHADER, subroutine);
+void Shader::registerSubroutine(const char* subroutine, GLenum shaderType) {
+	subroutineList[subroutine] = glGetSubroutineIndex(program, shaderType, subroutine);
 }
 
 GLuint Shader::getSubroutineLocation(const char* subroutine) {
@@ -219,7 +227,7 @@ GLuint Shader::getUniformLocation(const char* unif) {
 }
 
 void Shader::setShaderSubroutine(ShaderSubroutine subroutine) {
-	this->shaderSubroutine = subroutine;
+	this->shaderSubroutines.push_back(subroutine);
 }
 
 void Shader::registerMatriciesUBO() {
