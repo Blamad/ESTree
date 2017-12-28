@@ -50,7 +50,7 @@ void GLVertexArray::setInstancedVertexArray(const std::vector<Vertex> &vertices,
 
 	glGenBuffers(1, &instancedModelMatriciesBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, instancedModelMatriciesBuffer);
-	glBufferData(GL_ARRAY_BUFFER, instanceTransforms.size() * sizeof(glm::mat4), &instanceTransforms[0], usage);
+	glBufferData(GL_ARRAY_BUFFER, instanceTransforms.size() * sizeof(InstancedTransform), &instanceTransforms[0], usage);
 
 	//Model matrix
 	GLuint vec4Size = sizeof(glm::vec4);

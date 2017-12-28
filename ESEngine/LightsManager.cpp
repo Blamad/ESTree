@@ -39,7 +39,6 @@ void LightsManager::updateLights(vec3& viewPos, Renderer& renderer, function<voi
 
 		Shader::updateViewMatrix(lightView);
 		dLight->lightSpace = lightProjection * lightView;
-		depthBuffer->shader->setShaderSubroutine(INSTANCED_MESH_MODE);
 		depthBuffer->shader->setShaderSubroutine(SHADOW_DEPTH_PASS);
 		renderObjectsFunction(renderer, depthBuffer->shader.get());
 	}

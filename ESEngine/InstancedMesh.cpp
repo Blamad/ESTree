@@ -30,6 +30,7 @@ void InstancedMesh::draw(Renderer &renderer) {
 			glUniform1i(shader->getUniformLocation("directionalShadingSamples[0]"), 2);
 			shader->initialized = true;
 		}
+
 		shader->setShaderSubroutine(INSTANCED_MESH_MODE);
 		shader->updateShaderSubroutine();
 

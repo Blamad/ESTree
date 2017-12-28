@@ -88,7 +88,6 @@ private:
 
 	//Leaves generation
 	void generateInstancedLeaves();
-	shared_ptr<InstancedMesh> createInstancedLeavesCubeMesh(vector<InstancedTransform> &instancedTransforms);
 	shared_ptr<InstancedMesh> createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms);
 	
 	//Stuff
