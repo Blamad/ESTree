@@ -90,7 +90,7 @@ void SingleTreeScene::generateTerrain() {
 
 	go = unique_ptr<GameObject>(new Cube(Material::grass()));
 	transform = getTransform(go.get());
-	transform->scale(vec3(15, 0.5, 15));
+	transform->scale(vec3(15, 0.1, 15));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(0);
@@ -130,7 +130,7 @@ GameObject* SingleTreeScene::createCamera(glm::vec3 position, float yaw, float p
 }
 
 void SingleTreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1, 1, 1)) {
-	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container(), false, true));
+	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container()));
 	go->name = "CrateCube";
 	Transform* transform = getTransform(go.get());
 	transform->translate(pos);
@@ -138,6 +138,15 @@ void SingleTreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1, 1, 1)) {
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(1);
 	rigidBody->makeDynamic();
+
+	/*InstancedTransform it;
+	it.translateModel(vec3(0, 1, 0));
+	vector<InstancedTransform> itVec;
+	itVec.push_back(it);
+
+	shared_ptr<GameObject> igo = shared_ptr<GameObject>(new InstancedCube(Material::leaves1(), itVec));
+	igo->name = "LeafCube";
+	go->addGameObject(igo);*/
 
 	addGameObject(move(go));
 }
@@ -152,7 +161,7 @@ void SingleTreeScene::addSkybox() {
 		"Textures/Skybox_darkforest/front.jpg"
 	};
 
-	Shader shader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getInstance().getShader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
 
 	unique_ptr<Skybox> skybox(new Skybox(skyboxTex, shader));
 	setSkybox(std::move(skybox));

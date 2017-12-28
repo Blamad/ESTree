@@ -1,7 +1,7 @@
 #include "DepthFrameBuffer.h"
 
-DepthFrameBuffer::DepthFrameBuffer(unique_ptr<Shader> shader, int width, int height) : FrameBuffer(move(shader), width, height) {
-	depthDebugShader = unique_ptr<Shader>(new Shader("Shaders/DepthQuadDebug.vert", "Shaders/DepthQuadDebug.frag"));
+DepthFrameBuffer::DepthFrameBuffer(shared_ptr<Shader> shader, int width, int height) : FrameBuffer(shader, width, height) {
+	depthDebugShader = ShaderManager::getInstance().getShader("Shaders/DepthQuadDebug.vert", "Shaders/DepthQuadDebug.frag")	;
 	init();
 };
 

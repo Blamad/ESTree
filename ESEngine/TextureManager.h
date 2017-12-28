@@ -3,8 +3,11 @@
 
 #include <memory>
 #include <vector>
+#include <algorithm>
 
-#include "Texture.h"
+#include "Texture2D.h"
+#include "CubeMap.h"
+
 
 using namespace std;
 

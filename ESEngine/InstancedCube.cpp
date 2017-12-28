@@ -1,7 +1,7 @@
 #include "InstancedCube.h"
 
 InstancedCube::InstancedCube(Material material, vector<InstancedTransform> &instancedTransforms) : GameObject() {
-	Shader shader("Shaders/InstancedShader.vert", "Shaders/InstancedShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getInstance().getShader("Shaders/InstancedShader.vert", "Shaders/InstancedShader.frag");
 	addComponent(createMesh(shader, material, instancedTransforms));
 }
 void InstancedCube::addInstance(InstancedTransform transform) {
@@ -18,7 +18,7 @@ Vertex InstancedCube::createVertex(vec3 position, vec3 normal, vec2 texCoords) {
 	return vert;
 }
 
-shared_ptr<Mesh> InstancedCube::createMesh(Shader shader, Material material, vector<InstancedTransform> &instancedTransforms) {
+shared_ptr<Mesh> InstancedCube::createMesh(shared_ptr<Shader> shader, Material material, vector<InstancedTransform> &instancedTransforms) {
 	vector<Vertex> vertices = {
 		//front
 		createVertex(vec3(1.0f, -1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 0)),

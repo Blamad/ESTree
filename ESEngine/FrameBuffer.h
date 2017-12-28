@@ -1,6 +1,7 @@
 #ifndef FRAME_BUFFER_H
 #define FRAME_BUFFER_H
 
+#include "ShaderManager.h"
 #include "Renderer.h"
 #include "Screen.h"
 #include "Texture.h"
@@ -10,10 +11,10 @@ class FrameBuffer {
 public:
 	GLuint FBO;
 	GLuint quadVAO;
-	unique_ptr<Shader> shader;
+	shared_ptr<Shader> shader;
 
 	FrameBuffer() : width(Screen::getScreenWidth()), height(Screen::getScreenHeight()) {};
-	FrameBuffer(unique_ptr<Shader> shader, int width = Screen::getScreenWidth(), int height = Screen::getScreenHeight()) : shader(move(shader)), width(width), height(height) {	}
+	FrameBuffer(shared_ptr<Shader> shader, int width = Screen::getScreenWidth(), int height = Screen::getScreenHeight()) : shader(move(shader)), width(width), height(height) {	}
 
 	TextureBuffer* getBuffer() {
 		return buffer.get();

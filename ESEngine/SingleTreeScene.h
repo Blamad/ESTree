@@ -1,8 +1,11 @@
 #ifndef SINGLE_TREE_SCENE_H
 #define SINGLE_TREE_SCENE_H
 
+#include "ShaderManager.h"
 #include "Scene.h"
+#include "InstancedCube.h"
 #include "Cube.h"
+#include "Terrain.h"
 #include "LampCube.h"
 #include "LindenmayerTree.h"
 #include "Material.h"

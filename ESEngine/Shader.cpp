@@ -85,7 +85,6 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 
-	initialized = true;
 	active = true;
 }
 
@@ -133,6 +132,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 	if (!success)
 	{
 		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+		std::cout << vertexPath << std::endl;
 		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
@@ -173,13 +173,25 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 	glDeleteShader(geometry);
-
-	initialized = true;
 	active = true;
 }
 
 void Shader::use() {
 	glUseProgram(program);
+}
+
+void Shader::updateShaderSubroutine() {
+	GLuint index;
+	switch (this->shaderSubroutine) {
+	case RENDER_PASS:
+		index = getSubroutineLocation("renderPass");
+		glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &index);
+		break;
+	case SHADOW_DEPTH_PASS:
+		index = getSubroutineLocation("shadowDepthPass");
+		glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &index);
+		break;
+	}
 }
 
 void Shader::registerAttribute(const char* attrib) {
@@ -190,12 +202,24 @@ void Shader::registerUniform(const char* unif) {
 	unifLocationList[unif] = glGetUniformLocation(program, unif);
 }
 
+void Shader::registerSubroutine(const char* subroutine) {
+	subroutineList[subroutine] = glGetSubroutineIndex(program, GL_FRAGMENT_SHADER, subroutine);
+}
+
+GLuint Shader::getSubroutineLocation(const char* subroutine) {
+	return subroutineList[subroutine];
+}
+
 GLuint Shader::getAttribLocation(const char* attrib) {
 	return attribList[attrib];
 }
 
 GLuint Shader::getUniformLocation(const char* unif) {
 	return unifLocationList[unif];
+}
+
+void Shader::setShaderSubroutine(ShaderSubroutine subroutine) {
+	this->shaderSubroutine = subroutine;
 }
 
 void Shader::registerMatriciesUBO() {

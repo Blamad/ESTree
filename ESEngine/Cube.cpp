@@ -1,7 +1,7 @@
 #include "Cube.h"
 
 Cube::Cube(Material material, bool useMeshWiring, bool useNormalVisualisation) : GameObject() {
-	Shader shader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getInstance().getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 	shared_ptr<Mesh> mesh = createMesh(shader);
 	mesh->material = material;
 	if (useMeshWiring)
@@ -37,7 +37,7 @@ Vertex Cube::createVertex(vec3 position, vec3 normal) {
 	return vert;
 }
 
-shared_ptr<Mesh> Cube::createMesh(Shader shader) {
+shared_ptr<Mesh> Cube::createMesh(shared_ptr<Shader> shader) {
 	vector<Vertex> v;
 	vector<int> i;
 
@@ -100,7 +100,7 @@ shared_ptr<Mesh> Cube::createMesh(Shader shader) {
 	return mesh;
 }
 
-shared_ptr<Mesh> Cube::createMesh(Shader shader, vec4 color) {
+shared_ptr<Mesh> Cube::createMesh(shared_ptr<Shader> shader, vec4 color) {
 	vector<Vertex> vertices = {
 		//front
 		createVertex(vec3(1.0f, -1.0f, 1.0f),	vec3(0.0f, 0.0f, 1.0f),	color),

@@ -34,8 +34,10 @@
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="SingleTreeScene.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TextureBuffer.cpp" />
     <ClCompile Include="Texture2D.cpp" />
@@ -84,8 +86,10 @@
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Segment.h" />
+    <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="SingleTreeScene.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
@@ -147,8 +151,6 @@
     <None Include="LindenmayerRules\testZ.l" />
     <None Include="Shaders\DepthQuadDebug.frag" />
     <None Include="Shaders\DepthQuadDebug.vert" />
-    <None Include="Shaders\DirectionalShadowShader.frag" />
-    <None Include="Shaders\DirectionalShadowShader.vert" />
     <None Include="Shaders\GenericShader.frag" />
     <None Include="Shaders\GenericShader.vert" />
     <None Include="Shaders\HDRShader.frag" />

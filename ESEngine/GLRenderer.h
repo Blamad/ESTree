@@ -9,8 +9,8 @@
 class GLRenderer : public Renderer {
 	
 public:
-	void renderObject(VertexArray &vertexArray, Shader &shader);
-	void renderInstancedObject(VertexArray &vertexArray, Shader &shader, int &amount);
+	void renderObject(VertexArray &vertexArray, Shader *shader);
+	void renderInstancedObject(VertexArray &vertexArray, Shader *shader, int &amount);
 };
 
 #endif // !GLRENDERER_H

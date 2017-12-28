@@ -258,6 +258,12 @@
     <ClCompile Include="DirectionalLight.cpp">
       <Filter>Engine\GameObject\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>TestProject\Models\General\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -434,6 +440,12 @@
     <ClInclude Include="SingleTreeScene.h">
       <Filter>TestProject\Scenes\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>TestProject\Models\General\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="LindenmayerRules\advancedTree.l">
@@ -525,12 +537,6 @@
     </None>
     <None Include="Shaders\PostEffectShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
-    </None>
-    <None Include="Shaders\DirectionalShadowShader.frag">
-      <Filter>GraphicEngine\Shaders</Filter>
-    </None>
-    <None Include="Shaders\DirectionalShadowShader.vert">
-      <Filter>GraphicEngine\Shaders</Filter>
     </None>
     <None Include="Shaders\HDRShader.frag">
       <Filter>GraphicEngine\Shaders</Filter>

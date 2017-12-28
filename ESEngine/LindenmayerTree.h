@@ -12,6 +12,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "ShaderManager.h"
 #include "Segment.h"
 #include "InstancedMesh.h"
 #include "LindenmayerTreeParams.h"

@@ -5,14 +5,14 @@
 
 class DepthFrameBuffer : public FrameBuffer {
 public:
-	DepthFrameBuffer(unique_ptr<Shader> shader, int width, int height);
+	DepthFrameBuffer(shared_ptr<Shader> shader, int width, int height);
 
 	void mountFrameBuffer();
 	void unmountFrameBuffer();
 	void executeFrameBuffer(Renderer& renderer);
 	
 protected:
-	unique_ptr<Shader> depthDebugShader;
+	shared_ptr<Shader> depthDebugShader;
 	void init();
 };
 

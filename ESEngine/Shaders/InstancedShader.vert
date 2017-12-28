@@ -4,7 +4,7 @@ layout(location = 1) in vec3 normal;
 layout(location = 2) in vec4 color;
 layout(location = 3) in vec2 texCoords;
 layout(location = 4) in mat4 model;
-layout(location = 8) in mat4 normalModel;
+layout(location = 8) in mat3 normalModel;
 
 out VS_OUT {
   vec3 fragPos;
@@ -18,8 +18,6 @@ layout (std140, binding = 0) uniform Matricies
 	uniform mat4 view;
 };
 
-
-
 void main()
 {
 	vec4 modelSpacePos = model * vec4(position, 1.0f);
@@ -27,6 +25,6 @@ void main()
 	gl_Position = projection * viewSpacePos;
 
 	vs_out.fragPos = vec3(model * vec4(position, 1.0f));
-	vs_out.normal = mat3(view * model) * normal;//normalModel * normal;
+	vs_out.normal = normalModel * normal;
 	vs_out.texCoords = texCoords;
 }

@@ -10,6 +10,10 @@
 #include <sstream>
 #include <iostream>
 
+enum ShaderSubroutine {
+	RENDER_PASS, SHADOW_DEPTH_PASS
+};
+
 class Shader
 {
 public:
@@ -25,9 +29,15 @@ public:
 
 	void registerAttribute(const char* attrib);
 	void registerUniform(const char* uniform);
+	void registerSubroutine(const char* uniform);
 	
+	GLuint getSubroutineLocation(const char* subroutine);
 	GLuint getAttribLocation(const char* attrib);
 	GLuint getUniformLocation(const char* unif);
+
+	void setShaderSubroutine(ShaderSubroutine subroutine);
+
+	void updateShaderSubroutine();
 
 	void use();
 
@@ -43,6 +53,9 @@ public:
 private:
 	std::map<std::string, GLuint> attribList;
 	std::map<std::string, GLuint> unifLocationList;
+	std::map<std::string, GLuint> subroutineList;
+
+	ShaderSubroutine shaderSubroutine = RENDER_PASS;
 
 	static GLuint matricesUBO;
 };
