@@ -21,8 +21,8 @@ void LindenmayerTree::generateTree() {
 	logger.log(INFO, "Generation started: " + params.name);
 	generateMeshSkeleton();
 	generateMeshData();
-	//generateInstancedLeaves();
-	generateLeaves();
+	generateInstancedLeaves();
+	//generateLeaves();
 	logger.log(INFO, "Generation finished. " + to_string(mesh->indices.size() / 3) + " tris.");
 }
 
@@ -336,10 +336,9 @@ void LindenmayerTree::generateLeaves() {
 }
 
 void LindenmayerTree::generateInstancedLeaves() {
-	//Something is wrong with persisting position and passing it to shader.
 	vector<InstancedTransform> instancedTransforms;
 	Transform *transform = (Transform*)getComponent(TRANSFORM);
-
+	
 	for (auto & seg : segmentsVec) {
 		if (!seg->isLastStem())
 			continue;
@@ -350,6 +349,7 @@ void LindenmayerTree::generateInstancedLeaves() {
 			instancedTransforms.push_back(it);
 		}
 	}
+
 	shared_ptr<InstancedMesh> leavesMesh = createInstancedLeavesPanelMesh(instancedTransforms);
 	shared_ptr<GameObject> go(new GameObject());
 	go->addComponent(leavesMesh);

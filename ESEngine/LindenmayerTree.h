@@ -14,6 +14,7 @@
 
 #include "ShaderManager.h"
 #include "Segment.h"
+#include "Mesh.h"
 #include "InstancedMesh.h"
 #include "LindenmayerTreeParams.h"
 #include "LindenmayerTreeParser.h"

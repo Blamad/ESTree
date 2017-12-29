@@ -4,7 +4,7 @@ layout(location = 1) in vec3 normal;
 layout(location = 2) in vec4 color;
 layout(location = 3) in vec2 texCoords;
 layout(location = 4) in mat4 instancedModel;
-layout(location = 8) in mat3 instancedNormalModel;
+//layout(location = 8) in mat4 instancedNormalModel;
 
 out VS_OUT {
   vec3 fragPos;
@@ -41,7 +41,7 @@ void instancedMesh() {
 	gl_Position = projection * viewSpacePos;
 
 	vs_out.fragPos = vec3(instancedModel * vec4(position, 1.0f));
-	vs_out.normal = instancedNormalModel * normal;
+	vs_out.normal = mat3(transpose(inverse(instancedModel))) * normal;
 	vs_out.texCoords = texCoords;
 }
 

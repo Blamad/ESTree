@@ -28,7 +28,7 @@ void SingleTreeScene::initialize() {
 
 	GameObject* go;
 	Material barkMaterial;
-	vec3 position = vec3(3,0,3);
+	vec3 position = vec3(-3,0,-3);
 	string paramsFileName;
 	string leavesTextureName;
 	bool normalVisualisation;
