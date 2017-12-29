@@ -192,6 +192,7 @@ void Shader::updateShaderSubroutine() {
 			break;
 		case INSTANCED_MESH_MODE:
 			indexes[1] = getSubroutineLocation("instancedMesh");
+			break;
 		default:
 			break;
 		}
