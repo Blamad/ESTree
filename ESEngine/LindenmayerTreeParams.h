@@ -12,7 +12,11 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
 
+#include <rapidjson/document.h>
+#include <rapidjson/istreamwrapper.h>
+
 using namespace std;
+using namespace rapidjson;
 
 class Rule {
 public:
@@ -48,6 +52,10 @@ public:
 
 protected:
 	map<string, vector<Rule>> rules;
+	
+	void readLFile(string filePath);
+	void readJSONFile(string filePath);
+	
 	vector<string> split(string lane);
 	vector<string> split(string lane, string splitter);
 	string fillRuleWithVariables(string rule, map<string, float> variables);

@@ -168,7 +168,7 @@ void LindenmayerTree::generateMeshData() {
 			transform.pitchRotation += customParameter;
 			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));
 			break;
-		case '\"': //scale down
+		case '`': //scale down
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = 0.625;

@@ -1,0 +1,20 @@
+{
+  "parameters": {
+    "depth": 8,
+    "initialLength": 1.5,
+    "initialRadius": 1.2,
+    "angle": 34.37,
+	"r1": 0.9,
+	"r2": 0.6,
+	"a0": 45,
+	"a2": 45,
+	"d": 137.5,
+	"wr": 0.707
+  },
+  "axiom": "A(4,1.2)",
+  "rules": [
+    { "symbol": "A(s,w)", "production": "=(w)F(s)[^(a0)B(s*r2,w*wr)]+(d)A(s*r1,w*wr)" },
+	{ "symbol": "B(s,w)", "production": "=(w)F(s)[<(a2)C(s*r2,w*wr)]C(s*r1,w*wr)" },
+	{ "symbol": "C(s,w)", "production": "=(w)F(s)[>(a2)B(s*r2,w*wr)]B(s*r1,w*wr)" }
+  ]
+}

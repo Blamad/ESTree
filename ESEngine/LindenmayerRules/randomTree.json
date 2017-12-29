@@ -1,0 +1,15 @@
+{
+  "parameters": {
+    "depth": 5,
+    "initialLength": 1.5,
+    "initialRadius": 0.6,
+    "angle": 15
+  },
+  "axiom": "f(4.5)a",
+  "rules": [
+    { "symbol": "a", "probability": 0.25, "production": "`>[<<f(4.5)a][^^++f(4.5)a][vv--f(4.5)a][>>f(4.5)a]" },
+	{ "symbol": "a", "probability": 0.25, "production": "`<[<<f(4.5)a][>>f(3)a]" },
+	{ "symbol": "a", "probability": 0.25, "production": "`+^[^^++f(3)a][vv--f(4.5)a]" },
+	{ "symbol": "a", "probability": 0.25, "production": "`-v[>>>f(4.5)a][++++++++>>>f(4.5)a][-------->>>f(4.5)a]" }
+  ]
+}

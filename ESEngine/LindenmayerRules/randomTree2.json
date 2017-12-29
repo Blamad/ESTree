@@ -1,0 +1,21 @@
+{
+  "parameters": {
+    "depth": 5,
+    "initialLength": 3,
+    "initialRadius": 0.6,
+    "angle": 15
+  },
+  "axiom": "fb",
+  "rules": [
+	{ "symbol": "b", "probability": 0.2, "production": "fa" },
+	{ "symbol": "b", "probability": 0.2, "production": "fa" },
+	{ "symbol": "b", "probability": 0.2, "production": "+fa" },
+	{ "symbol": "b", "probability": 0.2, "production": "vfa" },
+	{ "symbol": "b", "probability": 0.1, "production": "[--vvfa][+^fa]" },
+	{ "symbol": "b", "probability": 0.1, "production": "[-vfa][++^^fa]" },
+	{ "symbol": "a", "probability": 0.25, "production": ">[<<f(4.5)a][^^++f(4.5)a][vv--f(4.5)a][>>f(4.5)a]" },
+	{ "symbol": "a", "probability": 0.25, "production": "<[<<f(4.5)a][>>f(3)a]" },
+	{ "symbol": "a", "probability": 0.25, "production": "^+[^^++f(3)a][vv--f(4.5)a]" },
+	{ "symbol": "a", "probability": 0.25, "production": "v-[>>>f(4.5)a][++++++++>>>f(4.5)a][-------->>>f(4.5)a]" }
+  ]
+}

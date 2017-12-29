@@ -1,0 +1,19 @@
+{
+  "parameters": {
+    "depth": 6,
+    "initialLength": 1.5,
+    "initialRadius": 1.2,
+    "angle": 34.37,
+	"d1": 94.74,
+	"d2": 132.63,
+	"a": 18.98,
+	"lr": 1.109,
+	"vr": 0.8
+  },
+  "axiom": "=(1)F(2)>(45)A",
+  "rules": [
+    { "symbol": "A", "production": "=(vr)F(.25)[^(a)F(.25)A]/(d1)[^(a)F(.25)A]>(d2)[^(a)F(.25)A]" },
+	{ "symbol": "F(l)", "production": "F(l*lr)" },
+	{ "symbol": "=(w)", "production": "=(w*vr)" }
+  ]
+}
