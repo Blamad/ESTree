@@ -1,9 +1,72 @@
 #include "LindenmayerTreeParams.h"
 
 LindenmayerTreeParams::LindenmayerTreeParams(string filePath) {
-	
+	if(filePath.substr(filePath.find_last_of('.')+1) == "l")
+		readLFile(filePath);
+	else
+		readJSONFile(filePath);
+}
+
+void LindenmayerTreeParams::readJSONFile(string filePath) {
 	name = filePath;
+
+	ifstream ifs(name);
+	IStreamWrapper isw(ifs);
+	Document document;
+	document.ParseStream(isw);
+
+	//PARAMETERS
+	for (auto& m : document["parameters"].GetObject()) {
+		string paramName = m.name.GetString(); 
+		float paramValue = m.value.GetFloat();
+
+		if (paramName == "initialLength") {
+			initialLength = paramValue;
+		}
+		else if (paramName == "depth") {
+			depth = paramValue;
+		}
+		else if (paramName == "initialRadius") {
+			initialRadius = paramValue;
+		}
+		else if (paramName == "angle") {
+			angle = radians(paramValue);
+		}
+		else {
+			customParameters[paramName] = paramValue;
+		}
+	}
 	
+	//RULES
+	axiom = document["axiom"].GetString();
+	for (auto& rule : document["rules"].GetArray()) {
+		string symbol = rule.GetObject()["symbol"].GetString();
+		string production = rule.GetObject()["production"].GetString();
+
+		vector<string> variables;
+		int intialDepth = 0;
+		float probability = 1.0;
+
+		if (symbol.length() > 1 && symbol[1] == '(') {
+			variables = split(symbol.substr(2, symbol.length() - 3), ",");
+			symbol = symbol.substr(0, 1);
+		}
+
+		if (rule.GetObject().HasMember("probability")) {
+			probability = rule.GetObject()["probability"].GetFloat();
+		}
+		if (rule.GetObject().HasMember("initialDepth")) {
+			intialDepth = rule.GetObject()["initialDepth"].GetInt();
+		}
+
+		production = fillRuleWithVariables(production, customParameters);
+		addRule(Rule(symbol, production, probability, intialDepth, variables));
+	}
+}
+
+void LindenmayerTreeParams::readLFile(string filePath) {
+	name = filePath;
+
 	ifstream lindenFile;
 	lindenFile.exceptions(ifstream::badbit);
 	int parsedLineCounter = 0;
@@ -20,16 +83,20 @@ LindenmayerTreeParams::LindenmayerTreeParams(string filePath) {
 			//Parameters
 			if (line.length() > 6 && line.substr(0, 6) == "define") {
 				vector<string> splitLane = split(line);
-				
+
 				if (splitLane[1] == "initialLength") {
 					initialLength = atof(splitLane[2].c_str());
-				} else if (splitLane[1] == "depth") {
+				}
+				else if (splitLane[1] == "depth") {
 					depth = atof(splitLane[2].c_str());
-				} else if (splitLane[1] == "initialRadius") {
+				}
+				else if (splitLane[1] == "initialRadius") {
 					initialRadius = atof(splitLane[2].c_str());
-				}else if (splitLane[1] == "angle") {
+				}
+				else if (splitLane[1] == "angle") {
 					angle = radians(atof(splitLane[2].c_str()));
-				} else {
+				}
+				else {
 					customParameters[splitLane[1]] = atof(splitLane[2].c_str());
 				}
 				continue;
@@ -52,7 +119,7 @@ LindenmayerTreeParams::LindenmayerTreeParams(string filePath) {
 					symbol = symbol.substr(0, 1);
 				}
 				if (symbol[1] == '(') {
-					variables = split(symbol.substr(2,symbol.length() - 3), ",");
+					variables = split(symbol.substr(2, symbol.length() - 3), ",");
 					symbol = symbol.substr(0, 1);
 				}
 			}

@@ -5,4 +5,4 @@ define initialRadius 0.5
 define angle 15
 
 f(4.5)a
-a "[<<f(4.5)a][++^^f(4.5)a][vv--f(4.5)a][>>f(4.5)a]
+a `[<<f(4.5)a][++^^f(4.5)a][vv--f(4.5)a][>>f(4.5)a]

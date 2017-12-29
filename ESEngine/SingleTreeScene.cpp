@@ -7,25 +7,15 @@ void SingleTreeScene::initialize() {
 	logger.log(INFO, "Starting scene");
 
 	vector<string> treeParams = {
-		"randomTree.l",
-		"symetricTree.l",
-		"fibbonacciTree.l",
-		"advancedTree.l",
-		"advancedTree2.l",
+		"randomTree.json",
+		"symetricTree.json",
+		"fibbonacciTree.json",
+		"advancedTree.json",
+		"advancedTree2.json",
 		//5
-		"parametricMonopodialTreeA.l",
-		"parametricMonopodialTreeB.l",
-		"parametricMonopodialTreeC.l",
-		"parametricMonopodialTreeD.l",
-		"parametricMonopodialTreeA.l",
-		//10
-		"parametricSympodialTreeA.l",
-		"parametricSympodialTreeB.l",
-		"parametricSympodialTreeC.l",
-		"parametricSympodialTreeD.l",
-		"test.l",
-		//15
-		"normalTest.l"
+		"parametricMonopodialTreeA.json",
+		"parametricSympodialTreeA.json",
+		"parametricTernaryTreeA.json"
 	};
 
 	vector<string> leavesParams = {
@@ -44,7 +34,7 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[2];
+	paramsFileName = "LindenmayerRules/" + treeParams[4];
 	leavesTextureName = "Textures/" + leavesParams[0];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;

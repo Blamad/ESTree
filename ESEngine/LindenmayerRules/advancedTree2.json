@@ -1,0 +1,16 @@
+{
+  "parameters": {
+    "depth": 5,
+    "initialLength": 1.5,
+    "initialRadius": 0.4,
+    "angle": 10
+  },
+  "axiom": "f(2)A",
+  "rules": [
+    { "symbol": "A", "production": "`(0.9)=>f[^^++Af][vv--Af]<<<A", "probability": 0.275 },
+	{ "symbol": "A", "production": "`(0.8)=<f[^^++Af][vv--Af]>>>A", "probability": 0.275 },
+	{ "symbol": "A", "initialDepth": 1, "production": "`(0.8)=(0.7)>Af[^^^+++f][vv--f]>>f", "probability": 0.15 },
+	{ "symbol": "A", "initialDepth": 1, "production": "`(0.8)=(0.7)>f[^^++f][vvv---Af]>>f", "probability": 0.15 },
+	{ "symbol": "A", "initialDepth": 2, "production": "`(0.8)=(0.6)>Af[^^++f][vv--f]<<f", "probability": 0.15 }
+  ]
+}

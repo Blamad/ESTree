@@ -123,21 +123,29 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LindenmayerRules\advancedTree.json" />
     <None Include="LindenmayerRules\advancedTree.l" />
+    <None Include="LindenmayerRules\advancedTree2.json" />
     <None Include="LindenmayerRules\advancedTree2.l" />
+    <None Include="LindenmayerRules\fibbonacciTree.json" />
     <None Include="LindenmayerRules\fibbonacciTree.l" />
     <None Include="LindenmayerRules\normalTest.l" />
+    <None Include="LindenmayerRules\parametricMonopodialTreeA.json" />
     <None Include="LindenmayerRules\parametricMonopodialTreeA.l" />
     <None Include="LindenmayerRules\parametricMonopodialTreeB.l" />
     <None Include="LindenmayerRules\parametricMonopodialTreeC.l" />
     <None Include="LindenmayerRules\parametricMonopodialTreeD.l" />
+    <None Include="LindenmayerRules\parametricSympodialTreeA.json" />
     <None Include="LindenmayerRules\parametricSympodialTreeA.l" />
     <None Include="LindenmayerRules\parametricSympodialTreeB.l" />
     <None Include="LindenmayerRules\parametricSympodialTreeC.l" />
     <None Include="LindenmayerRules\parametricSympodialTreeD.l" />
+    <None Include="LindenmayerRules\parametricTernaryTreeA.json" />
     <None Include="LindenmayerRules\parametricTernaryTreeA.l" />
     <None Include="LindenmayerRules\parametricTree.l" />
+    <None Include="LindenmayerRules\randomTree.json" />
     <None Include="LindenmayerRules\randomTree.l" />
+    <None Include="LindenmayerRules\randomTree2.json" />
     <None Include="LindenmayerRules\randomTree2.l" />
     <None Include="LindenmayerRules\parametricTree2.l" />
     <None Include="LindenmayerRules\symetricTree.l" />
@@ -188,6 +196,11 @@
     <Image Include="Textures\Skybox\top.jpg" />
     <Image Include="Textures\treeTexture1.jpg" />
     <Image Include="Textures\treeTexture2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="LindenmayerRules\symetricTree.json">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -241,11 +254,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(RAPIDJSON_LIB);$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
     <LibraryPath>$(BULLET_LIB)\Libs;$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(RAPIDJSON_LIB);$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
     <LibraryPath>$(BULLET_LIB)\Libs;$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

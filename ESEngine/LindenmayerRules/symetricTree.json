@@ -1,0 +1,12 @@
+{
+  "parameters": {
+    "depth": 4,
+    "initialLength": 1.2,
+    "initialRadius": 0.5,
+    "angle": 15
+  },
+  "axiom": "f(4.5)a",
+  "rules": [
+    { "symbol": "a", "production": "`[<<f(4.5)a][++^^f(4.5)a][vv--f(4.5)a][>>f(4.5)a]" }
+  ]
+}

@@ -49,9 +49,6 @@
     <Filter Include="TestProject\Scenes\Header Files">
       <UniqueIdentifier>{389cab42-a262-46c1-b207-33e47cae06a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TestProject\Models\Trees\Tree Models\Parametric">
-      <UniqueIdentifier>{3a4fb0bb-e1a3-4cf4-9d7a-c978b4c21cd5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\GameObject">
       <UniqueIdentifier>{121b900a-08ff-40e7-b7f8-f4b1fbe2bb74}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,18 @@
     </Filter>
     <Filter Include="GraphicEngine\Shaders\Debug">
       <UniqueIdentifier>{a8212551-3977-4d21-b07a-c6eaa34b4ba8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Models\Trees\Tree Models\legacyFiles">
+      <UniqueIdentifier>{ac71d6c3-2dc0-43e0-a8f2-1282a075ce5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Models\Trees\Tree Models\legacyFiles\Parametric">
+      <UniqueIdentifier>{3a4fb0bb-e1a3-4cf4-9d7a-c978b4c21cd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Models\Trees\Tree Models\jsonFiles">
+      <UniqueIdentifier>{427a63cd-ce9e-405c-aeff-7bddb6561156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Models\Trees\Tree Models\jsonFiles\Parametric">
+      <UniqueIdentifier>{c0b43988-fc0a-4696-a518-091e1ceb71e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -436,33 +445,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LindenmayerRules\advancedTree.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\advancedTree2.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\fibbonacciTree.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\randomTree.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\randomTree2.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\test.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\testX.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\testY.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\testZ.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
     <None Include="Shaders\InstancedShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
@@ -483,42 +465,6 @@
     </None>
     <None Include="Shaders\GenericShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricTree.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\symetricTree.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricTree2.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricMonopodialTreeA.l">
-      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricMonopodialTreeB.l">
-      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricMonopodialTreeC.l">
-      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricMonopodialTreeD.l">
-      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricSympodialTreeA.l">
-      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricSympodialTreeB.l">
-      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricSympodialTreeC.l">
-      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricSympodialTreeD.l">
-      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
-    </None>
-    <None Include="LindenmayerRules\parametricTernaryTreeA.l">
-      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
     </None>
     <None Include="Shaders\PostEffectShader.frag">
       <Filter>TestProject\Models\Shaders</Filter>
@@ -553,11 +499,98 @@
     <None Include="Shaders\MeshWiringShader.geom">
       <Filter>GraphicEngine\Shaders\Debug</Filter>
     </None>
-    <None Include="LindenmayerRules\normalTest.l">
-      <Filter>TestProject\Models\Trees\Tree Models</Filter>
-    </None>
     <None Include="Shaders\NormalVisualisationShader.geom">
       <Filter>GraphicEngine\Shaders\Debug</Filter>
+    </None>
+    <None Include="LindenmayerRules\advancedTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\advancedTree2.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\fibbonacciTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\normalTest.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricTree2.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\randomTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\randomTree2.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\symetricTree.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\test.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\testX.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\testY.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\testZ.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\fibbonacciTree.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricMonopodialTreeA.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricMonopodialTreeB.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricMonopodialTreeC.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricMonopodialTreeD.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricSympodialTreeA.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricSympodialTreeB.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricSympodialTreeC.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricSympodialTreeD.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricTernaryTreeA.l">
+      <Filter>TestProject\Models\Trees\Tree Models\legacyFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\advancedTree.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\advancedTree2.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\randomTree.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\randomTree2.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricMonopodialTreeA.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricSympodialTreeA.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricTernaryTreeA.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles\Parametric</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -627,5 +660,10 @@
     <Image Include="Textures\Skybox\top.jpg">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="LindenmayerRules\symetricTree.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-define depth 1
+define depth 3
 define initialLength 1.5
 define initialRadius 0.6
 define angle 34.37
