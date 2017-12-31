@@ -149,7 +149,9 @@
     <None Include="LindenmayerRules\randomTree2.l" />
     <None Include="LindenmayerRules\parametricTree2.l" />
     <None Include="LindenmayerRules\symetricTree.l" />
+    <None Include="LindenmayerRules\test.json" />
     <None Include="LindenmayerRules\test.l" />
+    <None Include="LindenmayerRules\test2.json" />
     <None Include="LindenmayerRules\testX.l" />
     <None Include="LindenmayerRules\testY.l" />
     <None Include="LindenmayerRules\testZ.l" />

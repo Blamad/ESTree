@@ -11,6 +11,7 @@
 #include <boost/thread/thread.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
 
 #include "Segment.h"
 #include "InstancedMesh.h"
@@ -71,6 +72,7 @@ private:
 	//Mesh and vertices stuff
 	void createMeshComponent();
 	void generateMeshData();
+	float calculateYAngle(shared_ptr<Segment> parent, SegmentTransform & transform);
 	void createRoot(SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, float &radius, float &length, quat &rotation);
@@ -92,7 +94,11 @@ private:
 	
 	//Stuff
 	float toRadians(float angle) {
-		return (angle * 3.14159265359) / 180;
+		return angle * 3.14159265359 / 180;
+	}
+
+	float toAngle(float radians) {
+		return radians * 180 / 3.14159265359;
 	}
 };
 

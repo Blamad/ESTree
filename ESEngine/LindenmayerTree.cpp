@@ -31,7 +31,6 @@ void LindenmayerTree::generateTree() {
 void LindenmayerTree::generateMeshSkeleton() {
 	LindenmayerTreeParser parser(params);
 	product = parser.generateTreeProduction();
-	logger.log(INFO, product);
 }
 
 float LindenmayerTree::getNumericParameter(string product, int index) {
@@ -85,7 +84,10 @@ void LindenmayerTree::generateMeshData() {
 
 	float customParameter = -1;
 
-	SegmentTransform transform = SegmentTransform(quat(), params.initialLength, params.initialRadius, 1, 0);
+	params.angle = 10;
+	params.depth = 4;
+
+	SegmentTransform transform = SegmentTransform(quat(), params.initialLength, params.initialRadius);
 	createRoot(transform);
 	currentSegment = root;
 	segmentsVec.push_back(currentSegment);
@@ -167,6 +169,7 @@ void LindenmayerTree::generateMeshData() {
 			}
 
 			transform.pitchRotation += customParameter;
+			//logger.log(INFO, "Pitch: " + to_string(transform.pitchRotation));
 			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));
 			break;
 		case '`': //scale down
@@ -178,6 +181,7 @@ void LindenmayerTree::generateMeshData() {
 
 			transform.lengthScale *= customParameter;
 			transform.radius *= customParameter;
+			//transform.radius -= params.initialRadius / params.depth;
 			break;
 		case '=': //scale thickness
 			customParameter = getNumericParameter(product, i);
@@ -187,9 +191,29 @@ void LindenmayerTree::generateMeshData() {
 				i = returnNewIndexAfterParameter(product, i);
 
 			transform.radius *= customParameter;
+			//transform.radius -= params.initialRadius / params.depth;
 			break;
 		case '$':
 			//TODO do zrobienia!
+			//Mam model matrix parenta.
+			//Mam parametry tego segmentu.
+			//Moge obliczyc taki kat by po ustaleniu go ustawic obrot wokol frontu tak, by wektor prawy wskazywal prawo, jak ziemia.
+
+			//Zolw patrzy zawsze w os Y. Wiec skret bedzie w zakresie y. Os z bedzie wektorem lewym, x gora.
+			
+			customParameter = calculateYAngle(currentSegment, transform);
+			logger.log(INFO, "calculated Y angle: " + to_string(customParameter) + " pitch: " + to_string(toAngle(customParameter)));
+			logger.log(INFO, "actual pitch: " + to_string(transform.pitchRotation));
+
+			customParameter *= -1;
+
+			customParameter = toRadians(-transform.pitchRotation);
+
+			transform.pitchRotation += toAngle(customParameter);
+			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));
+
+			logger.log(INFO, "After operation it is: " + to_string(calculateYAngle(currentSegment, transform)) + " pitch: " + to_string(transform.pitchRotation));
+
 			break;
 		case ' ':
 		default:
@@ -211,6 +235,19 @@ void LindenmayerTree::generateMeshData() {
 	}
 	generateVertices();
 	mesh->updateMesh();
+}
+
+float LindenmayerTree::calculateYAngle(shared_ptr<Segment> parent, SegmentTransform &transform) {
+	mat4 segmentMatrix = mat4();
+	if (transform.rotation.w != 1)
+		segmentMatrix = segmentMatrix * mat4_cast(transform.rotation);
+	segmentMatrix = translate(segmentMatrix, vec3(0, transform.length, 0));
+	mat4 modelMatrix = parent->modelMatrix * segmentMatrix;
+
+	float x, y, z;
+	extractEulerAngleXYZ(modelMatrix, x, y, z);
+
+	return y;
 }
 
 void LindenmayerTree::createRoot(SegmentTransform &transform) {
@@ -245,6 +282,15 @@ shared_ptr<Segment> LindenmayerTree::createSegment(shared_ptr<Segment> parent, S
 	stem->radius = segTransform.radius;
 	stem->segments = segments;
 	stem->pitchRotation = segTransform.pitchRotation;
+
+	/*vec3 leftVec(stem->modelMatrix[0][0], stem->modelMatrix[0][1], stem->modelMatrix[0][2]);
+	logger.log(INFO, "R vec: (" + to_string(leftVec.x) + "; " + to_string(leftVec.y) + "; " + to_string(leftVec.z) + ")");
+
+	vec3 headingVec(stem->modelMatrix[0][2], stem->modelMatrix[1][2], stem->modelMatrix[2][2]);
+	logger.log(INFO, "H vec: (" + to_string(headingVec.x) + "; " + to_string(headingVec.y) + "; " + to_string(headingVec.z) + ")");
+
+	vec3 upVec(stem->modelMatrix[0][1], stem->modelMatrix[1][1], stem->modelMatrix[2][1]);
+	logger.log(INFO, "U vec: (" + to_string(upVec.x) + "; " + to_string(upVec.y) + "; " + to_string(upVec.z) + ")");*/
 
 	//Create top ring:
 	enqueueGenerationData(stem->radius, stem->modelMatrix, 1);
@@ -324,7 +370,8 @@ void LindenmayerTree::generateLeaves() {
 	for (auto & seg : segmentsVec) {
 		if (!seg->isLastStem())
 			continue;
-		if (randomGenerator() > 0.33f) {
+		//if (randomGenerator() > 0.33f) {
+		if (randomGenerator() > 0.0f) {
 			shared_ptr<GameObject> go (new GameObject());
 			Transform* leafTransform = (Transform*) go->getComponent(TRANSFORM);
 			

@@ -15,7 +15,7 @@ enum SegmentType {
 
 class SegmentTransform {
 public:
-	SegmentTransform(glm::quat &rotation, float length, float radius, float lengthScale, float yawRotation = 0) : rotation(rotation), length(length), radius(radius), lengthScale(lengthScale), pitchRotation(yawRotation) {};
+	SegmentTransform(glm::quat &rotation, float length, float radius, float lengthScale = 1, float yawRotation = 0) : rotation(rotation), length(length), radius(radius), lengthScale(lengthScale), pitchRotation(yawRotation) {};
 	float length;
 	float lengthScale;
 	float radius;
