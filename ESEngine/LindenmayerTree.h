@@ -72,7 +72,7 @@ private:
 	//Mesh and vertices stuff
 	void createMeshComponent();
 	void generateMeshData();
-	float calculateYAngle(shared_ptr<Segment> parent, SegmentTransform & transform);
+	float calculateRollAngle(shared_ptr<Segment> parent, SegmentTransform & transform);
 	void createRoot(SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, float &radius, float &length, quat &rotation);

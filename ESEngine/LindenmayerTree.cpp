@@ -84,9 +84,6 @@ void LindenmayerTree::generateMeshData() {
 
 	float customParameter = -1;
 
-	params.angle = 10;
-	params.depth = 4;
-
 	SegmentTransform transform = SegmentTransform(quat(), params.initialLength, params.initialRadius);
 	createRoot(transform);
 	currentSegment = root;
@@ -97,7 +94,7 @@ void LindenmayerTree::generateMeshData() {
 		switch (character) {
 		case '[':
 			segmentStack.push(currentSegment);
-			transformStack.push(SegmentTransform(transform.rotation, transform.length, transform.radius, transform.lengthScale, transform.pitchRotation));
+			transformStack.push(SegmentTransform(transform.rotation, transform.length, transform.radius, transform.lengthScale, transform.roll));
 			break;
 		case ']':
 			currentSegment = segmentStack.top();
@@ -113,7 +110,7 @@ void LindenmayerTree::generateMeshData() {
 				i = returnNewIndexAfterParameter(product, i);
 				customParameter = toRadians(customParameter);
 			}
-			transform.rotation *= angleAxis(-customParameter, vec3(1, 0, 0));
+			transform.rotation *= angleAxis(customParameter, vec3(1, 0, 0));
 			break;
 		case 'v':
 			customParameter = getNumericParameter(product, i);
@@ -123,7 +120,7 @@ void LindenmayerTree::generateMeshData() {
 				i = returnNewIndexAfterParameter(product, i);
 				customParameter = toRadians(customParameter);
 			}
-			transform.rotation *= angleAxis(customParameter, vec3(1, 0, 0));
+			transform.rotation *= angleAxis(-customParameter, vec3(1, 0, 0));
 			break;
 		case '>': //rotate branch in z axis
 			customParameter = getNumericParameter(product, i);
@@ -156,7 +153,7 @@ void LindenmayerTree::generateMeshData() {
 				customParameter = toRadians(customParameter);
 			}
 
-			transform.pitchRotation -= customParameter;
+			transform.roll -= customParameter;
 			transform.rotation *= angleAxis(-customParameter, vec3(0, 1, 0));
 			break;
 		case '-':
@@ -168,8 +165,7 @@ void LindenmayerTree::generateMeshData() {
 				customParameter = toRadians(customParameter);
 			}
 
-			transform.pitchRotation += customParameter;
-			//logger.log(INFO, "Pitch: " + to_string(transform.pitchRotation));
+			transform.roll += customParameter;
 			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));
 			break;
 		case '`': //scale down
@@ -190,30 +186,17 @@ void LindenmayerTree::generateMeshData() {
 			else
 				i = returnNewIndexAfterParameter(product, i);
 
+			logger.log(INFO, "Width: " + to_string(transform.radius) + " -> " + to_string(transform.radius * customParameter));
+
 			transform.radius *= customParameter;
 			//transform.radius -= params.initialRadius / params.depth;
 			break;
 		case '$':
-			//TODO do zrobienia!
-			//Mam model matrix parenta.
-			//Mam parametry tego segmentu.
-			//Moge obliczyc taki kat by po ustaleniu go ustawic obrot wokol frontu tak, by wektor prawy wskazywal prawo, jak ziemia.
-
-			//Zolw patrzy zawsze w os Y. Wiec skret bedzie w zakresie y. Os z bedzie wektorem lewym, x gora.
-			
-			customParameter = calculateYAngle(currentSegment, transform);
-			logger.log(INFO, "calculated Y angle: " + to_string(customParameter) + " pitch: " + to_string(toAngle(customParameter)));
-			logger.log(INFO, "actual pitch: " + to_string(transform.pitchRotation));
-
+			customParameter = transform.roll;
 			customParameter *= -1;
-
-			customParameter = toRadians(-transform.pitchRotation);
-
-			transform.pitchRotation += toAngle(customParameter);
+			
+			transform.roll += customParameter;
 			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));
-
-			logger.log(INFO, "After operation it is: " + to_string(calculateYAngle(currentSegment, transform)) + " pitch: " + to_string(transform.pitchRotation));
-
 			break;
 		case ' ':
 		default:
@@ -229,7 +212,7 @@ void LindenmayerTree::generateMeshData() {
 			transform.length = customParameter *transform.lengthScale;
 			currentSegment = createSegment(currentSegment, transform);
 			segmentsVec.push_back(currentSegment);
-			transform = SegmentTransform(quat(), params.initialLength, transform.radius, transform.lengthScale, transform.pitchRotation);
+			transform = SegmentTransform(quat(), params.initialLength, transform.radius, transform.lengthScale, transform.roll);
 			break;
 		}
 	}
@@ -237,7 +220,7 @@ void LindenmayerTree::generateMeshData() {
 	mesh->updateMesh();
 }
 
-float LindenmayerTree::calculateYAngle(shared_ptr<Segment> parent, SegmentTransform &transform) {
+float LindenmayerTree::calculateRollAngle(shared_ptr<Segment> parent, SegmentTransform &transform) {
 	mat4 segmentMatrix = mat4();
 	if (transform.rotation.w != 1)
 		segmentMatrix = segmentMatrix * mat4_cast(transform.rotation);
@@ -270,9 +253,9 @@ shared_ptr<Segment> LindenmayerTree::createSegment(shared_ptr<Segment> parent, S
 	segmentMatrix = translate(segmentMatrix, vec3(0, segTransform.length, 0));
 
 	//Create textured bottom ring and rotate it to match top ring rotation:
-	float yaw = segTransform.pitchRotation - parent->pitchRotation;
+	float roll = segTransform.roll - parent->roll;
 	
-	mat4 alignmentTransform = parent->modelMatrix * mat4_cast(quat(vec3(0, yaw, 0)));
+	mat4 alignmentTransform = parent->modelMatrix * mat4_cast(quat(vec3(0, roll, 0)));
 	enqueueGenerationData(parent->radius, alignmentTransform, 0);
 
 	shared_ptr<Segment> stem = shared_ptr<Segment>(new Segment(parent));
@@ -281,7 +264,7 @@ shared_ptr<Segment> LindenmayerTree::createSegment(shared_ptr<Segment> parent, S
 	stem->modelMatrix = parent->modelMatrix * segmentMatrix;
 	stem->radius = segTransform.radius;
 	stem->segments = segments;
-	stem->pitchRotation = segTransform.pitchRotation;
+	stem->roll = segTransform.roll;
 
 	/*vec3 leftVec(stem->modelMatrix[0][0], stem->modelMatrix[0][1], stem->modelMatrix[0][2]);
 	logger.log(INFO, "R vec: (" + to_string(leftVec.x) + "; " + to_string(leftVec.y) + "; " + to_string(leftVec.z) + ")");

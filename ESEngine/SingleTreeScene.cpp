@@ -13,6 +13,7 @@ void SingleTreeScene::initialize() {
 		"advancedTree.json",
 		"advancedTree2.json",
 		//5
+		"test.json",
 		"parametricMonopodialTreeA.json",
 		"parametricSympodialTreeA.json",
 		"parametricTernaryTreeA.json"
@@ -34,25 +35,17 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/test2.json"; //+ treeParams[5];
+	paramsFileName = "LindenmayerRules/" + treeParams[5];
 	leavesTextureName = "Textures/" + leavesParams[0];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
 	meshWiring = false;	
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
-	/*paramsFileName = "LindenmayerRules/test2.json";
-	position = vec3(1, 0, 3);
+	/*position = vec3(3, 0, 3);
+	paramsFileName = "LindenmayerRules/" + treeParams[1];
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
-
-	paramsFileName = "LindenmayerRules/test2.json";
-	position = vec3(-1, 0, 3);
-	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
-
-	paramsFileName = "LindenmayerRules/test.json";
-	position = vec3(-3, 0, 3);
-	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);*/
-
+	*/
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 
@@ -63,7 +56,8 @@ void SingleTreeScene::initialize() {
 	vec3 dir = normalize(vec3(-1, -0.8, -1));
 	createDirectionalLight(vec3(dir.x * -14, dir.y * -14, dir.z * -14), dir);
 
-	setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
+	//setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
+	setActiveCamera(createCamera(vec3(0, 15, 35), 45, -10));
 
 	generateFrameBuffer();
 }

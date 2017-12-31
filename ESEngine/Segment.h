@@ -21,7 +21,7 @@ public:
 	float radius;
 	
 	glm::quat rotation;
-	float pitchRotation;
+	float roll;
 };
 
 class Segment {
@@ -57,7 +57,7 @@ public:
 	//Transform matrix
 	glm::mat4 modelMatrix;
 
-	float pitchRotation;
+	float roll;
 };
 
 #endif

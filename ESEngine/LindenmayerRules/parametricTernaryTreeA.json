@@ -12,7 +12,7 @@
   },
   "axiom": "=(1)F(2)>(45)A",
   "rules": [
-    { "symbol": "A", "production": "=(vr)F(.25)[^(a)F(.25)A]/(d1)[^(a)F(.25)A]>(d2)[^(a)F(.25)A]" },
+    { "symbol": "A", "production": "=(vr)F(.25)[v(a)F(.25)A]/(d1)[v(a)F(.25)A]>(d2)[v(a)F(.25)A]" },
 	{ "symbol": "F(l)", "production": "F(l*lr)" },
 	{ "symbol": "=(w)", "production": "=(w*vr)" }
   ]

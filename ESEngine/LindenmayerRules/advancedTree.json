@@ -3,16 +3,17 @@
     "depth": 4,
     "initialLength": 0.5,
     "initialRadius": 0.25,
-    "angle": 7
+    "angle": 7,
+	"a1": 35
   },
-  "axiom": "f",
+  "axiom": "F",
   "rules": [
-    { "symbol": "F", "production": "`Y[^^^^^^MF][vvvvvNF][+++++OF][-----PF]" },
-	{ "symbol": "M", "production": "ZfvMf" },
-	{ "symbol": "N", "production": "Zf^Nf" },
+    { "symbol": "F", "production": "`Y[v(a1)MF][^(a1)NF][+(a1)OF][-(a1)PF]" },
+	{ "symbol": "M", "production": "Zf^Mf" },
+	{ "symbol": "N", "production": "ZfvNf" },
 	{ "symbol": "O", "production": "Zf>Of" },
 	{ "symbol": "P", "production": "Zf<Pf" },
-	{ "symbol": "Y", "production": "ZfvZYf^" },
+	{ "symbol": "Y", "production": "Zf^ZYfv" },
 	{ "symbol": "Z", "production": "ZZf" }
   ]
 }
