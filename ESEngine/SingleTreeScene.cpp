@@ -125,7 +125,7 @@ GameObject* SingleTreeScene::createCamera(glm::vec3 position, float yaw, float p
 }
 
 void SingleTreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1, 1, 1)) {
-	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container(), false, true));
+	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container(), false, false));
 	go->name = "CrateCube";
 	Transform* transform = getTransform(go.get());
 	transform->translate(pos);
