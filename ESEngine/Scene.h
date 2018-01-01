@@ -18,6 +18,7 @@
 #include "Behaviour.h"
 #include "Camera.h"
 #include "Skybox.h"
+#include "DepthFrameBuffer.h"
 
 using namespace std;
 

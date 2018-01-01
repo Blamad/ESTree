@@ -9,11 +9,19 @@ public:
 
 	void mountFrameBuffer();
 	void unmountFrameBuffer();
+	void initDebugQuad();
 	void executeFrameBuffer(Renderer& renderer);
+
+	static void drawDepthFrame();
 	
 protected:
 	unique_ptr<Shader> depthDebugShader;
 	void init();
+
+	//GUI DEPTH PREVIEW
+	static GLuint debugQuadVAO;
+	static Shader* debugQuadShader;
+	static TextureBuffer* debugQuadTextureBuffer;
 };
 
 #endif

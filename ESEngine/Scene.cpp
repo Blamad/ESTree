@@ -113,4 +113,6 @@ void Scene::renderFrame(Renderer &renderer) {
 		sceneFrameBuffer->unmountFrameBuffer();
 		sceneFrameBuffer->executeFrameBuffer(renderer);
 	}
+
+	//DepthFrameBuffer::drawDepthFrame();
 }
