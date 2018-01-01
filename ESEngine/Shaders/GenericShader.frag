@@ -102,17 +102,10 @@ float calcDirectionalShadow(DirectionalLight light, vec3 normal, vec3 lightDir, 
 	// get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
 	
-<<<<<<< HEAD
 	//BIAS
-	float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
-=======
-	//WITH BIAS
 	// calculate shadow bias
 	float bias = max(0.01 * (1.0 - dot(normal, lightDir)), 0.001);
-	// check whether current frag pos is in shadow
-	float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
->>>>>>> master
-	
+		
 	//PCF
 	float shadow = 0;
 	vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
