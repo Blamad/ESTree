@@ -47,14 +47,13 @@ void MouseManager::updatePickedObject(double dt, InputState& inputState) {
 void MouseManager::pickObject(GameObject* go) {	
 	RigidBody *rb = (RigidBody*)go->getComponent(RIGIDBODY);
 	if (!rb->pickable) {
-		if (go->name == "Floor")
-			rb->translate(vec3(0, -1, 0));
 		return;
 	}
 
 	pickedGameObject = go;
 	pickedGameObjectMass = rb->getCurrentMass();
 	rb->changeMass(0);
+	rb->clearForces();
 	logger.log(INFO, "Rigidbody picked...");
 
 	Screen::setCursorState(HIDDEN);

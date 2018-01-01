@@ -100,6 +100,12 @@ double RigidBody::getCurrentMass() {
 	return this->mass;
 }
 
+void RigidBody::clearForces() {
+	rigidBody->setAngularVelocity(btVector3(0, 0, 0));
+	rigidBody->setLinearVelocity(btVector3(0, 0, 0));
+	rigidBody->clearForces();
+}
+
 void RigidBody::changeMass(double mass) {
 	btVector3 fallInertia(0, 0, 0);
 	rigidBody->getCollisionShape()->calculateLocalInertia(mass, fallInertia);

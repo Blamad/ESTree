@@ -18,6 +18,7 @@
 #include "Behaviour.h"
 #include "Camera.h"
 #include "Skybox.h"
+#include "DepthFrameBuffer.h"
 
 using namespace std;
 
@@ -48,7 +49,13 @@ private:
 	unique_ptr<FrameBuffer> sceneFrameBuffer;
 
 	void renderSkybox(Renderer &renderer);
+
 	function<void(Renderer&, Shader*)> prepareDrawObjectsCall();
+
+	void preSceneRenderRoutine(Renderer &renderer);
+	void postSceneRenderRoutine(Renderer &renderer);
+
+	void drawGui();
 };
 
 #endif

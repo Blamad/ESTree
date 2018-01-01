@@ -28,6 +28,7 @@ public:
 
 	void makeDynamic();
 	double getCurrentMass();
+	void clearForces();
 	void changeMass(double mass);
 
 protected:
