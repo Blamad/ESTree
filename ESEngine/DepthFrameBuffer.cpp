@@ -30,7 +30,6 @@ void DepthFrameBuffer::init() {
 void DepthFrameBuffer::mountFrameBuffer() {
 	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 	glEnable(GL_DEPTH_TEST);
-	glCullFace(GL_FRONT);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Screen::setViewport(width, height);
@@ -38,7 +37,6 @@ void DepthFrameBuffer::mountFrameBuffer() {
 
 void DepthFrameBuffer::unmountFrameBuffer() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glCullFace(GL_BACK);
 	glDisable(GL_DEPTH_TEST);
 
 	Screen::setViewport(Screen::getScreenWidth(), Screen::getScreenHeight());
