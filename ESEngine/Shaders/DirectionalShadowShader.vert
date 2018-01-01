@@ -1,11 +1,6 @@
 #version 430 core
 
 layout (location = 0) in vec3 position;
-/*layout (location = 3) in vec2 texCoords;
-
-out VS_OUT {
-  vec2 texCoords;
-} vs_out;*/
 
 layout (std140) uniform Matrices
 {
@@ -17,6 +12,7 @@ uniform mat4 model;
 
 void main()
 {
-	gl_Position = projection * view * model * vec4(position, 1.0f);
-	//vs_out.texCoords = texCoords;
+	vec4 modelSpacePos = model * vec4(position, 1.0f);
+	vec4 viewSpacePos = view * modelSpacePos;
+	gl_Position = projection * viewSpacePos;
 }
