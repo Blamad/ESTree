@@ -45,7 +45,6 @@ void LightsManager::updateLights(vec3& viewPos, Renderer& renderer, function<voi
 
 	depthBuffer->unmountFrameBuffer();
 	Shader::updateProjectionMatrix(Camera::getProjectionMatrix());
-	depthBuffer->executeFrameBuffer(renderer);
 
 	updateLightsUBO(viewPos);
 }

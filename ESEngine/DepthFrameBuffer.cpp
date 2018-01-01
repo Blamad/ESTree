@@ -59,11 +59,11 @@ void DepthFrameBuffer::drawDepthFrame() {
 }
 
 void DepthFrameBuffer::initDebugQuad() {
-	debugQuadShader = shader.get();
+	debugQuadShader = depthDebugShader.get();
 	debugQuadTextureBuffer = buffer.get();
 
-	float bottomValue = -1.0f;
-	float topValue = 1.0f;
+	float bottomValue = -.9f;
+	float topValue = -.6f;
 
 	float quadVertices[] = {
 		bottomValue,  topValue,  0.0f, 1.0f,

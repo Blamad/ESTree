@@ -102,17 +102,28 @@ void Scene::renderFrame(Renderer &renderer) {
 	lightsManager->updateLights(activeCamera->position, renderer, prepareDrawObjectsCall());
 	Shader::updateViewMatrix(activeCamera->getViewMatrix());
 
-	if (sceneFrameBuffer != nullptr) {
-		sceneFrameBuffer->mountFrameBuffer();
-	}
+	preSceneRenderRoutine(renderer);
 
 	renderObjects(renderer);
 	renderSkybox(renderer);
 	
+	postSceneRenderRoutine(renderer);
+	drawGui();
+}
+
+void Scene::preSceneRenderRoutine(Renderer &renderer) {
+	if (sceneFrameBuffer != nullptr) {
+		sceneFrameBuffer->mountFrameBuffer();
+	}
+}
+
+void Scene::postSceneRenderRoutine(Renderer &renderer) {
 	if (sceneFrameBuffer != nullptr) {
 		sceneFrameBuffer->unmountFrameBuffer();
 		sceneFrameBuffer->executeFrameBuffer(renderer);
 	}
+}
 
-	//DepthFrameBuffer::drawDepthFrame();
+void Scene::drawGui() {
+	DepthFrameBuffer::drawDepthFrame();
 }

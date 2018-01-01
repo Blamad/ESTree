@@ -50,6 +50,11 @@ private:
 
 	void renderSkybox(Renderer &renderer);
 	function<void(Renderer&, Shader&)> prepareDrawObjectsCall();
+
+	void preSceneRenderRoutine(Renderer &renderer);
+	void postSceneRenderRoutine(Renderer &renderer);
+
+	void drawGui();
 };
 
 #endif
