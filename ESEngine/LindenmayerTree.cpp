@@ -22,7 +22,7 @@ void LindenmayerTree::generateTree() {
 	generateMeshSkeleton();
 	generateMeshData();
 	//generateInstancedLeaves();
-	generateLeaves();
+	//generateLeaves();
 	logger.log(INFO, "Generation finished. " + to_string(mesh->indices.size() / 3) + " tris.");
 }
 
@@ -177,7 +177,6 @@ void LindenmayerTree::generateMeshData() {
 
 			transform.lengthScale *= customParameter;
 			transform.radius *= customParameter;
-			//transform.radius -= params.initialRadius / params.depth;
 			break;
 		case '=': //scale thickness
 			customParameter = getNumericParameter(product, i);
@@ -186,10 +185,7 @@ void LindenmayerTree::generateMeshData() {
 			else
 				i = returnNewIndexAfterParameter(product, i);
 
-			logger.log(INFO, "Width: " + to_string(transform.radius) + " -> " + to_string(transform.radius * customParameter));
-
 			transform.radius *= customParameter;
-			//transform.radius -= params.initialRadius / params.depth;
 			break;
 		case '$':
 			customParameter = transform.roll;

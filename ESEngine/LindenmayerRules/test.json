@@ -3,10 +3,11 @@
     "depth": 1,
     "initialLength": 1.5,
     "initialRadius": 0.5,
-    "angle": 90
+    "angle": 90,
+	"wr": 0.707
   },
-  "axiom": "fa",
+  "axiom": "A(1.5)",
   "rules": [
-    { "symbol": "a", "production": "+>f+>$fa" }
+    { "symbol": "A(w)", "production": "=(w)FvA" }
   ]
 }

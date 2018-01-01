@@ -35,7 +35,7 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[5];
+	paramsFileName = "LindenmayerRules/" + treeParams[6];
 	leavesTextureName = "Textures/" + leavesParams[0];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
@@ -53,8 +53,9 @@ void SingleTreeScene::initialize() {
 	addSkybox();
 
 	//Light
-	vec3 dir = normalize(vec3(-1, -0.8, -1));
-	createDirectionalLight(vec3(dir.x * -14, dir.y * -14, dir.z * -14), dir);
+	vec3 dir = normalize(vec3(-0.5, -0.5, 0));
+	vec3 distance = vec3(-14);
+	createDirectionalLight(distance * dir, dir);
 
 	//setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
 	setActiveCamera(createCamera(vec3(0, 15, 35), 45, -10));

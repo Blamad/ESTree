@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "depth": 6,
+    "depth": 10,
     "initialLength": 1.5,
     "initialRadius": 1.2,
     "angle": 34.37,
@@ -12,7 +12,7 @@
   },
   "axiom": "A(4,1)",
   "rules": [
-    { "symbol": "A(s,w)", "production": "=(w)F(s)[v(a1)B(s*r2,w*wr)]<(90)[+(a2)B(s*r2,w*wr)]" },
-	{ "symbol": "B(s,w)", "production": "=(w)F(s)[<(a1)$B(s*r1,w*wr)][>(a2)$B(s*r1,w*wr)]" }
+    { "symbol": "A(l,w)", "production": "=(w)F(l)[v(a1)B(l*r2,w*wr)]-(180)[v(a2)B(l*r2,w*wr)]" },
+	{ "symbol": "B(l,w)", "production": "=(w)F(l)[>(a1)$B(l*r1,w*wr)][<(a2)$B(l*r2,w*wr)]" }
   ]
 }
