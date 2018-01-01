@@ -3,10 +3,10 @@
     "depth": 1,
     "initialLength": 1.5,
     "initialRadius": 0.5,
-    "angle": 45
+    "angle": 90
   },
   "axiom": "fa",
   "rules": [
-    { "symbol": "a", "production": "v+fv+$fa" }
+    { "symbol": "a", "production": "+>f+>$fa" }
   ]
 }
