@@ -1,8 +1,8 @@
-#include "LindenmayerTreeGenerator.h"
+#include "LindenmayerTreeSolver.h"
 
-boost::variate_generator<boost::mt19937, boost::uniform_real<> > LindenmayerTreeGenerator::randomGenerator(boost::mt19937(time(0)), boost::uniform_real<>(0, 1));
+boost::variate_generator<boost::mt19937, boost::uniform_real<> > LindenmayerTreeSolver::randomGenerator(boost::mt19937(time(0)), boost::uniform_real<>(0, 1));
 
-string LindenmayerTreeGenerator::generateTreeProduction() {
+string LindenmayerTreeSolver::generateTreeProduction(LindenmayerTreeParams &params) {
 	string product = params.axiom;
 
 	string regexString = generateSymbolRegex(params.getAvailableRules());
@@ -18,7 +18,7 @@ string LindenmayerTreeGenerator::generateTreeProduction() {
 			
 			string found = res[0];
 			newProduct += res.prefix();
-			newProduct += parseRule(found, i);
+			newProduct += parseRule(params, found, i);
 		}
 		newProduct += res.suffix();
 		if(newProduct.length() > 0)
@@ -28,7 +28,7 @@ string LindenmayerTreeGenerator::generateTreeProduction() {
 	return product;
 }
 
-string LindenmayerTreeGenerator::parseRule(string& symbol, int &depth) {
+string LindenmayerTreeSolver::parseRule(LindenmayerTreeParams &params, string& symbol, int &depth) {
 	vector<Rule> rules;
 	float randomSpace = 0;
 
@@ -55,7 +55,7 @@ string LindenmayerTreeGenerator::parseRule(string& symbol, int &depth) {
 	return symbol;
 }
 
-string LindenmayerTreeGenerator::applyRule(string symbol, Rule rule) {
+string LindenmayerTreeSolver::applyRule(string symbol, Rule rule) {
 	map<string, string> parameters;
 	
 	if (symbol.length() > 1 && symbol[1] == '(') {
@@ -113,7 +113,7 @@ string LindenmayerTreeGenerator::applyRule(string symbol, Rule rule) {
 	return production;
 }
 
-string LindenmayerTreeGenerator::fillRuleWithParameters(string rule, map<string, string> parameters) {
+string LindenmayerTreeSolver::fillRuleWithParameters(string rule, map<string, string> parameters) {
 	string newRule = rule;
 
 	pair<string, string> pair;
@@ -142,7 +142,7 @@ string LindenmayerTreeGenerator::fillRuleWithParameters(string rule, map<string,
 	return newRule;
 }
 
-string LindenmayerTreeGenerator::generateSymbolRegex(vector<string> symbols) {
+string LindenmayerTreeSolver::generateSymbolRegex(vector<string> symbols) {
 	string regexString("(");
 	BOOST_FOREACH(string symbol, symbols) {
 		regexString += symbol + "|";

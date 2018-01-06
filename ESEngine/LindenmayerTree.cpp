@@ -8,8 +8,7 @@ Logger LindenmayerTree::logger("LindenmayerTree");
 LindenmayerTree::LindenmayerTree(LindenmayerTreeParams &params, Material &material, Material &leavesMaterial, bool useMeshWiring, bool normalVisualisation) : params(params), material(material), leavesMaterial(leavesMaterial), meshWiring(useMeshWiring), normalVisualisation(normalVisualisation), GameObject() {
 	this->vBufferSize = 100000;
 	this->iBufferSize = 4000000;
-	this->segments = 9;
-	this->textureXStep = 1.0f / (segments - 1);
+	this->ringDensity = 9;
 }
 
 void LindenmayerTree::generate() {
@@ -19,18 +18,20 @@ void LindenmayerTree::generate() {
 
 void LindenmayerTree::generateTree() {
 	logger.log(INFO, "Generation started: " + params.name);
-	generateMeshSkeleton();
-	generateMeshData();
+	generateTreeMesh();
 	//generateInstancedLeaves();
 	//generateLeaves();
 	logger.log(INFO, "Generation finished. " + to_string(mesh->indices.size() / 3) + " tris.");
 }
 
+void LindenmayerTree::generateTreeMesh() {
+	generateMeshSkeleton();
+	generateMeshData();
+}
+
 //PARSING L DATA
 void LindenmayerTree::generateMeshSkeleton() {
-	LindenmayerTreeGenerator parser(params);
-	product = parser.generateTreeProduction();
-	logger.log(INFO, product);
+	product = LindenmayerTreeSolver::generateTreeProduction(params);
 }
 
 float LindenmayerTree::getNumericParameter(string product, int index) {
@@ -73,6 +74,8 @@ void LindenmayerTree::createMeshComponent() {
 
 	mesh->material = material;
 	addComponent(mesh);
+
+	meshGenerator = make_unique<LindenmayerTreeMeshGenerator>(LindenmayerTreeMeshGenerator(mesh.get(), ringDensity));
 }
 
 void LindenmayerTree::generateMeshData() {
@@ -216,7 +219,7 @@ void LindenmayerTree::generateMeshData() {
 			break;
 		}
 	}
-	generateVertices();
+	meshGenerator->generateMesh();
 	mesh->updateMesh();
 }
 
@@ -290,32 +293,23 @@ shared_ptr<Segment> LindenmayerTree::createSegment(shared_ptr<Segment> parent, S
 	float roll = segTransform.roll - parent->roll;
 	
 	mat4 alignmentTransform = parent->modelMatrix * mat4_cast(quat(vec3(0, roll, 0)));
-	enqueueGenerationData(parent->radius, alignmentTransform, 0);
+	meshGenerator->enqueueGenerationData(parent->radius, alignmentTransform, 0);
 
 	shared_ptr<Segment> stem = shared_ptr<Segment>(new Segment(parent));
 	stem->indiciesOffset = mesh->indices.size();
 	stem->verticiesOffset = mesh->vertices.size();
 	stem->modelMatrix = parent->modelMatrix * segmentMatrix;
 	stem->radius = segTransform.radius;
-	stem->segments = segments;
+	stem->segments = ringDensity;
 	stem->roll = segTransform.roll;
 
-	/*vec3 leftVec(stem->modelMatrix[0][0], stem->modelMatrix[0][1], stem->modelMatrix[0][2]);
-	logger.log(INFO, "R vec: (" + to_string(leftVec.x) + "; " + to_string(leftVec.y) + "; " + to_string(leftVec.z) + ")");
-
-	vec3 headingVec(stem->modelMatrix[0][2], stem->modelMatrix[1][2], stem->modelMatrix[2][2]);
-	logger.log(INFO, "H vec: (" + to_string(headingVec.x) + "; " + to_string(headingVec.y) + "; " + to_string(headingVec.z) + ")");
-
-	vec3 upVec(stem->modelMatrix[0][1], stem->modelMatrix[1][1], stem->modelMatrix[2][1]);
-	logger.log(INFO, "U vec: (" + to_string(upVec.x) + "; " + to_string(upVec.y) + "; " + to_string(upVec.z) + ")");*/
-
 	//Create top ring:
-	enqueueGenerationData(stem->radius, stem->modelMatrix, 1);
+	meshGenerator->enqueueGenerationData(stem->radius, stem->modelMatrix, 1);
 
 	//Link two rings
-	int bottomOffset = mesh->vertices.size() - 2 * segments;
-	int topOffset = bottomOffset + segments;
-	for (int i = 0; i < segments - 1; i++) {
+	int bottomOffset = mesh->vertices.size() - 2 * ringDensity;
+	int topOffset = bottomOffset + ringDensity;
+	for (int i = 0; i < ringDensity - 1; i++) {
 		mesh->indices.push_back(bottomOffset + i);
 		mesh->indices.push_back(topOffset + i);
 		mesh->indices.push_back(bottomOffset + i + 1);
@@ -328,57 +322,6 @@ shared_ptr<Segment> LindenmayerTree::createSegment(shared_ptr<Segment> parent, S
 	parent->addChild(stem);
 
 	return stem;
-}
-
-//PARALLEL RING COMPUTATIONS
-
-void LindenmayerTree::enqueueGenerationData(float &radius, mat4 &transform, int textureY) {
-	float theta = 2 * pi<float>() / float(segments - 1);
-	int verticesOffset = mesh->vertices.size();
-
-	for (int j = 0; j < segments; j++) {
-		mesh->vertices.push_back(Vertex());
-		threadGenerationData.push_back(VertexGenerationAttributes(verticesOffset, j, theta, radius, transform, textureY));
-	}
-}
-
-void LindenmayerTree::generateVertices() {
-	int coresAvailable = boost::thread::hardware_concurrency();
-	int numberOfVerticesPerCore = threadGenerationData.size() / coresAvailable;
-
-	boost::thread_group group;
-	for (int j = 0; j < coresAvailable - 1; j++) 
-		group.create_thread(boost::bind(&LindenmayerTree::computeRingPoint, this, numberOfVerticesPerCore*j, numberOfVerticesPerCore*(j+1)));
-	group.create_thread(boost::bind(&LindenmayerTree::computeRingPoint, this, numberOfVerticesPerCore*(coresAvailable - 1), threadGenerationData.size()));
-	group.join_all();
-}
-
-void LindenmayerTree::computeRingPoint(int startIndex, int endIndex) {
-
-	float arg, sin, cos;
-	vec4 tmpPosition;
-	vec3 position, normal;
-	Vertex *vert;
-	VertexGenerationAttributes *vga;
-
-	for (int i = startIndex; i < endIndex; i++) {
-		vga = &threadGenerationData[i];
-		arg = vga->theta*vga->vertexNumber;
-		sin = sinf(arg) / 2;
-		cos = cosf(arg) / 2;
-
-		mat3 rotationMatrix(vga->transform);
-
-		tmpPosition = vec4(vga->radius * cos, 0, vga->radius * sin, 1);
-		position = vec3(vga->transform * tmpPosition);
-		normal = normalize(rotationMatrix * vec3(tmpPosition) * vec3(2, 2, 2));
-
-		//output verticies
-		vert = &mesh->vertices[vga->verticesOffset + vga->vertexNumber];
-		vert->position = position;
-		vert->normal = normal;
-		vert->texCoords = vec2(textureXStep * vga->vertexNumber, vga->textureY);
-	}
 }
 
 // LEAVES

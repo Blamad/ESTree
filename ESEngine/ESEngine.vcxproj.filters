@@ -264,7 +264,10 @@
     <ClCompile Include="DirectionalLight.cpp">
       <Filter>Engine\GameObject\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LindenmayerTreeGenerator.cpp">
+    <ClCompile Include="LindenmayerTreeSolver.cpp">
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LindenmayerTreeMeshGenerator.cpp">
       <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -440,7 +443,10 @@
     <ClInclude Include="SingleTreeScene.h">
       <Filter>TestProject\Scenes\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LindenmayerTreeGenerator.h">
+    <ClInclude Include="LindenmayerTreeSolver.h">
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LindenmayerTreeMeshGenerator.h">
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

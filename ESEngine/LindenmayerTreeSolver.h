@@ -12,21 +12,20 @@
 
 using namespace std;
 
-class LindenmayerTreeGenerator {
+class LindenmayerTreeSolver {
 public:
-	LindenmayerTreeGenerator(LindenmayerTreeParams &params) : params(params) { }
-	string generateTreeProduction();
+	static string generateTreeProduction(LindenmayerTreeParams &params);
 
 private:
 	LindenmayerTreeParams params;
 	static boost::variate_generator<boost::mt19937, boost::uniform_real<>> randomGenerator;	
 	
-	string parseRule(string& symbol, int &depth);
-	string applyRule(string parent, Rule rule);
-	string fillRuleWithParameters(string rule, map<string, string> parameters);
-	string generateSymbolRegex(vector<string> symbols);
+	static string parseRule(LindenmayerTreeParams &params, string& symbol, int &depth);
+	static string applyRule(string parent, Rule rule);
+	static string fillRuleWithParameters(string rule, map<string, string> parameters);
+	static string generateSymbolRegex(vector<string> symbols);
 
-	vector<string> split(string lane, string splitter) {
+	static vector<string> split(string lane, string splitter) {
 		vector<string> splitLane;
 		boost::split(splitLane, lane, boost::is_any_of(splitter));
 		return splitLane;
