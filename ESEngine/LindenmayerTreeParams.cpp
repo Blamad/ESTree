@@ -43,12 +43,12 @@ void LindenmayerTreeParams::readJSONFile(string filePath) {
 		string symbol = rule.GetObject()["symbol"].GetString();
 		string production = rule.GetObject()["production"].GetString();
 
-		vector<string> variables;
+		vector<string> parameters;
 		int intialDepth = 0;
 		float probability = 1.0;
 
 		if (symbol.length() > 1 && symbol[1] == '(') {
-			variables = split(symbol.substr(2, symbol.length() - 3), ",");
+			parameters = split(symbol.substr(2, symbol.length() - 3), ",");
 			symbol = symbol.substr(0, 1);
 		}
 
@@ -60,7 +60,7 @@ void LindenmayerTreeParams::readJSONFile(string filePath) {
 		}
 
 		production = fillRuleWithVariables(production, customParameters);
-		addRule(Rule(symbol, production, probability, intialDepth, variables));
+		addRule(Rule(symbol, production, probability, intialDepth, parameters));
 	}
 }
 
@@ -190,58 +190,6 @@ string LindenmayerTreeParams::fillRuleWithVariables(string rule, map<string, flo
 			newRule = temporaryStr;
 	}
 	return newRule;
-}
-
-string LindenmayerTreeParams::applyRule(string parent, Rule rule) {
-	map<string, float> variables;
-
-	regex paramRegex("[(,]{1}[*+/-0-9.]*[,)]{1}");
-	smatch res;
-	string::const_iterator paramSearchStart(parent.cbegin());
-
-	regex innerMathRegex("[0-9]{1}[*+-/]");
-	smatch innerMathRes;
-
-	int paramIndex = 0;
-
-	while (regex_search(paramSearchStart, parent.cend(), res, paramRegex))
-	{
-		paramSearchStart += res.position() + res.length();
-		string found = res[0].str().substr(1, res[0].str().length() - 2);
-
-		float value = 0;
-
-		if (regex_search(found.cbegin(), found.cend(), innerMathRes, innerMathRegex)) {
-			char c = innerMathRes.str()[1];
-			
-			switch (c) {
-			case '+':
-				value = atof(innerMathRes.prefix().str().c_str()) + atof(innerMathRes.suffix().str().c_str());
-				break;
-			case '-':
-				value = atof(innerMathRes.prefix().str().c_str()) - atof(innerMathRes.suffix().str().c_str());
-				break;
-			case '*':
-				value = atof(innerMathRes.prefix().str().c_str()) * atof(innerMathRes.suffix().str().c_str());
-				break;
-			case '/':
-				value = atof(innerMathRes.prefix().str().c_str()) / atof(innerMathRes.suffix().str().c_str());
-				break;
-			}
-		} else {
-			value = atof(found.c_str());
-		}
-		variables[rule.variables[paramIndex++]] = value;
-	}
-
-	pair<string, float> pair;
-	BOOST_FOREACH(pair, variables) {
-		variables[pair.first] = pair.second;
-	}
-
-	string result = fillRuleWithVariables(rule.replacement, variables);
-	cout << rule.replacement << endl << result << endl;
-	return result;
 }
 
 vector<string> LindenmayerTreeParams::getAvailableRules() {

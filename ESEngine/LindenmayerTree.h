@@ -16,7 +16,7 @@
 #include "Segment.h"
 #include "InstancedMesh.h"
 #include "LindenmayerTreeParams.h"
-#include "LindenmayerTreeParser.h"
+#include "LindenmayerTreeGenerator.h"
 
 #include "Logger.h"
 
@@ -72,6 +72,7 @@ private:
 	//Mesh and vertices stuff
 	void createMeshComponent();
 	void generateMeshData();
+	quat test(SegmentTransform transform);
 	float calculateRollAngle(shared_ptr<Segment> parent, SegmentTransform & transform);
 	void createRoot(SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, SegmentTransform &transform);

@@ -1,18 +1,18 @@
 {
   "parameters": {
-    "depth": 2,
-    "initialLength": 1.5,
-    "initialRadius": 0.1,
+    "depth": 6,
+    "initialLength": 2,
+    "initialRadius": 0.5,
     "angle": 34.37,
-	"d1": 94.74,
-	"d2": 132.63,
+	"d1": 137.5,
+	"d2": 137.5,
 	"a": 18.95,
 	"lr": 1.109,
-	"vr": 1.1
+	"vr": 0.99
   },
-  "axiom": "=(0.1)F(2)>(45)A",
+  "axiom": "=(1)F(2)>(45)A",
   "rules": [
-    { "symbol": "A", "production": "=(vr)F(.5)[v(a)F(.5)A]/(d1)[v(a)F(.5)A]>(d2)[v(a)F(.5)A]" },
+    { "symbol": "A", "production": "=(vr)F(.5)[v(a)F(.5)A]-(d1)[v(a)F(.5)A]-(d2)[v(a)F(.5)A]" },
 	{ "symbol": "F(l)", "production": "F(l*lr)" },
 	{ "symbol": "=(w)", "production": "=(w*vr)" }
   ]

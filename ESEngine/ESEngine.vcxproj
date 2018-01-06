@@ -28,7 +28,7 @@
     <ClCompile Include="InstancedCube.cpp" />
     <ClCompile Include="LindenmayerTreeParams.cpp" />
     <ClCompile Include="LindenmayerTree.cpp" />
-    <ClCompile Include="LindenmayerTreeParser.cpp" />
+    <ClCompile Include="LindenmayerTreeGenerator.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MouseManager.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
@@ -76,7 +76,7 @@
     <ClInclude Include="LampCube.h" />
     <ClInclude Include="LindenmayerTreeParams.h" />
     <ClInclude Include="LindenmayerTree.h" />
-    <ClInclude Include="LindenmayerTreeParser.h" />
+    <ClInclude Include="LindenmayerTreeGenerator.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MouseManager.h" />
     <ClInclude Include="PhysicsManager.h" />

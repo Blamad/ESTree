@@ -27,10 +27,10 @@ void LindenmayerTree::generateTree() {
 }
 
 //PARSING L DATA
-
 void LindenmayerTree::generateMeshSkeleton() {
-	LindenmayerTreeParser parser(params);
+	LindenmayerTreeGenerator parser(params);
 	product = parser.generateTreeProduction();
+	logger.log(INFO, product);
 }
 
 float LindenmayerTree::getNumericParameter(string product, int index) {
@@ -40,7 +40,8 @@ float LindenmayerTree::getNumericParameter(string product, int index) {
 		int offset = 0;
 		while (product.length() > (index + offset) && product.at(index + offset) != ')')
 			offset++;
-		value = atof(product.substr(index + 2, offset - 2).c_str());
+		string strValue = product.substr(index + 2, offset - 2);
+		value = atof(strValue.c_str());
 	}
 	return value;
 }
@@ -184,15 +185,18 @@ void LindenmayerTree::generateMeshData() {
 				customParameter = 0.625;
 			else
 				i = returnNewIndexAfterParameter(product, i);
-
 			transform.radius *= customParameter;
 			break;
 		case '$':
-			customParameter = transform.roll;
+			/*customParameter = transform.roll;
 			customParameter *= -1;
 			
 			transform.roll += customParameter;
-			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));
+			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));*/
+
+			transform.roll = 0;
+			transform.rotation = test(transform);
+
 			break;
 		case ' ':
 		default:
@@ -205,7 +209,7 @@ void LindenmayerTree::generateMeshData() {
 			else
 				i = returnNewIndexAfterParameter(product, i);
 
-			transform.length = customParameter *transform.lengthScale;
+			transform.length = customParameter * transform.lengthScale;
 			currentSegment = createSegment(currentSegment, transform);
 			segmentsVec.push_back(currentSegment);
 			transform = SegmentTransform(quat(), params.initialLength, transform.radius, transform.lengthScale, transform.roll);
@@ -214,6 +218,40 @@ void LindenmayerTree::generateMeshData() {
 	}
 	generateVertices();
 	mesh->updateMesh();
+}
+
+quat LindenmayerTree::test(SegmentTransform transform) {
+	mat4 rotationMatrix = mat4_cast(transform.rotation);
+	
+	cout << "Matrix:" << endl;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++)
+			cout << rotationMatrix[j][i] << " ";
+		cout << endl;
+	}
+
+	vec3 front = transform.rotation * vec3(0, 1, 0);
+	vec3 worldUp = vec3(0, 1, 0);
+
+	vec3 left = normalize(cross(front, worldUp));
+	vec3 up = normalize(cross(front, left));
+
+	//front *= -1;
+	//left *= -1;
+
+	rotationMatrix[0][0] = left.x;
+	rotationMatrix[1][0] = left.y;
+	rotationMatrix[2][0] = left.z;
+
+	rotationMatrix[0][1] = up.x;
+	rotationMatrix[1][1] = up.y;
+	rotationMatrix[2][1] = up.z;
+
+	rotationMatrix[0][2] = front.x;
+	rotationMatrix[1][2] = front.y;
+	rotationMatrix[2][2] = front.z;
+
+	return quat(rotationMatrix);
 }
 
 float LindenmayerTree::calculateRollAngle(shared_ptr<Segment> parent, SegmentTransform &transform) {
