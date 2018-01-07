@@ -20,7 +20,7 @@ void LindenmayerTree::generateTree() {
 	logger.log(INFO, "Generation started: " + params.name);
 	generateTreeMesh();
 	//generateInstancedLeaves();
-	//generateLeaves();
+	generateLeaves();
 	logger.log(INFO, "Generation finished. " + to_string(mesh->indices.size() / 3) + " tris.");
 }
 
@@ -106,7 +106,7 @@ void LindenmayerTree::generateMeshData() {
 			transform = transformStack.top();
 			transformStack.pop();
 			break;
-		case '^': //rotate branch in x axis
+		case 'v': //pitch branch in x axis
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = params.angle;
@@ -116,7 +116,7 @@ void LindenmayerTree::generateMeshData() {
 			}
 			transform.rotation *= angleAxis(customParameter, vec3(1, 0, 0));
 			break;
-		case 'v':
+		case '^':
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = params.angle;
@@ -126,7 +126,7 @@ void LindenmayerTree::generateMeshData() {
 			}
 			transform.rotation *= angleAxis(-customParameter, vec3(1, 0, 0));
 			break;
-		case '>': //rotate branch in z axis
+		case '<': //yaw branch in z axis
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = params.angle;
@@ -137,7 +137,7 @@ void LindenmayerTree::generateMeshData() {
 
 			transform.rotation *= angleAxis(customParameter, vec3(0, 0, 1));
 			break;
-		case '<':
+		case '>':
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = params.angle;
@@ -148,7 +148,7 @@ void LindenmayerTree::generateMeshData() {
 
 			transform.rotation *= angleAxis(-customParameter, vec3(0, 0, 1));
 			break;
-		case '+': //twist branch up/down in y axis
+		case '-': //roll branch in y axis
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = params.angle;
@@ -160,7 +160,7 @@ void LindenmayerTree::generateMeshData() {
 			transform.roll -= customParameter;
 			transform.rotation *= angleAxis(-customParameter, vec3(0, 1, 0));
 			break;
-		case '-':
+		case '+':
 			customParameter = getNumericParameter(product, i);
 			if (customParameter == -1)
 				customParameter = params.angle;
@@ -197,7 +197,6 @@ void LindenmayerTree::generateMeshData() {
 			transform.roll += customParameter;
 			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));*/
 
-			transform.roll = 0;
 			transform.rotation = test(transform);
 
 			break;
@@ -224,50 +223,46 @@ void LindenmayerTree::generateMeshData() {
 }
 
 quat LindenmayerTree::test(SegmentTransform transform) {
-	mat4 rotationMatrix = mat4_cast(transform.rotation);
-	
-	cout << "Matrix:" << endl;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++)
-			cout << rotationMatrix[j][i] << " ";
-		cout << endl;
-	}
+	if (!print)
+		return transform.rotation;
+	print = false;
 
-	vec3 front = transform.rotation * vec3(0, 1, 0);
+	mat4 rotationMatrix = mat4_cast(transform.rotation);
+
+	cout << "Matrix:" << endl;
+	printMat4(rotationMatrix);
+
+	vec3 front = transform.rotation * vec3(0, -1, 0);
 	vec3 worldUp = vec3(0, 1, 0);
 
 	vec3 left = normalize(cross(front, worldUp));
 	vec3 up = normalize(cross(front, left));
 
+	quat newRotation = quat(lookAt(vec3(0, 0, 0), front, up));
+
+	float pitch = glm::pitch(newRotation);
+	float yaw = glm::yaw(newRotation);
+	float roll = glm::roll(newRotation);
+
+	//cout << pitch << ", " << yaw << ", " << roll << endl;
+	cout << "Vectors:" << endl;
+
+	vec3 realLeft(rotationMatrix[0][0], rotationMatrix[1][0], rotationMatrix[2][0]);
+	vec3 realFront(rotationMatrix[0][1], rotationMatrix[1][1], rotationMatrix[2][1]);
+	vec3 realUp(rotationMatrix[0][2], rotationMatrix[1][2], rotationMatrix[2][2]);
+
+	/*cout << "Left:  ";	printVec3(transform.rotation * vec3(1, 0, 0));
+	cout << "Front: ";  printVec3(transform.rotation * vec3(0, 1, 0));
+	cout << "Up:    ";	printVec3(transform.rotation * vec3(0, 0, 1));*/
+
+	cout << "Right: ";	printVec3(realLeft);
+	cout << "Front: ";  printVec3(realFront);
+	cout << "Up:    ";	printVec3(realUp);
+
 	//front *= -1;
 	//left *= -1;
 
-	rotationMatrix[0][0] = left.x;
-	rotationMatrix[1][0] = left.y;
-	rotationMatrix[2][0] = left.z;
-
-	rotationMatrix[0][1] = up.x;
-	rotationMatrix[1][1] = up.y;
-	rotationMatrix[2][1] = up.z;
-
-	rotationMatrix[0][2] = front.x;
-	rotationMatrix[1][2] = front.y;
-	rotationMatrix[2][2] = front.z;
-
 	return quat(rotationMatrix);
-}
-
-float LindenmayerTree::calculateRollAngle(shared_ptr<Segment> parent, SegmentTransform &transform) {
-	mat4 segmentMatrix = mat4();
-	if (transform.rotation.w != 1)
-		segmentMatrix = segmentMatrix * mat4_cast(transform.rotation);
-	segmentMatrix = translate(segmentMatrix, vec3(0, transform.length, 0));
-	mat4 modelMatrix = parent->modelMatrix * segmentMatrix;
-
-	float x, y, z;
-	extractEulerAngleXYZ(modelMatrix, x, y, z);
-
-	return y;
 }
 
 void LindenmayerTree::createRoot(SegmentTransform &transform) {
@@ -364,16 +359,16 @@ shared_ptr<Mesh> LindenmayerTree::generateLeaf() {
 		Vertex::createVertex(vec3(1.0f,  1.0f,  0.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 0)),
 		Vertex::createVertex(vec3(-1.0f,  1.0f,  0.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 0)),
 		Vertex::createVertex(vec3(-1.0f, -1.0f,  0.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 1)),
-		//back
+		/*//back
 		Vertex::createVertex(vec3(-1.0f, -1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(0, 1)),
 		Vertex::createVertex(vec3(-1.0f,  1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(0, 0)),
 		Vertex::createVertex(vec3(1.0f,  1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 0)),
-		Vertex::createVertex(vec3(1.0f, -1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 1)),
+		Vertex::createVertex(vec3(1.0f, -1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 1)),*/
 	};
 
 	vector<int> indices = {
 		0, 1, 3, 1, 2, 3,
-		4, 5, 7, 5, 6, 7,
+		/*4, 5, 7, 5, 6, 7,*/
 	};
 
 	shared_ptr<Mesh> mesh = shared_ptr<Mesh>(new Mesh(vertices, indices, shader, vertices.size(), indices.size(), GL_STREAM_DRAW));

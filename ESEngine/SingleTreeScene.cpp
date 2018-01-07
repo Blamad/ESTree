@@ -35,8 +35,8 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[2];
-	leavesTextureName = "Textures/" + leavesParams[0];
+	paramsFileName = "LindenmayerRules/" + treeParams[5];
+	leavesTextureName = "Textures/" + leavesParams[1];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
 	meshWiring = false;	
@@ -58,7 +58,7 @@ void SingleTreeScene::initialize() {
 	createDirectionalLight(distance * dir, dir);
 
 	//setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
-	setActiveCamera(createCamera(vec3(0, 15, 35), 45, -10));
+	setActiveCamera(createCamera(vec3(0, 5, 15), -90, -10));
 
 	generateFrameBuffer();
 }

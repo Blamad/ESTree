@@ -9,6 +9,6 @@
   },
   "axiom": "fa",
   "rules": [
-    { "symbol": "a", "production": "`(w)[^fa][v-(a1)-(a1)fa][<+(a1)fa][>-(a1)fa]" }
+    { "symbol": "a", "production": "`(w)[vfa][^+(a1)+(a1)fa][>-(a1)fa][<+(a1)fa]" }
   ]
 }

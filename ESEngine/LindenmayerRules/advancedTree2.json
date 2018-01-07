@@ -9,10 +9,10 @@
   },
   "axiom": "f(2)A",
   "rules": [
-    { "symbol": "A", "production": "`(0.9)=>f[^(a1)+(a1)Af][v(a1)-(a1)Af]<(a2)A", "probability": 0.275 },
-	{ "symbol": "A", "production": "`(0.8)=<f[^(a1)+(a1)Af][v(a1)-(a1)Af]>(a2)A", "probability": 0.275 },
-	{ "symbol": "A", "initialDepth": 1, "production": "`(0.8)=(0.7)>Af[^(a2)+(a2)f][v(a1)-(a1)f]>(a1)f", "probability": 0.15 },
-	{ "symbol": "A", "initialDepth": 1, "production": "`(0.8)=(0.7)>f[^(a1)+(a1)f][v(a2)-(a2)Af]>(a1)f", "probability": 0.15 },
-	{ "symbol": "A", "initialDepth": 2, "production": "`(0.8)=(0.6)>Af[^(a1)+(a1)f][v(a1)-(a1)f]<(a1)f", "probability": 0.15 }
+    { "symbol": "A", "production": "`(0.9)=<f[v(a1)-(a1)Af][^(a1)+(a1)Af]>(a2)A", "probability": 0.275 },
+	{ "symbol": "A", "production": "`(0.8)=>f[v(a1)-(a1)Af][^(a1)+(a1)Af]<(a2)A", "probability": 0.275 },
+	{ "symbol": "A", "initialDepth": 1, "production": "`(0.8)=(0.7)<Af[v(a2)-(a2)f][^(a1)+(a1)f]<(a1)f", "probability": 0.15 },
+	{ "symbol": "A", "initialDepth": 1, "production": "`(0.8)=(0.7)<f[v(a1)-(a1)f][^(a2)+(a2)Af]<(a1)f", "probability": 0.15 },
+	{ "symbol": "A", "initialDepth": 2, "production": "`(0.8)=(0.6)<Af[v(a1)-(a1)f][^(a1)+(a1)f]>(a1)f", "probability": 0.15 }
   ]
 }

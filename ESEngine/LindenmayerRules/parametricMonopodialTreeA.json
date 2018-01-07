@@ -13,8 +13,8 @@
   },
   "axiom": "A(3,1)",
   "rules": [
-    { "symbol": "A(l,w)", "production": "=(w)F(l)[v(a0)B(l*r2,wr)]+(d)A(l*r1,wr)" },
-	{ "symbol": "B(l,w)", "production": "=(w)F(l)[<(a2)$C(l*r2,wr)]C(l*r1,wr)" },
-	{ "symbol": "C(l,w)", "production": "=(w)F(l)[>(a2)$B(l*r2,wr)]B(l*r1,wr)" }
+    { "symbol": "A(l,w)", "production": "=(w)F(l)[^(a0)B(l*r2,wr)]-(d)A(l*r1,wr)" },
+	{ "symbol": "B(l,w)", "production": "=(w)F(l)[>(a2)$C(l*r2,wr)]C(l*r1,wr)" },
+	{ "symbol": "C(l,w)", "production": "=(w)F(l)[<(a2)$B(l*r2,wr)]B(l*r1,wr)" }
   ]
 }

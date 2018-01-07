@@ -62,7 +62,6 @@ private:
 	void createMeshComponent();
 	void generateMeshData();
 	quat test(SegmentTransform transform);
-	float calculateRollAngle(shared_ptr<Segment> parent, SegmentTransform & transform);
 	void createRoot(SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, float &radius, float &length, quat &rotation);
@@ -82,6 +81,27 @@ private:
 
 	float toAngle(float radians) {
 		return radians * 180 / 3.14159265359;
+	}
+
+	string number(float val) {
+		if (val < 0.001 && val > -0.001)
+			return "0";
+		else
+			return to_string(val);
+	}
+
+	bool print = true;
+
+	void printVec3(vec3 val) {
+		cout << number(val.x) + " " + number(val.y) + " " + number(val.z) << endl;
+	}
+
+	void printMat4(mat4 val) {
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++)
+				cout << number(val[j][i]) << " ";
+			cout << endl;
+		}
 	}
 };
 
