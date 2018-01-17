@@ -126,37 +126,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LindenmayerRules\advancedTree.json" />
-    <None Include="LindenmayerRules\advancedTree.l" />
     <None Include="LindenmayerRules\advancedTree2.json" />
-    <None Include="LindenmayerRules\advancedTree2.l" />
     <None Include="LindenmayerRules\fibbonacciTree.json" />
-    <None Include="LindenmayerRules\fibbonacciTree.l" />
-    <None Include="LindenmayerRules\normalTest.l" />
     <None Include="LindenmayerRules\parametricMonopodialTreeA.json" />
-    <None Include="LindenmayerRules\parametricMonopodialTreeA.l" />
-    <None Include="LindenmayerRules\parametricMonopodialTreeB.l" />
-    <None Include="LindenmayerRules\parametricMonopodialTreeC.l" />
-    <None Include="LindenmayerRules\parametricMonopodialTreeD.l" />
+    <None Include="LindenmayerRules\parametricMonopodialTreeB.json" />
+    <None Include="LindenmayerRules\parametricMonopodialTreeC.json" />
+    <None Include="LindenmayerRules\parametricMonopodialTreeD.json" />
     <None Include="LindenmayerRules\parametricSympodialTreeA.json" />
-    <None Include="LindenmayerRules\parametricSympodialTreeA.l" />
-    <None Include="LindenmayerRules\parametricSympodialTreeB.l" />
-    <None Include="LindenmayerRules\parametricSympodialTreeC.l" />
-    <None Include="LindenmayerRules\parametricSympodialTreeD.l" />
+    <None Include="LindenmayerRules\parametricSympodialTreeB.json" />
+    <None Include="LindenmayerRules\parametricSympodialTreeC.json" />
+    <None Include="LindenmayerRules\parametricSympodialTreeD.json" />
     <None Include="LindenmayerRules\parametricTernaryTreeA.json" />
-    <None Include="LindenmayerRules\parametricTernaryTreeA.l" />
-    <None Include="LindenmayerRules\parametricTree.l" />
     <None Include="LindenmayerRules\randomTree.json" />
-    <None Include="LindenmayerRules\randomTree.l" />
     <None Include="LindenmayerRules\randomTree2.json" />
-    <None Include="LindenmayerRules\randomTree2.l" />
-    <None Include="LindenmayerRules\parametricTree2.l" />
-    <None Include="LindenmayerRules\symetricTree.l" />
+    <None Include="LindenmayerRules\symetricTree.json" />
     <None Include="LindenmayerRules\test.json" />
-    <None Include="LindenmayerRules\test.l" />
     <None Include="LindenmayerRules\test2.json" />
-    <None Include="LindenmayerRules\testX.l" />
-    <None Include="LindenmayerRules\testY.l" />
-    <None Include="LindenmayerRules\testZ.l" />
     <None Include="Shaders\DepthQuadDebug.frag" />
     <None Include="Shaders\DepthQuadDebug.vert" />
     <None Include="Shaders\DirectionalShadowShader.frag" />
@@ -200,11 +185,6 @@
     <Image Include="Textures\Skybox\top.jpg" />
     <Image Include="Textures\treeTexture1.jpg" />
     <Image Include="Textures\treeTexture2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="LindenmayerRules\symetricTree.json">
-      <SubType>Designer</SubType>
-    </Xml>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
