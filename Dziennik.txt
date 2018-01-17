@@ -75,3 +75,179 @@ po co za każdym razem wysyłać cały bufor? Wystarczy update bieżących lamp 
 
 14.05
 Zmęczony człek też myśli.. Obliczenia translacji normalnych przeniesione do cpu
+
+21.05
+Pierwsza implementacja pieńka, jak narazie sam okrąg jako podstawa. Jak ładnie opiąć jeden bufor (zawierający całe drzewo) w grupy wierzchołków będących gałęziami?
+Na razie klasa Branch zaznacza indeksy początku i końca gałęzi w buforze, trzyma też info o promieniu podstawy i kierunku gałęzi. Dzięki temu w każdej klatce można przeliczać położenie itp.
+Problem będzie np. podczas wzrostu rodzica, wtedy prócz samego zwiększania średnicy będzie przemieszczanie wierzchołków w przestrzeni, to może być kosztowną sprawą.
+Może lepiej byłoby budować odwrotnie? Trzymać info o kierunku, pkcie początkowym i końcowym gałęzi i w każdej klatce generować nowe wierzchołki?
+TO SIĘ AŻ PROSI O ZRÓWNOLEGLENIE.
+
+24.05
+Normalne dla generowanego drzewa będą w miarę proste. Wystarczy określić kierunek między środkiem walca C i jego punktem brzegowym B. Wtedy punkt C + N = B.
+Jeżeli otrzymany wektor ma być normalną punktu, trzeba go będzie znormalizować.
+
+28.05
+Utworzony kod do generowania walca, z możliwością kontroli zwężenia. Na razie nieobracalny.
+Jak rysować walce? Najlepiej byłoby rysować pierścieniami, wtedy generowane byłyby kolejne punkty jako szkielet drzewa. Punkt miałby wartości takie jak promień, kierunek. 
+Byłyby też punkty oznaczające rozwidlenie z określeniem proporcji rozbicia.
+Taki szkielet punktów mógłby następnie być tłumaczony na kolejne pierścienie łączone w walce.
+
+29.05
+Dodanie możliwości przeładowywania bufora wierzchołków danego mesha.
+
+30.05
+Teraz dopiero działa możliwość przeładowywania mesha. Działa również budowa drzewa z pierścieni, na razie w oparciu o bezpośrednio o poprzedni pierścień w buforze.
+Przydałby się jakiś algo redukcji niepotrzebnej segmentacji w węższych gałęziach.
+
+2.06
+Dodanie pierwszych metod generujących siatkę drzewa na podstawie pierścieni-rodziców. Zbudowanie rozwijalnych struktur Stem (prosty fragment gałęzi) oraz Split(rozgałęzienie).
+W przyszłości Split trzeba będzie rozbudować o oddzielne podstawy dla każdej odnogi, na razie wyrastają one z jednego pierścienia co tworzy nieciekawy efekt wizualny.
+W sumie wystarczy 
+
+18.06
+Siatkę drzewa można generować po wszystkim, nie musi być dynamicznie. 
+W ten sposób będzie można ładnie obsłużyć splity. Generalnie to musi być segment z flagą SPLIT lub STEM, każda gałąź może stać się przecież bazą do rozgałęzień.
+Kierunek splitu względem stemów można określić na podstawie kierunków stemów mnożonych przez ich współczynnik średnicy.
+
+20.06
+Do zrobienia nadal pozostaje kwestia rozmiaru podstawy gałęzi. Pierwsze drzewa wyglądają bardzo ciekawie, trzeba znaleźć jakieś źródło modeli.
+
+21.06
+Wektor po inicjalizacji przyjmuje już zdefiniowaną ilość elementów i je generuje. To może być powodem problemów z długą komunikacją.
+
+11.07
+Todo:
+Tekstury, skybox
+Wybór mesha myszką
+Ograniczenie sferą
+Poczytać o intergracji QT z Opengl
+
+14.08
+Jak działa bullet. Każde ciało ma swoją sferę kolizji. Dodatkowo jest odrębny świat kolizji dla każdego planu. 
+W ramach rigidBody tworzony jest shape, motionstate(rotacja i pozycja) oraz btRigidBody. Pamiętaj, że btRigidBody ma możliwość dowiązania własnego pointera (setUserPointer).
+RayCasting potrzebuje wszystkich macierzy przekształcenia widoku: z kamery i okna. Przeliczenie wszystkich macierzy prowadzi do wykrycia pierwszej kolizji w ekranie.
+
+29.08 - dodać bibliotekę QT. Poprawić liście. 
+01.09 - ukończony moduł wielowątkowej generacji meshy
+04.09 - ukończone teksturowanie, problem z przesłanianiem zawartości przez skyboxa
+06.09 - model parametryczny.
+problem z przekazywaniem parametrów między iteracjami.
+Regexy? Każdy ciąg alfanumeryczny otoczony niealfanumerycznymi wartościami musi zostać zastąpiony.
+Parsowane reguły już na starcie powinny zostać przepisane z wykrytymi argumentami.
+To pierwszy etap.
+Drugi etap będzie w trakcie parsowania reguł. Wartości będą liczone na bierząco i podstawiane w rozwinięciach.
+Trzeci etap do wykreślenie z finalnej produkcji wszystkich reguł nieprodukcyjnych.
+		
+10.09
+Implementacja wyboru obiektu myszą.
+Wybór obiektów musi odbywać się w scenie. Scena nie jest świadoma macierzy projekcji ani nie ma dostępu do kolejki pozycji mychy.
+//TODO wspolrzedne myszy, rozdzielczosc ekranu, macierz projekcji (static z GLWindow?) meh.
+
+Do zrobienia w pierwszej kolejności:
+- losowość parametrów w pewnym przedziale o ustalonej wariancji
+- collision boxy wokół drzew z (może) jakimś obrysem tych sfer?
+- cieniowanie i zabawa z urealistycznieniem sceny
+
+Przedłużenie terminu oddania do końca lutego!
+Jaki narzut refaktoryzacji miałoby przejście na Qt?
+
+18.09
+Problem z klikaniem myszą na obiekty. Raycast realizowany jest PhysicsManager - tam znajdowany jest kliknięty rigidbody.
+Problem to skąd i kiedy to wołać. Czy Camera powinna miec aż taką wiedzę? Może powinien być jakiś wewnętrzny mouse controller?
+Odpowiadałby za stany myszy, za kliknięcie i wyłapanie klikanego obiektu.. Tyle że to bezpośrednio wiąże się z CameraBehabiour.
+Chyba, że jakaś flaga na ten znak blokowałaby odświeżanie zachowania kamery. To ma sens.
+
+08.11
+Co korzysta z myszy: camera, picker.
+Z czego korzysta mysz? scene->activeCameraBehaviour, scene->physicsManager.
+
+18.11
+Widoczność kursora: 
+Startujemy z widocznym kursorem, kamerą nieczułą na mysz i kontrolą klawiatury. - DONE
+Po wciśnięciu Shift kursor znika i mamy możliwość obrotu kamery, bez możliwości wyboru obiektu.
+
+Zdaje się że metoda MouseManager::processKeyboardShortcuts kręci się w nieskończoność. Sprawdź czy można temu zaradzić.
+
+19.11
+MousePick - done.
+
+22.11
+Co zostalo do zrobienia:
+- rozkminić bardziej zaawansowane figury kolizyjne
+- cieniowanie
+- realizm generowanych drzew (jakaś wartość losowa, parametr do realistycznych drzewek, może kora z lepszym modelem oświetlania)
+
+Co pisać w magisterce?
+- Konstrukcje silnika (inspiracje konstrukcyjne (Unity/Ogre))
+  - GameObject
+  - Scene
+  - Poziom abstrakcji zapewniający tylko podmianę jednostki renderującej i wszystko dalej będzie działało
+  - Fizyka (BulletPhysics: manipulacja mychą, kolizje)
+  
+30.11
+Ctrl+Z - odpalenie HUD w Nsight debugerze
+
+02.12
+Prawdopodonie przyczyna leży w braku konkretnej pozycji  światła kierunkowego, modyfikowanie pozycji (createDirectionalLight) daje dziwne efekty. Trzeba sprawdzić jak to działa.
+Kierunki podajesz w wartości znormalizowanej! (directory of DirLight)
+NearPane w tescie glebi jest kopniety, obcina geometrie zbyt szybko!
+Być może kwestie pozycji załatwi odpowiednie przeskalowanie kierunku światła odległością.
+
+03.12
+Tekstrura przesyłana jako cień jest w trawą; fuckup w setupie tekstur?
+Specular też padł. COŚ NIE TAK Z BINDINGIEM TEKSTUR!
+
+17.12
+Jest coś takiego jak subroutine, nie potrzeba wtedy pierdyliona shaderów.. Na kiedyś.
+Przydałby się normal mapper.
+!!!!!!!!!!!!!!! Miales przerobic wczytywanie plikow na jakis czytelny format!
+Normalne drzewa są kopnięte.
+
+28.12
+Normalne naprawione. Subroutine dodane, mozna jeszcze dodac do instancjonowania, znacząco rośnie framerate.
+Na dzisiaj: wszyczywanie z xls, stworzenie gruntu z płaszczyzny zamiast bryły, dodanie subroutine do renderowania instancjonowanego (oraz update macierzy).
+Jak zostanie czasu - popisać o silniku.
+
+InstancedMesh jest dodawany do GameObject obslugujacego wylacznie instancje. Ten z kolei bedzie dodawany do GameObject okreslajacego jego totalna pozycje.
+
+29.12
+Symbole l systemu (reguła prawej dłoni):
+[ - wrzuta na stos
+] - zdjęcie ze stosu
+v - rotacja po x(+)
+^ - rotacja po x(-)
+< - rotacja po z(+)
+> - rotacja po z(-)
+- - rotacja po y(-)
++ - rotacja po y(+)
+` - skalowanie całego elementu
+= - skalowanie wyłącznie grubości
+$ - równaj prawy wektor do poziomu
+fF- rysuj gałąź
+
+Instanced rendering zrobiony. Migracja na jsona zrobiona.
+Zostało przyjrzeć się magicznemu parametrowi, zobaczyć o co chodzi z cieniami, wymyślić jakieś wartości losowe dla kątów.
+
+30.12
+O co chodzi z magicznym parametrem?
+Wektor żółwia rysującego często wykręca się spektakularnie. Ten parametr obraca zółwia wokół jego własnej osi tak, by lewy wektor wrócił do pozycji horyzontalnej.
+(płaszczyzna gałęzi pokrywa się z płaszczyzną świata).
+Oś Y to heading, oś Z to right (left).
+
+Redukcja szerokosci: teraz jest fixed parameter, trzeba to uzależnić od depth. - nope.
+
+Ustalone czym jest heading, rozrysowane (nie zgub!). Zagadka w teście. Prosta gałąź cofa odchyla się w left o 45, obraca się wokół heading o 45. Następna gałąź idzie w 45 w left względem orientacji poprzedniej a później obrót o 45 w heading.
+Jak wyliczyć kąt między podstawowym left a left ziemi? Jak ustawić ten kąt?
+
+01.01.2018
+Cienie rozpracowane. 
+
+Zdecydowanie parametry generacji są kopięte, całkiem nieźle!
+
+03.01.2018
+Dodany subroutine do shaderów, znaczne uproszczenie generacji mapy cieniowania. NSight kładzie się przy subroutine (!?).
+
+07.01.2018
+Matma.. Musze jakoś ustawić obrót obiektu (roll) tak, by wektor prawy został sprowadzony do pozycji horyzontalnej.
+Nie wiem jak to zrobić kwaternionami, ponoć można wyciągnąć wektory up, right, front z macierzy rotacji. Może tak..?

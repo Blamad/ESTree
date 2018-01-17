@@ -13,6 +13,7 @@ void SingleTreeScene::initialize() {
 		"advancedTree.json",
 		"advancedTree2.json",
 		//5
+		"test.json",
 		"parametricMonopodialTreeA.json",
 		"parametricSympodialTreeA.json",
 		"parametricTernaryTreeA.json"
@@ -34,14 +35,17 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[1];
-	leavesTextureName = "Textures/" + leavesParams[0];
+	paramsFileName = "LindenmayerRules/" + treeParams[7];
+	leavesTextureName = "Textures/" + leavesParams[1];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
-	meshWiring = false;
-	
-
+	meshWiring = false;	
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+
+	/*position = vec3(3, 0, 3);
+	paramsFileName = "LindenmayerRules/" + treeParams[1];
+	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+	*/
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 
@@ -49,10 +53,12 @@ void SingleTreeScene::initialize() {
 	addSkybox();
 
 	//Light
-	vec3 dir = normalize(vec3(-.5, -.8, -.5));
-	createDirectionalLight(vec3(dir.x * -14, dir.y * -14, dir.z * -14), dir);
+	vec3 dir = normalize(vec3(-0.5, -0.5, 0));
+	vec3 distance = vec3(-14);
+	createDirectionalLight(distance * dir, dir);
 
-	setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
+	//setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
+	setActiveCamera(createCamera(vec3(0, 5, 15), -90, -10));
 
 	generateFrameBuffer();
 }

@@ -1,0 +1,15 @@
+{
+  "parameters": {
+    "depth": 2,
+    "initialLength": 1.5,
+    "initialRadius": 0.5,
+    "angle": 30
+  },
+  "axiom": "fa",
+  "rules": [
+    {
+      "symbol": "a",
+      "production": "`+f$a"
+    }
+  ]
+}

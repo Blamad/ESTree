@@ -20,12 +20,12 @@ using namespace rapidjson;
 
 class Rule {
 public:
-	Rule(string symbol, string replacement, float probability = 1.0f, int allowedDepth = 0, vector<string> variables = {}) : symbol(symbol), replacement(replacement), probability(probability), allowedDepth(allowedDepth), variables(variables) { };
+	Rule(string symbol, string replacement, float probability = 1.0f, int allowedDepth = 0, vector<string> variables = {}) : symbol(symbol), production(replacement), probability(probability), allowedDepth(allowedDepth), parameters(variables) { };
 	string symbol;
 	int allowedDepth;
-	string replacement;
+	string production;
 	float probability;
-	vector<string> variables;
+	vector<string> parameters;
 };
 
 class LindenmayerTreeParams {
@@ -42,6 +42,7 @@ public:
 	float initialLength;
 	float initialRadius;
 	float angle;
+	float leavesAngleDiversity = 0.0f;
 
 	map<string, float> customParameters;
 
@@ -59,5 +60,4 @@ protected:
 	vector<string> split(string lane);
 	vector<string> split(string lane, string splitter);
 	string fillRuleWithVariables(string rule, map<string, float> variables);
-	string applyRule(string parent, Rule rule);
 };

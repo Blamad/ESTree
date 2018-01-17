@@ -37,17 +37,14 @@ int main() {
 
 void treeScene(SceneManager *sceneManager) {
 	sceneManager->setActiveScene(shared_ptr<Scene>(new TreeScene()));
-	createCamera(sceneManager, vec3(0, 15, 35), -90, -10);
 }
 
 void testScene(SceneManager *sceneManager) {
 	sceneManager->setActiveScene(shared_ptr<Scene>(new TestScene()));
-	createCamera(sceneManager, vec3(0, 5, -12), 90, -10);
 }
 
 void singleTreeScene(SceneManager *sceneManager) {
 	sceneManager->setActiveScene(shared_ptr<Scene>(new SingleTreeScene()));
-	createCamera(sceneManager, vec3(0, 5, -12), 90, -10);
 }
 
 GameObject* createCamera(SceneManager *sceneManager, vec3 position, float pitch, float yaw) {

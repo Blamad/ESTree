@@ -1,0 +1,16 @@
+{
+  "parameters": {
+    "depth": 2,
+    "initialLength": 1.5,
+    "initialRadius": 0.5,
+    "angle": 90,
+	"wr": 0.707
+  },
+  "axiom": "A(1)",
+  "rules": [
+    {
+      "symbol": "A(w)",
+      "production": "=(w)F>$A(w*wr)"
+    }
+  ]
+}

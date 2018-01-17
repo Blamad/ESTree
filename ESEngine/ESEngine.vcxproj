@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="DepthFrameBuffer.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="LindenmayerTreeMeshGenerator.cpp" />
     <ClCompile Include="PostEffectFrameBuffer.cpp" />
     <ClCompile Include="CubeMap.cpp" />
     <ClCompile Include="HDRFrameBuffer.cpp" />
@@ -28,7 +29,7 @@
     <ClCompile Include="InstancedCube.cpp" />
     <ClCompile Include="LindenmayerTreeParams.cpp" />
     <ClCompile Include="LindenmayerTree.cpp" />
-    <ClCompile Include="LindenmayerTreeParser.cpp" />
+    <ClCompile Include="LindenmayerTreeSolver.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MouseManager.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="ClickEvent.h" />
     <ClInclude Include="DepthFrameBuffer.h" />
+    <ClInclude Include="LindenmayerTreeMeshGenerator.h" />
     <ClInclude Include="PostEffectFrameBuffer.h" />
     <ClInclude Include="CubeMap.h" />
     <ClInclude Include="FrameBuffer.h" />
@@ -78,7 +80,7 @@
     <ClInclude Include="LampCube.h" />
     <ClInclude Include="LindenmayerTreeParams.h" />
     <ClInclude Include="LindenmayerTree.h" />
-    <ClInclude Include="LindenmayerTreeParser.h" />
+    <ClInclude Include="LindenmayerTreeSolver.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MouseManager.h" />
     <ClInclude Include="PhysicsManager.h" />
@@ -153,7 +155,9 @@
     <None Include="LindenmayerRules\randomTree2.l" />
     <None Include="LindenmayerRules\parametricTree2.l" />
     <None Include="LindenmayerRules\symetricTree.l" />
+    <None Include="LindenmayerRules\test.json" />
     <None Include="LindenmayerRules\test.l" />
+    <None Include="LindenmayerRules\test2.json" />
     <None Include="LindenmayerRules\testX.l" />
     <None Include="LindenmayerRules\testY.l" />
     <None Include="LindenmayerRules\testZ.l" />

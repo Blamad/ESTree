@@ -192,9 +192,6 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Engine\Core\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LindenmayerTreeParser.cpp">
-      <Filter>TestProject\Models\Trees\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Screen.cpp">
       <Filter>Engine\Core\Source Files</Filter>
     </ClCompile>
@@ -273,6 +270,12 @@
     <ClCompile Include="Terrain.cpp">
       <Filter>TestProject\Models\General\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LindenmayerTreeSolver.cpp">
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LindenmayerTreeMeshGenerator.cpp">
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -343,9 +346,6 @@
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Engine\Core\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LindenmayerTreeParser.h">
-      <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Screen.h">
       <Filter>Engine\Core\Header Files</Filter>
@@ -454,6 +454,12 @@
     </ClInclude>
     <ClInclude Include="Terrain.h">
       <Filter>TestProject\Models\General\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LindenmayerTreeSolver.h">
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LindenmayerTreeMeshGenerator.h">
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -597,6 +603,12 @@
     </None>
     <None Include="LindenmayerRules\parametricTernaryTreeA.json">
       <Filter>TestProject\Models\Trees\Tree Models\jsonFiles\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\test.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles</Filter>
+    </None>
+    <None Include="LindenmayerRules\test2.json">
+      <Filter>TestProject\Models\Trees\Tree Models\jsonFiles</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

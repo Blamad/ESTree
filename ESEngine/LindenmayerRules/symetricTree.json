@@ -1,12 +1,17 @@
 {
   "parameters": {
     "depth": 4,
-    "initialLength": 1.2,
+    "initialLength": 4.5,
     "initialRadius": 0.5,
-    "angle": 15
+    "angle": 30,
+	"a1": 90,
+	"w": 0.707
   },
-  "axiom": "f(4.5)a",
+  "axiom": "fa",
   "rules": [
-    { "symbol": "a", "production": "`[<<f(4.5)a][++^^f(4.5)a][vv--f(4.5)a][>>f(4.5)a]" }
+    {
+      "symbol": "a",
+      "production": "`(w)[vfa][^+(a1)+(a1)fa][>-(a1)fa][<+(a1)fa]"
+    }
   ]
 }
