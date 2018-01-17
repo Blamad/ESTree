@@ -7,6 +7,9 @@
   },
   "axiom": "fa",
   "rules": [
-    { "symbol": "a", "production": "`+f$a" }
+    {
+      "symbol": "a",
+      "production": "`+f$a"
+    }
   ]
 }

@@ -42,6 +42,7 @@ public:
 	float initialLength;
 	float initialRadius;
 	float angle;
+	float leavesAngleDiversity = 0.0f;
 
 	map<string, float> customParameters;
 

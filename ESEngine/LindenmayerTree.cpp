@@ -1,6 +1,8 @@
 #include "LindenmayerTree.h"
 #include <glm/gtx/matrix_decompose.hpp>
 
+float LindenmayerTree::leavesGrowthProbability = 0.0f;
+
 boost::variate_generator<boost::mt19937, boost::uniform_real<> > LindenmayerTree::randomGenerator(boost::mt19937(time(0)), boost::uniform_real<>(0, 1));
 
 Logger LindenmayerTree::logger("LindenmayerTree");
@@ -191,14 +193,13 @@ void LindenmayerTree::generateMeshData() {
 			transform.radius *= customParameter;
 			break;
 		case '$':
-			/*customParameter = transform.roll;
-			customParameter *= -1;
-			
-			transform.roll += customParameter;
-			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));*/
+			transform.rotation = restoreHorizontalOrientation(transform);
+			if (abs(transform.roll - roll(transform.rotation)) > 3.14)
+				cout << "OOH!" << endl;
 
-			transform.rotation = test(transform);
-
+			cout << transform.roll << " to: ";
+			transform.roll = roll(transform.rotation);
+			cout << transform.roll << endl;
 			break;
 		case ' ':
 		default:
@@ -222,47 +223,24 @@ void LindenmayerTree::generateMeshData() {
 	mesh->updateMesh();
 }
 
-quat LindenmayerTree::test(SegmentTransform transform) {
-	if (!print)
-		return transform.rotation;
-	print = false;
-
+quat LindenmayerTree::restoreHorizontalOrientation(SegmentTransform transform) {
 	mat4 rotationMatrix = mat4_cast(transform.rotation);
 
-	cout << "Matrix:" << endl;
-	printMat4(rotationMatrix);
+	vec3 worldUp = vec3(0, -1, 0);
 
-	vec3 front = transform.rotation * vec3(0, -1, 0);
-	vec3 worldUp = vec3(0, 1, 0);
-
+	vec3 front(rotationMatrix[0][1], rotationMatrix[1][1], rotationMatrix[2][1]);
 	vec3 left = normalize(cross(front, worldUp));
 	vec3 up = normalize(cross(front, left));
 
-	quat newRotation = quat(lookAt(vec3(0, 0, 0), front, up));
+	float matrix[16] = {
+		left.x, front.x, up.x, 0,
+		left.y, front.y, up.y, 0,
+		left.z, front.z, up.z, 0,
+		0,		0,		 0,	   0
+	};
 
-	float pitch = glm::pitch(newRotation);
-	float yaw = glm::yaw(newRotation);
-	float roll = glm::roll(newRotation);
-
-	//cout << pitch << ", " << yaw << ", " << roll << endl;
-	cout << "Vectors:" << endl;
-
-	vec3 realLeft(rotationMatrix[0][0], rotationMatrix[1][0], rotationMatrix[2][0]);
-	vec3 realFront(rotationMatrix[0][1], rotationMatrix[1][1], rotationMatrix[2][1]);
-	vec3 realUp(rotationMatrix[0][2], rotationMatrix[1][2], rotationMatrix[2][2]);
-
-	/*cout << "Left:  ";	printVec3(transform.rotation * vec3(1, 0, 0));
-	cout << "Front: ";  printVec3(transform.rotation * vec3(0, 1, 0));
-	cout << "Up:    ";	printVec3(transform.rotation * vec3(0, 0, 1));*/
-
-	cout << "Right: ";	printVec3(realLeft);
-	cout << "Front: ";  printVec3(realFront);
-	cout << "Up:    ";	printVec3(realUp);
-
-	//front *= -1;
-	//left *= -1;
-
-	return quat(rotationMatrix);
+	mat4 newMatrix = make_mat4(matrix);
+	return quat(newMatrix);
 }
 
 void LindenmayerTree::createRoot(SegmentTransform &transform) {
@@ -325,22 +303,19 @@ void LindenmayerTree::generateLeaves() {
 	for (auto & seg : segmentsVec) {
 		if (!seg->isLastStem())
 			continue;
-		//if (randomGenerator() > 0.33f) {
-		if (randomGenerator() > 0.0f) {
-			shared_ptr<GameObject> go (new GameObject());
-			Transform* leafTransform = (Transform*) go->getComponent(TRANSFORM);
+		if (randomGenerator() > leavesGrowthProbability) {
+			shared_ptr<GameObject> go(new GameObject());
+			Transform* leafTransform = (Transform*)go->getComponent(TRANSFORM);
+
+			if (params.leavesAngleDiversity > 0) { 
+				mat4 leafRotation;
+				float angle = randomGenerator() * 2 * params.leavesAngleDiversity - params.leavesAngleDiversity;
+				leafRotation = rotate(leafRotation, angle, vec3(0,1,0));
+				leafTransform->setModelMatrix(leafRotation * seg->modelMatrix);
+			}
+			else
+				leafTransform->setModelMatrix(seg->modelMatrix);
 			
-			leafTransform->setModelMatrix(seg->modelMatrix);
-			/*glm::vec3 scale;
-			glm::quat rotation;
-			glm::vec3 translation;
-			glm::vec3 skew;
-			glm::vec4 perspective;
-			glm::decompose(seg->modelMatrix, scale, rotation, translation, skew, perspective);
-			rotation = glm::conjugate(rotation);
-			
-			leafTransform->translate(translation);
-			leafTransform->rotate(rotation);*/
 
 			shared_ptr<Mesh> leafMesh = generateLeaf();
 			go->addComponent(leafMesh);
@@ -359,16 +334,16 @@ shared_ptr<Mesh> LindenmayerTree::generateLeaf() {
 		Vertex::createVertex(vec3(1.0f,  1.0f,  0.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 0)),
 		Vertex::createVertex(vec3(-1.0f,  1.0f,  0.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 0)),
 		Vertex::createVertex(vec3(-1.0f, -1.0f,  0.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 1)),
-		/*//back
+		//back
 		Vertex::createVertex(vec3(-1.0f, -1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(0, 1)),
 		Vertex::createVertex(vec3(-1.0f,  1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(0, 0)),
 		Vertex::createVertex(vec3(1.0f,  1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 0)),
-		Vertex::createVertex(vec3(1.0f, -1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 1)),*/
+		Vertex::createVertex(vec3(1.0f, -1.0f, 0.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 1)),
 	};
 
 	vector<int> indices = {
 		0, 1, 3, 1, 2, 3,
-		/*4, 5, 7, 5, 6, 7,*/
+		4, 5, 7, 5, 6, 7,
 	};
 
 	shared_ptr<Mesh> mesh = shared_ptr<Mesh>(new Mesh(vertices, indices, shader, vertices.size(), indices.size(), GL_STREAM_DRAW));
@@ -382,12 +357,18 @@ void LindenmayerTree::generateInstancedLeaves() {
 	for (auto & seg : segmentsVec) {
 		if (!seg->isLastStem())
 			continue;
-		if (randomGenerator() > 0.0f) {
+		if (randomGenerator() > leavesGrowthProbability) {
 			InstancedTransform it;
-			//TODO przemieszczenie lisci.
-			//it.modelMatrix = glm::translate(it.modelMatrix, vec3(0, branchLeafOverlappingFactor, 0));
-			//it.modelMatrix = it.modelMatrix * transform->getModelMatrix() * seg->modelMatrix;
-			it.modelMatrix = transform->getModelMatrix() * seg->modelMatrix;
+
+			if (params.leavesAngleDiversity > 0) {
+				mat4 leafRotation;
+				float angle = randomGenerator() * 2 * params.leavesAngleDiversity - params.leavesAngleDiversity;
+				leafRotation = rotate(leafRotation, angle, vec3(0, 1, 0));
+				it.modelMatrix = leafRotation * transform->getModelMatrix() * seg->modelMatrix;
+			}
+			else
+				it.modelMatrix = transform->getModelMatrix() * seg->modelMatrix;
+			
 			it.generateNormalModelMatrix();
 			instancedTransforms.push_back(it);
 		}

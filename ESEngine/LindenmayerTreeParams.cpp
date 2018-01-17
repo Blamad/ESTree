@@ -32,6 +32,9 @@ void LindenmayerTreeParams::readJSONFile(string filePath) {
 		else if (paramName == "angle") {
 			angle = radians(paramValue);
 		}
+		else if (paramName == "leavesAngleDiversity") {
+			leavesAngleDiversity = radians(paramValue);
+		}
 		else {
 			customParameters[paramName] = paramValue;
 		}
@@ -95,6 +98,9 @@ void LindenmayerTreeParams::readLFile(string filePath) {
 				}
 				else if (splitLane[1] == "angle") {
 					angle = radians(atof(splitLane[2].c_str()));
+				}
+				else if (splitLane[1] == "leavesAngleDiversity") {
+					leavesAngleDiversity = radians(atof(splitLane[2].c_str()));
 				}
 				else {
 					customParameters[splitLane[1]] = atof(splitLane[2].c_str());

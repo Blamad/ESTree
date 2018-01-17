@@ -8,6 +8,9 @@
   },
   "axiom": "A(1)",
   "rules": [
-    { "symbol": "A(w)", "production": "=(w)F>$A(w*wr)" }
+    {
+      "symbol": "A(w)",
+      "production": "=(w)F>$A(w*wr)"
+    }
   ]
 }

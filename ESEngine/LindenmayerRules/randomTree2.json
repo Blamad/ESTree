@@ -7,15 +7,55 @@
   },
   "axiom": "fb",
   "rules": [
-	{ "symbol": "b", "probability": 0.2, "production": "fa" },
-	{ "symbol": "b", "probability": 0.2, "production": "fa" },
-	{ "symbol": "b", "probability": 0.2, "production": "+fa" },
-	{ "symbol": "b", "probability": 0.2, "production": "^fa" },
-	{ "symbol": "b", "probability": 0.1, "production": "[--^^fa][+vfa]" },
-	{ "symbol": "b", "probability": 0.1, "production": "[-^fa][++vvfa]" },
-	{ "symbol": "a", "probability": 0.25, "production": ">[<<f(4.5)a][vv++f(4.5)a][^^--f(4.5)a][>>f(4.5)a]" },
-	{ "symbol": "a", "probability": 0.25, "production": "<[<<f(4.5)a][>>f(3)a]" },
-	{ "symbol": "a", "probability": 0.25, "production": "v+[vv++f(3)a][^^--f(4.5)a]" },
-	{ "symbol": "a", "probability": 0.25, "production": "^-[>>>f(4.5)a][++++++++>>>f(4.5)a][-------->>>f(4.5)a]" }
+    {
+      "symbol": "b",
+      "probability": 0.2,
+      "production": "fa"
+    },
+    {
+      "symbol": "b",
+      "probability": 0.2,
+      "production": "fa"
+    },
+    {
+      "symbol": "b",
+      "probability": 0.2,
+      "production": "+fa"
+    },
+    {
+      "symbol": "b",
+      "probability": 0.2,
+      "production": "^fa"
+    },
+    {
+      "symbol": "b",
+      "probability": 0.1,
+      "production": "[--^^fa][+vfa]"
+    },
+    {
+      "symbol": "b",
+      "probability": 0.1,
+      "production": "[-^fa][++vvfa]"
+    },
+    {
+      "symbol": "a",
+      "probability": 0.25,
+      "production": ">[<<f(4.5)a][vv++f(4.5)a][^^--f(4.5)a][>>f(4.5)a]"
+    },
+    {
+      "symbol": "a",
+      "probability": 0.25,
+      "production": "<[<<f(4.5)a][>>f(3)a]"
+    },
+    {
+      "symbol": "a",
+      "probability": 0.25,
+      "production": "v+[vv++f(3)a][^^--f(4.5)a]"
+    },
+    {
+      "symbol": "a",
+      "probability": 0.25,
+      "production": "^-[>>>f(4.5)a][++++++++>>>f(4.5)a][-------->>>f(4.5)a]"
+    }
   ]
 }

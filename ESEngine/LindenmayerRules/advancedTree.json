@@ -8,12 +8,33 @@
   },
   "axiom": "F",
   "rules": [
-    { "symbol": "F", "production": "`Y[^(a1)MF][v(a1)NF][-(a1)OF][+(a1)PF]" },
-	{ "symbol": "M", "production": "ZfvMf" },
-	{ "symbol": "N", "production": "Zf^Nf" },
-	{ "symbol": "O", "production": "Zf<Of" },
-	{ "symbol": "P", "production": "Zf>Pf" },
-	{ "symbol": "Y", "production": "ZfvZYf^" },
-	{ "symbol": "Z", "production": "ZZf" }
+    {
+      "symbol": "F",
+      "production": "`Y[^(a1)MF][v(a1)NF][-(a1)OF][+(a1)PF]"
+    },
+    {
+      "symbol": "M",
+      "production": "ZfvMf"
+    },
+    {
+      "symbol": "N",
+      "production": "Zf^Nf"
+    },
+    {
+      "symbol": "O",
+      "production": "Zf<Of"
+    },
+    {
+      "symbol": "P",
+      "production": "Zf>Pf"
+    },
+    {
+      "symbol": "Y",
+      "production": "ZfvZYf^"
+    },
+    {
+      "symbol": "Z",
+      "production": "ZZf"
+    }
   ]
 }

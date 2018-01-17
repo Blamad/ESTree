@@ -41,6 +41,7 @@ protected:
 
 private:
 	static Logger logger;
+	static float leavesGrowthProbability;
 
 	vector<shared_ptr<Segment>> segmentsVec;
 	unique_ptr<LindenmayerTreeMeshGenerator> meshGenerator;
@@ -61,7 +62,7 @@ private:
 	void generateTreeMesh();
 	void createMeshComponent();
 	void generateMeshData();
-	quat test(SegmentTransform transform);
+	quat restoreHorizontalOrientation(SegmentTransform transform);
 	void createRoot(SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, float &radius, float &length, quat &rotation);

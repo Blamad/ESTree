@@ -4,17 +4,26 @@
     "initialLength": 4,
     "initialRadius": 0.8,
     "angle": 34.37,
-	"r1": 0.9,
-	"r2": 0.6,
-	"a0": 45,
-	"a2": 45,
-	"d": 137.5,
-	"wr": 0.707
+    "r1": 0.9,
+    "r2": 0.8,
+    "a0": 45,
+    "a2": 45,
+    "d": 137.5,
+    "wr": 0.707
   },
-  "axiom": "A(3,1)",
+  "axiom": "F(1)=(0.9)F(1)=(0.9)F(1)=(0.9)A(3,1)",
   "rules": [
-    { "symbol": "A(l,w)", "production": "=(w)F(l)[^(a0)B(l*r2,wr)]-(d)A(l*r1,wr)" },
-	{ "symbol": "B(l,w)", "production": "=(w)F(l)[>(a2)$C(l*r2,wr)]C(l*r1,wr)" },
-	{ "symbol": "C(l,w)", "production": "=(w)F(l)[<(a2)$B(l*r2,wr)]B(l*r1,wr)" }
+    {
+      "symbol": "A(l,w)",
+      "production": "=(w)F(l)[^(a0)B(l*r2,wr)]-(d)A(l*r1,wr)"
+    },
+    {
+      "symbol": "B(l,w)",
+      "production": "=(w)F(l)[>(a2)$C(l*r2,wr)]C(l*r1,wr)"
+    },
+    {
+      "symbol": "C(l,w)",
+      "production": "=(w)F(l)[<(a2)$B(l*r2,wr)]B(l*r1,wr)"
+    }
   ]
 }
