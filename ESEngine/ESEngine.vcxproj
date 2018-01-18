@@ -22,6 +22,7 @@
     <ClCompile Include="DepthFrameBuffer.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="LindenmayerTreeMeshGenerator.cpp" />
+    <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="PostEffectFrameBuffer.cpp" />
     <ClCompile Include="CubeMap.cpp" />
     <ClCompile Include="HDRFrameBuffer.cpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="ClickEvent.h" />
     <ClInclude Include="DepthFrameBuffer.h" />
     <ClInclude Include="LindenmayerTreeMeshGenerator.h" />
+    <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="PostEffectFrameBuffer.h" />
     <ClInclude Include="CubeMap.h" />
     <ClInclude Include="FrameBuffer.h" />
