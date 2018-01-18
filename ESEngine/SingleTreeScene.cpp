@@ -37,13 +37,13 @@ void SingleTreeScene::initialize() {
 
 	GameObject* go;
 	Material barkMaterial;
-	vec3 position = vec3(-3,0,-3);
+	vec3 position = vec3(3,0,3);
 	string paramsFileName;
 	string leavesTextureName;
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[2];
+	paramsFileName = "LindenmayerRules/" + treeParams[11];
 	leavesTextureName = "Textures/" + leavesParams[1];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
