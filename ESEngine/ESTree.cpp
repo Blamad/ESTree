@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "TreeScene.h"
 #include "TestScene.h"
+#include "PhysicsScene.h"
 #include "SingleTreeScene.h"
 #include "Logger.h"
 
@@ -11,6 +12,7 @@ GameObject* createCamera(SceneManager *sceneManager, vec3 position, float pitch,
 
 void testScene(SceneManager *sceneManager);
 void treeScene(SceneManager *sceneManager);
+void physicsScene(SceneManager *sceneManager);
 void singleTreeScene(SceneManager *sceneManager);
 
 Logger logger("ESTree");
@@ -23,8 +25,9 @@ int main() {
 	logger.log(INFO, "Creating scene..");
 	SceneManager* sceneManager = engine->getSceneManager();
 
-	//singleTreeScene(sceneManager);
-	treeScene(sceneManager);
+	//physicsScene(sceneManager);
+	singleTreeScene(sceneManager);
+	//treeScene(sceneManager);
 	//testScene(sceneManager);
 	logger.log(INFO, "Scene created. Rendering..");
 
@@ -33,6 +36,10 @@ int main() {
 	delete(engine);
 
 	return 0;
+}
+
+void physicsScene(SceneManager *sceneManager) {
+	sceneManager->setActiveScene(shared_ptr<Scene>(new PhysicsScene()));
 }
 
 void treeScene(SceneManager *sceneManager) {

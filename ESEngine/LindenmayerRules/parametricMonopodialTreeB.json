@@ -1,9 +1,10 @@
 {
   "parameters": {
-    "depth": 7,
+    "depth": 9,
     "initialLength": 4,
     "initialRadius": 0.8,
     "angle": 34.37,
+    "leavesAngleDiversity": 15,
     "r1": 0.9,
     "r2": 0.9,
     "a0": 45,
@@ -11,11 +12,11 @@
     "d": 137.5,
     "wr": 0.707
   },
-  "axiom": "F(1)=(0.9)F(1)=(0.9)F(1)=(0.9)A(3,1)",
+  "axiom": "F(1)=(0.9)F(1)=(0.9)A(2,1)",
   "rules": [
     {
       "symbol": "A(l,w)",
-      "production": "=(w)F(l)[^(a0)B(l*r2,wr)]-(d)A(l*r1,wr)"
+      "production": "=(w)F(l)[^(a0)B(l*r2,wr)]+(d)A(l*r1,wr)"
     },
     {
       "symbol": "B(l,w)",

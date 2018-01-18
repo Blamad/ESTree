@@ -251,3 +251,6 @@ Dodany subroutine do shaderów, znaczne uproszczenie generacji mapy cieniowania.
 07.01.2018
 Matma.. Musze jakoś ustawić obrót obiektu (roll) tak, by wektor prawy został sprowadzony do pozycji horyzontalnej.
 Nie wiem jak to zrobić kwaternionami, ponoć można wyciągnąć wektory up, right, front z macierzy rotacji. Może tak..?
+
+17.01.2018
+Problem ze skalowaniem długości, zdaje się że zbyt wolno skracają się gałęzie. Czemu?
