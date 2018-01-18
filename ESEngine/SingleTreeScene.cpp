@@ -15,8 +15,16 @@ void SingleTreeScene::initialize() {
 		//5
 		"test.json",
 		"parametricMonopodialTreeA.json",
+		"parametricMonopodialTreeB.json",
+		"parametricMonopodialTreeC.json",
+		"parametricMonopodialTreeD.json",
+		//10
 		"parametricSympodialTreeA.json",
+		"parametricSympodialTreeB.json",
+		"parametricSympodialTreeC.json",
+		"parametricSympodialTreeD.json",
 		"parametricTernaryTreeA.json"
+		//15
 	};
 
 	vector<string> leavesParams = {

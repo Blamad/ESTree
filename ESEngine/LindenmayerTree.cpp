@@ -194,12 +194,7 @@ void LindenmayerTree::generateMeshData() {
 			break;
 		case '$':
 			transform.rotation = restoreHorizontalOrientation(transform);
-			if (abs(transform.roll - roll(transform.rotation)) > 3.14)
-				cout << "OOH!" << endl;
-
-			cout << transform.roll << " to: ";
 			transform.roll = roll(transform.rotation);
-			cout << transform.roll << endl;
 			break;
 		case ' ':
 		default:
