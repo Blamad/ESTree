@@ -11,11 +11,11 @@
     "a2": 50,
     "wr": 0.707
   },
-  "axiom": "F(1)=(0.9)A(4,1)",
+  "axiom": "F(1)=(0.9)A(3,1)",
   "rules": [
     {
       "symbol": "A(l,w)",
-      "production": "=(w)F(l)[^(a1)B(l*r2,wr)]+(180)[^(a2)B(l*r2,wr)]"
+      "production": "=(w)F(l)[^(a1)B(l*r1,wr)]+(180)[^(a2)B(l*r2,wr)]"
     },
     {
       "symbol": "B(l,w)",

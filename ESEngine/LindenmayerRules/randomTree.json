@@ -3,7 +3,8 @@
     "depth": 5,
     "initialLength": 1.5,
     "initialRadius": 0.6,
-    "angle": 15
+    "angle": 15,
+    "leavesAngleDiversity": 15
   },
   "axiom": "f(4.5)a",
   "rules": [
