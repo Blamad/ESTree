@@ -17,25 +17,37 @@ void LindenmayerTreeParams::readJSONFile(string filePath) {
 
 	//PARAMETERS
 	for (auto& m : document["parameters"].GetObject()) {
-		string paramName = m.name.GetString(); 
-		float paramValue = m.value.GetFloat();
-
+		string paramName = m.name.GetString();
+		
 		if (paramName == "initialLength") {
+			float paramValue = m.value.GetFloat();
 			initialLength = paramValue;
 		}
 		else if (paramName == "depth") {
+			float paramValue = m.value.GetFloat();
 			depth = paramValue;
 		}
 		else if (paramName == "initialRadius") {
+			float paramValue = m.value.GetFloat();
 			initialRadius = paramValue;
 		}
 		else if (paramName == "angle") {
+			float paramValue = m.value.GetFloat();
 			angle = radians(paramValue);
 		}
 		else if (paramName == "leavesAngleDiversity") {
+			float paramValue = m.value.GetFloat();
 			leavesAngleDiversity = radians(paramValue);
 		}
+		else if (paramName == "tropism") {
+			tropism = vec3(m.value.GetArray()[0].GetFloat(), m.value.GetArray()[1].GetFloat(), m.value.GetArray()[2].GetFloat());
+		}
+		else if (paramName == "tropismBendingFactor") {
+			float paramValue = m.value.GetFloat();
+			tropismBendingFactor = radians(paramValue);
+		}
 		else {
+			float paramValue = m.value.GetFloat();
 			customParameters[paramName] = paramValue;
 		}
 	}
@@ -101,6 +113,12 @@ void LindenmayerTreeParams::readLFile(string filePath) {
 				}
 				else if (splitLane[1] == "leavesAngleDiversity") {
 					leavesAngleDiversity = radians(atof(splitLane[2].c_str()));
+				}
+				else if (splitLane[1] == "tropism") {
+					//TODO parse vector
+				}
+				else if (splitLane[1] == "tropismBendingFactor") {
+					tropismBendingFactor = atof(splitLane[2].c_str());
 				}
 				else {
 					customParameters[splitLane[1]] = atof(splitLane[2].c_str());

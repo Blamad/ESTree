@@ -7,6 +7,8 @@
 #include <fstream>
 #include <iostream>
 
+#include <GLM\common.hpp>
+
 #include <boost/random.hpp>
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string/split.hpp>
@@ -16,6 +18,7 @@
 #include <rapidjson/istreamwrapper.h>
 
 using namespace std;
+using namespace glm;
 using namespace rapidjson;
 
 class Rule {
@@ -43,6 +46,8 @@ public:
 	float initialRadius;
 	float angle;
 	float leavesAngleDiversity = 0.0f;
+	vec3 tropism;
+	float tropismBendingFactor = 0.2f;
 
 	map<string, float> customParameters;
 

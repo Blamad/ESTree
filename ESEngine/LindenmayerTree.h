@@ -11,6 +11,7 @@
 #include <boost/thread/thread.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/vector_angle.hpp>
 #include <glm/gtx/euler_angles.hpp>
 
 #include "Segment.h"
@@ -62,6 +63,7 @@ private:
 	void generateTreeMesh();
 	void createMeshComponent();
 	void generateMeshData();
+	quat applyTropism(SegmentTransform transform);
 	quat restoreHorizontalOrientation(SegmentTransform transform);
 	void createRoot(SegmentTransform &transform);
 	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, SegmentTransform &transform);
@@ -84,14 +86,17 @@ private:
 		return radians * 180 / 3.14159265359;
 	}
 
+	vec3 getFrontVector(quat quaterinon) {
+		mat4 rotationMatrix = mat4_cast(quaterinon);
+		return vec3(rotationMatrix[0][1], rotationMatrix[1][1], rotationMatrix[2][1]);
+	}
+
 	string number(float val) {
 		if (val < 0.001 && val > -0.001)
 			return "0";
 		else
 			return to_string(val);
 	}
-
-	bool print = true;
 
 	void printVec3(vec3 val) {
 		cout << number(val.x) + " " + number(val.y) + " " + number(val.z) << endl;

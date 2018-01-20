@@ -196,6 +196,10 @@ void LindenmayerTree::generateMeshData() {
 			transform.rotation = restoreHorizontalOrientation(transform);
 			transform.roll = roll(transform.rotation);
 			break;
+		case 'T':
+			transform.rotation = applyTropism(transform);
+			transform.roll = roll(transform.rotation);
+			break;
 		case ' ':
 		default:
 			break;
@@ -210,6 +214,11 @@ void LindenmayerTree::generateMeshData() {
 			transform.length = customParameter * transform.lengthScale;
 			currentSegment = createSegment(currentSegment, transform);
 			segmentsVec.push_back(currentSegment);
+			if (true) {
+				transform.rotation = applyTropism(transform);
+				transform.roll = roll(transform.rotation);
+			}
+
 			transform = SegmentTransform(quat(), params.initialLength, transform.radius, transform.lengthScale, transform.roll);
 			break;
 		}
@@ -218,12 +227,20 @@ void LindenmayerTree::generateMeshData() {
 	mesh->updateMesh();
 }
 
-quat LindenmayerTree::restoreHorizontalOrientation(SegmentTransform transform) {
-	mat4 rotationMatrix = mat4_cast(transform.rotation);
+quat LindenmayerTree::applyTropism(SegmentTransform transform) {
+	vec3 front = getFrontVector(transform.rotation);
+	vec3 newFront = front + params.tropism * params.tropismBendingFactor;
+	vec3 rotationVector = normalize(cross(front, newFront));
+	float rotationAngle = angle(front, newFront);
 
+	return transform.rotation * angleAxis(rotationAngle, rotationVector);
+	//return mix(transform.rotation, params.tropism, params.tropismBendingFactor);
+}
+ 
+quat LindenmayerTree::restoreHorizontalOrientation(SegmentTransform transform) {
 	vec3 worldUp = vec3(0, -1, 0);
 
-	vec3 front(rotationMatrix[0][1], rotationMatrix[1][1], rotationMatrix[2][1]);
+	vec3 front = getFrontVector(transform.rotation);
 	vec3 left = normalize(cross(front, worldUp));
 	vec3 up = normalize(cross(front, left));
 
@@ -234,8 +251,8 @@ quat LindenmayerTree::restoreHorizontalOrientation(SegmentTransform transform) {
 		0,		0,		 0,	   0
 	};
 
-	mat4 newMatrix = make_mat4(matrix);
-	return quat(newMatrix);
+	mat4 rotationMatrix = make_mat4(matrix);
+	return quat(rotationMatrix);
 }
 
 void LindenmayerTree::createRoot(SegmentTransform &transform) {

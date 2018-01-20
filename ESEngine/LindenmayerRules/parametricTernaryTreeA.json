@@ -1,14 +1,16 @@
 {
   "parameters": {
-    "depth": 7,
+    "depth": 5,
     "initialLength": 2,
     "initialRadius": 0.5,
     "angle": 34.37,
-	"d1": 137.5,
-	"d2": 137.5,
-	"a": 18.95,
-	"lr": 1.109,
-	"vr": 0.99
+    "tropism": [ 0, -1, 0 ],
+    "tropismBendingFactor": 0.22,
+    "d1": 137.5,
+    "d2": 137.5,
+    "a": 18.95,
+    "lr": 1.109,
+    "vr": 1.109
   },
   "axiom": "=(1)F(2)>(45)A",
   "rules": [
