@@ -254,3 +254,11 @@ Nie wiem jak to zrobić kwaternionami, ponoć można wyciągnąć wektory up, ri
 
 17.01.2018
 Problem ze skalowaniem długości, zdaje się że zbyt wolno skracają się gałęzie. Czemu?
+
+18.01.2018
+Ternary param: to lerp między quaternionem obrotu żółwia i zdefiniowanym wektorem z parametrem kroku e.
+
+20.01.2018
+Obecny heading + e * tropism = nowy heading.
+cross(heading, new_heading) = oś obrotu
+kąt obrotu też pewnie można wyznaczyć między tymi wartościami (angle(vec3, vec3))
