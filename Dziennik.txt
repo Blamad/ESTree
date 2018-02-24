@@ -262,3 +262,8 @@ Ternary param: to lerp między quaternionem obrotu żółwia i zdefiniowanym wek
 Obecny heading + e * tropism = nowy heading.
 cross(heading, new_heading) = oś obrotu
 kąt obrotu też pewnie można wyznaczyć między tymi wartościami (angle(vec3, vec3))
+
+24.02.2018
+A gdyby generację drzew przenieść do GPU? OpenCL lub CUDA.
+TODO:
+Tropizm, fix do instancjonowanych drzew
