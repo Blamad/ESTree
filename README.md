@@ -13,5 +13,5 @@ Sample screenshot presenting current engine abilities regarding tree generation:
  * Tree model descibed by Lindenmayer rules using few fibbonacci properties:
   ![Sample screenshot](/images/fibbonacciTree_18_01_2018.PNG)
  
- * Tree model generated from rules described in "The Algorithmic Beauty of Plants":
+ * Sympodial tree model generated from rules described in "The Algorithmic Beauty of Plants":
   ![Sample screenshot](/images/sympodialTree3_18_01_2018.PNG)
