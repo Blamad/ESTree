@@ -4,6 +4,7 @@ Scene::Scene() {
 	lightsManager.reset(new LightsManager());
 	physicsManager.reset(new PhysicsManager());
 	mouseManager.reset(new MouseManager(physicsManager.get()));
+	uiManager.reset(new UIManager());
 }
 
 void Scene::setActiveCamera(GameObject *gameObject) {
@@ -47,6 +48,7 @@ void Scene::setFrameBuffer(unique_ptr<FrameBuffer> frameBuffer) {
 
 void Scene::update(double &dt, InputState &inputState) {
 	physicsManager->step(dt);
+	uiManager->update(dt, inputState);
 	mouseManager->update(dt, inputState);
 
 	for(const auto &node : gameObjects) {
@@ -108,7 +110,8 @@ void Scene::renderFrame(Renderer &renderer) {
 	renderSkybox(renderer);
 	
 	postSceneRenderRoutine(renderer);
-	drawGui();
+
+	renderUI();
 }
 
 void Scene::preSceneRenderRoutine(Renderer &renderer) {
@@ -124,6 +127,6 @@ void Scene::postSceneRenderRoutine(Renderer &renderer) {
 	}
 }
 
-void Scene::drawGui() {
-	DepthFrameBuffer::drawDepthFrame();
+void Scene::renderUI() {
+	uiManager->draw();
 }

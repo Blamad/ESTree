@@ -130,6 +130,18 @@
     <Filter Include="TestProject\Models\Trees\Tree Models\Parametric">
       <UniqueIdentifier>{473106b6-3b4e-4933-a104-0cc2c5705fb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\UI">
+      <UniqueIdentifier>{5acc73ed-4ad9-4f55-9cee-0d0224f81803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\Source Files">
+      <UniqueIdentifier>{09ab0b16-57e9-42e9-8933-f3bc7d6e8481}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\Interfaces">
+      <UniqueIdentifier>{9873703b-a9ee-4572-8b78-0e5cd55747af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\Header Files">
+      <UniqueIdentifier>{10c04a73-3ffb-458e-a77a-148fb97abdac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -263,6 +275,15 @@
     </ClCompile>
     <ClCompile Include="PhysicsScene.cpp">
       <Filter>TestProject\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthFramePreviewComponent.cpp">
+      <Filter>Engine\UI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleComponent.cpp">
+      <Filter>Engine\UI\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -446,6 +467,18 @@
     <ClInclude Include="PhysicsScene.h">
       <Filter>TestProject\Scenes\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>Engine\UI\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthFramePreviewComponent.h">
+      <Filter>Engine\UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleComponent.h">
+      <Filter>Engine\UI\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\InstancedShader.vert">
@@ -555,6 +588,12 @@
     </None>
     <None Include="LindenmayerRules\parametricTernaryTreeA.json">
       <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="Shaders\FontShader.vert">
+      <Filter>GraphicEngine\Shaders</Filter>
+    </None>
+    <None Include="Shaders\FontShader.frag">
+      <Filter>GraphicEngine\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
