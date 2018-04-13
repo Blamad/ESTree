@@ -10,17 +10,20 @@ using namespace std;
 
 class ShaderManager {
 public:
-	static ShaderManager& getInstance();
+	static shared_ptr<Shader> getShader(const GLchar* vertexPath, const GLchar* fragmentPath);
+	static shared_ptr<Shader> getShader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath);
+
 	void operator=(ShaderManager const&) = delete;
 	ShaderManager(ShaderManager const&) = delete;
 	~ShaderManager();
 
-	shared_ptr<Shader> getShader(const GLchar* vertexPath, const GLchar* fragmentPath);
-	shared_ptr<Shader> getShader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath);
-
 private:
 	ShaderManager() {};
 	map<string, shared_ptr<Shader>> shaders;
+
+	static ShaderManager& getInstance();
+	shared_ptr<Shader> findOrCreateShader(const GLchar* vertexPath, const GLchar* fragmentPath);
+	shared_ptr<Shader> findOrCreateShader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath);
 };
 
 #endif

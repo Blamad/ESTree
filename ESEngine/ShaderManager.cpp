@@ -5,8 +5,15 @@ ShaderManager& ShaderManager::getInstance() {
 	return instance;
 }
 
-
 shared_ptr<Shader> ShaderManager::getShader(const GLchar* vertexPath, const GLchar* fragmentPath) {
+	return getInstance().findOrCreateShader(vertexPath, fragmentPath);
+}
+
+shared_ptr<Shader> ShaderManager::getShader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath) {
+	return getInstance().findOrCreateShader(vertexPath, fragmentPath, geometryPath);
+}
+
+shared_ptr<Shader> ShaderManager::findOrCreateShader(const GLchar* vertexPath, const GLchar* fragmentPath) {
 	string shaderId = string(vertexPath) + "_" + string(fragmentPath); 
 	auto it = shaders.find(shaderId);
 
@@ -19,7 +26,7 @@ shared_ptr<Shader> ShaderManager::getShader(const GLchar* vertexPath, const GLch
 	return shader;
 }
 
-shared_ptr<Shader> ShaderManager::getShader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath) {
+shared_ptr<Shader> ShaderManager::findOrCreateShader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath) {
 	string shaderId = string(vertexPath) + "_" + string(fragmentPath) + "_" + string(geometryPath);
 	auto it = shaders.find(shaderId);
 
