@@ -27,6 +27,7 @@ private:
 	bool initialized = false;
 
 	void loadSkybox(string* paths);
+	void setupSkybox();
 	void generateVertexArray();
 
 	glm::mat4 getModelMatrix() {

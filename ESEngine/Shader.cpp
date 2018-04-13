@@ -85,7 +85,6 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 
-	initialized = true;
 	active = true;
 }
 
@@ -174,7 +173,6 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 	glDeleteShader(fragment);
 	glDeleteShader(geometry);
 
-	initialized = true;
 	active = true;
 }
 
