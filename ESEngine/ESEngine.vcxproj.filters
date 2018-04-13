@@ -264,6 +264,9 @@
     <ClCompile Include="PhysicsScene.cpp">
       <Filter>TestProject\Scenes\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -445,6 +448,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsScene.h">
       <Filter>TestProject\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

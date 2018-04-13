@@ -66,7 +66,7 @@ void LindenmayerTree::createMeshComponent() {
 	i.reserve(iBufferSize);
 
 
-	Shader shader = Shader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 	mesh = shared_ptr<Mesh>(new Mesh(v, i, shader, vBufferSize, iBufferSize, GL_STREAM_DRAW));
 
 	if (meshWiring)
@@ -321,7 +321,7 @@ void LindenmayerTree::generateLeaves() {
 }
 
 shared_ptr<Mesh> LindenmayerTree::generateLeaf() {
-	Shader shader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 
 	vector<Vertex> vertices = {
 		//front
@@ -374,7 +374,7 @@ void LindenmayerTree::generateInstancedLeaves() {
 }
 
 shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms) {
-	Shader shader("Shaders/InstancedShader.vert", "Shaders/GenericShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/InstancedShader.vert", "Shaders/GenericShader.frag");
 
 	vector<Vertex> vertices = {
 		//front
@@ -400,7 +400,7 @@ shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesPanelMesh(vector
 }
 
 shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesCubeMesh(vector<InstancedTransform> &instancedTransforms) {
-	Shader shader("Shaders/InstancedShader.vert", "Shaders/GenericShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/InstancedShader.vert", "Shaders/GenericShader.frag");
 
 	vector<Vertex> vertices = {
 		//front

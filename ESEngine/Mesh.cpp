@@ -3,13 +3,13 @@
 Logger Mesh::logger("Mesh");
 
 void Mesh::draw(Renderer &renderer) {
-	BOOST_FOREACH(Shader& shader, shaders) {
-		draw(renderer, shader);
+	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
+		draw(renderer, shader.get());
 	}
 }
 
-void Mesh::draw(Renderer &renderer, Shader &shader) {
-	if (!shader.active) {
+void Mesh::draw(Renderer &renderer, Shader *shader) {
+	if (!shader->active) {
 		logger.log(WARN, "Trying to draw with inactive shader!");
 		return;
 	}
@@ -22,8 +22,8 @@ void Mesh::draw(Renderer &renderer, Shader &shader) {
 
 	Transform *transform = (Transform*)this->getComponent(TRANSFORM);
 
-	GLuint program = shader.program;
-	shader.use();
+	GLuint program = shader->program;
+	shader->use();
 
 	if (!initialized) {
 		glUniform3fv(glGetUniformLocation(program, "material.ambient"), 1, glm::value_ptr(material.ambient));
@@ -66,7 +66,7 @@ void Mesh::draw(Renderer &renderer, Shader &shader) {
 	}
 }
 
-Mesh::Mesh(vector<Vertex> &vertices, vector<int> &indices, Shader &shader, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shader) {
+Mesh::Mesh(vector<Vertex> &vertices, vector<int> &indices, shared_ptr<Shader> shader, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shader) {
 	if (vBufferSize == -1)
 		vBufferSize = vertices.size();
 	if (iBufferSize == -1)
@@ -77,7 +77,7 @@ Mesh::Mesh(vector<Vertex> &vertices, vector<int> &indices, Shader &shader, int v
 	setupMeshes();
 }
 
-Mesh::Mesh(vector<Vertex> &vertices, vector<int> &indices, vector<Shader> &shaders, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shaders) {
+Mesh::Mesh(vector<Vertex> &vertices, vector<int> &indices, vector<shared_ptr<Shader>> shaders, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shaders) {
 	if (vBufferSize == -1)
 		vBufferSize = vertices.size();
 	if (iBufferSize == -1)
@@ -93,7 +93,7 @@ Mesh::~Mesh() {
 }
 
 void Mesh::setupMeshes() {
-	BOOST_FOREACH(Shader shader, shaders) {
+	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
 		setupMesh(shader);
 	}
 }
@@ -102,21 +102,21 @@ void Mesh::updateMesh() {
 	vertexArray->updateVertexArray(vertices, indices);
 }
 
-void Mesh::setupMesh(Shader &shader) {
+void Mesh::setupMesh(shared_ptr<Shader> shader) {
 	vertexArray->setVertexArray(vertices, indices);
-	shader.registerMatriciesUBO();
-	shader.registerLightsUBO();
+	shader->registerMatriciesUBO();
+	shader->registerLightsUBO();
 }
 
-void Mesh::addNewShader(Shader &shader) {
+void Mesh::addNewShader(shared_ptr<Shader> shader) {
 	addShader(shader);
 	setupMesh(shader);
 }
 
 void Mesh::showMeshWiring() {
-	addNewShader(Shader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/MeshWiringShader.geom"));
+	addNewShader(ShaderManager::getShader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/MeshWiringShader.geom"));
 }
 
 void Mesh::showNormalVisualisation() {
-	addNewShader(Shader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/NormalVisualisationShader.geom"));
+	addNewShader(ShaderManager::getShader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/NormalVisualisationShader.geom"));
 }

@@ -1,7 +1,12 @@
 #include "Skybox.h"
 #include "GLVertexArray.h"
 
-Skybox::Skybox(string* paths, Shader shader) : Renderable(shader)
+Skybox::Skybox(string* paths) : Renderable(ShaderManager::getShader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag"))
+{
+	this->loadSkybox(paths);
+}
+
+Skybox::Skybox(string* paths, shared_ptr<Shader> shader) : Renderable(shader) 
 {
 	this->loadSkybox(paths);
 }
@@ -12,26 +17,26 @@ void Skybox::loadSkybox(string* paths)
 	generateVertexArray();
 }
 
-void Skybox::draw(Renderer &renderer, Shader &shader) {
+void Skybox::draw(Renderer &renderer, Shader *shader) {
 	glDepthFunc(GL_LEQUAL);
 
-	shader.use();
+	shader->use();
 
 	if (!initialized) {
-		glUniform1i(glGetUniformLocation(shader.program, "cubemap"), 0);
+		glUniform1i(glGetUniformLocation(shader->program, "cubemap"), 0);
 		initialized = true;
 	}
 
-	glUniformMatrix4fv(glGetUniformLocation(shader.program, "model"), 1, GL_FALSE, glm::value_ptr(getModelMatrix()));
+	glUniformMatrix4fv(glGetUniformLocation(shader->program, "model"), 1, GL_FALSE, glm::value_ptr(getModelMatrix()));
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap->textureBuffer->id);
-	renderer.renderObject(*vertexArray, shaders[0]);
+	renderer.renderObject(*vertexArray, shaders[0].get());
 	glDepthFunc(GL_LESS);
 }
 
 void Skybox::draw(Renderer& renderer) {
-	draw(renderer, shaders[0]);
+	draw(renderer, shaders[0].get());
 }
 
 void Skybox::generateVertexArray()
@@ -80,7 +85,7 @@ void Skybox::generateVertexArray()
 
 	vertexArray = unique_ptr<VertexArray>(new GLVertexArray(vertices.size(), indices.size(), GL_STATIC_DRAW));
 	vertexArray->setVertexArray(vertices, indices);
-	shaders[0].registerMatriciesUBO();
-	shaders[0].use();
-	glUniform1i(glGetUniformLocation(shaders[0].program, "cubemap"), 0);
+	shaders[0]->registerMatriciesUBO();
+	shaders[0]->use();
+	glUniform1i(glGetUniformLocation(shaders[0]->program, "cubemap"), 0);
 }

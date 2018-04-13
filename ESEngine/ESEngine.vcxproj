@@ -36,6 +36,7 @@
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="SingleTreeScene.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="TestScene.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Segment.h" />
+    <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="SingleTreeScene.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="TestScene.h" />

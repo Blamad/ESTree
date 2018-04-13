@@ -2,12 +2,12 @@
 #include <boost/foreach.hpp>
 
 void InstancedMesh::draw(Renderer &renderer) {
-	BOOST_FOREACH(Shader shader, shaders) {
-		if (!shader.active)
+	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
+		if (!shader->active)
 			continue;
 
-		GLuint program = shader.program;
-		shader.use();
+		GLuint program = shader->program;
+		shader->use();
 
 		if (!initialized) {
 			glUniform3fv(glGetUniformLocation(program, "material.ambient"), 1, glm::value_ptr(material.ambient));
@@ -32,7 +32,7 @@ void InstancedMesh::draw(Renderer &renderer) {
 			glBindTexture(GL_TEXTURE_2D, material.texSpecular->textureBuffer->id);
 		}
 		int numberOfInstances = instanceMatricies.size();
-		renderer.renderInstancedObject(*vertexArray, shader, numberOfInstances);
+		renderer.renderInstancedObject(*vertexArray, shader.get(), numberOfInstances);
 
 		if (material.texDiffuse != nullptr) {
 			glActiveTexture(GL_TEXTURE0);
@@ -46,7 +46,7 @@ void InstancedMesh::draw(Renderer &renderer) {
 	}
 }
 
-InstancedMesh::InstancedMesh(vector<Vertex> &vertices, vector<int> &indices, vector<InstancedTransform> &instancedTransforms, Shader &shader, int vBufferSize, int iBufferSize, int bufferUsage) : Mesh(shader, bufferUsage) {
+InstancedMesh::InstancedMesh(vector<Vertex> &vertices, vector<int> &indices, vector<InstancedTransform> &instancedTransforms, shared_ptr<Shader> shader, int vBufferSize, int iBufferSize, int bufferUsage) : Mesh(shader, bufferUsage) {
 	if (vBufferSize == -1)
 		vBufferSize = vertices.size();
 	if (iBufferSize == -1)
@@ -74,9 +74,9 @@ void InstancedMesh::updateMesh() {
 
 void InstancedMesh::setupMesh()
 {
-	BOOST_FOREACH(Shader shader, shaders) {
+	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
 		vertexArray->setInstancedVertexArray(vertices, indices, instanceMatricies);
-		shader.registerMatriciesUBO();
-		shader.registerLightsUBO();
+		shader->registerMatriciesUBO();
+		shader->registerLightsUBO();
 	}
 }

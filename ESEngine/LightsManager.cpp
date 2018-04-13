@@ -25,7 +25,7 @@ void LightsManager::removeLight(Light* light) {
 	lights[light->lightType].erase(removedLight);
 }
 
-void LightsManager::updateLights(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader&)> renderObjectsFunction) {
+void LightsManager::updateLights(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader*)> renderObjectsFunction) {
 	mat4 lightProjection = DirectionalLight::getProjectionMatrix();
 	mat4 lightView;
 
@@ -40,7 +40,7 @@ void LightsManager::updateLights(vec3& viewPos, Renderer& renderer, function<voi
 		Shader::updateViewMatrix(lightView);
 		dLight->lightSpace = lightProjection * lightView;
 
-		renderObjectsFunction(renderer, *depthBuffer->shader);
+		renderObjectsFunction(renderer, depthBuffer->shader.get());
 	}
 
 	depthBuffer->unmountFrameBuffer();
@@ -73,7 +73,7 @@ void LightsManager::initializeLightsUBO() {
 
 void LightsManager::initialize() {
 	float sizeMod = 6;
-	unique_ptr<Shader> shader = unique_ptr<Shader>(new Shader("Shaders/DirectionalShadowShader.vert", "Shaders/DirectionalShadowShader.frag"));
+	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/DirectionalShadowShader.vert", "Shaders/DirectionalShadowShader.frag");
 	shader->initializeMatricesUBO();
-	depthBuffer = unique_ptr<DepthFrameBuffer>(new DepthFrameBuffer(move(shader), Screen::getScreenWidth() * sizeMod, Screen::getScreenHeight() * sizeMod));
+	depthBuffer = unique_ptr<DepthFrameBuffer>(new DepthFrameBuffer(shader, Screen::getScreenWidth() * sizeMod, Screen::getScreenHeight() * sizeMod));
 }

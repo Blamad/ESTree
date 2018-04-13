@@ -17,6 +17,6 @@ protected:
 	Vertex createVertex(vec3 position, vec3 normal, vec2 texCoords);
 	Vertex createVertex(vec3 position, vec3 normal, vec4 color);
 	Vertex createVertex(vec3 position, vec3 normal);
-	shared_ptr<Mesh> createMesh(Shader shader);
-	shared_ptr<Mesh> createMesh(Shader shader, vec4 color);
+	shared_ptr<Mesh> createMesh(shared_ptr<Shader> shader);
+	shared_ptr<Mesh> createMesh(shared_ptr<Shader> shader, vec4 color);
 };

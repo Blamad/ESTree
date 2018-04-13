@@ -6,6 +6,7 @@
 #include <memory>
 #include <boost/foreach.hpp>
 
+#include "ShaderManager.h"
 #include "Renderable.h"
 #include "Renderer.h"
 #include "Transform.h"
@@ -24,13 +25,13 @@ public:
 	vector<Vertex> vertices;
 	vector<int> indices;
 
-	Mesh(Shader &shader, int bufferUsage = GL_STATIC_DRAW) : bufferUsage(bufferUsage), Renderable(shader) {};
-	Mesh(vector<Vertex> &vertices, vector<int> &indices, Shader &shader, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
-	Mesh(vector<Vertex> &vertices, vector<int> &indices, vector<Shader> &shaders, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
+	Mesh(shared_ptr<Shader> shader, int bufferUsage = GL_STATIC_DRAW) : bufferUsage(bufferUsage), Renderable(shader) {};
+	Mesh(vector<Vertex> &vertices, vector<int> &indices, shared_ptr<Shader> shader, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
+	Mesh(vector<Vertex> &vertices, vector<int> &indices, vector<shared_ptr<Shader>> shaders, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
 	~Mesh();
 
 	void draw(Renderer &renderer);
-	void draw(Renderer &renderer, Shader &shader);
+	void draw(Renderer &renderer, Shader *shader);
 	void updateMesh();
 	void showMeshWiring();
 	void showNormalVisualisation();
@@ -43,8 +44,8 @@ protected:
 	unique_ptr<VertexArray> vertexArray;
 
 	void setupMeshes();
-	void setupMesh(Shader &shader);
-	void addNewShader(Shader & shader);
+	void setupMesh(shared_ptr<Shader> shader);
+	void addNewShader(shared_ptr<Shader> shader);
 };
 
 #endif

@@ -27,7 +27,7 @@ public:
 	Scene();
 
 	void update(double &dt, InputState &inputState);
-	void renderObjectsUsingShader(Renderer &renderer, Shader &shader);
+	void renderObjectsUsingShader(Renderer &renderer, Shader *shader);
 	void renderObjects(Renderer &renderer);
 	void renderFrame(Renderer &renderer);
 
@@ -49,7 +49,7 @@ private:
 	unique_ptr<FrameBuffer> sceneFrameBuffer;
 
 	void renderSkybox(Renderer &renderer);
-	function<void(Renderer&, Shader&)> prepareDrawObjectsCall();
+	function<void(Renderer&, Shader*)> prepareDrawObjectsCall();
 
 	void preSceneRenderRoutine(Renderer &renderer);
 	void postSceneRenderRoutine(Renderer &renderer);

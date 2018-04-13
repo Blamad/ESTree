@@ -136,9 +136,7 @@ void PhysicsScene::addSkybox() {
 		"Textures/Skybox_darkforest/front.jpg"
 	};
 
-	Shader shader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
-
-	unique_ptr<Skybox> skybox(new Skybox(skyboxTex, shader));
+	unique_ptr<Skybox> skybox(new Skybox(skyboxTex));
 	setSkybox(std::move(skybox));
 }
 
