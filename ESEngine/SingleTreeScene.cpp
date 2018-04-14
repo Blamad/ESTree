@@ -43,7 +43,7 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[11];
+	paramsFileName = "LindenmayerRules/" + treeParams[6];
 	leavesTextureName = "Textures/" + leavesParams[1];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
