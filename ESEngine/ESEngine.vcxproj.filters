@@ -267,6 +267,12 @@
     <ClCompile Include="DirectionalLight.cpp">
       <Filter>Engine\GameObject\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>TestProject\Models\General\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="LindenmayerTreeSolver.cpp">
       <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
@@ -284,6 +290,12 @@
     </ClCompile>
     <ClCompile Include="ConsoleComponent.cpp">
       <Filter>Engine\UI\Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>TestProject\Models\General\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -458,6 +470,12 @@
     <ClInclude Include="SingleTreeScene.h">
       <Filter>TestProject\Scenes\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>TestProject\Models\General\Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="LindenmayerTreeSolver.h">
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
@@ -478,6 +496,12 @@
     </ClInclude>
     <ClInclude Include="ConsoleComponent.h">
       <Filter>Engine\UI\Header Files</Filter>
+	</ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>TestProject\Models\General\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -507,12 +531,6 @@
     </None>
     <None Include="Shaders\PostEffectShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
-    </None>
-    <None Include="Shaders\DirectionalShadowShader.frag">
-      <Filter>GraphicEngine\Shaders</Filter>
-    </None>
-    <None Include="Shaders\DirectionalShadowShader.vert">
-      <Filter>GraphicEngine\Shaders</Filter>
     </None>
     <None Include="Shaders\HDRShader.frag">
       <Filter>GraphicEngine\Shaders</Filter>

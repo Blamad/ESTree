@@ -2,7 +2,9 @@
 
 TextureBuffer* DepthFrameBuffer::debugQuadTextureBuffer = nullptr;
 
-DepthFrameBuffer::DepthFrameBuffer(unique_ptr<Shader> shader, int width, int height) : FrameBuffer(move(shader), width, height) {
+
+DepthFrameBuffer::DepthFrameBuffer(shared_ptr<Shader> shader, int width, int height) : FrameBuffer(move(shader), width, height) {
+	depthDebugShader = ShaderManager::getShader("Shaders/DepthQuadDebug.vert", "Shaders/DepthQuadDebug.frag");
 	init();
 };
 

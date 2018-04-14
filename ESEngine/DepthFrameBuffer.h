@@ -5,7 +5,7 @@
 
 class DepthFrameBuffer : public FrameBuffer {
 public:
-	DepthFrameBuffer(unique_ptr<Shader> shader, int width, int height);
+	DepthFrameBuffer(shared_ptr<Shader> shader, int width, int height);
 
 	void mountFrameBuffer();
 	void unmountFrameBuffer();
@@ -14,6 +14,7 @@ public:
 	static TextureBuffer* getCurrentFrameTextureBuffer();
 	
 protected:
+	shared_ptr<Shader> depthDebugShader;
 	void init();
 	static TextureBuffer* debugQuadTextureBuffer;
 };

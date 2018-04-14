@@ -1,6 +1,7 @@
 #ifndef TREE_SCENE_H
 #define TREE_SCENE_H
 
+#include "ShaderManager.h"
 #include "Scene.h"
 #include "Cube.h"
 #include "LampCube.h"

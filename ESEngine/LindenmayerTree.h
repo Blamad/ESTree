@@ -13,13 +13,17 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/euler_angles.hpp>
 
+#include "ShaderManager.h"
 #include "Segment.h"
+#include "Mesh.h"
 #include "InstancedMesh.h"
 #include "LindenmayerTreeParams.h"
 #include "LindenmayerTreeSolver.h"
 #include "LindenmayerTreeMeshGenerator.h"
 
 #include "Logger.h"
+
+using namespace glm;
 
 class LindenmayerTree : public GameObject {
 public:
@@ -72,7 +76,6 @@ private:
 
 	//Leaves generation
 	void generateInstancedLeaves();
-	shared_ptr<InstancedMesh> createInstancedLeavesCubeMesh(vector<InstancedTransform> &instancedTransforms);
 	shared_ptr<InstancedMesh> createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms);
 	
 	//Stuff

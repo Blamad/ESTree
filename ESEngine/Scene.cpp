@@ -78,7 +78,7 @@ void Scene::renderObjects(Renderer &renderer) {
 	}
 }
 
-void Scene::renderObjectsUsingShader(Renderer &renderer, Shader &shader) {
+void Scene::renderObjectsUsingShader(Renderer &renderer, Shader *shader) {
 	for (const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
 		for (auto & renderable : go->getComponents(RENDERABLE)) {
@@ -94,9 +94,9 @@ void Scene::renderSkybox(Renderer &renderer) {
 	}
 }
 
-function<void(Renderer&, Shader&)> Scene::prepareDrawObjectsCall() {
-	function<void(Renderer&, Shader&)> renderObjectsFunction;
-	renderObjectsFunction = [this](Renderer& renderer, Shader& shader) { renderObjectsUsingShader(renderer, shader); };
+function<void(Renderer&, Shader*)> Scene::prepareDrawObjectsCall() {
+	function<void(Renderer&, Shader*)> renderObjectsFunction;
+	renderObjectsFunction = [this](Renderer &renderer, Shader *shader) { renderObjectsUsingShader(renderer, shader); };
 	return renderObjectsFunction;
 }
 

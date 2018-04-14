@@ -267,3 +267,14 @@ kąt obrotu też pewnie można wyznaczyć między tymi wartościami (angle(vec3,
 A gdyby generację drzew przenieść do GPU? OpenCL lub CUDA.
 TODO:
 Tropizm, fix do instancjonowanych drzew
+
+26.03.2018
+TODO:
+wszystko powyżej
+konsola z jakimiś komendami - ładuj drzewo w lokalizacji; generuj jeszcze raz wybrane
+eksporter do modelu obj?
+losowość parametrów
+
+31.03.2018
+DepthFrameBuffer jest tworzony w LightsManager, wewnątrz niego są metody rysowania i tak jednego bufora. Czemu właściwie nie uczynić buforów singletonami?
+Dużo by to ułatwiło.

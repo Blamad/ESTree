@@ -52,6 +52,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+		std::cout << vertexPath << std::endl;
 		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 	};
 
@@ -64,6 +65,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
+		std::cout << fragmentPath << std::endl;
 		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
@@ -85,7 +87,6 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 
-	initialized = true;
 	active = true;
 }
 
@@ -133,6 +134,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 	if (!success)
 	{
 		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+		std::cout << vertexPath << std::endl;
 		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
@@ -173,8 +175,6 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 	glDeleteShader(geometry);
-
-	initialized = true;
 	active = true;
 }
 
@@ -190,12 +190,20 @@ void Shader::registerUniform(const char* unif) {
 	unifLocationList[unif] = glGetUniformLocation(program, unif);
 }
 
+void Shader::registerSubroutine(const char* subroutine, GLenum shaderType) {
+	subroutineList[subroutine] = glGetSubroutineIndex(program, shaderType, subroutine);
+}
+
 GLuint Shader::getAttribLocation(const char* attrib) {
 	return attribList[attrib];
 }
 
 GLuint Shader::getUniformLocation(const char* unif) {
 	return unifLocationList[unif];
+}
+
+GLuint Shader::getSubroutineLocation(const char* subroutine) {
+	return subroutineList[subroutine];
 }
 
 void Shader::registerMatriciesUBO() {
@@ -211,13 +219,13 @@ void Shader::initializeMatricesUBO() {
 	glBindBufferRange(GL_UNIFORM_BUFFER, matricesBlockBinding, matricesUBO, 0, 2 * sizeof(glm::mat4));
 }
 
-void Shader::updateProjectionMatrix(glm::mat4 projection) {
+void Shader::updateProjectionMatrix(glm::mat4 &projection) {
 	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void Shader::updateViewMatrix(glm::mat4 view) {
+void Shader::updateViewMatrix(glm::mat4 &view) {
 	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
 	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -226,4 +234,36 @@ void Shader::updateViewMatrix(glm::mat4 view) {
 void Shader::registerLightsUBO() {
 	GLuint uniformBlockIndex = glGetUniformBlockIndex(program, "Lights");
 	glUniformBlockBinding(program, uniformBlockIndex, lightBlockBinding);
+}
+
+void Shader::updateShaderSubroutine() {
+	GLuint indexes[2] = { getSubroutineLocation("renderPass"), getSubroutineLocation("singleMesh") };
+	BOOST_FOREACH(ShaderSubroutine shaderSubroutine, shaderSubroutines) {
+		switch (shaderSubroutine) {
+		case SHADOW_DEPTH_PASS:
+			indexes[0] = getSubroutineLocation("shadowDepthPass");
+			break;
+		case INSTANCED_MESH_MODE:
+			indexes[1] = getSubroutineLocation("instancedMesh");
+			break;
+		default:
+			break;
+		}
+	}
+
+	glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &indexes[0]);
+	glUniformSubroutinesuiv(GL_VERTEX_SHADER, 1, &indexes[1]);
+	shaderSubroutines.clear();
+}
+
+void Shader::setShaderSubroutine(ShaderSubroutine subroutine) {
+	this->shaderSubroutines.push_back(subroutine);
+}
+
+bool Shader::isInitializedBy(int initializer) {
+	return initializedBy[initializer];
+}
+
+void Shader::setInitializedBy(int initializer) {
+	initializedBy[initializer] = true;
 }

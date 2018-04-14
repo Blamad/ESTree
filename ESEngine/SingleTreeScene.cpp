@@ -33,6 +33,7 @@ void SingleTreeScene::initialize() {
 		"leaves3.png",
 		"leaves4.png",
 		"leaves5.png",
+		"arrow.png"
 	};
 
 	GameObject* go;
@@ -43,17 +44,12 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[7];
-	leavesTextureName = "Textures/" + leavesParams[1];
+	paramsFileName = "LindenmayerRules/" + treeParams[10];
+	leavesTextureName = "Textures/" + leavesParams[5];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
 	meshWiring = false;	
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
-
-	/*position = vec3(3, 0, 3);
-	paramsFileName = "LindenmayerRules/" + treeParams[1];
-	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
-	*/
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 
@@ -65,7 +61,6 @@ void SingleTreeScene::initialize() {
 	vec3 distance = vec3(-14);
 	createDirectionalLight(distance * dir, dir);
 
-	//setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
 	setActiveCamera(createCamera(vec3(0, 5, 15), -90, -10));
 
 	generateFrameBuffer();
@@ -94,7 +89,7 @@ void SingleTreeScene::generateTerrain() {
 
 	go = unique_ptr<GameObject>(new Cube(Material::grass()));
 	transform = getTransform(go.get());
-	transform->scale(vec3(15, 0.5, 15));
+	transform->scale(vec3(15, 0.1, 15));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(0);
@@ -156,9 +151,7 @@ void SingleTreeScene::addSkybox() {
 		"Textures/Skybox_darkforest/front.jpg"
 	};
 
-	Shader shader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
-
-	unique_ptr<Skybox> skybox(new Skybox(skyboxTex, shader));
+	unique_ptr<Skybox> skybox(new Skybox(skyboxTex));
 	setSkybox(std::move(skybox));
 }
 
