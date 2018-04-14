@@ -188,12 +188,20 @@ void Shader::registerUniform(const char* unif) {
 	unifLocationList[unif] = glGetUniformLocation(program, unif);
 }
 
+void Shader::registerSubroutine(const char* subroutine, GLenum shaderType) {
+	subroutineList[subroutine] = glGetSubroutineIndex(program, shaderType, subroutine);
+}
+
 GLuint Shader::getAttribLocation(const char* attrib) {
 	return attribList[attrib];
 }
 
 GLuint Shader::getUniformLocation(const char* unif) {
 	return unifLocationList[unif];
+}
+
+GLuint Shader::getSubroutineLocation(const char* subroutine) {
+	return subroutineList[subroutine];
 }
 
 void Shader::registerMatriciesUBO() {
@@ -225,3 +233,29 @@ void Shader::registerLightsUBO() {
 	GLuint uniformBlockIndex = glGetUniformBlockIndex(program, "Lights");
 	glUniformBlockBinding(program, uniformBlockIndex, lightBlockBinding);
 }
+
+void Shader::updateShaderSubroutine() {
+
+	GLuint indexes[2] = { getSubroutineLocation("renderPass"), getSubroutineLocation("singleMesh") };
+	BOOST_FOREACH(ShaderSubroutine shaderSubroutine, shaderSubroutines) {
+		switch (shaderSubroutine) {
+		case SHADOW_DEPTH_PASS:
+			indexes[0] = getSubroutineLocation("shadowDepthPass");
+			break;
+		case INSTANCED_MESH_MODE:
+			indexes[1] = getSubroutineLocation("instancedMesh");
+			break;
+		default:
+			break;
+		}
+	}
+
+	glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &indexes[0]);
+	glUniformSubroutinesuiv(GL_VERTEX_SHADER, 1, &indexes[1]);
+	shaderSubroutines.clear();
+}
+
+void Shader::setShaderSubroutine(ShaderSubroutine subroutine) {
+	this->shaderSubroutines.push_back(subroutine);
+}
+
