@@ -43,7 +43,7 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[11];
+	paramsFileName = "LindenmayerRules/" + treeParams[7];
 	leavesTextureName = "Textures/" + leavesParams[1];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
@@ -136,15 +136,6 @@ void SingleTreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1, 1, 1)) {
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(1);
 	rigidBody->makeDynamic();
-
-	/*InstancedTransform it;
-	it.translateModel(vec3(0, 1, 0));
-	vector<InstancedTransform> itVec;
-	itVec.push_back(it);
-
-	shared_ptr<GameObject> igo = shared_ptr<GameObject>(new InstancedCube(Material::leaves1(), itVec));
-	igo->name = "LeafCube";
-	go->addGameObject(igo);*/
 
 	addGameObject(move(go));
 }
