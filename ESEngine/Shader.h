@@ -12,6 +12,8 @@
 #include <iostream>
 #include <boost\foreach.hpp>
 
+using namespace std;
+
 enum ShaderSubroutine {
 	RENDER_PASS, SHADOW_DEPTH_PASS, SINGLE_MESH_MODE, INSTANCED_MESH_MODE
 };
@@ -22,7 +24,6 @@ public:
 	static GLuint matricesBlockBinding;
 	static GLuint lightBlockBinding;
 
-	bool initialized = false;
 	bool active = true;
 	GLuint program;
 
@@ -42,22 +43,25 @@ public:
 	void updateShaderSubroutine();
 
 	void use();
+	bool isInitializedBy(int initializer);
+	void setInitializedBy(int initializer);
 
 	//	UBO
 	//	Model View Matricies
 	void registerMatriciesUBO();
 	static void initializeMatricesUBO();
-	static void updateProjectionMatrix(glm::mat4 projection);
-	static void updateViewMatrix(glm::mat4 view);
+	static void updateProjectionMatrix(glm::mat4 &projection);
+	static void updateViewMatrix(glm::mat4 &view);
 	//	Lights
 	void registerLightsUBO();
 
 private:
-	std::map<std::string, GLuint> attribList;
-	std::map<std::string, GLuint> unifLocationList;
-	std::map<std::string, GLuint> subroutineList;
+	map<string, GLuint> attribList;
+	map<string, GLuint> unifLocationList;
+	map<string, GLuint> subroutineList;
+	map<int, bool> initializedBy;
 
-	std::vector<ShaderSubroutine> shaderSubroutines;
+	vector<ShaderSubroutine> shaderSubroutines;
 
 	static GLuint matricesUBO;
 };

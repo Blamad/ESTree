@@ -44,6 +44,8 @@ protected:
 	vector<InstancedTransform> instanceMatricies;
 
 	void setupMesh();
+
+	int identifier() { return 2; }
 };
 
 #endif

@@ -19,6 +19,9 @@ public:
 		this->position = position;
 	}
 
+protected:
+	int identifier() { return 0; }
+
 private:
 	shared_ptr<Texture> cubeMap;
 	shared_ptr<VertexArray> vertexArray;

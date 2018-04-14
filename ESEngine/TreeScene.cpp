@@ -11,6 +11,7 @@ void TreeScene::initialize() {
 	string paramsFileName;
 	
 	bool debug = true;
+	string arrow = "Textures/arrow.png";
 
 	paramsFileName = "LindenmayerRules/parametricSympodialTreeA.json";
 	position = vec3(20, 0, 20);
@@ -40,10 +41,11 @@ void TreeScene::initialize() {
 	position = vec3(7.5, 0, -7.5);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), debug);
 
-	/*paramsFileName = "LindenmayerRules/parametricMonopodialTreeD.json";
+	paramsFileName = "LindenmayerRules/parametricMonopodialTreeD.json";
 	position = vec3(7.5, 0, -20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves4.png"), debug);
 	
+	/*
 	paramsFileName = "LindenmayerRules/randomTree.json";
 	position = vec3(-7.5, 0, 20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves5.png"));
@@ -76,7 +78,6 @@ void TreeScene::initialize() {
 	position = vec3(-20, 0, -20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves3.png"));*/
 
-	/**/
 	generateTestBox(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5));
 
 	generateTerrain();

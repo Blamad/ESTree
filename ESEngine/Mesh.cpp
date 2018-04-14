@@ -24,7 +24,7 @@ void Mesh::draw(Renderer &renderer, Shader *shader) {
 
 	shader->use();
 
-	if (!shader->initialized) {
+	if (!shader->isInitializedBy(identifier())) {
 		shader->registerUniform("material.ambient");
 		shader->registerUniform("material.diffuse");
 		shader->registerUniform("material.specular");
@@ -49,7 +49,7 @@ void Mesh::draw(Renderer &renderer, Shader *shader) {
 		glUniform1i(shader->getUniformLocation("material.texSpecular"), 1);
 		glUniform1i(shader->getUniformLocation("directionalShadingSamples[0]"), 2);
 
-		shader->initialized = true;
+		shader->setInitializedBy(identifier());
 	}
 
 	shader->setShaderSubroutine(SINGLE_MESH_MODE);

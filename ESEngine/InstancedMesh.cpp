@@ -18,7 +18,7 @@ void InstancedMesh::draw(Renderer &renderer, Shader *shader) {
 	GLuint program = shader->program;
 	shader->use();
 
-	if (!shader->initialized) {
+	if (!shader->isInitializedBy(identifier())) {
 		shader->registerUniform("material.ambient");
 		shader->registerUniform("material.diffuse");
 		shader->registerUniform("material.specular");
@@ -39,7 +39,7 @@ void InstancedMesh::draw(Renderer &renderer, Shader *shader) {
 		glUniform1i(shader->getUniformLocation("material.texDiffuse"), 0);
 		glUniform1i(shader->getUniformLocation("material.texSpecular"), 1);
 		glUniform1i(shader->getUniformLocation("directionalShadingSamples[0]"), 2);
-		shader->initialized = true;
+		shader->setInitializedBy(identifier());
 	}
 
 	shader->setShaderSubroutine(INSTANCED_MESH_MODE);

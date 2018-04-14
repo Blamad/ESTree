@@ -19,12 +19,12 @@ void Skybox::draw(Renderer &renderer, Shader *shader) {
 
 	shader->use();
 
-	if (!shader->initialized) {
+	if (!shader->isInitializedBy(identifier())) {
 		shader->registerUniform("cubemap");
 		shader->registerUniform("model");
 
 		glUniform1i(shader->getUniformLocation("cubemap"), 0);
-		shader->initialized = true;
+		shader->setInitializedBy(identifier());
 	}
 	shader->updateShaderSubroutine();
 

@@ -332,7 +332,7 @@ void LindenmayerTree::generateInstancedLeaves() {
 				mat4 leafRotation;
 				float angle = randomGenerator() * 2 * params.leavesAngleDiversity - params.leavesAngleDiversity;
 				leafRotation = rotate(leafRotation, angle, vec3(0, 1, 0));
-				it.modelMatrix = leafRotation * transform->getModelMatrix() * seg->modelMatrix;
+				it.modelMatrix = transform->getModelMatrix() * seg->modelMatrix * leafRotation;
 			}
 			else
 				it.modelMatrix = transform->getModelMatrix() * seg->modelMatrix;

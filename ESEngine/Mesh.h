@@ -47,6 +47,8 @@ protected:
 	void setupMeshes();
 	void setupMesh(shared_ptr<Shader> shader);
 	void addNewShader(shared_ptr<Shader> shader);
+
+	int identifier() { return 1; }
 };
 
 #endif

@@ -33,6 +33,7 @@ void SingleTreeScene::initialize() {
 		"leaves3.png",
 		"leaves4.png",
 		"leaves5.png",
+		"arrow.png"
 	};
 
 	GameObject* go;
@@ -43,8 +44,8 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[7];
-	leavesTextureName = "Textures/" + leavesParams[1];
+	paramsFileName = "LindenmayerRules/" + treeParams[10];
+	leavesTextureName = "Textures/" + leavesParams[5];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
 	meshWiring = false;	

@@ -14,6 +14,8 @@ public:
 	virtual void draw(Renderer &renderer, Shader *shader) = 0;
 
 protected:
+	virtual int identifier() = 0;
+
 	Renderable(shared_ptr<Shader> shader) : Component(RENDERABLE) {
 		this->shaders.push_back(shader);
 	};
