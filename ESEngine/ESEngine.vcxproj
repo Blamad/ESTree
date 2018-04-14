@@ -39,6 +39,7 @@
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="SingleTreeScene.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TextureBuffer.cpp" />
     <ClCompile Include="Texture2D.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="SingleTreeScene.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />

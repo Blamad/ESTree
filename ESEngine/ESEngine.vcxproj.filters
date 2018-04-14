@@ -267,6 +267,9 @@
     <ClCompile Include="ShaderManager.cpp">
       <Filter>Engine\Manager\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>TestProject\Models\General\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -451,6 +454,9 @@
     </ClInclude>
     <ClInclude Include="ShaderManager.h">
       <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>TestProject\Models\General\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,8 @@
 #include <memory>
 #include <vector>
 
-#include "Texture.h"
+#include "Texture2D.h"
+#include "CubeMap.h"
 
 using namespace std;
 
