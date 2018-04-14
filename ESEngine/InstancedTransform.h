@@ -8,8 +8,8 @@ using namespace glm;
 
 struct InstancedTransform {
 public:
-	mat4 modelMatrix = mat4(1);
-	//mat4 normalModelMatrix = mat4(1);
+	mat4 modelMatrix;
+	//mat4 normalModelMatrix;
 
 	void translateModel(vec3 &position) {
 		modelMatrix = translate(modelMatrix, position);

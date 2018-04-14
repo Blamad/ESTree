@@ -1,6 +1,7 @@
 #ifndef TEST_SCENE_H
 #define TEST_SCENE_H
 
+#include "ShaderManager.h"
 #include "Scene.h"
 #include "Material.h"
 #include "Cube.h"

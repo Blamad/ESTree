@@ -150,8 +150,6 @@
     <None Include="LindenmayerRules\test2.json" />
     <None Include="Shaders\DepthQuadDebug.frag" />
     <None Include="Shaders\DepthQuadDebug.vert" />
-    <None Include="Shaders\DirectionalShadowShader.frag" />
-    <None Include="Shaders\DirectionalShadowShader.vert" />
     <None Include="Shaders\GenericShader.frag" />
     <None Include="Shaders\GenericShader.vert" />
     <None Include="Shaders\HDRShader.frag" />

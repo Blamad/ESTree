@@ -26,10 +26,12 @@ void Skybox::draw(Renderer &renderer, Shader *shader) {
 		glUniform1i(shader->getUniformLocation("cubemap"), 0);
 		shader->initialized = true;
 	}
+	shader->updateShaderSubroutine();
 
 	glUniformMatrix4fv(shader->getUniformLocation("model"), 1, GL_FALSE, glm::value_ptr(getModelMatrix()));
 
 	glActiveTexture(GL_TEXTURE0);
+	glUniform1i(shader->getUniformLocation("cubemap"), 0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap->textureBuffer->id);
 	renderer.renderObject(*vertexArray, shaders[0].get());
 	glDepthFunc(GL_LESS);

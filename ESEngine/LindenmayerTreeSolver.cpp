@@ -66,7 +66,7 @@ string LindenmayerTreeSolver::applyRule(string symbol, Rule rule) {
 
 	string production = fillRuleWithParameters(rule.production, parameters);
 
-	regex valueRegex("[(,]{1}[\\*\\+/\\-0-9\\.]*(\\*|\\+|-|/){1}[\\*\\+/\\-0-9\\.]*");
+	regex valueRegex("[(,]{1}[\\-0-9\\.]+(\\*|\\+|-|/){1}[\\*\\+/\\-0-9\\.]+");
 	smatch valueRes;
 	string::const_iterator paramSearchStart(production.cbegin());
 

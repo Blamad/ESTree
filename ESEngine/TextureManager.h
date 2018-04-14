@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <algorithm>
 
 #include "Texture2D.h"
 #include "CubeMap.h"

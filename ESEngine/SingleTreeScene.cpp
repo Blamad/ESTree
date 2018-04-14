@@ -43,17 +43,12 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[7];
+	paramsFileName = "LindenmayerRules/" + treeParams[11];
 	leavesTextureName = "Textures/" + leavesParams[1];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
 	meshWiring = false;	
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
-
-	/*position = vec3(3, 0, 3);
-	paramsFileName = "LindenmayerRules/" + treeParams[1];
-	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
-	*/
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 
@@ -65,7 +60,6 @@ void SingleTreeScene::initialize() {
 	vec3 distance = vec3(-14);
 	createDirectionalLight(distance * dir, dir);
 
-	//setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
 	setActiveCamera(createCamera(vec3(0, 5, 15), -90, -10));
 
 	generateFrameBuffer();
@@ -94,7 +88,7 @@ void SingleTreeScene::generateTerrain() {
 
 	go = unique_ptr<GameObject>(new Cube(Material::grass()));
 	transform = getTransform(go.get());
-	transform->scale(vec3(15, 0.5, 15));
+	transform->scale(vec3(15, 0.1, 15));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(0);
@@ -142,6 +136,15 @@ void SingleTreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1, 1, 1)) {
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(1);
 	rigidBody->makeDynamic();
+
+	/*InstancedTransform it;
+	it.translateModel(vec3(0, 1, 0));
+	vector<InstancedTransform> itVec;
+	itVec.push_back(it);
+
+	shared_ptr<GameObject> igo = shared_ptr<GameObject>(new InstancedCube(Material::leaves1(), itVec));
+	igo->name = "LeafCube";
+	go->addGameObject(igo);*/
 
 	addGameObject(move(go));
 }

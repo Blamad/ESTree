@@ -49,6 +49,7 @@ private:
 	unique_ptr<FrameBuffer> sceneFrameBuffer;
 
 	void renderSkybox(Renderer &renderer);
+
 	function<void(Renderer&, Shader*)> prepareDrawObjectsCall();
 
 	void preSceneRenderRoutine(Renderer &renderer);

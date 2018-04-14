@@ -72,19 +72,19 @@ void RigidBody::initAsAStaticPlane() {
 	this->transform = (Transform*)getComponent(TRANSFORM);
 	this->mass = 0;
 	
-	btCollisionShape * boxCollisionShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+	btCollisionShape* boxCollisionShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 	
-	btTransform & btTransform = transform->getBtTransform();
-	btDefaultMotionState * motionstate = new btDefaultMotionState(btTransform);
+	btTransform& btTransform = transform->getBtTransform();
+	btDefaultMotionState* motionstate = new btDefaultMotionState(btTransform);
 	
 	btVector3 fallInertia(0, 0, 0);
 	boxCollisionShape->calculateLocalInertia(mass, fallInertia);
 	
 	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(
-			mass,
-			motionstate,
-			boxCollisionShape,
-			fallInertia
+		mass,
+		motionstate,
+		boxCollisionShape,
+		fallInertia
 	);
 	
 	rigidBody = new btRigidBody(rigidBodyCI);

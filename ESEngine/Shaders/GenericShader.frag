@@ -47,36 +47,14 @@ layout (std140, binding = 1) uniform Lights
 uniform Material material;
 uniform sampler2D directionalShadingSamples[MAX_NUM_TOTAL_LIGHTS];
 
+subroutine void renderPassType();
+subroutine uniform renderPassType renderPassSubroutine;
+
 out vec4 color;
 
 vec3 calcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
-
 vec3 calcDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, sampler2D shadowTexture);
 float calcDirectionalShadow(DirectionalLight light, vec3 normal, vec3 lightDir, sampler2D shadowMap);
-
-void main()
-{
-	if(texture(material.texDiffuse, fs_in.texCoords).a < 0.1)
-        discard;
-
-	// Properties
-    vec3 normal = normalize(fs_in.normal);
-    vec3 viewDir = normalize(lights.viewPos.xyz - fs_in.fragPos);
-
-	vec3 result = vec3(0.0, 0.0, 0.0);
-
-	//Calc directional lights
-	for(int i = 0; i < lights.directionalLightsLength; i++) {
-        result += calcDirectionalLight(lights.directionalLights[i], normal, viewDir, directionalShadingSamples[i]);
-	}
-
-    //Calc point lights
-	for(int i = 0; i < lights.pointLightsLength; i++) {
-        result += calcPointLight(lights.pointLights[i], normal, fs_in.fragPos, viewDir);
-	}
-
-	color = vec4(result, 1.0f);
-}
 
 vec3 calcDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, sampler2D shadowTexture)
 {
@@ -124,14 +102,25 @@ float calcDirectionalShadow(DirectionalLight light, vec3 normal, vec3 lightDir, 
 	// get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
 	
-	//WITH BIAS
+	//BIAS
 	// calculate shadow bias
 	float bias = max(0.01 * (1.0 - dot(normal, lightDir)), 0.001);
-	// check whether current frag pos is in shadow
-	float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
-	
-	//WITHOUT BIAS
-	//float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
+		
+	//PCF
+	float shadow = 0;
+	vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+	for(int x = -1; x <= 1; ++x)
+	{
+		for(int y = -1; y <= 1; ++y)
+		{
+			float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
+			//WITH BIAS
+			shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
+			//WITHOUT BIAS
+			//shadow += currentDepth > pcfDepth  ? 1.0 : 0.0;
+		}    
+	}
+	shadow /= 9.0;
 
     return shadow;
 }  
@@ -164,4 +153,38 @@ vec3 calcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     specular *= attenuation;
     
 	return ambient + diffuse + specular;    
+}
+
+subroutine (renderPassType)
+void shadowDepthPass() {
+	if(texture(material.texDiffuse, fs_in.texCoords).a < 0.1)
+        discard;
+}
+
+subroutine (renderPassType)
+void renderPass() {
+	if(texture(material.texDiffuse, fs_in.texCoords).a < 0.1)
+        discard;
+
+	// Properties
+    vec3 normal = normalize(fs_in.normal);
+    vec3 viewDir = normalize(lights.viewPos.xyz - fs_in.fragPos);
+
+	vec3 result = vec3(0.0, 0.0, 0.0);
+
+	//Calc directional lights
+	for(int i = 0; i < lights.directionalLightsLength; i++) {
+        result += calcDirectionalLight(lights.directionalLights[i], normal, viewDir, directionalShadingSamples[i]);
+	}
+
+    //Calc point lights
+	for(int i = 0; i < lights.pointLightsLength; i++) {
+        result += calcPointLight(lights.pointLights[i], normal, fs_in.fragPos, viewDir);
+	}
+
+	color = vec4(result, 1.0f);
+}
+
+void main() {
+	renderPassSubroutine();
 }

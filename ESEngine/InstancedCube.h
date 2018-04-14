@@ -18,5 +18,5 @@ protected:
 	shared_ptr<InstancedMesh> mesh;
 
 	Vertex createVertex(vec3 position, vec3 normal, vec2 texCoords);
-	shared_ptr<Mesh> createMesh(shared_ptr<Shader> shader, Material material, vector<InstancedTransform> &instancedTransforms);
+	shared_ptr<Renderable> createMesh(shared_ptr<Shader> shader, Material material, vector<InstancedTransform> &instancedTransforms);
 };

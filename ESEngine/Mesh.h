@@ -32,6 +32,7 @@ public:
 
 	void draw(Renderer &renderer);
 	void draw(Renderer &renderer, Shader *shader);
+
 	void updateMesh();
 	void showMeshWiring();
 	void showNormalVisualisation();

@@ -39,7 +39,7 @@ void LightsManager::updateLights(vec3& viewPos, Renderer& renderer, function<voi
 
 		Shader::updateViewMatrix(lightView);
 		dLight->lightSpace = lightProjection * lightView;
-
+		depthBuffer->shader->setShaderSubroutine(SHADOW_DEPTH_PASS);
 		renderObjectsFunction(renderer, depthBuffer->shader.get());
 	}
 
@@ -73,7 +73,7 @@ void LightsManager::initializeLightsUBO() {
 
 void LightsManager::initialize() {
 	float sizeMod = 6;
-	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/DirectionalShadowShader.vert", "Shaders/DirectionalShadowShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 	shader->initializeMatricesUBO();
 	depthBuffer = unique_ptr<DepthFrameBuffer>(new DepthFrameBuffer(shader, Screen::getScreenWidth() * sizeMod, Screen::getScreenHeight() * sizeMod));
 }
