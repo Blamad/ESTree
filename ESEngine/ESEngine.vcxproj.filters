@@ -290,12 +290,18 @@
     </ClCompile>
     <ClCompile Include="ConsoleComponent.cpp">
       <Filter>Engine\UI\Source Files</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="ShaderManager.cpp">
       <Filter>Engine\Manager\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Terrain.cpp">
       <Filter>TestProject\Models\General\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleInterpreter.cpp">
+      <Filter>Engine\UI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Context.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -496,18 +502,24 @@
     </ClInclude>
     <ClInclude Include="ConsoleComponent.h">
       <Filter>Engine\UI\Header Files</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="ShaderManager.h">
       <Filter>Engine\Manager\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Terrain.h">
       <Filter>TestProject\Models\General\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="KeyEvent.h">
+      <Filter>GraphicEngine\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleInterpreter.h">
+      <Filter>Engine\UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Context.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\InstancedShader.vert">
-      <Filter>TestProject\Models\Shaders</Filter>
-    </None>
     <None Include="Shaders\LampShader.frag">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
@@ -539,9 +551,6 @@
       <Filter>GraphicEngine\Shaders</Filter>
     </None>
     <None Include="Shaders\DepthQuadDebug.frag">
-      <Filter>GraphicEngine\Shaders\Debug</Filter>
-    </None>
-    <None Include="Shaders\DepthQuadDebug.vert">
       <Filter>GraphicEngine\Shaders\Debug</Filter>
     </None>
     <None Include="Shaders\GeometryDebugShader.vert">

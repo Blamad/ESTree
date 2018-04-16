@@ -1,35 +1,48 @@
 #include "DepthFramePreviewComponent.h"
 
 void DepthFramePreviewComponent::draw() {
+	if (!enabled)
+		return;
+
 	if (!initialized)
 		init();
-	depthDebugShader->use();
-	glBindVertexArray(debugQuadVAO);
+	shader->use();
+
+	glBindVertexArray(VAO);
 	glBindTexture(GL_TEXTURE_2D, DepthFrameBuffer::getCurrentFrameTextureBuffer()->id);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindVertexArray(0);
 }
 
 void DepthFramePreviewComponent::init() {
-	depthDebugShader = unique_ptr<Shader>(new Shader("Shaders/DepthQuadDebug.vert", "Shaders/DepthQuadDebug.frag"));
+	shader = ShaderManager::getShader("Shaders/FontShader.vert", "Shaders/DepthQuadDebug.frag");
+	mat4 projection = glm::ortho(.0f, .0f + Screen::getScreenWidth(), .0f, .0f + Screen::getScreenHeight());
 
-	float quadVertices[] = {
-		topLeftDebugQuadCorner.x - debugQuadSize, topLeftDebugQuadCorner.y,					0.0f, 1.0f,
-		topLeftDebugQuadCorner.x - debugQuadSize, topLeftDebugQuadCorner.y - debugQuadSize, 0.0f, 0.0f,
-		topLeftDebugQuadCorner.x, topLeftDebugQuadCorner.y - debugQuadSize,					1.0f, 0.0f,
+	shader->use();
+	if (!shader->isInitializedBy(3)) {
+		glUniformMatrix4fv(glGetUniformLocation(shader->program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+		shader->setInitializedBy(3);
+	}
+	
+	GLfloat vertices[6][4] = {
+	{ xpos,			ypos + height,  0.0, 1.0 },
+	{ xpos,			ypos,			0.0, 0.0 },
+	{ xpos + width, ypos,			1.0, 0.0 },
 
-		topLeftDebugQuadCorner.x - debugQuadSize, topLeftDebugQuadCorner.y,					0.0f, 1.0f,
-		topLeftDebugQuadCorner.x, topLeftDebugQuadCorner.y - debugQuadSize,					1.0f, 0.0f,
-		topLeftDebugQuadCorner.x, topLeftDebugQuadCorner.y,									1.0f, 1.0f
+	{ xpos,			ypos + height,  0.0, 1.0 },
+	{ xpos + width, ypos,			1.0, 0.0 },
+	{ xpos + width, ypos + height,  1.0, 1.0 }
 	};
 
-	unsigned int quadVBO;
-	glGenVertexArrays(1, &debugQuadVAO);
-	glGenBuffers(1, &quadVBO);
-	glBindVertexArray(debugQuadVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	initialized = true;
 }

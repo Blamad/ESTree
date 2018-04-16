@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleComponent.cpp" />
+    <ClCompile Include="ConsoleInterpreter.cpp" />
+    <ClCompile Include="Context.cpp" />
     <ClCompile Include="DepthFrameBuffer.cpp" />
     <ClCompile Include="DepthFramePreviewComponent.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
@@ -73,8 +75,11 @@
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="ClickEvent.h" />
     <ClInclude Include="ConsoleComponent.h" />
+    <ClInclude Include="ConsoleInterpreter.h" />
+    <ClInclude Include="Context.h" />
     <ClInclude Include="DepthFrameBuffer.h" />
     <ClInclude Include="DepthFramePreviewComponent.h" />
+    <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="LindenmayerTreeMeshGenerator.h" />
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="PostEffectFrameBuffer.h" />
@@ -156,14 +161,12 @@
     <None Include="LindenmayerRules\test.json" />
     <None Include="LindenmayerRules\test2.json" />
     <None Include="Shaders\DepthQuadDebug.frag" />
-    <None Include="Shaders\DepthQuadDebug.vert" />
     <None Include="Shaders\FontShader.frag" />
     <None Include="Shaders\FontShader.vert" />
     <None Include="Shaders\GenericShader.frag" />
     <None Include="Shaders\GenericShader.vert" />
     <None Include="Shaders\HDRShader.frag" />
     <None Include="Shaders\HDRShader.vert" />
-    <None Include="Shaders\InstancedShader.vert" />
     <None Include="Shaders\LampShader.frag" />
     <None Include="Shaders\LampShader.vert" />
     <None Include="Shaders\GeometryDebugShader.frag" />

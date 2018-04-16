@@ -4,26 +4,33 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include "ShaderManager.h"
 #include "UIComponent.h"
 #include "Screen.h"
 #include "Logger.h"
+#include "ConsoleInterpreter.h"
 #include <memory>
 #include <map>
 #include <GLM\glm.hpp>
 #include <GL\glew.h>
+#include <chrono>
+#include <boost\foreach.hpp>
+
+#include <GLFW\glfw3.h>
 
 using namespace std;
+using namespace std::chrono;
 
 struct Character {
-	GLuint     textureID;  // ID handle of the glyph texture
-	glm::ivec2 size;       // Size of glyph
-	glm::ivec2 bearing;    // Offset from baseline to left/top of glyph
-	GLuint     advance;    // Offset to advance to next glyph
+	GLuint  textureID;
+	ivec2	size;
+	ivec2	bearing;
+	GLuint	advance;    
 };
 
 class ConsoleComponent : public UIComponent {
 public:
-	ConsoleComponent(vec3 fontColor = vec3(0.3, 0.7f, 0.9f)): fontColor(fontColor) { init(); }
+	ConsoleComponent(vec3 fontColor = vec3(1.0, .0f, .0f));
 
 	void init();
 	void draw();
@@ -31,14 +38,32 @@ public:
 
 private:
 	static Logger logger;
+
 	GLuint VAO, VBO;
 	map<GLchar, Character> characters;
-	unique_ptr<Shader> fontShader;
+	shared_ptr<Shader> fontShader;
 	vec3 fontColor;
+	bool isFocused;
+	int consoleXPos;
+	int consoleYPos;
 
+	vector<string> textBuffer;
+	string inputLine;
+
+	float lineOffset = 18.0f;
+	float fontScale = 0.7f;
+	int maxLines = 10;
+
+	vector<string> inputHistory;
+	int lastInputIndex;
 
 	void initFreeType();
-	void renderLine(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
+	void renderLine(std::string text, GLfloat x, GLfloat y);
+	
+	void processInputLine();
+
+	void registerInputChar(char c);
+	void removeLastCharFromInput(int key);
 };
 
 #endif

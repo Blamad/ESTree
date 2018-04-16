@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 #include "PointLight.h"
+#include "Context.h"
 
 class SceneManager {
 public:

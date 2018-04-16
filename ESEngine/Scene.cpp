@@ -33,12 +33,13 @@ GameObject* Scene::createGameObject() {
 	return gameObjects[uuid].get();
 }
 
-//TODO Na razie to lezy!
 void Scene::removeGameObject(GameObject *gameObject) {
 	Uuid uuid = gameObject->id;
 
 	if (gameObjects[uuid]->getComponent(LIGHT) != nullptr)
 		lightsManager->removeLight((Light*) gameObjects[uuid]->getComponent(LIGHT));
+	if (gameObjects[uuid]->getComponent(RIGIDBODY) != nullptr)
+		physicsManager->removeRigidBody((RigidBody*)gameObjects[uuid]->getComponent(RIGIDBODY));
 	gameObjects.erase(uuid);
 }
 

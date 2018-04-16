@@ -2,7 +2,15 @@
 
 UIManager::UIManager() {
 	addComponent(make_unique<DepthFramePreviewComponent>());
+	depthPreviewComponent = (DepthFramePreviewComponent*)uiComponents[0].get();
 	addComponent(make_unique<ConsoleComponent>());
+
+	Context::setUIManager(this);
+}
+
+void UIManager::toggleDepthBufferComponent(bool enabled) {
+	if (depthPreviewComponent != nullptr)
+		depthPreviewComponent->enabled = enabled;
 }
 
 void UIManager::addComponent(unique_ptr<UIComponent> component) {

@@ -56,7 +56,7 @@ void Engine::renderingLoop() {
 
 		window->poolInputEvents();
 		sceneManager->getActiveScene()->update(deltaTime, *inputState);
-		inputState->clearMouseEvents();
+		inputState->clearEvents();
 
 		window->prepareFrameRendering();
 		sceneManager->getActiveScene()->renderFrame(*renderer);

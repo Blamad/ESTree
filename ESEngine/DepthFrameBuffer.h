@@ -14,7 +14,6 @@ public:
 	static TextureBuffer* getCurrentFrameTextureBuffer();
 	
 protected:
-	shared_ptr<Shader> depthDebugShader;
 	void init();
 	static TextureBuffer* debugQuadTextureBuffer;
 };

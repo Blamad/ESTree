@@ -26,13 +26,17 @@ PhysicsManager::~PhysicsManager() {
 	delete broadphase;
 }
 
-void PhysicsManager::addRigidBody(RigidBody* rigidBody) {
+void PhysicsManager::addRigidBody(RigidBody *rigidBody) {
 	dynamicsWorld->addRigidBody(rigidBody->rigidBody);
 }
 
-void PhysicsManager::reloadRigidBody(RigidBody* rigidBody) {
+void PhysicsManager::reloadRigidBody(RigidBody *rigidBody) {
 	dynamicsWorld->removeRigidBody(rigidBody->rigidBody);
 	dynamicsWorld->addRigidBody(rigidBody->rigidBody);
+}
+
+void PhysicsManager::removeRigidBody(RigidBody *rigidBody) {
+	dynamicsWorld->removeRigidBody(rigidBody->rigidBody);
 }
 
 void PhysicsManager::step(double deltaTime) {
