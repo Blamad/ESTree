@@ -46,6 +46,7 @@ void MouseManager::updatePickedObject(double dt, InputState& inputState) {
 
 void MouseManager::pickObject(GameObject* go) {	
 	RigidBody *rb = (RigidBody*)go->getComponent(RIGIDBODY);
+	setSelectedGameObject(go);
 	if (!rb->pickable) {
 		return;
 	}

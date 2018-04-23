@@ -11,8 +11,8 @@ GLWindow::~GLWindow() {
 
 bool GLWindow::initialize() {
 	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
@@ -106,10 +106,15 @@ void GLWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, GL_TRUE);
 
+		KeyState state;
+		if (action == GLFW_REPEAT)
+			state = REPEAT;
 		if (action == GLFW_PRESS)
-			instance->inputState->setKeyPressed(key);
-		else if (action == GLFW_RELEASE)
-			instance->inputState->setKeyReleased(key);
+			state = PRESSED;
+		if (action == GLFW_RELEASE)
+			state = RELEASED;
+		
+		instance->inputState->pushKeyEvent(key, state);
 	}
 }
 

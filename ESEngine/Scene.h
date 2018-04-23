@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include "InputState.h"
 #include "FrameBuffer.h"
+#include "UIComponent.h"
 #include "Renderer.h"
 #include "LightsManager.h"
 #include "PhysicsManager.h"
@@ -19,6 +20,7 @@
 #include "Camera.h"
 #include "Skybox.h"
 #include "DepthFrameBuffer.h"
+#include "UIManager.h"
 
 using namespace std;
 
@@ -45,6 +47,7 @@ private:
 	unique_ptr<MouseManager> mouseManager;
 	unique_ptr<LightsManager> lightsManager;
 	unique_ptr<PhysicsManager> physicsManager;
+	unique_ptr<UIManager> uiManager;
 	map<Uuid, unique_ptr<GameObject>> gameObjects;
 	unique_ptr<FrameBuffer> sceneFrameBuffer;
 
@@ -54,8 +57,7 @@ private:
 
 	void preSceneRenderRoutine(Renderer &renderer);
 	void postSceneRenderRoutine(Renderer &renderer);
-
-	void drawGui();
+	void renderUI();
 };
 
 #endif

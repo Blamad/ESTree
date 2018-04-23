@@ -19,7 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConsoleComponent.cpp" />
+    <ClCompile Include="ConsoleInterpreter.cpp" />
+    <ClCompile Include="Context.cpp" />
     <ClCompile Include="DepthFrameBuffer.cpp" />
+    <ClCompile Include="DepthFramePreviewComponent.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="LindenmayerTreeMeshGenerator.cpp" />
     <ClCompile Include="PhysicsScene.cpp" />
@@ -65,11 +69,17 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TreeBehaviour.cpp" />
     <ClCompile Include="TreeScene.cpp" />
+    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="ClickEvent.h" />
+    <ClInclude Include="ConsoleComponent.h" />
+    <ClInclude Include="ConsoleInterpreter.h" />
+    <ClInclude Include="Context.h" />
     <ClInclude Include="DepthFrameBuffer.h" />
+    <ClInclude Include="DepthFramePreviewComponent.h" />
+    <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="LindenmayerTreeMeshGenerator.h" />
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="PostEffectFrameBuffer.h" />
@@ -119,6 +129,8 @@
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="TreeBehaviour.h" />
     <ClInclude Include="TreeScene.h" />
+    <ClInclude Include="UIComponent.h" />
+    <ClInclude Include="UIManager.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="Point2d.h" />
     <ClInclude Include="Renderable.h" />
@@ -149,12 +161,12 @@
     <None Include="LindenmayerRules\test.json" />
     <None Include="LindenmayerRules\test2.json" />
     <None Include="Shaders\DepthQuadDebug.frag" />
-    <None Include="Shaders\DepthQuadDebug.vert" />
+    <None Include="Shaders\FontShader.frag" />
+    <None Include="Shaders\FontShader.vert" />
     <None Include="Shaders\GenericShader.frag" />
     <None Include="Shaders\GenericShader.vert" />
     <None Include="Shaders\HDRShader.frag" />
     <None Include="Shaders\HDRShader.vert" />
-    <None Include="Shaders\InstancedShader.vert" />
     <None Include="Shaders\LampShader.frag" />
     <None Include="Shaders\LampShader.vert" />
     <None Include="Shaders\GeometryDebugShader.frag" />
@@ -242,12 +254,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(RAPIDJSON_LIB);$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BULLET_LIB)\Libs;$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(FREETYPE2_LIB)\Includes;$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(RAPIDJSON_LIB);$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(FREETYPE2_LIB)\Libs;$(BULLET_LIB)\Libs;$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(RAPIDJSON_LIB);$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BULLET_LIB)\Libs;$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(FREETYPE2_LIB)\Includes;$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(RAPIDJSON_LIB);$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(FREETYPE2_LIB)\Libs;$(BULLET_LIB)\Libs;$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -259,7 +271,7 @@
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;glew32s.lib;glfw3.lib;libboost_thread-vc140-mt-gd-1_64.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;glew32s.lib;glfw3.lib;libboost_thread-vc140-mt-gd-1_64.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -282,7 +294,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

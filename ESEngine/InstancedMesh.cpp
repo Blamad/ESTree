@@ -1,5 +1,4 @@
 #include "InstancedMesh.h"
-#include <boost/foreach.hpp>
 
 Logger InstancedMesh::logger("InstancedMesh");
 

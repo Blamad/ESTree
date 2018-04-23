@@ -2,7 +2,7 @@
 #include "CameraBehaviour.h"
 
 SceneManager::SceneManager() {
-	currentScene.reset(new Scene());
+	Context::setSceneManager(this);
 }
 
 GameObject* SceneManager::addGameObject(unique_ptr<GameObject> go) {

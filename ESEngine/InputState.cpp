@@ -1,10 +1,14 @@
 #include "InputState.h"
 
 bool InputState::isKeyPressed(int key) {
+	if (blocked)
+		return false;
 	return keys[key];
 }
 
 bool InputState::isKeyReleased(int key) {
+	if (blocked)
+		return false;
 	return !keys[key];
 }
 
@@ -24,18 +28,23 @@ const deque<ClickEvent> InputState::getMouseClickEvents() {
 	return mouseClick;
 }
 
-void InputState::clearMouseEvents() {
+const deque<KeyEvent> InputState::getKeyboardEvents() {
+	return keyEvents;
+}
+
+void InputState::blockEvents() {
 	mousePosition.clear();
 	mouseScroll.clear();
 	mouseClick.clear();
+	blocked = true;
 }
 
-void InputState::setKeyPressed(int key) {
-	keys[key] = true;
-}
-
-void InputState::setKeyReleased(int key) {
-	keys[key] = false;
+void InputState::clearEvents() {
+	mousePosition.clear();
+	mouseScroll.clear();
+	mouseClick.clear();
+	keyEvents.clear();
+	blocked = false;
 }
 
 void InputState::pushMousePosition(double x, double y) {
@@ -49,4 +58,9 @@ void InputState::pushMouseScroll(double x, double y) {
 
 void InputState::pushMouseClick(ClickEvent click) {
 	mouseClick.push_back(click);
+}
+
+void InputState::pushKeyEvent(int key, KeyState state) {
+	keyEvents.push_back(KeyEvent(key, state));
+	keys[key] = state == RELEASED ? false : true;
 }
