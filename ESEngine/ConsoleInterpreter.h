@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <map>
+#include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
 
 #include "Context.h"
@@ -22,10 +24,18 @@ private:
 		boost::split(line, value, boost::is_any_of(by));
 		return line;
 	}
+
+	static void processTreeCommand(map<string, string> params);
+
+	static GameObject* createTree(LindenmayerTreeParams &params, string &name, Material &barkTexture, Material &leavesTexture, vec3 &position);
 	
 	static vec3 parseCoords(string line) {
 		vector<string> position = split(line, ",");
 		return vec3(strToInt(position[0]), strToInt(position[1]), strToInt(position[2]));
+	}
+
+	static void logToConsole(string val) {
+		//Context::getConsoleComponent()->writeLine(val);
 	}
 
 	static int strToInt(string &value) {

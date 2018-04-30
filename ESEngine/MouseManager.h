@@ -31,6 +31,9 @@ public:
 		return selectedGameObject;
 	}
 
+	void setSelectedGameObject(GameObject *go) {
+		selectedGameObject = go;
+	}
 
 private:
 	static Logger logger;
@@ -59,10 +62,6 @@ private:
 	void moveGameObject(GameObject *go, double x, double y);
 	void pickObject(GameObject * go);
 	void releaseObject();
-
-	void setSelectedGameObject(GameObject *go) {
-		selectedGameObject = go;
-	}
 
 	string vecToString(vec3 vec); 
 	float calcDistance(vec3 vecA, vec3 vecB);

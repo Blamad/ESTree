@@ -93,6 +93,7 @@ InputState* GLWindow::registerInputManager() {
 	glfwSetCursorPosCallback(glfwWindow, GLWindow::mousePositionCallback);
 	glfwSetScrollCallback(glfwWindow, GLWindow::mouseScrollCallback);
 	glfwSetMouseButtonCallback(glfwWindow, GLWindow::mouseClickCallback);
+	glfwSetCharModsCallback(glfwWindow, GLWindow::characterCallback);
 
 	return inputState.get();
 }
@@ -127,6 +128,12 @@ void GLWindow::mousePositionCallback(GLFWwindow* window, double xpos, double ypo
 void GLWindow::mouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	if (instance) {
 		instance->inputState->pushMouseScroll(xoffset, yoffset);
+	}
+}
+
+void GLWindow::characterCallback(GLFWwindow* window, unsigned int codepoint, int mods) {
+	if (instance) {
+		instance->inputState->pushCharEvent(codepoint);
 	}
 }
 

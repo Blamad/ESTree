@@ -21,6 +21,7 @@ public:
 	const deque<Point2d> InputState::getMouseScrollEvents();
 	const deque<ClickEvent> InputState::getMouseClickEvents();
 	const deque<KeyEvent> InputState::getKeyboardEvents();
+	const deque<char> InputState::getCharacterEvents();
 
 	const Point2d getLastMousePosition();
 
@@ -33,12 +34,14 @@ public:
 	void pushMouseScroll(double x, double y);
 	void pushMouseClick(ClickEvent click);
 	void pushKeyEvent(int key, KeyState state);
+	void pushCharEvent(char character);
 
 private:
 	deque<Point2d> mousePosition;
 	deque<Point2d> mouseScroll;
 	deque<ClickEvent> mouseClick;
 	deque<KeyEvent> keyEvents;
+	deque<char> charEvents;
 	bool keys[500];
 	bool blocked;
 

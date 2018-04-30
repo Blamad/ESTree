@@ -9,6 +9,7 @@
 #include "Screen.h"
 #include "Logger.h"
 #include "ConsoleInterpreter.h"
+#include "Context.h"
 #include <memory>
 #include <map>
 #include <GLM\glm.hpp>
@@ -35,6 +36,7 @@ public:
 	void init();
 	void draw();
 	void update(double &dt, InputState &inputState);
+	void writeLine(string line);
 
 private:
 	static Logger logger;

@@ -6,6 +6,8 @@ ConsoleComponent::ConsoleComponent(vec3 fontColor) : fontColor(fontColor) {
 	consoleXPos = Screen::getScreenWidth() * .01f;
 	consoleYPos = Screen::getScreenHeight() * .01f;
 	isFocused = false;
+	//Context::setConsoleComponent(this);
+
 	init();
 }
 
@@ -65,6 +67,7 @@ void ConsoleComponent::update(double &dt, InputState &inputState) {
 			isFocused = !isFocused;
 			inputLine.clear();
 			lastInputIndex = 0;
+			return;
 		}
 	}
 	
@@ -76,14 +79,12 @@ void ConsoleComponent::update(double &dt, InputState &inputState) {
 			return;
 		}
 
+		BOOST_FOREACH(auto charEvent, inputState.getCharacterEvents()) {
+			if (charEvent != GLFW_KEY_ENTER) {
+				registerInputChar(charEvent);
+			}
+		}
 		BOOST_FOREACH(auto keyEvent, inputState.getKeyboardEvents()) {
-			if (GLFW_KEY_A <= keyEvent.key && keyEvent.key <= GLFW_KEY_Z && keyEvent.state != RELEASED)
-				registerInputChar(keyEvent.key + 32);
-			if (GLFW_KEY_APOSTROPHE <= keyEvent.key && keyEvent.key <= GLFW_KEY_EQUAL && keyEvent.state != RELEASED)
-				registerInputChar(keyEvent.key);
-
-			if (keyEvent.key == GLFW_KEY_SPACE && keyEvent.state != RELEASED)
-				registerInputChar(' ');
 			if (keyEvent.key == GLFW_KEY_BACKSPACE && keyEvent.state != RELEASED)
 				removeLastCharFromInput(keyEvent.key);
 			if (keyEvent.key == GLFW_KEY_ENTER && keyEvent.state == PRESSED) {
@@ -96,9 +97,19 @@ void ConsoleComponent::update(double &dt, InputState &inputState) {
 					lastInputIndex = inputHistory.size() - 1;
 				inputLine = inputHistory[lastInputIndex];
 			}
+			if (keyEvent.key == GLFW_KEY_DOWN && keyEvent.state == PRESSED && !inputHistory.empty()) {
+				lastInputIndex++;
+				if (lastInputIndex > inputHistory.size() - 1)
+					lastInputIndex = 0;
+				inputLine = inputHistory[lastInputIndex];
+			}
 		}
 		inputState.blockEvents();
 	}
+}
+
+void ConsoleComponent::writeLine(string line) {
+	textBuffer.push_back(line);
 }
 
 void ConsoleComponent::processInputLine() {
