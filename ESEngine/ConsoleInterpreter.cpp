@@ -3,13 +3,14 @@
 #include "UIManager.h"
 #include "SceneManager.h"
 
+Logger ConsoleInterpreter::logger("ConsoleInterpreter");
+
 void ConsoleInterpreter::processTreeCommand(map<string, string> params) {
 	vec3 pos(0, 0, 0);
 	string name = "Tree";
-	string filename = "LindenmayerRules/fibbonacciTree.json";
+	string filename = "LindenmayerRules/randomTree.json";
 	string barkTexture = "Textures/barkTexture3.jpg";
 	string leavesTexture = "Textures/leaves3.png";
-
 
 	while (!params.empty()) {
 		if (params.find("pos") != params.end()) {
@@ -46,15 +47,52 @@ void ConsoleInterpreter::processTreeCommand(map<string, string> params) {
 	createTree(lindenmayerParameters, name, Material::diffuseTextureOnly(barkTexture), Material::diffuseTextureOnly(leavesTexture), pos);
 }
 
+void ConsoleInterpreter::processCubeCommand(map<string, string> params) {
+	vec3 pos(0, 0, 0);
+	string name = "CrateCube";
+	
+	while (!params.empty()) {
+		if (params.find("pos") != params.end()) {
+			pos = parseCoords(params["pos"]);
+			params.erase("pos");
+			continue;
+		}
+		if (params.find("name") != params.end()) {
+			name = params["name"];
+			params.erase("name");
+			continue;
+		}
+		
+		logToConsole("Unknown cube parameter!");
+		return;
+	}
+	
+	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container(), false, false));
+	go->name = name;
+	Transform *transform = (Transform*)go->getComponent(TRANSFORM);
+	transform->translate(pos);
+	shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	go->addComponent(rigidBody);
+	rigidBody->initAsBox(1);
+	rigidBody->makeDynamic();
+}
+
 void ConsoleInterpreter::processInput(string &input) {
 	try {
 		vector<string> line = split(input, " ");
 
+		if (line[0] == "help") {
+			displayHelp();
+			return;
+		}
+
 		if (line[0] == "depth" && line.size() == 2) {
-			if (line[1] == "off")
+			if (line[1] == "off") {
 				Context::getUIManager()->toggleDepthBufferComponent(false);
-			if (line[1] == "on")
+			}
+			if (line[1] == "on") {
 				Context::getUIManager()->toggleDepthBufferComponent(true);
+			}
 			return;
 		}
 
@@ -72,40 +110,30 @@ void ConsoleInterpreter::processInput(string &input) {
 				return;
 			}
 			if (line.size() % 2 == 1) {
-				map<string, string> params;
-				for (int i = 1; i < line.size(); i += 2) {
-					params[line[i]] = line[i + 1];
-				}
+				map<string, string> params = generateParamsMap(line);
 				processTreeCommand(params);
 			}
 			else {
-				//ERROR, UNKNOWN INPUT PATTERN
+				logToConsole("Command parameters does not match expected values");
 			}
-
 			return;
 		}
 
-		if (line[0] == "cube" && line.size() == 2) {
-			vec3 position = parseCoords(line[1]);
-			unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container(), false, false));
-			go->name = "CrateCube";
-			Transform *transform = (Transform*)go->getComponent(TRANSFORM);
-			transform->translate(position);
-			shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
-			go->addComponent(rigidBody);
-			rigidBody->initAsBox(1);
-			rigidBody->makeDynamic();
-
-			Context::getSceneManager()->addGameObject(move(go));
+		if (line[0] == "cube") {
+			map<string, string> params = generateParamsMap(line);
+			processCubeCommand(params);
+			
 			return;
 		}
 
 		if (line[0] == "rm") {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
+				string name = selected->name;
 				Context::getSceneManager()->getActiveScene()->removeGameObject(selected);
-				logToConsole("'" + selected->name + "' removed");
+				logToConsole("'" + name + "' removed");
 			}
+			return;
 		}
 
 		if (line[0] == "mv" && line.size() == 2) {
@@ -115,13 +143,31 @@ void ConsoleInterpreter::processInput(string &input) {
 				RigidBody *rigidbody = (RigidBody*)selected->getComponent(RIGIDBODY);
 				rigidbody->translate(position);
 			}
+			return;
 		}
 
 		logToConsole("Unknown command '"+line[0]+"'");
 	}
 	catch (exception e) {
-
+		logToConsole("Something went wrong!");
+		logger.log(ERROR, e.what());
 	}
+}
+
+void ConsoleInterpreter::displayHelp() {
+	logToConsole("Available commands:");
+	logToConsole(" - depth <on/off>");
+	logToConsole("    display depth buffer");
+	logToConsole(" - cube pos <vec3> name <string>");
+	logToConsole("    generate cube");
+	logToConsole(" - rm");
+	logToConsole("    removes selected object");
+	logToConsole(" - mv <vec3>");
+	logToConsole("    moves selected object by given vector");
+	logToConsole(" - tree rld");
+	logToConsole("    reloads selected tree");
+	logToConsole(" - tree pos<vec3> file<string> name<string> bark<string> leaves<string>");
+	logToConsole("    generate tree");
 }
 
 GameObject* ConsoleInterpreter::createTree(LindenmayerTreeParams &params, string &name, Material &bark, Material &leaves, vec3 &position) {

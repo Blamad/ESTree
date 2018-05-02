@@ -10,6 +10,7 @@
 #include "Logger.h"
 #include "ConsoleInterpreter.h"
 #include "Context.h"
+#include "ConsoleMemory.h"
 #include <memory>
 #include <map>
 #include <GLM\glm.hpp>
@@ -37,6 +38,7 @@ public:
 	void draw();
 	void update(double &dt, InputState &inputState);
 	void writeLine(string line);
+	ConsoleMemory* getConsoleMemory() { return memory.get(); }
 
 private:
 	static Logger logger;
@@ -49,15 +51,14 @@ private:
 	int consoleXPos;
 	int consoleYPos;
 
-	vector<string> textBuffer;
 	string inputLine;
 
 	float lineOffset = 18.0f;
 	float fontScale = 0.7f;
 	int maxLines = 10;
+	int consoleScrollOffset = 0;
 
-	vector<string> inputHistory;
-	int lastInputIndex;
+	unique_ptr<ConsoleMemory> memory;
 
 	void initFreeType();
 	void renderLine(std::string text, GLfloat x, GLfloat y);
@@ -66,6 +67,8 @@ private:
 
 	void registerInputChar(char c);
 	void removeLastCharFromInput(int key);
+	void scrollUp();
+	void scrollDown();
 };
 
 #endif

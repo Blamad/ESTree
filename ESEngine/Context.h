@@ -4,22 +4,22 @@
 class SceneManager;
 class MouseManager;
 class UIManager;
-class ConsoleComponent;
+class ConsoleMemory;
 
 class Context {
 public:
-	//static ConsoleComponent* getConsoleComponent() { return consoleComponent; }
+	static ConsoleMemory* getConsoleMemory() { return consoleMemory; }
 	static SceneManager* getSceneManager() { return sceneManager; }
 	static MouseManager* getMouseManager() { return mouseManager; }
 	static UIManager* getUIManager() { return uiManager; }
 
-	//static void setConsoleComponent(ConsoleComponent *console) { consoleComponent = console; }
+	static void setConsoleMemory(ConsoleMemory *console) { consoleMemory = console; }
 	static void setSceneManager(SceneManager *scene) { sceneManager = scene; }
 	static void setMouseManager(MouseManager *mouse) { mouseManager = mouse; }
 	static void setUIManager(UIManager *ui) { uiManager = ui; }
 
 private:
-	//static ConsoleComponent *consoleComponent;
+	static ConsoleMemory *consoleMemory;
 	static SceneManager *sceneManager;
 	static MouseManager *mouseManager;
 	static UIManager *uiManager;

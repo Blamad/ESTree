@@ -518,6 +518,9 @@
     <ClInclude Include="Context.h">
       <Filter>Engine\Manager\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ConsoleMemory.h">
+      <Filter>Engine\UI\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\LampShader.frag">

@@ -76,6 +76,7 @@
     <ClInclude Include="ClickEvent.h" />
     <ClInclude Include="ConsoleComponent.h" />
     <ClInclude Include="ConsoleInterpreter.h" />
+    <ClInclude Include="ConsoleMemory.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="DepthFrameBuffer.h" />
     <ClInclude Include="DepthFramePreviewComponent.h" />
