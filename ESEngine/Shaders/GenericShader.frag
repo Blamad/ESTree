@@ -92,7 +92,7 @@ float calcDirectionalShadow(DirectionalLight light, vec3 normal, vec3 lightDir, 
     projCoords = projCoords * 0.5 + 0.5;
 
 	// check if z coordinate is beyond light's pane
-	 if(projCoords.z > 1.0) {
+	if(projCoords.z > 1.0) {
        return 0.0;
 	}
 

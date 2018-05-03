@@ -166,7 +166,7 @@ void ConsoleInterpreter::displayHelp() {
 	logToConsole("    moves selected object by given vector");
 	logToConsole(" - tree rld");
 	logToConsole("    reloads selected tree");
-	logToConsole(" - tree pos<vec3> file<string> name<string> bark<string> leaves<string>");
+	logToConsole(" - tree pos <vec3> file <string> name <string> bark <string> leaves <string>");
 	logToConsole("    generate tree");
 }
 
