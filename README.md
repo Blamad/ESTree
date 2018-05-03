@@ -7,6 +7,7 @@ ESTree is using few libraries:
  * __GLFW, GLEW, OpenGL__: scene rendering
  * __BulletPhysics__: physics simulation (collisions, mouse picking, collapsing towers made of blocks) 
  * __RapidJSON__: parsing configuration files
+ * __FreeType__: text rendering
 
 Sample screenshot presenting current engine abilities regarding tree generation:
 
