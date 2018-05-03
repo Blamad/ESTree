@@ -7,6 +7,8 @@
 
 #include "RigidBody.h"
 #include "Ray.h"
+#include "Context.h"
+#include "ConsoleMemory.h"
 
 #include "Logger.h"
 

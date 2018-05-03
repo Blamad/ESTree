@@ -40,6 +40,7 @@ protected:
 	static void mousePositionCallback(GLFWwindow* window, double xoffset, double yoffset);
 	static void mouseScrollCallback(GLFWwindow* window, double xpos, double ypos);
 	static void mouseClickCallback(GLFWwindow* window, int button, int action, int mods);
+	static void characterCallback(GLFWwindow* window, unsigned int codepoint, int mods);
 
 private:
 	static Logger logger;

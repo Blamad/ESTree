@@ -56,10 +56,11 @@ GameObject* PhysicsManager::raycast(Ray &ray) {
 
 	if (RayCallback.hasHit()) {
 		GameObject *go = static_cast<GameObject*>(RayCallback.m_collisionObject->getUserPointer());
-		if(go->name.length() != 0)
-			logger.log(INFO, "Object clicked: " + go->name);
-		else
-			logger.log(INFO, "Object clicked: " + boost::uuids::to_string(go->id));
+		string name = go->name.length() > 0 ? go->name : boost::uuids::to_string(go->id);
+		
+		logger.log(INFO, "Object clicked: " + name);
+		Context::getConsoleMemory()->pushLine("Object clicked: " + name);
+
 		return go;
 	}
 	else {

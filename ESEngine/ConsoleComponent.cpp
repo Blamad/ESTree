@@ -3,9 +3,12 @@
 Logger ConsoleComponent::logger("ConsoleComponent");
 
 ConsoleComponent::ConsoleComponent(vec3 fontColor) : fontColor(fontColor) {
+	memory.reset(new ConsoleMemory());
 	consoleXPos = Screen::getScreenWidth() * .01f;
 	consoleYPos = Screen::getScreenHeight() * .01f;
 	isFocused = false;
+	Context::setConsoleMemory(this->memory.get());
+
 	init();
 }
 
@@ -21,8 +24,6 @@ void ConsoleComponent::init() {
 		fontShader->registerUniform("textColor");
 		fontShader->setInitializedBy(3);
 	}
-
-	lastInputIndex = 0;
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -45,11 +46,11 @@ void ConsoleComponent::draw() {
 	glBindVertexArray(VAO);
 
 	int index = 0;
-	for (int i = 0; i < 10; i++) {
-		index = textBuffer.size() - 1 - i;
+	for (int i = consoleScrollOffset; i < maxLines + consoleScrollOffset; i++) {
+		index = memory->getLines().size() - 1 - i;
 		if (index < 0)
 			continue;
-		renderLine(textBuffer[index], consoleXPos, consoleYPos + lineOffset * (i + 1));
+		renderLine(memory->getLines()[index], consoleXPos, consoleYPos + lineOffset * (i - consoleScrollOffset + 1));
 	}
 
 	string inputLineDisplayed = ">" + inputLine + (isFocused ? "_" : "");
@@ -64,7 +65,8 @@ void ConsoleComponent::update(double &dt, InputState &inputState) {
 		if (keyEvent.key == GLFW_KEY_GRAVE_ACCENT && keyEvent.state == PRESSED) {
 			isFocused = !isFocused;
 			inputLine.clear();
-			lastInputIndex = 0;
+			memory->resetInputHistoryIndex();
+			return;
 		}
 	}
 	
@@ -72,38 +74,59 @@ void ConsoleComponent::update(double &dt, InputState &inputState) {
 		if (!inputState.getMouseClickEvents().empty()) {
 			isFocused = false;
 			inputLine.clear();
-			lastInputIndex = 0;
+			memory->resetInputHistoryIndex();
 			return;
 		}
 
+		BOOST_FOREACH(auto charEvent, inputState.getCharacterEvents()) {
+			if (charEvent != GLFW_KEY_ENTER) {
+				registerInputChar(charEvent);
+			}
+		}
 		BOOST_FOREACH(auto keyEvent, inputState.getKeyboardEvents()) {
-			if (GLFW_KEY_A <= keyEvent.key && keyEvent.key <= GLFW_KEY_Z && keyEvent.state != RELEASED)
-				registerInputChar(keyEvent.key + 32);
-			if (GLFW_KEY_APOSTROPHE <= keyEvent.key && keyEvent.key <= GLFW_KEY_EQUAL && keyEvent.state != RELEASED)
-				registerInputChar(keyEvent.key);
-
-			if (keyEvent.key == GLFW_KEY_SPACE && keyEvent.state != RELEASED)
-				registerInputChar(' ');
-			if (keyEvent.key == GLFW_KEY_BACKSPACE && keyEvent.state != RELEASED)
+			if (keyEvent.key == GLFW_KEY_BACKSPACE && keyEvent.state != RELEASED) {
 				removeLastCharFromInput(keyEvent.key);
+			}
 			if (keyEvent.key == GLFW_KEY_ENTER && keyEvent.state == PRESSED) {
 				processInputLine();
-				lastInputIndex = 0;
 			}
-			if (keyEvent.key == GLFW_KEY_UP && keyEvent.state == PRESSED && !inputHistory.empty()) {
-				lastInputIndex--;
-				if (lastInputIndex < 0)
-					lastInputIndex = inputHistory.size() - 1;
-				inputLine = inputHistory[lastInputIndex];
+			if (keyEvent.key == GLFW_KEY_UP && keyEvent.state == PRESSED) {
+				inputLine = memory->getPreviousInput();
+			}
+			if (keyEvent.key == GLFW_KEY_DOWN && keyEvent.state == PRESSED) {
+				inputLine = memory->getNextInput();
+			}
+		}
+		BOOST_FOREACH(auto scrollEvent, inputState.getMouseScrollEvents()) {
+			if (scrollEvent.y > 0) {
+				scrollUp();
+			}
+			if (scrollEvent.y < 0) {
+				scrollDown();
 			}
 		}
 		inputState.blockEvents();
 	}
 }
 
+void ConsoleComponent::scrollUp() {
+	if (memory->getLines().size() > consoleScrollOffset) {
+		consoleScrollOffset += 1;
+	}
+}
+
+void ConsoleComponent::scrollDown() {
+	if (consoleScrollOffset > 0) {
+		consoleScrollOffset -= 1;
+	}
+}
+
+void ConsoleComponent::writeLine(string line) {
+	memory->pushLine(line);
+}
+
 void ConsoleComponent::processInputLine() {
-	textBuffer.push_back(inputLine);
-	inputHistory.push_back(inputLine);
+	memory->pushInputLine(inputLine); 
 	ConsoleInterpreter::processInput(inputLine);
 	inputLine.clear();
 }

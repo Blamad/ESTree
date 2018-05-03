@@ -32,6 +32,10 @@ const deque<KeyEvent> InputState::getKeyboardEvents() {
 	return keyEvents;
 }
 
+const deque<char> InputState::getCharacterEvents() {
+	return charEvents;
+}
+
 void InputState::blockEvents() {
 	mousePosition.clear();
 	mouseScroll.clear();
@@ -44,6 +48,7 @@ void InputState::clearEvents() {
 	mouseScroll.clear();
 	mouseClick.clear();
 	keyEvents.clear();
+	charEvents.clear();
 	blocked = false;
 }
 
@@ -58,6 +63,10 @@ void InputState::pushMouseScroll(double x, double y) {
 
 void InputState::pushMouseClick(ClickEvent click) {
 	mouseClick.push_back(click);
+}
+
+void InputState::pushCharEvent(char character) {
+	charEvents.push_back(character);
 }
 
 void InputState::pushKeyEvent(int key, KeyState state) {

@@ -32,8 +32,15 @@ public:
 	bool meshWiring;
 	bool normalVisualisation;
 
+	LindenmayerTreeParams getTreeParams() { return params; }
+	Material getBarkMaterial() { return barkMaterial; };
+	Material getLeavesMaterial() { return leavesMaterial; }
+
 protected:
-	Material material;
+	Material barkMaterial;
+	Material leavesMaterial;
+	LindenmayerTreeParams params;
+
 	shared_ptr<Mesh> mesh;
 	shared_ptr<Segment> root;
 
@@ -49,8 +56,6 @@ private:
 
 	vector<shared_ptr<Segment>> segmentsVec;
 	unique_ptr<LindenmayerTreeMeshGenerator> meshGenerator;
-	LindenmayerTreeParams params;
-	Material leavesMaterial;
 	string product;
 
 	static boost::variate_generator<boost::mt19937, boost::uniform_real<>> randomGenerator;
