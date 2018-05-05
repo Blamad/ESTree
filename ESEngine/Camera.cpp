@@ -10,7 +10,7 @@ glm::mat4 Camera::getViewMatrix() {
 }
 
 glm::mat4 Camera::getProjectionMatrix() {
-	mat4 projection = perspective(ZOOM, float(Screen::getScreenWidth()) / Screen::getScreenHeight(), 0.1f, 100.0f);
+	mat4 projection = perspective(ZOOM, float(Screen::getScreenWidth()) / Screen::getScreenHeight(), 1.0f, 100.0f);
 	return projection;
 }
 

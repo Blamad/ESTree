@@ -34,6 +34,7 @@ void Mesh::draw(Renderer &renderer, Shader *shader) {
 		shader->registerUniform("directionalShadingSamples[0]");
 		shader->registerUniform("model");
 		shader->registerUniform("normalModel");
+		shader->registerUniform("time");
 
 		shader->registerSubroutine("shadowDepthPass", GL_FRAGMENT_SHADER);
 		shader->registerSubroutine("renderPass", GL_FRAGMENT_SHADER);
@@ -52,6 +53,7 @@ void Mesh::draw(Renderer &renderer, Shader *shader) {
 		shader->setInitializedBy(identifier());
 	}
 
+	glUniform1f(shader->getUniformLocation("time"), Context::getTime());
 	shader->setShaderSubroutine(SINGLE_MESH_MODE);
 	shader->updateShaderSubroutine();
 
