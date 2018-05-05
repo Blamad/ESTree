@@ -15,6 +15,7 @@ bool GLWindow::initialize() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	//Inicjalizacja okna GLFW
 	glfwWindow = glfwCreateWindow(width, height, "EsTree", nullptr, nullptr);
@@ -39,14 +40,15 @@ bool GLWindow::initialize() {
 
 	//Ustawienie opcji openGLa
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_MULTISAMPLE);
 
 	//Deprecated
 	bool linesOnly = false;
-	if(linesOnly)
+	if (linesOnly)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glEnable(GL_CULL_FACE);
-	
+
 	//Ustawienie koloru czyszczenia ekranu
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
