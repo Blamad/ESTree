@@ -179,7 +179,7 @@ void ConsoleComponent::initFreeType() {
 	if (FT_Init_FreeType(&ft))
 		logger.log(ERROR, "Could not init FreeType Library");
 	FT_Face face;
-	if (FT_New_Face(ft, "Fonts/arial.ttf", 0, &face))
+	if (FT_New_Face(ft, "Fonts/arial_bold.ttf", 0, &face))
 		logger.log(ERROR, "Failed to load font");
 	FT_Set_Pixel_Sizes(face, 0, 24);
 	
