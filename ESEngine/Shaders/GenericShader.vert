@@ -65,7 +65,7 @@ void instancedMesh() {
 	vec4 modelSpacePos = instancedModel * vec4(position, 1.0f);
 	vec4 viewSpacePos = view * modelSpacePos;
 	gl_Position = projection * viewSpacePos;
-	if((texCoords.x == 1 && texCoords.y == 1) || (texCoords.x == 0 && texCoords.y == 1)) {
+	if((texCoords.x == 0 && texCoords.y == 0) || (texCoords.x == 1 && texCoords.y == 0)) {
 		gl_Position.xyz += calcMove(position.xyz, //worldpos.xyz,
 				0.041,
 				0.070,
