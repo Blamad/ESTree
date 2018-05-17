@@ -15,6 +15,7 @@
 #include "TextureBuffer.h"
 #include "GLVertexArray.h"
 
+#include "Context.h"
 #include "Logger.h"
 
 using namespace std;

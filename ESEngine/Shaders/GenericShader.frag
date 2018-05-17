@@ -77,7 +77,8 @@ vec3 calcDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, sam
     vec3 specular = light.specular.rgb * spec * matSpecular;
 
 	float shadow = calcDirectionalShadow(light, normal, lightDir, shadowTexture);
-    vec3 lighting = ambient + (1.0 - shadow) * (diffuse + specular);
+    vec3 lighting = ambient + (1.0 - shadow*0.8) * (diffuse + specular);
+	//vec3 lighting = ambient + diffuse + specular;
 
 	return lighting;
 }  

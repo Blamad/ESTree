@@ -51,6 +51,7 @@ void Engine::renderingLoop() {
 
 	while (!window->shouldClose()) {
 		double currentTime = window->getTime();
+		Context::setTime(currentTime);
 		double deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
 

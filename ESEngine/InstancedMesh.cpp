@@ -18,6 +18,7 @@ void InstancedMesh::draw(Renderer &renderer, Shader *shader) {
 	shader->use();
 
 	if (!shader->isInitializedBy(identifier())) {
+		shader->registerUniform("time");
 		shader->registerUniform("material.ambient");
 		shader->registerUniform("material.diffuse");
 		shader->registerUniform("material.specular");
@@ -41,6 +42,7 @@ void InstancedMesh::draw(Renderer &renderer, Shader *shader) {
 		shader->setInitializedBy(identifier());
 	}
 
+	glUniform1f(shader->getUniformLocation("time"), Context::getTime());
 	shader->setShaderSubroutine(INSTANCED_MESH_MODE);
 	shader->updateShaderSubroutine();
 
