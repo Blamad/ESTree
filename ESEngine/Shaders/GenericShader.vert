@@ -63,10 +63,9 @@ void singleMesh() {
 subroutine (renderMode)
 void instancedMesh() {
 	vec4 modelSpacePos = instancedModel * vec4(position, 1.0f);
-	vec4 viewSpacePos = view * modelSpacePos;
-	gl_Position = projection * viewSpacePos;
+	
 	if((texCoords.x == 0 && texCoords.y == 0) || (texCoords.x == 1 && texCoords.y == 0)) {
-		gl_Position.xyz += calcMove(position.xyz, //worldpos.xyz,
+		modelSpacePos.xyz += calcMove(modelSpacePos.xyz,
 				0.041,
 				0.070,
 				0.044,
@@ -76,6 +75,9 @@ void instancedMesh() {
 				vec3(3.0,1.6,3.0),
 				vec3(0.0,0.0,0.0));
 	}
+
+	vec4 viewSpacePos = view * modelSpacePos;
+	gl_Position = projection * viewSpacePos;
 
 	vs_out.fragPos = vec3(instancedModel * vec4(position, 1.0f));
 	vs_out.normal = mat3(transpose(inverse(instancedModel))) * normal;

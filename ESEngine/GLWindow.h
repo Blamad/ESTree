@@ -49,6 +49,10 @@ private:
 	GLFWwindow* glfwWindow;
 	unique_ptr<InputState> inputState;
 
+	bool initGlfw();
+	bool initGlew();
+	void setupWindowParams();
+
 	//input managment stuff
 	static GLWindow* instance;
 };

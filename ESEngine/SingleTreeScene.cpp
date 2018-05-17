@@ -58,7 +58,7 @@ void SingleTreeScene::initialize() {
 
 	//Light
 	vec3 dir = normalize(vec3(-0.5, -0.5, 0));
-	vec3 distance = vec3(-14);
+	vec3 distance = vec3(-20);
 	createDirectionalLight(distance * dir, dir);
 
 	setActiveCamera(createCamera(vec3(0, 5, 15), -90, -10));

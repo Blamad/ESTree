@@ -72,7 +72,7 @@ void LightsManager::initializeLightsUBO() {
 }
 
 void LightsManager::initialize() {
-	float sizeMod = 6;
+	float sizeMod = 4;
 	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 	shader->initializeMatricesUBO();
 	depthBuffer = unique_ptr<DepthFrameBuffer>(new DepthFrameBuffer(shader, Screen::getScreenWidth() * sizeMod, Screen::getScreenHeight() * sizeMod));

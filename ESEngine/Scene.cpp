@@ -12,6 +12,10 @@ void Scene::setActiveCamera(GameObject *gameObject) {
 	mouseManager->setCamera((CameraBehaviour*)gameObject->getComponent(BEHAVIOUR), activeCamera);
 }
 
+Camera* Scene::getActiveCamera() {
+	return activeCamera;
+}
+
 void Scene::setSkybox(unique_ptr<Skybox> skybox) {
 	this->skybox = std::move(skybox);
 }

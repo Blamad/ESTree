@@ -38,6 +38,7 @@ public:
 	void removeGameObject(GameObject *gameObject);
 
 	void setActiveCamera(GameObject *gameObject);
+	Camera * getActiveCamera();
 	void setSkybox(unique_ptr<Skybox> skybox);
 	void setFrameBuffer(unique_ptr<FrameBuffer> frameBuffer);
 
