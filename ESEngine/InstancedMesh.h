@@ -29,8 +29,8 @@ public:
 	InstancedMesh(vector<Vertex> &vertices, vector<int> &indices, vector<InstancedTransform> &instancedTransforms, shared_ptr<Shader> shader, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
 	~InstancedMesh();
 
-	void draw(Renderer &renderer);
-	void draw(Renderer &renderer, Shader* shader);
+	void draw(Renderer &renderer) override;
+	void draw(Renderer &renderer, Shader* shader) override;
 
 	void addInstance(InstancedTransform instancedTransform);
 	void updateMesh();
@@ -46,7 +46,7 @@ protected:
 
 	void setupMesh();
 
-	int identifier() { return 2; }
+	int identifier() override { return 2; }
 };
 
 #endif
