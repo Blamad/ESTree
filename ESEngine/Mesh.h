@@ -31,8 +31,8 @@ public:
 	Mesh(vector<Vertex> &vertices, vector<int> &indices, vector<shared_ptr<Shader>> shaders, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
 	~Mesh();
 
-	void draw(Renderer &renderer);
-	void draw(Renderer &renderer, Shader *shader);
+	void draw(Renderer &renderer) override;
+	void draw(Renderer &renderer, Shader *shader) override;
 
 	void updateMesh();
 	void showMeshWiring();
@@ -49,7 +49,7 @@ protected:
 	void setupMesh(shared_ptr<Shader> shader);
 	void addNewShader(shared_ptr<Shader> shader);
 
-	int identifier() { return 1; }
+	int identifier() override { return 1; }
 };
 
 #endif

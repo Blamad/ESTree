@@ -20,11 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleComponent.cpp" />
+    <ClCompile Include="ConsoleCubeCommand.cpp" />
     <ClCompile Include="ConsoleInterpreter.cpp" />
+    <ClCompile Include="ConsoleTreeCommand.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="DepthFrameBuffer.cpp" />
     <ClCompile Include="DepthFramePreviewComponent.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="LindenmayerTreeFactory.cpp" />
     <ClCompile Include="LindenmayerTreeMeshGenerator.cpp" />
     <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="PostEffectFrameBuffer.cpp" />
@@ -75,12 +78,17 @@
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="ClickEvent.h" />
     <ClInclude Include="ConsoleComponent.h" />
+    <ClInclude Include="ConsoleCubeCommand.h" />
     <ClInclude Include="ConsoleInterpreter.h" />
     <ClInclude Include="ConsoleMemory.h" />
+    <ClInclude Include="ConsoleTreeCommand.h" />
+    <ClInclude Include="ConsoleUtils.h" />
     <ClInclude Include="Context.h" />
+    <ClInclude Include="ConsoleCustomCommand.h" />
     <ClInclude Include="DepthFrameBuffer.h" />
     <ClInclude Include="DepthFramePreviewComponent.h" />
     <ClInclude Include="KeyEvent.h" />
+    <ClInclude Include="LindenmayerTreeFactory.h" />
     <ClInclude Include="LindenmayerTreeMeshGenerator.h" />
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="PostEffectFrameBuffer.h" />
