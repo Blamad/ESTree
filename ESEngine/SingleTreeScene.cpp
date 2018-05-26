@@ -53,6 +53,7 @@ void SingleTreeScene::initialize() {
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 
+	generateGrass();
 	generateTerrain();
 	addSkybox();
 
@@ -82,6 +83,11 @@ GameObject* SingleTreeScene::createLindenmayerTree(string paramsFileName, vec3 &
 	return addGameObject(move(go));
 }
 
+void SingleTreeScene::generateGrass() {
+	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Grass(Material::diffuseTextureOnly("Textures/grassBlades2.png")));
+	addGameObject(move(go));
+}
+
 void SingleTreeScene::generateTerrain() {
 	Transform* transform;
 	shared_ptr<RigidBody> rigidBody;
@@ -89,7 +95,7 @@ void SingleTreeScene::generateTerrain() {
 
 	go = unique_ptr<GameObject>(new Cube(Material::grass()));
 	transform = getTransform(go.get());
-	transform->scale(vec3(15, 0.1, 15));
+	transform->scale(vec3(21, 0.1, 21));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(0);

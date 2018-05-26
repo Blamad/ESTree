@@ -27,6 +27,7 @@
     <ClCompile Include="DepthFrameBuffer.cpp" />
     <ClCompile Include="DepthFramePreviewComponent.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="Grass.cpp" />
     <ClCompile Include="LindenmayerTreeFactory.cpp" />
     <ClCompile Include="LindenmayerTreeMeshGenerator.cpp" />
     <ClCompile Include="PhysicsScene.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="ConsoleCustomCommand.h" />
     <ClInclude Include="DepthFrameBuffer.h" />
     <ClInclude Include="DepthFramePreviewComponent.h" />
+    <ClInclude Include="Grass.h" />
     <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="LindenmayerTreeFactory.h" />
     <ClInclude Include="LindenmayerTreeMeshGenerator.h" />
@@ -195,6 +197,8 @@
     <Image Include="Textures\barkTexture5.jpg" />
     <Image Include="Textures\container_d.jpg" />
     <Image Include="Textures\container_s.jpg" />
+    <Image Include="Textures\grassBlades1.png" />
+    <Image Include="Textures\grassBlades2.png" />
     <Image Include="Textures\grassTexture.jpeg" />
     <Image Include="Textures\grassTexture.jpg" />
     <Image Include="Textures\leaves1.png" />
