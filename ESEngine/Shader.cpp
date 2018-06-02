@@ -86,8 +86,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	// Delete the shaders as they're linked into our program now and no longer necessery
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
-
-	active = true;
+	init();
 }
 
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath)
@@ -175,7 +174,13 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 	glDeleteShader(geometry);
+	init();
+}
+
+void Shader::init() {
 	active = true;
+	subroutineList[GL_VERTEX_SHADER] = map<string, GLuint>();
+	subroutineList[GL_FRAGMENT_SHADER] = map<string, GLuint>();
 }
 
 void Shader::use() {
@@ -191,7 +196,7 @@ void Shader::registerUniform(const char* unif) {
 }
 
 void Shader::registerSubroutine(const char* subroutine, GLenum shaderType) {
-	subroutineList[subroutine] = glGetSubroutineIndex(program, shaderType, subroutine);
+	subroutineList[shaderType][subroutine] = glGetSubroutineIndex(program, shaderType, subroutine);
 }
 
 GLuint Shader::getAttribLocation(const char* attrib) {
@@ -203,7 +208,13 @@ GLuint Shader::getUniformLocation(const char* unif) {
 }
 
 GLuint Shader::getSubroutineLocation(const char* subroutine) {
-	return subroutineList[subroutine];
+	auto iter = subroutineList[GL_VERTEX_SHADER].find(subroutine);
+	if (iter != subroutineList[GL_VERTEX_SHADER].end()) {
+		return subroutineList[GL_VERTEX_SHADER][subroutine];
+	}
+	else {
+		return subroutineList[GL_FRAGMENT_SHADER][subroutine];
+	}
 }
 
 void Shader::registerMatriciesUBO() {
@@ -236,28 +247,14 @@ void Shader::registerLightsUBO() {
 	glUniformBlockBinding(program, uniformBlockIndex, lightBlockBinding);
 }
 
-void Shader::updateShaderSubroutine() {
-	GLuint indexes[2] = { getSubroutineLocation("renderPass"), getSubroutineLocation("singleMesh") };
-	BOOST_FOREACH(ShaderSubroutine shaderSubroutine, shaderSubroutines) {
-		switch (shaderSubroutine) {
-		case SHADOW_DEPTH_PASS:
-			indexes[0] = getSubroutineLocation("shadowDepthPass");
-			break;
-		case INSTANCED_MESH_MODE:
-			indexes[1] = getSubroutineLocation("instancedMesh");
-			break;
-		default:
-			break;
-		}
+void Shader::setShaderSubroutine(const char* subroutine) {
+	auto iter = subroutineList[GL_VERTEX_SHADER].find(subroutine);
+	if (iter != subroutineList[GL_VERTEX_SHADER].end()) {
+		glUniformSubroutinesuiv(GL_VERTEX_SHADER, 1, &iter->second);
 	}
-
-	glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &indexes[0]);
-	glUniformSubroutinesuiv(GL_VERTEX_SHADER, 1, &indexes[1]);
-	shaderSubroutines.clear();
-}
-
-void Shader::setShaderSubroutine(ShaderSubroutine subroutine) {
-	this->shaderSubroutines.push_back(subroutine);
+	else {
+		glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &subroutineList[GL_FRAGMENT_SHADER][subroutine]);
+	}
 }
 
 bool Shader::isInitializedBy(int initializer) {

@@ -32,17 +32,17 @@ void LightsManager::updateLights(vec3& viewPos, Renderer& renderer, function<voi
 	Shader::updateProjectionMatrix(lightProjection);
 
 	depthBuffer->mountFrameBuffer();
-	
+	depthBuffer->shader->setShaderSubroutine("shadowDepthPass");
+
 	BOOST_FOREACH(Light* light, lights[DIRECTIONAL]) {
 		DirectionalLight* dLight = (DirectionalLight*)light;
 		mat4 lightView = DirectionalLight::getViewMatrix(dLight);
 
 		Shader::updateViewMatrix(lightView);
 		dLight->lightSpace = lightProjection * lightView;
-		depthBuffer->shader->setShaderSubroutine(SHADOW_DEPTH_PASS);
 		renderObjectsFunction(renderer, depthBuffer->shader.get());
 	}
-
+	depthBuffer->shader->setShaderSubroutine("renderPass");
 	depthBuffer->unmountFrameBuffer();
 	Shader::updateProjectionMatrix(Camera::getProjectionMatrix());
 

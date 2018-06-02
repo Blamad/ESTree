@@ -1,5 +1,7 @@
 #include "Grass.h"
 
+boost::variate_generator<boost::mt19937, boost::uniform_real<>> Grass::randomGenerator(boost::mt19937(time(0)), boost::uniform_real<>(-1, 1));
+
 Grass::Grass(Material material) : GameObject() {
 	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 
@@ -8,7 +10,7 @@ Grass::Grass(Material material) : GameObject() {
 	for (int x = -10 * 2 * scale; x < 11 * 2 * scale; x+=2) {
 		for (int z = -10 * 2 * scale; z < 11 * 2 * scale; z+=2) {
 			InstancedTransform t;
-			t.translateModel(vec3(x*scale, 1*scale, z*scale));
+			t.translateModel(vec3((x + randomGenerator()) * scale, 1*scale, (z + randomGenerator()) * scale));
 			transforms.push_back(t);
 		}
 	}

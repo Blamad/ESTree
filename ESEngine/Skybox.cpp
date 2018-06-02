@@ -26,7 +26,6 @@ void Skybox::draw(Renderer &renderer, Shader *shader) {
 		glUniform1i(shader->getUniformLocation("cubemap"), 0);
 		shader->setInitializedBy(identifier());
 	}
-	shader->updateShaderSubroutine();
 
 	glUniformMatrix4fv(shader->getUniformLocation("model"), 1, GL_FALSE, glm::value_ptr(getModelMatrix()));
 

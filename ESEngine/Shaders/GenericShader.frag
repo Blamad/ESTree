@@ -157,12 +157,6 @@ vec3 calcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 }
 
 subroutine (renderPassType)
-void shadowDepthPass() {
-	if(texture(material.texDiffuse, fs_in.texCoords).a < 0.1)
-        discard;
-}
-
-subroutine (renderPassType)
 void renderPass() {
 	if(texture(material.texDiffuse, fs_in.texCoords).a < 0.1)
         discard;
@@ -184,6 +178,12 @@ void renderPass() {
 	}
 
 	color = vec4(result, 1.0f);
+}
+
+subroutine (renderPassType)
+void shadowDepthPass() {
+	if(texture(material.texDiffuse, fs_in.texCoords).a < 0.1)
+        discard;
 }
 
 void main() {

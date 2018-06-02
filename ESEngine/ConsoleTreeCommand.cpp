@@ -1,69 +1,140 @@
 #include "ConsoleTreeCommand.h"
 
 bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
-	if (line[0] != "tree") {
+	if (line[0] != "rtree" && line[0] != "tree") {
 		return false;
 	}
 
-	if (line.size() == 2) {
-		if (line[1] == "rld") {
-			LindenmayerTree *selected = (LindenmayerTree*)Context::getMouseManager()->getSelectedGameObject();
+	LindenmayerTree *selected = nullptr;
+	bool rldTree = false;
+
+	vec3 pos(0, 0, 0);
+	string name = "Tree";
+	LindenmayerTreeParams lindenmayerParameters = LindenmayerTreeParams("LindenmayerRules/randomTree.json");
+	Material barkMaterial = Material::diffuseTextureOnly("Textures/barkTexture3.jpg");
+	Material leavesMaterial = Material::diffuseTextureOnly("Textures/leaves3.png");
+
+	if (line.size() > 1) {
+		map<string, string> params = ConsoleUtils::generateParamsMap(line);
+
+		if (line[0] == "rtree") {
+			selected = (LindenmayerTree*) Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
-				vec3 position = ((Transform*)selected->getComponent(TRANSFORM))->getPosition();
-				GameObject *go = LindenmayerTreeFactory::getInstance().generateTree(selected->getTreeParams(), selected->name, selected->getBarkMaterial(), selected->getLeavesMaterial(), position);
+				rldTree = true;
+				pos = ((Transform*)selected->getComponent(TRANSFORM))->getPosition();
+				name = selected->name;
+				lindenmayerParameters = selected->getTreeParams();
+				barkMaterial = selected->getBarkMaterial();
+				leavesMaterial = selected->getLeavesMaterial();
+			}
+			else {
+				ConsoleUtils::logToConsole("No tree selected!");
+				return false;
+			}
+		}
+
+		if (line.size() % 2 == 1) {
+			while (!params.empty()) {
+				if (params.find("pos") != params.end()) {
+					pos = ConsoleUtils::parseCoords(params["pos"]);
+					params.erase("pos");
+					continue;
+				}
+				if (params.find("name") != params.end()) {
+					name = params["name"];
+					params.erase("name");
+					continue;
+				}
+				if (params.find("file") != params.end()) {
+					if (params["file"].length() > 2) {
+						lindenmayerParameters = LindenmayerTreeParams("LindenmayerRules/" + params["file"]);
+					}
+					else {
+						int index = stoi(params["file"]);
+						static vector<string> treeParams = {
+							"randomTree.json",
+							"symetricTree.json",
+							"fibbonacciTree.json",
+							"advancedTree.json",
+							"advancedTree2.json",
+							//5
+							"test.json",
+							"parametricMonopodialTreeA.json",
+							"parametricMonopodialTreeB.json",
+							"parametricMonopodialTreeC.json",
+							"parametricMonopodialTreeD.json",
+							//10
+							"parametricSympodialTreeA.json",
+							"parametricSympodialTreeB.json",
+							"parametricSympodialTreeC.json",
+							"parametricSympodialTreeD.json",
+							"parametricTernaryTreeA.json"
+							//15
+						};
+						lindenmayerParameters = LindenmayerTreeParams("LindenmayerRules/" + (treeParams.size() > index ? treeParams[index] : treeParams[0]));
+					}
+					params.erase("file");
+					continue;
+				}
+				if (params.find("bark") != params.end()) {
+					if (params["bark"].length() > 2) {
+						barkMaterial = Material::diffuseTextureOnly("Textures/" + params["bark"]);
+					}
+					else {
+						int index = stoi(params["bark"]);
+						static vector<string> barkTextures = {
+							"barkTexture1.jpg",
+							"barkTexture2.jpg",
+							"barkTexture3.jpg",
+							"barkTexture4.jpg",
+							"barkTexture5.jpg",
+							"treeTexture1.jpg",
+							"treeTexture2.jpg"
+						};
+						barkMaterial = Material::diffuseTextureOnly("Textures/" + (barkTextures.size() > index ? barkTextures[index] : barkTextures[0]));
+					}
+					params.erase("bark");
+					continue;
+				}
+				if (params.find("leaves") != params.end()) {
+					if (params["leaves"].length() > 2) {
+						leavesMaterial = Material::diffuseTextureOnly("Textures/" + params["leaves"]);
+					}
+					else {
+						int index = stoi(params["leaves"]);
+						static vector<string> leaves = {
+							"leaves1.png",
+							"leaves2.png",
+							"leaves3.png",
+							"leaves4.png",
+							"leaves5.png",
+							"arrow.png"
+						};
+						leavesMaterial = Material::diffuseTextureOnly("Textures/" + (leaves.size() > index ? leaves[index] : leaves[0]));
+					}
+					params.erase("leaves");
+					continue;
+				}
+
+				ConsoleUtils::logToConsole("Unknown tree parameter!");
+			}
+
+			GameObject *go = LindenmayerTreeFactory::getInstance().generateTree(lindenmayerParameters, name, barkMaterial, leavesMaterial, pos);
+			if (rldTree) {
 				Context::getSceneManager()->getActiveScene()->removeGameObject(selected);
 				Context::getMouseManager()->setSelectedGameObject(go);
 			}
 		}
-	} else if (line.size() % 2 == 1) {
-		map<string, string> params = ConsoleUtils::generateParamsMap(line);
-		vec3 pos(0, 0, 0);
-		string name = "Tree";
-		string filename = "LindenmayerRules/randomTree.json";
-		string barkTexture = "Textures/barkTexture3.jpg";
-		string leavesTexture = "Textures/leaves3.png";
-
-		while (!params.empty()) {
-			if (params.find("pos") != params.end()) {
-				pos = ConsoleUtils::parseCoords(params["pos"]);
-				params.erase("pos");
-				continue;
-			}
-			if (params.find("file") != params.end()) {
-				filename = "LindenmayerRules/" + params["file"];
-				params.erase("file");
-				continue;
-			}
-			if (params.find("name") != params.end()) {
-				name = params["name"];
-				params.erase("name");
-				continue;
-			}
-			if (params.find("bark") != params.end()) {
-				barkTexture = "Textures/" + params["bark"];
-				params.erase("bark");
-				continue;
-			}
-			if (params.find("leaves") != params.end()) {
-				leavesTexture = "Textures/" + params["leaves"];
-				params.erase("leaves");
-				continue;
-			}
-
-			ConsoleUtils::logToConsole("Unknown tree parameter!");
+		else {
+			ConsoleUtils::logToConsole("Command parameters does not match expected values");
 		}
-
-		LindenmayerTreeParams lindenmayerParameters = LindenmayerTreeParams(filename);
-		LindenmayerTreeFactory::getInstance().generateTree(lindenmayerParameters, name, Material::diffuseTextureOnly(barkTexture), Material::diffuseTextureOnly(leavesTexture), pos);
-	}  else {
-		ConsoleUtils::logToConsole("Command parameters does not match expected values");
 	}
 	return true;
 }
 
 void ConsoleTreeCommand::printHelpText() {
-	ConsoleUtils::logToConsole(" - tree rld");
+	ConsoleUtils::logToConsole(" - rtree pos <vec3> file <string/int> name <string> bark <string/int> leaves <string/int>");
 	ConsoleUtils::logToConsole("    reloads selected tree");
-	ConsoleUtils::logToConsole(" - tree pos <vec3> file <string> name <string> bark <string> leaves <string>");
+	ConsoleUtils::logToConsole(" - tree pos <vec3> file <string/int> name <string> bark <string/int> leaves <string/int>");
 	ConsoleUtils::logToConsole("    generate tree");
 }

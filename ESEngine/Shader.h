@@ -38,9 +38,7 @@ public:
 	GLuint getAttribLocation(const char* attrib);
 	GLuint getUniformLocation(const char* unif);
 
-	void setShaderSubroutine(ShaderSubroutine subroutine);
-
-	void updateShaderSubroutine();
+	void setShaderSubroutine(const char* subroutine);
 
 	void use();
 	bool isInitializedBy(int initializer);
@@ -58,12 +56,14 @@ public:
 private:
 	map<string, GLuint> attribList;
 	map<string, GLuint> unifLocationList;
-	map<string, GLuint> subroutineList;
+	map<GLenum, map<string, GLuint>> subroutineList;
 	map<int, bool> initializedBy;
 
 	vector<ShaderSubroutine> shaderSubroutines;
 
 	static GLuint matricesUBO;
+
+	void init();
 };
 
 #endif

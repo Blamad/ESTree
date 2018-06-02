@@ -39,6 +39,22 @@ void ConsoleInterpreter::processInput(string &input) {
 			return;
 		}
 
+		if (line[0] == "clr") {
+			Context::getConsoleMemory()->clear();
+			return;
+		}
+
+		if (line[0] == "hdr" && line.size() == 2) {
+			if (line[1] == "on") {
+				Context::setHdrToggle(true);
+				return;
+			}
+			if (line[1] == "off") {
+				Context::setHdrToggle(false);
+				return;
+			}
+		}
+
 		if (line[0] == "mv" && line.size() == 2) {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
@@ -55,7 +71,7 @@ void ConsoleInterpreter::processInput(string &input) {
 			}
 		}
 
-		ConsoleUtils::logToConsole("Unknown command '"+line[0]+"'");
+		ConsoleUtils::logToConsole("Unknown command or wrong args: '"+ input +"'");
 	}
 	catch (exception e) {
 		ConsoleUtils::logToConsole("Something went wrong!");
@@ -67,10 +83,14 @@ void ConsoleInterpreter::displayHelp() {
 	ConsoleUtils::logToConsole("Available commands:");
 	ConsoleUtils::logToConsole(" - depth <on/off>");
 	ConsoleUtils::logToConsole("    display depth buffer");
+	ConsoleUtils::logToConsole(" - hdr <on/off>");
+	ConsoleUtils::logToConsole("    toggle hdr on/off");
+	ConsoleUtils::logToConsole(" - clr");
+	ConsoleUtils::logToConsole("    clear console");
 	ConsoleUtils::logToConsole(" - rm");
-	ConsoleUtils::logToConsole("    removes selected object");
+	ConsoleUtils::logToConsole("    remove selected object");
 	ConsoleUtils::logToConsole(" - mv <vec3>");
-	ConsoleUtils::logToConsole("    moves selected object by given vector");
+	ConsoleUtils::logToConsole("    translate selected object by given vector");
 
 	BOOST_FOREACH(auto& command, customConsoleCommands) {
 		command->printHelpText();

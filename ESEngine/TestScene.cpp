@@ -27,8 +27,8 @@ void TestScene::initialize() {
 	rigidBody->makeDynamic();
 	addGameObject(move(go));
 
-	go = unique_ptr<GameObject>(new Cube(Material::container()));
-	go->name = "CrateCube";
+	go = unique_ptr<GameObject>(new Cube(Material::ruby()));
+	go->name = "RubyCube";
 	transform = getTransform(go.get());
 	transform->translate(vec3(0, 10, 0));
 	transform->rotate(45.0f, vec3(1, 1, 1));
@@ -39,8 +39,8 @@ void TestScene::initialize() {
 
 	addGameObject(move(go));
 
-	go = unique_ptr<GameObject>(new Cube(Material::ruby()));
-	go->name = "RedCube";
+	go = unique_ptr<GameObject>(new Cube(Material::cyanPlastic()));
+	go->name = "CyanPlasticCube";
 	transform = getTransform(go.get());
 	transform->translate(vec3(5, 12, 2));
 	transform->rotate(45.0f, vec3(1, 1, 1));
@@ -51,27 +51,16 @@ void TestScene::initialize() {
 
 	addGameObject(move(go));
 
-	go = unique_ptr<GameObject>(new Cube(Material::container()));
-	go->name = "CrateCube";
-	transform = getTransform(go.get());
-	transform->translate(vec3(1, 6, 1));
-	transform->rotate(45.0f, vec3(1, 1, 1));
-	rigidBody = shared_ptr<RigidBody>(new RigidBody());
-	go->addComponent(rigidBody);
-	rigidBody->initAsBox(2);
-	rigidBody->makeDynamic();
-
-	addGameObject(move(go));
-
 	generateTerrain();
-	generateSkybox();
+	//generateSkybox();
 
 	//Light
 	createWhiteLampCube(vec3(-15, 20, 0), WEAK);
-	//createWhiteLampCube(vec3(15, 20, 0), WEAK);
+	createWhiteLampCube(vec3(15, 20, 0), WEAK);
 	//createWhiteLampCube(vec3(0, -5, 0), WEAK);
 	vec3 dir = normalize(vec3(-1, -0.5, -1));
 	createDirectionalLight(vec3(dir.x * -10, 15, dir.z * -10), dir);
+	setActiveCamera(createCamera(vec3(0, 5, 15), -90, -10));
 
 	generateFrameBuffer();
 }
@@ -101,6 +90,15 @@ void TestScene::generateTerrain() {
 			addGameObject(move(go));
 		}
 	}
+}
+
+GameObject* TestScene::createCamera(glm::vec3 position, float yaw, float pitch) {
+	unique_ptr<GameObject> go(new GameObject());
+	shared_ptr<Camera> camera = shared_ptr<Camera>(new Camera(position, glm::vec3(0.0f, 1.0f, 0.0f), yaw, pitch));
+	go->addComponent(camera);
+	shared_ptr<CameraBehaviour> cameraBehaviour = shared_ptr<CameraBehaviour>(new CameraBehaviour(camera.get()));
+	go->addComponent(cameraBehaviour);
+	return addGameObject(move(go));
 }
 
 GameObject* TestScene::createWhiteLampCube(vec3 position, PointLightStrength str) {
