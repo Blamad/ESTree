@@ -32,19 +32,19 @@ void InstancedMesh::draw(Renderer &renderer, Shader *shader) {
 		shader->registerSubroutine("instancedMesh", GL_VERTEX_SHADER);
 		shader->registerSubroutine("singleMesh", GL_VERTEX_SHADER);
 
-		glUniform3fv(shader->getUniformLocation("material.ambient"), 1, glm::value_ptr(material.ambient));
-		glUniform3fv(shader->getUniformLocation("material.diffuse"), 1, glm::value_ptr(material.diffuse));
-		glUniform3fv(shader->getUniformLocation("material.specular"), 1, glm::value_ptr(material.specular));
-		glUniform1f(shader->getUniformLocation("material.shininess"), material.shininess);
 		glUniform1i(shader->getUniformLocation("material.texDiffuse"), 0);
 		glUniform1i(shader->getUniformLocation("material.texSpecular"), 1);
 		glUniform1i(shader->getUniformLocation("directionalShadingSamples[0]"), 2);
 		shader->setInitializedBy(identifier());
 	}
 
+	glUniform3fv(shader->getUniformLocation("material.ambient"), 1, glm::value_ptr(material.ambient));
+	glUniform3fv(shader->getUniformLocation("material.diffuse"), 1, glm::value_ptr(material.diffuse));
+	glUniform3fv(shader->getUniformLocation("material.specular"), 1, glm::value_ptr(material.specular));
+	glUniform1f(shader->getUniformLocation("material.shininess"), material.shininess);
 	glUniform1f(shader->getUniformLocation("time"), Context::getTime());
-	shader->setShaderSubroutine(INSTANCED_MESH_MODE);
-	shader->updateShaderSubroutine();
+
+	shader->setShaderSubroutine("instancedMesh");
 
 	if (material.texDiffuse != nullptr) {
 		glActiveTexture(GL_TEXTURE0);

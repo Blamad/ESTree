@@ -26,10 +26,14 @@ void HDRFrameBuffer::init() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	initDrawingQuad();
+
+	shader->registerSubroutine("noHDR", GL_FRAGMENT_SHADER);
+	shader->registerSubroutine("adaptativeToneMapping", GL_FRAGMENT_SHADER);
 }
 
 void HDRFrameBuffer::executeFrameBuffer(Renderer& renderer) {
 	shader->use();
+	Context::getHdrToggle() ? shader->setShaderSubroutine("adaptativeToneMapping") : shader->setShaderSubroutine("noHDR");
 	glBindVertexArray(quadVAO);
 	glBindTexture(GL_TEXTURE_2D, buffer->id);
 	glDrawArrays(GL_TRIANGLES, 0, 6);

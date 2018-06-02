@@ -321,6 +321,9 @@
     <ClCompile Include="ConsoleCubeCommand.cpp">
       <Filter>TestProject\Console\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Grass.cpp">
+      <Filter>TestProject\Models\General\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -554,6 +557,9 @@
     <ClInclude Include="ConsoleCubeCommand.h">
       <Filter>TestProject\Console\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Grass.h">
+      <Filter>TestProject\Models\General\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\LampShader.frag">
@@ -724,6 +730,12 @@
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
     <Image Include="Textures\Skybox\top.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\grassBlades1.png">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\grassBlades2.png">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
   </ItemGroup>

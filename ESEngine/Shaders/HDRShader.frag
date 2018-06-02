@@ -5,25 +5,23 @@ in vec2 texCoords;
 
 uniform sampler2D screenTexture;
 
-void example1();
-void example2();
-void old();
-void none();
+void adaptativeToneMapping();
+void noHDR();
+
+subroutine void hdrMode();
+subroutine uniform hdrMode hdrModeSubroutine;
 
 void main() {
-	//none();
-	//old();
-	//example1();
-	example2();
+	hdrModeSubroutine();
 }
 
-void example1() {
-	fragColor = texelFetch(screenTexture, ivec2(gl_FragCoord.xy), 0);
-	fragColor.rgb = vec3(1.0) - exp(-fragColor.rgb * 1.0);
-	fragColor.a = 1.0;
+subroutine(hdrMode)
+void noHDR() {
+	fragColor.rgba = vec4(texture(screenTexture, texCoords).rgb, 1.0);
 }
 
-void example2() {
+subroutine(hdrMode)
+void adaptativeToneMapping() {
 	int i;
 	float lum[25];
 	vec2 texScale = vec2(1.0) / textureSize(screenTexture, 0);
@@ -49,22 +47,4 @@ void example2() {
 
 	fragColor.rgb = 1.0 - exp2(-vColor * exposure);
 	fragColor.a = 1.0f;
-}
-
-void old() {
-	const float gamma = 2.2;
-	const float exposure = 1.0;
-
-    vec3 hdrColor = texelFetch(screenTexture, ivec2(gl_FragCoord.xy), 0).rgb;
-
-	// Exposure tone mapping
-    vec3 mapped = vec3(1.0) - exp(-hdrColor * exposure);
-    // gamma correction 
-    mapped = pow(mapped, vec3(1.0 / gamma));
-  
-    fragColor = vec4(mapped, 1.0);
-}
-
-void none() {
-	fragColor = texelFetch(screenTexture, ivec2(gl_FragCoord.xy), 0).rgba;
 }

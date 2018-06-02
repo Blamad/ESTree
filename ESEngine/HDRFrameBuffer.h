@@ -2,6 +2,7 @@
 #define HDR_FRAME_BUFFER_H
 
 #include "FrameBuffer.h"
+#include "Context.h"
 
 class HDRFrameBuffer : public FrameBuffer {
 public:

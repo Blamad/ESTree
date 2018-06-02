@@ -19,6 +19,7 @@ bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
 				continue;
 			}
 			ConsoleUtils::logToConsole("Unknown cube parameter!");
+			break;
 		}
 
 		unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container(), false, false));
@@ -67,9 +68,11 @@ bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
 					strength = PointLightStrength::MEDIUM;
 				}
 				params.erase("strength");
+				continue;
 			}
 
 			ConsoleUtils::logToConsole("Unknown light parameter!");
+			break;
 		}
 
 		unique_ptr<GameObject> go = unique_ptr<GameObject>(new LampCube(vec4(1,1,1,1)));
