@@ -7,7 +7,7 @@ boost::variate_generator<boost::mt19937, boost::uniform_real<> > LindenmayerTree
 
 Logger LindenmayerTree::logger("LindenmayerTree");
 
-LindenmayerTree::LindenmayerTree(LindenmayerTreeParams &params, Material &material, Material &leavesMaterial, bool useMeshWiring, bool normalVisualisation) : params(params), material(material), leavesMaterial(leavesMaterial), meshWiring(useMeshWiring), normalVisualisation(normalVisualisation), GameObject() {
+LindenmayerTree::LindenmayerTree(LindenmayerTreeParams &params, Material &material, Material &leavesMaterial, bool useMeshWiring, bool normalVisualisation) : params(params), barkMaterial(material), leavesMaterial(leavesMaterial), meshWiring(useMeshWiring), normalVisualisation(normalVisualisation), GameObject() {
 	this->vBufferSize = 100000;
 	this->iBufferSize = 4000000;
 	this->ringDensity = 9;
@@ -20,9 +20,10 @@ void LindenmayerTree::generate() {
 
 void LindenmayerTree::generateTree() {
 	logger.log(INFO, "Generation started: " + params.name);
-	generateTreeMesh();
-	//generateInstancedLeaves();
-	generateLeaves();
+	generateMeshSkeleton();
+	generateMeshData();
+	generateInstancedLeaves();
+	//generateLeaves();
 	logger.log(INFO, "Generation finished. " + to_string(mesh->indices.size() / 3) + " tris.");
 }
 
@@ -65,8 +66,7 @@ void LindenmayerTree::createMeshComponent() {
 	v.reserve(vBufferSize);
 	i.reserve(iBufferSize);
 
-
-	Shader shader = Shader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 	mesh = shared_ptr<Mesh>(new Mesh(v, i, shader, vBufferSize, iBufferSize, GL_STREAM_DRAW));
 
 	if (meshWiring)
@@ -74,7 +74,7 @@ void LindenmayerTree::createMeshComponent() {
 	if (normalVisualisation)
 		mesh->showNormalVisualisation();
 
-	mesh->material = material;
+	mesh->material = barkMaterial;
 	addComponent(mesh);
 
 	meshGenerator = make_unique<LindenmayerTreeMeshGenerator>(LindenmayerTreeMeshGenerator(mesh.get(), ringDensity));
@@ -328,17 +328,45 @@ void LindenmayerTree::generateLeaves() {
 			else
 				leafTransform->setModelMatrix(seg->modelMatrix);
 			
-
 			shared_ptr<Mesh> leafMesh = generateLeaf();
 			go->addComponent(leafMesh);
-
 			this->addGameObject(go);
 		}
 	}
 }
 
+void LindenmayerTree::generateInstancedLeaves() {
+	vector<InstancedTransform> instancedTransforms;
+	Transform *transform = (Transform*)getComponent(TRANSFORM);
+	
+	for (auto & seg : segmentsVec) {
+		if (!seg->isLastStem())
+			continue;
+		if (randomGenerator() > leavesGrowthProbability) {
+			InstancedTransform it;
+
+			if (params.leavesAngleDiversity > 0) {
+				mat4 leafRotation;
+				float angle = randomGenerator() * 2 * params.leavesAngleDiversity - params.leavesAngleDiversity;
+				leafRotation = rotate(leafRotation, angle, vec3(0, 1, 0));
+				it.modelMatrix = transform->getModelMatrix() * seg->modelMatrix * leafRotation;
+			}
+			else
+				it.modelMatrix = transform->getModelMatrix() * seg->modelMatrix;
+			
+			it.generateNormalModelMatrix();
+			instancedTransforms.push_back(it);
+		}
+	}
+
+	shared_ptr<InstancedMesh> leavesMesh = createInstancedLeavesPanelMesh(instancedTransforms);
+	shared_ptr<GameObject> go(new GameObject());
+	go->addComponent(leavesMesh);
+	this->addGameObject(go);
+}
+
 shared_ptr<Mesh> LindenmayerTree::generateLeaf() {
-	Shader shader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 
 	vector<Vertex> vertices = {
 		//front
@@ -363,35 +391,8 @@ shared_ptr<Mesh> LindenmayerTree::generateLeaf() {
 	return mesh;
 }
 
-void LindenmayerTree::generateInstancedLeaves() {
-	Transform *transform = (Transform*)getComponent(TRANSFORM);
-	vector<InstancedTransform> instancedTransforms;
-	for (auto & seg : segmentsVec) {
-		if (!seg->isLastStem())
-			continue;
-		if (randomGenerator() > leavesGrowthProbability) {
-			InstancedTransform it;
-
-			if (params.leavesAngleDiversity > 0) {
-				mat4 leafRotation;
-				float angle = randomGenerator() * 2 * params.leavesAngleDiversity - params.leavesAngleDiversity;
-				leafRotation = rotate(leafRotation, angle, vec3(0, 1, 0));
-				it.modelMatrix = leafRotation * transform->getModelMatrix() * seg->modelMatrix;
-			}
-			else
-				it.modelMatrix = transform->getModelMatrix() * seg->modelMatrix;
-			
-			it.generateNormalModelMatrix();
-			instancedTransforms.push_back(it);
-		}
-	}
-
-	shared_ptr<InstancedMesh> leavesMesh = createInstancedLeavesPanelMesh(instancedTransforms);
-	addComponent(leavesMesh);
-}
-
 shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms) {
-	Shader shader("Shaders/InstancedShader.vert", "Shaders/GenericShader.frag");
+	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 
 	vector<Vertex> vertices = {
 		//front
@@ -409,56 +410,6 @@ shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesPanelMesh(vector
 	vector<int> indices = {
 		0, 1, 3, 1, 2, 3,
 		4, 5, 7, 5, 6, 7,
-	};
-
-	shared_ptr<InstancedMesh> mesh = shared_ptr<InstancedMesh>(new InstancedMesh(vertices, indices, instancedTransforms, shader, vertices.size(), indices.size(), GL_STREAM_DRAW));
-	mesh->material = leavesMaterial;
-	return mesh;
-}
-
-shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesCubeMesh(vector<InstancedTransform> &instancedTransforms) {
-	Shader shader("Shaders/InstancedShader.vert", "Shaders/GenericShader.frag");
-
-	vector<Vertex> vertices = {
-		//front
-		Vertex::createVertex(vec3(1.0f, -1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 0)),
-		Vertex::createVertex(vec3(1.0f,  1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 1)),
-		Vertex::createVertex(vec3(-1.0f,  1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 1)),
-		Vertex::createVertex(vec3(-1.0f, -1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 0)),
-		//back
-		Vertex::createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(0.0f, 0.0f, -1.0f),	vec2(0, 0)),
-		Vertex::createVertex(vec3(-1.0f,  1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(0, 1)),
-		Vertex::createVertex(vec3(1.0f,  1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 1)),
-		Vertex::createVertex(vec3(1.0f, -1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 0)),
-		//left
-		Vertex::createVertex(vec3(-1.0f, -1.0f,  1.0f),	vec3(-1.0f, 0.0f, 0.0f),	vec2(0, 1)),
-		Vertex::createVertex(vec3(-1.0f,  1.0f,  1.0f),	vec3(-1.0f, 0.0f, 0.0f),	vec2(1, 1)),
-		Vertex::createVertex(vec3(-1.0f,  1.0f, -1.0f),	vec3(-1.0f, 0.0f, 0.0f),	vec2(1, 0)),
-		Vertex::createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(-1.0f, 0.0f, 0.0f),	vec2(0, 0)),
-		//right
-		Vertex::createVertex(vec3(1.0f, -1.0f, -1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(0, 0)),
-		Vertex::createVertex(vec3(1.0f,  1.0f, -1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(1, 0)),
-		Vertex::createVertex(vec3(1.0f,  1.0f,  1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(1, 1)),
-		Vertex::createVertex(vec3(1.0f, -1.0f,  1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(0, 1)),
-		//top
-		Vertex::createVertex(vec3(1.0f, 1.0f,  1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(1, 1)),
-		Vertex::createVertex(vec3(1.0f, 1.0f, -1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(1, 0)),
-		Vertex::createVertex(vec3(-1.0f, 1.0f, -1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(0, 0)),
-		Vertex::createVertex(vec3(-1.0f, 1.0f,  1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(0, 1)),
-		//bottom
-		Vertex::createVertex(vec3(-1.0f, -1.0f,  1.0f),	vec3(0.0f, -1.0f, 0.0f),	vec2(0, 1)),
-		Vertex::createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(0.0f, -1.0f, 0.0f),	vec2(0, 0)),
-		Vertex::createVertex(vec3(1.0f, -1.0f, -1.0f),	vec3(0.0f, -1.0f, 0.0f),	vec2(1, 0)),
-		Vertex::createVertex(vec3(1.0f, -1.0f,  1.0f),	vec3(0.0f, -1.0f, 0.0f),	vec2(1, 1)),
-	};
-
-	vector<int> indices = {
-		0, 1, 3, 1, 2, 3,
-		4, 5, 7, 5, 6, 7,
-		8, 9, 11, 9, 10, 11,
-		12, 13, 15, 13, 14, 15,
-		16, 17, 19, 17, 18, 19,
-		20, 21, 23, 21, 22, 23
 	};
 
 	shared_ptr<InstancedMesh> mesh = shared_ptr<InstancedMesh>(new InstancedMesh(vertices, indices, instancedTransforms, shader, vertices.size(), indices.size(), GL_STREAM_DRAW));

@@ -14,13 +14,17 @@
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtx/euler_angles.hpp>
 
+#include "ShaderManager.h"
 #include "Segment.h"
+#include "Mesh.h"
 #include "InstancedMesh.h"
 #include "LindenmayerTreeParams.h"
 #include "LindenmayerTreeSolver.h"
 #include "LindenmayerTreeMeshGenerator.h"
 
 #include "Logger.h"
+
+using namespace glm;
 
 class LindenmayerTree : public GameObject {
 public:
@@ -29,8 +33,15 @@ public:
 	bool meshWiring;
 	bool normalVisualisation;
 
+	LindenmayerTreeParams getTreeParams() { return params; }
+	Material getBarkMaterial() { return barkMaterial; };
+	Material getLeavesMaterial() { return leavesMaterial; }
+
 protected:
-	Material material;
+	Material barkMaterial;
+	Material leavesMaterial;
+	LindenmayerTreeParams params;
+
 	shared_ptr<Mesh> mesh;
 	shared_ptr<Segment> root;
 
@@ -46,8 +57,6 @@ private:
 
 	vector<shared_ptr<Segment>> segmentsVec;
 	unique_ptr<LindenmayerTreeMeshGenerator> meshGenerator;
-	LindenmayerTreeParams params;
-	Material leavesMaterial;
 	string product;
 
 	static boost::variate_generator<boost::mt19937, boost::uniform_real<>> randomGenerator;
@@ -74,7 +83,6 @@ private:
 
 	//Leaves generation
 	void generateInstancedLeaves();
-	shared_ptr<InstancedMesh> createInstancedLeavesCubeMesh(vector<InstancedTransform> &instancedTransforms);
 	shared_ptr<InstancedMesh> createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms);
 	
 	//Stuff

@@ -33,31 +33,33 @@ void SingleTreeScene::initialize() {
 		"leaves3.png",
 		"leaves4.png",
 		"leaves5.png",
+		"arrow.png"
 	};
 
 	GameObject* go;
 	Material barkMaterial;
-	vec3 position = vec3(3,0,3);
+	vec3 position = vec3(0,0,0);
 	string paramsFileName;
 	string leavesTextureName;
 	bool normalVisualisation;
 	bool meshWiring;
 
 	paramsFileName = "LindenmayerRules/" + treeParams[14];
-	leavesTextureName = "Textures/" + leavesParams[1];
-	barkMaterial = Material::bark1();
+	leavesTextureName = "Textures/" + leavesParams[2];
+	barkMaterial = Material::bark2();
 	normalVisualisation = false;
 	meshWiring = false;	
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 
+	generateGrass();
 	generateTerrain();
 	addSkybox();
 
 	//Light
 	vec3 dir = normalize(vec3(-0.5, -0.5, 0));
-	vec3 distance = vec3(-14);
+	vec3 distance = vec3(-20);
 	createDirectionalLight(distance * dir, dir);
 
 	setActiveCamera(createCamera(vec3(0, 5, 15), -90, -10));
@@ -81,6 +83,11 @@ GameObject* SingleTreeScene::createLindenmayerTree(string paramsFileName, vec3 &
 	return addGameObject(move(go));
 }
 
+void SingleTreeScene::generateGrass() {
+	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Grass(Material::diffuseTextureOnly("Textures/grassBlades2.png")));
+	addGameObject(move(go));
+}
+
 void SingleTreeScene::generateTerrain() {
 	Transform* transform;
 	shared_ptr<RigidBody> rigidBody;
@@ -88,7 +95,7 @@ void SingleTreeScene::generateTerrain() {
 
 	go = unique_ptr<GameObject>(new Cube(Material::grass()));
 	transform = getTransform(go.get());
-	transform->scale(vec3(15, 0.5, 15));
+	transform->scale(vec3(21, 0.1, 21));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(0);
@@ -150,9 +157,7 @@ void SingleTreeScene::addSkybox() {
 		"Textures/Skybox_darkforest/front.jpg"
 	};
 
-	Shader shader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
-
-	unique_ptr<Skybox> skybox(new Skybox(skyboxTex, shader));
+	unique_ptr<Skybox> skybox(new Skybox(skyboxTex));
 	setSkybox(std::move(skybox));
 }
 

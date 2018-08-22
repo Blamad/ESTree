@@ -51,12 +51,13 @@ void Engine::renderingLoop() {
 
 	while (!window->shouldClose()) {
 		double currentTime = window->getTime();
+		Context::setTime(currentTime);
 		double deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
 
 		window->poolInputEvents();
 		sceneManager->getActiveScene()->update(deltaTime, *inputState);
-		inputState->clearMouseEvents();
+		inputState->clearEvents();
 
 		window->prepareFrameRendering();
 		sceneManager->getActiveScene()->renderFrame(*renderer);

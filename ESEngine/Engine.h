@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "LightsManager.h"
 #include "Logger.h"
+#include "Context.h"
 
 class Engine {
 public:

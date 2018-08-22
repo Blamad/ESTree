@@ -3,7 +3,7 @@
 HDRFrameBuffer::HDRFrameBuffer() : FrameBuffer() {
 	this->width = Screen::getScreenWidth() * 2;
 	this->height = Screen::getScreenHeight() * 2;
-	this->shader = unique_ptr<Shader>(new Shader("Shaders/HDRShader.vert", "Shaders/HDRShader.frag"));
+	this->shader = ShaderManager::getShader("Shaders/HDRShader.vert", "Shaders/HDRShader.frag");
 	init();
 };
 
@@ -26,10 +26,14 @@ void HDRFrameBuffer::init() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	initDrawingQuad();
+
+	shader->registerSubroutine("noHDR", GL_FRAGMENT_SHADER);
+	shader->registerSubroutine("adaptativeToneMapping", GL_FRAGMENT_SHADER);
 }
 
 void HDRFrameBuffer::executeFrameBuffer(Renderer& renderer) {
 	shader->use();
+	Context::getHdrToggle() ? shader->setShaderSubroutine("adaptativeToneMapping") : shader->setShaderSubroutine("noHDR");
 	glBindVertexArray(quadVAO);
 	glBindTexture(GL_TEXTURE_2D, buffer->id);
 	glDrawArrays(GL_TRIANGLES, 0, 6);

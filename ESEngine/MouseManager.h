@@ -7,13 +7,18 @@
 #include "CameraBehaviour.h"
 #include "Camera.h"
 #include "InputState.h"
+#include "Context.h"
 
 #include <cmath>
 
 class MouseManager {
 public:
-	MouseManager(PhysicsManager *pManager, CameraBehaviour *cameraBehaviour, Camera *camera) : pManager(pManager), cameraBehaviour(cameraBehaviour), camera(camera), objectPickingMode(true) { };
-	MouseManager(PhysicsManager *pManager) : pManager(pManager), objectPickingMode(true) { };
+	MouseManager(PhysicsManager *pManager, CameraBehaviour *cameraBehaviour, Camera *camera) : pManager(pManager), cameraBehaviour(cameraBehaviour), camera(camera), objectPickingMode(true) {
+		Context::setMouseManager(this);
+	};
+	MouseManager(PhysicsManager *pManager) : pManager(pManager), objectPickingMode(true) {
+		Context::setMouseManager(this);
+	};
 
 	void setCamera(CameraBehaviour *cameraBehaviour, Camera *camera) { 
 		this->camera = camera; 
@@ -21,6 +26,14 @@ public:
 	};
 	
 	void update(double dt, InputState &inputState);
+
+	GameObject* getSelectedGameObject() {
+		return selectedGameObject;
+	}
+
+	void setSelectedGameObject(GameObject *go) {
+		selectedGameObject = go;
+	}
 
 private:
 	static Logger logger;
@@ -38,6 +51,7 @@ private:
 	//RigidBody stuff
 
 	GameObject *pickedGameObject;
+	GameObject *selectedGameObject;
 	double pickedGameObjectMass = -1;
 	double lastXPos = NULL;
 	double lastYPos = NULL;

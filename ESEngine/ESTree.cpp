@@ -5,6 +5,9 @@
 #include "PhysicsScene.h"
 #include "SingleTreeScene.h"
 #include "Logger.h"
+#include "ConsoleInterpreter.h"
+#include "ConsoleTreeCommand.h"
+#include "ConsoleCubeCommand.h"
 
 using namespace glm;
 
@@ -30,6 +33,9 @@ int main() {
 	//treeScene(sceneManager);
 	//testScene(sceneManager);
 	logger.log(INFO, "Scene created. Rendering..");
+
+	ConsoleInterpreter::addCustomCommand(make_shared<ConsoleTreeCommand>(ConsoleTreeCommand()));
+	ConsoleInterpreter::addCustomCommand(make_shared<ConsoleCubeCommand>(ConsoleCubeCommand()));
 
 	engine->startRendering();
 

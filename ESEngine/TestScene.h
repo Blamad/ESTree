@@ -1,6 +1,7 @@
 #ifndef TEST_SCENE_H
 #define TEST_SCENE_H
 
+#include "ShaderManager.h"
 #include "Scene.h"
 #include "Material.h"
 #include "Cube.h"
@@ -25,6 +26,7 @@ public:
 	GameObject* createDirectionalLight(vec3 position, vec3 direction);
 
 	void generateTerrain();
+	GameObject * createCamera(glm::vec3 position, float yaw, float pitch);
 	void generateSkybox();
 
 	void generateFrameBuffer();

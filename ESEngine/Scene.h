@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include "InputState.h"
 #include "FrameBuffer.h"
+#include "UIComponent.h"
 #include "Renderer.h"
 #include "LightsManager.h"
 #include "PhysicsManager.h"
@@ -19,6 +20,7 @@
 #include "Camera.h"
 #include "Skybox.h"
 #include "DepthFrameBuffer.h"
+#include "UIManager.h"
 
 using namespace std;
 
@@ -27,7 +29,7 @@ public:
 	Scene();
 
 	void update(double &dt, InputState &inputState);
-	void renderObjectsUsingShader(Renderer &renderer, Shader &shader);
+	void renderObjectsUsingShader(Renderer &renderer, Shader *shader);
 	void renderObjects(Renderer &renderer);
 	void renderFrame(Renderer &renderer);
 
@@ -36,6 +38,7 @@ public:
 	void removeGameObject(GameObject *gameObject);
 
 	void setActiveCamera(GameObject *gameObject);
+	Camera * getActiveCamera();
 	void setSkybox(unique_ptr<Skybox> skybox);
 	void setFrameBuffer(unique_ptr<FrameBuffer> frameBuffer);
 
@@ -45,16 +48,17 @@ private:
 	unique_ptr<MouseManager> mouseManager;
 	unique_ptr<LightsManager> lightsManager;
 	unique_ptr<PhysicsManager> physicsManager;
+	unique_ptr<UIManager> uiManager;
 	map<Uuid, unique_ptr<GameObject>> gameObjects;
 	unique_ptr<FrameBuffer> sceneFrameBuffer;
 
 	void renderSkybox(Renderer &renderer);
-	function<void(Renderer&, Shader&)> prepareDrawObjectsCall();
+
+	function<void(Renderer&, Shader*)> prepareDrawObjectsCall();
 
 	void preSceneRenderRoutine(Renderer &renderer);
 	void postSceneRenderRoutine(Renderer &renderer);
-
-	void drawGui();
+	void renderUI();
 };
 
 #endif

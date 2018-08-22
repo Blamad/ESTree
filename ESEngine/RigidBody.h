@@ -15,6 +15,7 @@ public:
 	RigidBody();
 	void initAsBox(double mass);
 	void initAsAHullShape(double mass);
+	void initAsAStaticPlane();
 	
 	btRigidBody* rigidBody;
 	bool pickable = false;

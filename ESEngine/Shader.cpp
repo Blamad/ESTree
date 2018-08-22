@@ -52,6 +52,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+		std::cout << vertexPath << std::endl;
 		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 	};
 
@@ -64,6 +65,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
+		std::cout << fragmentPath << std::endl;
 		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
@@ -84,9 +86,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	// Delete the shaders as they're linked into our program now and no longer necessery
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
-
-	initialized = true;
-	active = true;
+	init();
 }
 
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath)
@@ -133,6 +133,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 	if (!success)
 	{
 		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+		std::cout << vertexPath << std::endl;
 		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
@@ -173,9 +174,13 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 	glDeleteShader(geometry);
+	init();
+}
 
-	initialized = true;
+void Shader::init() {
 	active = true;
+	subroutineList[GL_VERTEX_SHADER] = map<string, GLuint>();
+	subroutineList[GL_FRAGMENT_SHADER] = map<string, GLuint>();
 }
 
 void Shader::use() {
@@ -190,12 +195,26 @@ void Shader::registerUniform(const char* unif) {
 	unifLocationList[unif] = glGetUniformLocation(program, unif);
 }
 
+void Shader::registerSubroutine(const char* subroutine, GLenum shaderType) {
+	subroutineList[shaderType][subroutine] = glGetSubroutineIndex(program, shaderType, subroutine);
+}
+
 GLuint Shader::getAttribLocation(const char* attrib) {
 	return attribList[attrib];
 }
 
 GLuint Shader::getUniformLocation(const char* unif) {
 	return unifLocationList[unif];
+}
+
+GLuint Shader::getSubroutineLocation(const char* subroutine) {
+	auto iter = subroutineList[GL_VERTEX_SHADER].find(subroutine);
+	if (iter != subroutineList[GL_VERTEX_SHADER].end()) {
+		return subroutineList[GL_VERTEX_SHADER][subroutine];
+	}
+	else {
+		return subroutineList[GL_FRAGMENT_SHADER][subroutine];
+	}
 }
 
 void Shader::registerMatriciesUBO() {
@@ -211,13 +230,13 @@ void Shader::initializeMatricesUBO() {
 	glBindBufferRange(GL_UNIFORM_BUFFER, matricesBlockBinding, matricesUBO, 0, 2 * sizeof(glm::mat4));
 }
 
-void Shader::updateProjectionMatrix(glm::mat4 projection) {
+void Shader::updateProjectionMatrix(glm::mat4 &projection) {
 	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void Shader::updateViewMatrix(glm::mat4 view) {
+void Shader::updateViewMatrix(glm::mat4 &view) {
 	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
 	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -226,4 +245,22 @@ void Shader::updateViewMatrix(glm::mat4 view) {
 void Shader::registerLightsUBO() {
 	GLuint uniformBlockIndex = glGetUniformBlockIndex(program, "Lights");
 	glUniformBlockBinding(program, uniformBlockIndex, lightBlockBinding);
+}
+
+void Shader::setShaderSubroutine(const char* subroutine) {
+	auto iter = subroutineList[GL_VERTEX_SHADER].find(subroutine);
+	if (iter != subroutineList[GL_VERTEX_SHADER].end()) {
+		glUniformSubroutinesuiv(GL_VERTEX_SHADER, 1, &iter->second);
+	}
+	else {
+		glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &subroutineList[GL_FRAGMENT_SHADER][subroutine]);
+	}
+}
+
+bool Shader::isInitializedBy(int initializer) {
+	return initializedBy[initializer];
+}
+
+void Shader::setInitializedBy(int initializer) {
+	initializedBy[initializer] = true;
 }

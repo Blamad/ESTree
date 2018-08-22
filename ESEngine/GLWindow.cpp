@@ -10,11 +10,44 @@ GLWindow::~GLWindow() {
 }
 
 bool GLWindow::initialize() {
+	if (!initGlfw() || !initGlew())
+		return false;
+	setupWindowParams();
+
+	return true;
+}
+
+void GLWindow::setupWindowParams() {
+	glViewport(0, 0, width, height);
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_MULTISAMPLE);
+
+	if (false)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glEnable(GL_CULL_FACE);
+
+	setCursorVisible();
+}
+
+bool GLWindow::initGlew() {
+	glewExperimental = GL_TRUE;
+	if (glewInit() != GLEW_OK) {
+		std::cout << "Failed to initialize GLEW" << std::endl;
+		return false;
+	}
+	return true;
+}
+
+bool GLWindow::initGlfw() {
 	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	//Inicjalizacja okna GLFW
 	glfwWindow = glfwCreateWindow(width, height, "EsTree", nullptr, nullptr);
@@ -25,33 +58,9 @@ bool GLWindow::initialize() {
 		return false;
 	}
 	glfwMakeContextCurrent(glfwWindow);
-	setCursorVisible();
-
-	//Inicjalizacja GLEW
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK) {
-		std::cout << "Failed to initialize GLEW" << std::endl;
-		return false;
-	}
-
-	//Rozmiar okna
-	glViewport(0, 0, width, height);
-
-	//Ustawienie opcji openGLa
-	glEnable(GL_DEPTH_TEST);
-
-	//Deprecated
-	bool linesOnly = false;
-	if(linesOnly)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else
-		glEnable(GL_CULL_FACE);
-	
-	//Ustawienie koloru czyszczenia ekranu
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-
 	return true;
 }
+
 
 void GLWindow::setViewport(int width, int height) {
 	glViewport(0, 0, width, height);
@@ -93,6 +102,7 @@ InputState* GLWindow::registerInputManager() {
 	glfwSetCursorPosCallback(glfwWindow, GLWindow::mousePositionCallback);
 	glfwSetScrollCallback(glfwWindow, GLWindow::mouseScrollCallback);
 	glfwSetMouseButtonCallback(glfwWindow, GLWindow::mouseClickCallback);
+	glfwSetCharModsCallback(glfwWindow, GLWindow::characterCallback);
 
 	return inputState.get();
 }
@@ -106,10 +116,15 @@ void GLWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, GL_TRUE);
 
+		KeyState state;
+		if (action == GLFW_REPEAT)
+			state = REPEAT;
 		if (action == GLFW_PRESS)
-			instance->inputState->setKeyPressed(key);
-		else if (action == GLFW_RELEASE)
-			instance->inputState->setKeyReleased(key);
+			state = PRESSED;
+		if (action == GLFW_RELEASE)
+			state = RELEASED;
+		
+		instance->inputState->pushKeyEvent(key, state);
 	}
 }
 
@@ -122,6 +137,12 @@ void GLWindow::mousePositionCallback(GLFWwindow* window, double xpos, double ypo
 void GLWindow::mouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	if (instance) {
 		instance->inputState->pushMouseScroll(xoffset, yoffset);
+	}
+}
+
+void GLWindow::characterCallback(GLFWwindow* window, unsigned int codepoint, int mods) {
+	if (instance) {
+		instance->inputState->pushCharEvent(codepoint);
 	}
 }
 

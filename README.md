@@ -7,11 +7,12 @@ ESTree is using few libraries:
  * __GLFW, GLEW, OpenGL__: scene rendering
  * __BulletPhysics__: physics simulation (collisions, mouse picking, collapsing towers made of blocks) 
  * __RapidJSON__: parsing configuration files
+ * __FreeType__: text rendering
 
 Sample screenshot presenting current engine abilities regarding tree generation:
 
  * Tree model descibed by Lindenmayer rules using few fibbonacci properties:
   ![Sample screenshot](/images/fibbonacciTree_18_01_2018.PNG)
  
- * Tree model generated from rules described in "The Algorithmic Beauty of Plants":
+ * Sympodial tree model generated from rules described in "The Algorithmic Beauty of Plants":
   ![Sample screenshot](/images/sympodialTree3_18_01_2018.PNG)

@@ -130,6 +130,27 @@
     <Filter Include="TestProject\Models\Trees\Tree Models\Parametric">
       <UniqueIdentifier>{473106b6-3b4e-4933-a104-0cc2c5705fb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\UI">
+      <UniqueIdentifier>{5acc73ed-4ad9-4f55-9cee-0d0224f81803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\Source Files">
+      <UniqueIdentifier>{09ab0b16-57e9-42e9-8933-f3bc7d6e8481}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\Interfaces">
+      <UniqueIdentifier>{9873703b-a9ee-4572-8b78-0e5cd55747af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\Header Files">
+      <UniqueIdentifier>{10c04a73-3ffb-458e-a77a-148fb97abdac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Console">
+      <UniqueIdentifier>{000cc8ee-54eb-49d0-bc0c-589a5246777b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Console\Source Files">
+      <UniqueIdentifier>{0cb51d52-a3e2-4ada-918a-ac5bc41e3e2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestProject\Console\Header Files">
+      <UniqueIdentifier>{dcece3fe-3c73-41e4-a5b1-8017c8dbdb4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -255,6 +276,12 @@
     <ClCompile Include="DirectionalLight.cpp">
       <Filter>Engine\GameObject\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>TestProject\Models\General\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="LindenmayerTreeSolver.cpp">
       <Filter>TestProject\Models\Trees\Source Files</Filter>
     </ClCompile>
@@ -263,6 +290,39 @@
     </ClCompile>
     <ClCompile Include="PhysicsScene.cpp">
       <Filter>TestProject\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthFramePreviewComponent.cpp">
+      <Filter>Engine\UI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleComponent.cpp">
+      <Filter>Engine\UI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>TestProject\Models\General\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleInterpreter.cpp">
+      <Filter>Engine\UI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Context.cpp">
+      <Filter>Engine\Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LindenmayerTreeFactory.cpp">
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleTreeCommand.cpp">
+      <Filter>TestProject\Console\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleCubeCommand.cpp">
+      <Filter>TestProject\Console\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Grass.cpp">
+      <Filter>TestProject\Models\General\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -437,6 +497,12 @@
     <ClInclude Include="SingleTreeScene.h">
       <Filter>TestProject\Scenes\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>TestProject\Models\General\Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="LindenmayerTreeSolver.h">
       <Filter>TestProject\Models\Trees\Header Files</Filter>
     </ClInclude>
@@ -446,11 +512,56 @@
     <ClInclude Include="PhysicsScene.h">
       <Filter>TestProject\Scenes\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>Engine\UI\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthFramePreviewComponent.h">
+      <Filter>Engine\UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleComponent.h">
+      <Filter>Engine\UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>TestProject\Models\General\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyEvent.h">
+      <Filter>GraphicEngine\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleInterpreter.h">
+      <Filter>Engine\UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Context.h">
+      <Filter>Engine\Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleMemory.h">
+      <Filter>Engine\UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LindenmayerTreeFactory.h">
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleCustomCommand.h">
+      <Filter>Engine\UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleTreeCommand.h">
+      <Filter>TestProject\Console\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleUtils.h">
+      <Filter>Engine\UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleCubeCommand.h">
+      <Filter>TestProject\Console\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grass.h">
+      <Filter>TestProject\Models\General\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\InstancedShader.vert">
-      <Filter>TestProject\Models\Shaders</Filter>
-    </None>
     <None Include="Shaders\LampShader.frag">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
@@ -475,12 +586,6 @@
     <None Include="Shaders\PostEffectShader.vert">
       <Filter>TestProject\Models\Shaders</Filter>
     </None>
-    <None Include="Shaders\DirectionalShadowShader.frag">
-      <Filter>GraphicEngine\Shaders</Filter>
-    </None>
-    <None Include="Shaders\DirectionalShadowShader.vert">
-      <Filter>GraphicEngine\Shaders</Filter>
-    </None>
     <None Include="Shaders\HDRShader.frag">
       <Filter>GraphicEngine\Shaders</Filter>
     </None>
@@ -488,9 +593,6 @@
       <Filter>GraphicEngine\Shaders</Filter>
     </None>
     <None Include="Shaders\DepthQuadDebug.frag">
-      <Filter>GraphicEngine\Shaders\Debug</Filter>
-    </None>
-    <None Include="Shaders\DepthQuadDebug.vert">
       <Filter>GraphicEngine\Shaders\Debug</Filter>
     </None>
     <None Include="Shaders\GeometryDebugShader.vert">
@@ -555,6 +657,12 @@
     </None>
     <None Include="LindenmayerRules\parametricTernaryTreeA.json">
       <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="Shaders\FontShader.vert">
+      <Filter>GraphicEngine\Shaders</Filter>
+    </None>
+    <None Include="Shaders\FontShader.frag">
+      <Filter>GraphicEngine\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -622,6 +730,12 @@
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
     <Image Include="Textures\Skybox\top.jpg">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\grassBlades1.png">
+      <Filter>TestProject\Models\Trees\Textures</Filter>
+    </Image>
+    <Image Include="Textures\grassBlades2.png">
       <Filter>TestProject\Models\Trees\Textures</Filter>
     </Image>
   </ItemGroup>

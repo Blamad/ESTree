@@ -4,11 +4,16 @@ Scene::Scene() {
 	lightsManager.reset(new LightsManager());
 	physicsManager.reset(new PhysicsManager());
 	mouseManager.reset(new MouseManager(physicsManager.get()));
+	uiManager.reset(new UIManager());
 }
 
 void Scene::setActiveCamera(GameObject *gameObject) {
 	activeCamera = (Camera*)gameObject->getComponent(CAMERA);
 	mouseManager->setCamera((CameraBehaviour*)gameObject->getComponent(BEHAVIOUR), activeCamera);
+}
+
+Camera* Scene::getActiveCamera() {
+	return activeCamera;
 }
 
 void Scene::setSkybox(unique_ptr<Skybox> skybox) {
@@ -32,12 +37,13 @@ GameObject* Scene::createGameObject() {
 	return gameObjects[uuid].get();
 }
 
-//TODO Na razie to lezy!
 void Scene::removeGameObject(GameObject *gameObject) {
 	Uuid uuid = gameObject->id;
 
 	if (gameObjects[uuid]->getComponent(LIGHT) != nullptr)
 		lightsManager->removeLight((Light*) gameObjects[uuid]->getComponent(LIGHT));
+	if (gameObjects[uuid]->getComponent(RIGIDBODY) != nullptr)
+		physicsManager->removeRigidBody((RigidBody*)gameObjects[uuid]->getComponent(RIGIDBODY));
 	gameObjects.erase(uuid);
 }
 
@@ -47,6 +53,7 @@ void Scene::setFrameBuffer(unique_ptr<FrameBuffer> frameBuffer) {
 
 void Scene::update(double &dt, InputState &inputState) {
 	physicsManager->step(dt);
+	uiManager->update(dt, inputState);
 	mouseManager->update(dt, inputState);
 
 	for(const auto &node : gameObjects) {
@@ -76,7 +83,7 @@ void Scene::renderObjects(Renderer &renderer) {
 	}
 }
 
-void Scene::renderObjectsUsingShader(Renderer &renderer, Shader &shader) {
+void Scene::renderObjectsUsingShader(Renderer &renderer, Shader *shader) {
 	for (const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
 		for (auto & renderable : go->getComponents(RENDERABLE)) {
@@ -92,9 +99,9 @@ void Scene::renderSkybox(Renderer &renderer) {
 	}
 }
 
-function<void(Renderer&, Shader&)> Scene::prepareDrawObjectsCall() {
-	function<void(Renderer&, Shader&)> renderObjectsFunction;
-	renderObjectsFunction = [this](Renderer& renderer, Shader& shader) { renderObjectsUsingShader(renderer, shader); };
+function<void(Renderer&, Shader*)> Scene::prepareDrawObjectsCall() {
+	function<void(Renderer&, Shader*)> renderObjectsFunction;
+	renderObjectsFunction = [this](Renderer &renderer, Shader *shader) { renderObjectsUsingShader(renderer, shader); };
 	return renderObjectsFunction;
 }
 
@@ -108,7 +115,8 @@ void Scene::renderFrame(Renderer &renderer) {
 	renderSkybox(renderer);
 	
 	postSceneRenderRoutine(renderer);
-	drawGui();
+
+	renderUI();
 }
 
 void Scene::preSceneRenderRoutine(Renderer &renderer) {
@@ -124,6 +132,6 @@ void Scene::postSceneRenderRoutine(Renderer &renderer) {
 	}
 }
 
-void Scene::drawGui() {
-	DepthFrameBuffer::drawDepthFrame();
+void Scene::renderUI() {
+	uiManager->draw();
 }

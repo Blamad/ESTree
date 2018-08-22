@@ -6,7 +6,7 @@
 #include <memory>
 #include <boost/foreach.hpp>
 
-#include "Shader.h"
+#include "ShaderManager.h"
 #include "Renderer.h"
 #include "DepthFrameBuffer.h"
 #include "Light.h"
@@ -21,7 +21,7 @@ class LightsManager {
 public:
 	LightsManager();
 
-	void updateLights(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader&)> renderObjectsFunction);
+	void updateLights(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader*)> renderObjectsFunction);
 
 	void addLight(Light* light);
 	void removeLight(Light* light);

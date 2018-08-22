@@ -7,6 +7,8 @@
 
 #include "RigidBody.h"
 #include "Ray.h"
+#include "Context.h"
+#include "ConsoleMemory.h"
 
 #include "Logger.h"
 
@@ -17,6 +19,7 @@ public:
 
 	void addRigidBody(RigidBody* rigidBody);
 	void reloadRigidBody(RigidBody* rigidBody);
+	void removeRigidBody(RigidBody * rigidBody);
 	void step(double deltaTime);
 	GameObject* raycast(Ray &ray);
 
