@@ -5,17 +5,18 @@
     "initialRadius": 0.8,
     "angle": 34.37,
     "leavesAngleDiversity": 15,
+	"leavesGrowthProbability": 0,
     "r1": 0.9,
     "r2": 0.7,
-    "a1": 5,
-    "a2": 65,
+    "a1": 10,
+    "a2": 60,
     "wr": 0.707
   },
   "axiom": "F(1)=(0.9)A(3,1)",
   "rules": [
     {
       "symbol": "A(l,w)",
-      "production": "=(w)F(l)[^(a1)B(l*r1,wr)]+(180)[^(a2)B(l*r2,wr)]"
+      "production": "=(w)F(l)[v(a1)B(l*r1,wr)]+(180)[v(a2)B(l*r2,wr)]"
     },
     {
       "symbol": "B(l,w)",

@@ -14,6 +14,20 @@ void LindenmayerTreeMeshGenerator::enqueueGenerationData(float &radius, mat4 &tr
 	}
 }
 
+void LindenmayerTreeMeshGenerator::createIndiciesForSegment() {
+	int bottomOffset = getVerticesLength() - 2 * getVerticesPerRing();
+	int topOffset = bottomOffset + getVerticesPerRing();
+	for (int i = 0; i < getVerticesPerRing() - 1; i++) {
+		mesh->indices.push_back(bottomOffset + i);
+		mesh->indices.push_back(topOffset + i);
+		mesh->indices.push_back(bottomOffset + i + 1);
+
+		mesh->indices.push_back(topOffset + i);
+		mesh->indices.push_back(topOffset + i + 1);
+		mesh->indices.push_back(bottomOffset + i + 1);
+	}
+}
+
 void LindenmayerTreeMeshGenerator::generateMesh() {
 	int coresAvailable = boost::thread::hardware_concurrency();
 	int numberOfVerticesPerCore = threadGenerationData.size() / coresAvailable;

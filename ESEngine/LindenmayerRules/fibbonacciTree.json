@@ -8,27 +8,27 @@
   },
   "axiom": "f(4.5)a",
   "rules": [
-    {
+	{
       "symbol": "a",
       "probability": 0.125,
-      "initialDepth": 1,
+	  "initialDepth": 1,
       "production": "`[<f(4.5)a]"
     },
-    {
+	{
       "symbol": "a",
-      "probability": 0.225,
-      "initialDepth": 1,
-      "production": "`[<f(4.5)a][----<f(4.5)a]"
+      "production": "`[<f(4.5)a][-(137.48)<f(4.5)a]",
+	  "probability": 0.225,
+      "initialDepth": 1
     },
-    {
+	{
       "symbol": "a",
       "probability": 0.35,
-      "production": "`[<f(4.5)a][----<f(4.5)a][--------<f(4.5)a]"
+      "production": "`[<f(4.5)a][-(137.48)<f(4.5)a][-(137.48*2)<f(4.5)a]"
     },
-    {
+	{
       "symbol": "a",
       "probability": 0.3,
-      "production": "`[<f(4.5)a][----<f(4.5)a][--------<f(4.5)a][------------<f(4.5)a][----------------<f(4.5)a]"
+      "production": "`[<f(4.5)a][-(137.48)<f(4.5)a][-(137.48*2)<f(4.5)a][-(137.48*3)<f(4.5)a][-(137.48*4)<f(4.5)a]"
     }
   ]
 }

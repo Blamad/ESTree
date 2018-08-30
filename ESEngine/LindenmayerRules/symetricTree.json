@@ -11,7 +11,7 @@
   "rules": [
     {
       "symbol": "a",
-      "production": "`(w)[vfa][^+(a1)+(a1)fa][>-(a1)fa][<+(a1)fa]"
+      "production": "`(w)[vfa][^+(2*a1)fa][>-(a1)fa][<+(a1)fa]"
     }
   ]
 }

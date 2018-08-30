@@ -6,6 +6,12 @@ void Mesh::draw(Renderer &renderer) {
 	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
 		draw(renderer, shader.get());
 	}
+	if (isNormalsShaderEnabled) {
+		draw(renderer, getNormalsShader());
+	}
+	if (isMeshWiringShaderEnabled) {
+		draw(renderer, getMeshWiringShader());
+	}
 }
 
 void Mesh::draw(Renderer &renderer, Shader *shader) {
@@ -132,9 +138,17 @@ void Mesh::addNewShader(shared_ptr<Shader> shader) {
 }
 
 void Mesh::showMeshWiring() {
-	addNewShader(ShaderManager::getShader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/MeshWiringShader.geom"));
+	isMeshWiringShaderEnabled = true;
 }
 
 void Mesh::showNormalVisualisation() {
-	addNewShader(ShaderManager::getShader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/NormalVisualisationShader.geom"));
+	isNormalsShaderEnabled = true;
+}
+
+void Mesh::hideMeshWiring() {
+	isMeshWiringShaderEnabled = false;
+}
+
+void Mesh::hideNormalVisualisation() {
+	isNormalsShaderEnabled = false;
 }

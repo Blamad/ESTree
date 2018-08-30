@@ -1,10 +1,15 @@
 #include "LindenmayerTreeParams.h"
 
 LindenmayerTreeParams::LindenmayerTreeParams(string filePath) {
-	if(filePath.substr(filePath.find_last_of('.')+1) == "l")
-		readLFile(filePath);
+	filepath = filePath;
+	loadFile(filepath);
+}
+
+void LindenmayerTreeParams::loadFile(string &filepath) {
+	if (filepath.substr(filepath.find_last_of('.') + 1) == "l")
+		readLFile(filepath);
 	else
-		readJSONFile(filePath);
+		readJSONFile(filepath);
 }
 
 void LindenmayerTreeParams::readJSONFile(string filePath) {
@@ -41,10 +46,15 @@ void LindenmayerTreeParams::readJSONFile(string filePath) {
 		}
 		else if (paramName == "tropism") {
 			tropism = vec3(m.value.GetArray()[0].GetFloat(), m.value.GetArray()[1].GetFloat(), m.value.GetArray()[2].GetFloat());
+			tropism = normalize(tropism);
 		}
 		else if (paramName == "tropismBendingFactor") {
 			float paramValue = m.value.GetFloat();
-			tropismBendingFactor = radians(paramValue);
+			tropismBendingFactor = paramValue;
+		}
+		else if (paramName == "leavesGrowthProbability") {
+			float paramValue = m.value.GetFloat();
+			leafGrowthProb = paramValue;
 		}
 		else {
 			float paramValue = m.value.GetFloat();

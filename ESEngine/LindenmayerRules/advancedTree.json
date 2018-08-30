@@ -3,6 +3,7 @@
     "depth": 4,
     "initialLength": 0.5,
     "initialRadius": 0.25,
+    "leavesGrowthProbability": 0.0,
     "angle": 7,
 	"a1": 35
   },
@@ -10,15 +11,15 @@
   "rules": [
     {
       "symbol": "F",
-      "production": "`Y[^(a1)MF][v(a1)NF][-(a1)OF][+(a1)PF]"
+      "production": "`Y[v(a1)MF][^(a1)NF][-(a1)OF][+(a1)PF]"
     },
     {
       "symbol": "M",
-      "production": "ZfvMf"
+      "production": "Zf^Mf"
     },
     {
       "symbol": "N",
-      "production": "Zf^Nf"
+      "production": "ZfvNf"
     },
     {
       "symbol": "O",
@@ -30,7 +31,7 @@
     },
     {
       "symbol": "Y",
-      "production": "ZfvZYf^"
+      "production": "Zf^ZYfv"
     },
     {
       "symbol": "Z",

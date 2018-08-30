@@ -19,6 +19,36 @@ void ConsoleInterpreter::processInput(string &input) {
 			return;
 		}
 
+		if (line[0] == "normals" && line.size() == 2) {
+			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
+			if (selected != nullptr) {
+				Mesh *mesh = (Mesh*)selected->getComponent(RENDERABLE);
+				if (line[1] == "off") {
+					mesh->hideNormalVisualisation();
+				}
+				if (line[1] == "on") {
+					mesh->showNormalVisualisation();
+				}
+			}
+			
+			return;
+		}
+
+		if (line[0] == "wiring" && line.size() == 2) {
+			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
+			if (selected != nullptr) {
+				Mesh *mesh = (Mesh*)selected->getComponent(RENDERABLE);
+				if (line[1] == "off") {
+					mesh->hideMeshWiring();
+				}
+				if (line[1] == "on") {
+					mesh->showMeshWiring();
+				}
+			}
+
+			return;
+		}
+
 		if (line[0] == "depth" && line.size() == 2) {
 			if (line[1] == "off") {
 				Context::getUIManager()->toggleDepthBufferComponent(false);
@@ -85,6 +115,10 @@ void ConsoleInterpreter::displayHelp() {
 	ConsoleUtils::logToConsole("    display depth buffer");
 	ConsoleUtils::logToConsole(" - hdr <on/off>");
 	ConsoleUtils::logToConsole("    toggle hdr on/off");
+	ConsoleUtils::logToConsole(" - normals <on/off>");
+	ConsoleUtils::logToConsole("    toggle mesh normals on/off");
+	ConsoleUtils::logToConsole(" - wiring <on/off>");
+	ConsoleUtils::logToConsole("    toggle mesh wiring on/off");
 	ConsoleUtils::logToConsole(" - clr");
 	ConsoleUtils::logToConsole("    clear console");
 	ConsoleUtils::logToConsole(" - rm");

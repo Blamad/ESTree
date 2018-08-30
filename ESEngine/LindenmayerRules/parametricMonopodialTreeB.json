@@ -16,7 +16,7 @@
   "rules": [
     {
       "symbol": "A(l,w)",
-      "production": "=(w)F(l)[^(a0)B(l*r2,wr)]+(d)A(l*r1,wr)"
+      "production": "=(w)F(l)[v(a0)B(l*r2,wr)]+(d)A(l*r1,wr)"
     },
     {
       "symbol": "B(l,w)",

@@ -2,13 +2,13 @@
   "parameters": {
     "depth": 6,
     "initialLength": 2,
-    "initialRadius": 0.5,
+    "initialRadius": 1.0,
     "angle": 34.37,
     "tropism": [ 0, -1, 0 ],
-    "tropismBendingFactor": 0.22,
-    "leavesGrowthProbability": 0.0,
-    "d1": 94.74,
-    "d2": 132.63,
+    "tropismBendingFactor": 0.14,
+    "leavesGrowthProbability": 1.0,
+    "d1": 137.5,
+    "d2": 137.5,
     "a": 18.95,
     "lr": 1.109,
     "vr": 0.95
