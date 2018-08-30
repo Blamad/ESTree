@@ -18,5 +18,5 @@ uniform mat3 normalModel;
 void main()
 {
     gl_Position = projection * view * model * vec4(position, 1.0); 
-    vs_out.normal = normalize(vec3(projection * vec4(normalModel * normal, 1.0)));
+    vs_out.normal = mat3(transpose(inverse(view))) * normal;
 }

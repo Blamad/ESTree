@@ -52,9 +52,10 @@ void SingleTreeScene::initialize() {
 	paramsFileName = "LindenmayerRules/" + treeParams[15];
 	leavesTextureName = "Textures/" + leavesParams[1];
 	barkMaterial = Material::bark1();
-	normalVisualisation = false;
+	normalVisualisation = true;
 	meshWiring = false;
 	position = vec3(0, 0, 0);
+
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
