@@ -16,3 +16,6 @@ Sample screenshot presenting current engine abilities regarding tree generation:
  
  * Sympodial tree model generated from rules described in "The Algorithmic Beauty of Plants":
   ![Sample screenshot](/images/sympodialTree3_18_01_2018.PNG)
+  
+ * Ternary tree model generated from rules described in "The Algorithmic Beauty of Plants":
+  ![Sample screenshot](/images/ternaryTreeA_29_08_2018.PNG)
