@@ -324,6 +324,9 @@
     <ClCompile Include="Grass.cpp">
       <Filter>TestProject\Models\General\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LindenmayerTreeInterpreter.cpp">
+      <Filter>TestProject\Models\Trees\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -560,6 +563,9 @@
     <ClInclude Include="Grass.h">
       <Filter>TestProject\Models\General\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LindenmayerTreeInterpreter.h">
+      <Filter>TestProject\Models\Trees\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\LampShader.frag">
@@ -663,6 +669,15 @@
     </None>
     <None Include="Shaders\FontShader.frag">
       <Filter>GraphicEngine\Shaders</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricTernaryTreeC.json">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricTernaryTreeD.json">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
+    <None Include="LindenmayerRules\parametricTernaryTreeB.json">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 #include <boost/thread/thread.hpp>
 
 #include "Mesh.h"
+#include "InstancedMesh.h"
 
 class VertexGenerationAttributes;
 
@@ -12,8 +13,17 @@ public:
 	LindenmayerTreeMeshGenerator(Mesh *mesh, int &ringDensity);
 
 	void enqueueGenerationData(float &radius, mat4 &transform, int textureY);
+	void createIndiciesForSegment();
+	int getVerticesLength() { return mesh->vertices.size(); }
+	int getIndicesLength() { return mesh->indices.size(); }
+	int getVerticesPerRing() { return ringDensity; }
+
 	void generateMesh();
 
+	//Leaves generation
+	void generateLeaves();
+	void generateInstancedLeaves();
+	
 private:
 	vector<VertexGenerationAttributes> threadGenerationData;
 	float textureXStep;
@@ -21,6 +31,9 @@ private:
 	Mesh *mesh;
 
 	void computeRingPoint(int startIndex, int endIndex, Mesh *mesh);
+
+	shared_ptr<Mesh> generateLeaf();
+	shared_ptr<InstancedMesh> createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms);
 };
 
 class VertexGenerationAttributes {

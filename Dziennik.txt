@@ -215,15 +215,16 @@ InstancedMesh jest dodawany do GameObject obslugujacego wylacznie instancje. Ten
 Symbole l systemu (reguła prawej dłoni):
 [ - wrzuta na stos
 ] - zdjęcie ze stosu
-v - rotacja po x(+)
+v - rotacja po x(+) pitch
 ^ - rotacja po x(-)
-< - rotacja po z(+)
+< - rotacja po z(+) yaw
 > - rotacja po z(-)
-- - rotacja po y(-)
+- - rotacja po y(-) roll
 + - rotacja po y(+)
 ` - skalowanie całego elementu
 = - skalowanie wyłącznie grubości
 $ - równaj prawy wektor do poziomu
+T - aplikuj grawitacje na gałąź
 fF- rysuj gałąź
 
 Instanced rendering zrobiony. Migracja na jsona zrobiona.
@@ -278,3 +279,13 @@ losowość parametrów
 31.03.2018
 DepthFrameBuffer jest tworzony w LightsManager, wewnątrz niego są metody rysowania i tak jednego bufora. Czemu właściwie nie uczynić buforów singletonami?
 Dużo by to ułatwiło.
+
+Tanslate:
+Linden	projekt	houdini	nazwą
+!		=				zwężenie
+&		v		^		pitch down (+)	DO POPRAWKI (tu jest fakap bo książka korzysta z lewego wektora więc kierunki są odwrócone względem mojej pracy i Houdini)
+^		^		&		pitch up (-)	DO POPRAWKI (tu jest fakap bo książka korzysta z lewego wektora więc kierunki są odwrócone względem mojej pracy i Houdini)
+/		+		/		roll left (+) 	OK
+\		-		\\		roll right (-)	OK
++		<		+		turn left (+)	OK
+-		>		-		turn right (-)	OK

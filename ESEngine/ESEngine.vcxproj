@@ -29,6 +29,7 @@
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Grass.cpp" />
     <ClCompile Include="LindenmayerTreeFactory.cpp" />
+    <ClCompile Include="LindenmayerTreeInterpreter.cpp" />
     <ClCompile Include="LindenmayerTreeMeshGenerator.cpp" />
     <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="PostEffectFrameBuffer.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="Grass.h" />
     <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="LindenmayerTreeFactory.h" />
+    <ClInclude Include="LindenmayerTreeInterpreter.h" />
     <ClInclude Include="LindenmayerTreeMeshGenerator.h" />
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="PostEffectFrameBuffer.h" />
@@ -166,6 +168,9 @@
     <None Include="LindenmayerRules\parametricSympodialTreeC.json" />
     <None Include="LindenmayerRules\parametricSympodialTreeD.json" />
     <None Include="LindenmayerRules\parametricTernaryTreeA.json" />
+    <None Include="LindenmayerRules\parametricTernaryTreeB.json" />
+    <None Include="LindenmayerRules\parametricTernaryTreeC.json" />
+    <None Include="LindenmayerRules\parametricTernaryTreeD.json" />
     <None Include="LindenmayerRules\randomTree.json" />
     <None Include="LindenmayerRules\randomTree2.json" />
     <None Include="LindenmayerRules\symetricTree.json" />

@@ -15,12 +15,14 @@ enum SegmentType {
 
 class SegmentTransform {
 public:
-	SegmentTransform(glm::quat &rotation, float length, float radius, float lengthScale = 1, float roll = 0) : rotation(rotation), length(length), radius(radius), lengthScale(lengthScale), roll(roll) {};
+	SegmentTransform(glm::quat &rotation, glm::quat &totalRotation, float length, float radius, float angle, float lengthScale = 1, float roll = 0) : rotation(rotation), totalRotation(totalRotation), length(length), radius(radius), lengthScale(lengthScale), roll(roll), angle(angle) {};
 	float length;
 	float lengthScale;
 	float radius;
+	float angle;
 	
 	glm::quat rotation;
+	glm::quat totalRotation;
 	float roll;
 };
 
@@ -45,8 +47,6 @@ public:
 	//Buffer  offsets
 	int verticiesOffset = -1;
 	int indiciesOffset = -1;
-	//Number of segments
-	int segments = -1;
 	//Segment radius scale
 	float radius = 0;
 	//Rotation

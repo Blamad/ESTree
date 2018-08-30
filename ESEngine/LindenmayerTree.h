@@ -2,16 +2,12 @@
 #define LINDENMAYER_TREE_H
 
 #include <string>
-#include <stack>
 #include <vector>
 
 #include <time.h>
 #include <boost/generator_iterator.hpp>
 #include <boost/foreach.hpp>
 #include <boost/thread/thread.hpp>
-
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/euler_angles.hpp>
 
 #include "ShaderManager.h"
 #include "Segment.h"
@@ -20,6 +16,7 @@
 #include "LindenmayerTreeParams.h"
 #include "LindenmayerTreeSolver.h"
 #include "LindenmayerTreeMeshGenerator.h"
+#include "LindenmayerTreeInterpreter.h"
 
 #include "Logger.h"
 
@@ -42,7 +39,7 @@ protected:
 	LindenmayerTreeParams params;
 
 	shared_ptr<Mesh> mesh;
-	shared_ptr<Segment> root;
+	vector<shared_ptr<Segment>> segmentsVec;
 
 	int vBufferSize = 1000;
 	int iBufferSize = 4000;
@@ -52,9 +49,7 @@ protected:
 
 private:
 	static Logger logger;
-	static float leavesGrowthProbability;
 
-	vector<shared_ptr<Segment>> segmentsVec;
 	unique_ptr<LindenmayerTreeMeshGenerator> meshGenerator;
 	string product;
 
@@ -64,17 +59,13 @@ private:
 
 	//Parsing l-data
 	void generateMeshSkeleton();
-	float getNumericParameter(string product, int index);
-	float returnNewIndexAfterParameter(string product, int index);
+	
+	//Creating mesh generation data
+	void generateMeshData();
 	
 	//Mesh and vertices stuff
 	void generateTreeMesh();
 	void createMeshComponent();
-	void generateMeshData();
-	quat restoreHorizontalOrientation(SegmentTransform transform);
-	void createRoot(SegmentTransform &transform);
-	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, SegmentTransform &transform);
-	shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, float &radius, float &length, quat &rotation);
 	
 	void generateLeaves();
 	shared_ptr<Mesh> generateLeaf();
@@ -84,22 +75,12 @@ private:
 	shared_ptr<InstancedMesh> createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms);
 	
 	//Stuff
-	float toRadians(float angle) {
-		return angle * 3.14159265359 / 180;
-	}
-
-	float toAngle(float radians) {
-		return radians * 180 / 3.14159265359;
-	}
-
 	string number(float val) {
 		if (val < 0.001 && val > -0.001)
 			return "0";
 		else
 			return to_string(val);
 	}
-
-	bool print = true;
 
 	void printVec3(vec3 val) {
 		cout << number(val.x) + " " + number(val.y) + " " + number(val.z) << endl;

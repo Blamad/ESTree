@@ -3,6 +3,7 @@
     "depth": 5,
     "initialLength": 1.5,
     "initialRadius": 0.4,
+    "leavesGrowthProbability":  0.0,
     "angle": 10,
 	"a1": 20,
 	"a2": 30
@@ -11,24 +12,24 @@
   "rules": [
     {
       "symbol": "A",
-      "production": "`(0.9)=<f[v(a1)-(a1)Af][^(a1)+(a1)Af]>(a2)A",
+      "production": "`(0.9)=<f[^(a1)-(a1)Af][v(a1)+(a1)Af]>(a2)A",
       "probability": 0.275
     },
     {
       "symbol": "A",
-      "production": "`(0.8)=>f[v(a1)-(a1)Af][^(a1)+(a1)Af]<(a2)A",
+      "production": "`(0.8)=>f[^(a1)-(a1)Af][v(a1)+(a1)Af]<(a2)A",
       "probability": 0.275
     },
     {
       "symbol": "A",
       "initialDepth": 1,
-      "production": "`(0.8)=(0.7)<Af[v(a2)-(a2)f][^(a1)+(a1)f]<(a1)f",
+      "production": "`(0.8)=(0.7)<Af[^(a2)-(a2)f][v(a1)+(a1)f]<(a1)f",
       "probability": 0.15
     },
     {
       "symbol": "A",
       "initialDepth": 1,
-      "production": "`(0.8)=(0.7)<f[v(a1)-(a1)f][^(a2)+(a2)Af]<(a1)f",
+      "production": "`(0.8)=(0.7)<f[v(a1)-(a1)f][v(a2)+(a2)Af]<(a1)f",
       "probability": 0.15
     },
     {

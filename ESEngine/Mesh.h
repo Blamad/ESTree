@@ -38,6 +38,9 @@ public:
 	void showMeshWiring();
 	void showNormalVisualisation();
 
+	void hideMeshWiring();
+	void hideNormalVisualisation();
+
 protected:
 	static Logger logger;
 
@@ -45,9 +48,29 @@ protected:
 	int bufferUsage = GL_STATIC_DRAW;
 	unique_ptr<VertexArray> vertexArray;
 
+	shared_ptr<Shader> normalVisualisationShader;
+	shared_ptr<Shader> meshWiringShader;
+
+	bool isNormalsShaderEnabled = false;
+	bool isMeshWiringShaderEnabled = false;
+
 	void setupMeshes();
 	void setupMesh(shared_ptr<Shader> shader);
 	void addNewShader(shared_ptr<Shader> shader);
+
+	Shader* getNormalsShader() {
+		if (normalVisualisationShader == nullptr) {
+			normalVisualisationShader = ShaderManager::getShader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/NormalVisualisationShader.geom");
+		}
+		return normalVisualisationShader.get();
+	}
+
+	Shader* getMeshWiringShader() {
+		if (meshWiringShader == nullptr) {
+			meshWiringShader = ShaderManager::getShader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/MeshWiringShader.geom");
+		}
+		return meshWiringShader.get();
+	}
 
 	int identifier() override { return 1; }
 };

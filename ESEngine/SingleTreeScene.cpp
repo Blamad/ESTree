@@ -23,8 +23,13 @@ void SingleTreeScene::initialize() {
 		"parametricSympodialTreeB.json",
 		"parametricSympodialTreeC.json",
 		"parametricSympodialTreeD.json",
-		"parametricTernaryTreeA.json"
+		"parametricTernaryTreeA.json",
 		//15
+		"parametricTernaryTreeB.json",
+		"parametricTernaryTreeC.json",
+		"parametricTernaryTreeD.json",
+		"test.json",
+		"test2.json"
 	};
 
 	vector<string> leavesParams = {
@@ -38,17 +43,19 @@ void SingleTreeScene::initialize() {
 
 	GameObject* go;
 	Material barkMaterial;
-	vec3 position = vec3(0,0,0);
+	vec3 position = vec3(-7,0,0);
 	string paramsFileName;
 	string leavesTextureName;
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[2];
-	leavesTextureName = "Textures/" + leavesParams[2];
-	barkMaterial = Material::bark2();
-	normalVisualisation = false;
-	meshWiring = false;	
+	paramsFileName = "LindenmayerRules/" + treeParams[15];
+	leavesTextureName = "Textures/" + leavesParams[1];
+	barkMaterial = Material::bark1();
+	normalVisualisation = true;
+	meshWiring = false;
+	position = vec3(0, 0, 0);
+
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));

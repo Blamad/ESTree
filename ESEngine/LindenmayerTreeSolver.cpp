@@ -30,27 +30,21 @@ string LindenmayerTreeSolver::generateTreeProduction(LindenmayerTreeParams &para
 
 string LindenmayerTreeSolver::parseRule(LindenmayerTreeParams &params, string& symbol, int &depth) {
 	vector<Rule> rules;
-	float randomSpace = 0;
 
 	BOOST_FOREACH(Rule rule, params.getRules(symbol.substr(0,1))) {
 		if (rule.allowedDepth <= depth) {
 			rules.push_back(rule);
-			randomSpace += rule.probability;
 		}
 	}
 
-	//Only one rule
-	if (rules.size() == 1)
-		return applyRule(symbol, rules[0]);
-	//There goes some random stuff
-	if (rules.size() > 1) {
-		float value = randomGenerator() * randomSpace;
-		for (int i = 0; i < rules.size(); i++) {
-			value -= rules[i].probability;
-			if (value <= 0)
-				return applyRule(symbol, rules[i]);
-		}
+	//Pick rule
+	float value = randomGenerator();
+	for (int i = 0; i < rules.size(); i++) {
+		value -= rules[i].probability;
+		if (value <= 0)
+			return applyRule(symbol, rules[i]);
 	}
+
 	//No rules available
 	return symbol;
 }
