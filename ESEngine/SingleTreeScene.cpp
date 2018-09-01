@@ -49,14 +49,39 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
+	float posModifier = 10;
+
+	paramsFileName = "LindenmayerRules/" + treeParams[14];
+	leavesTextureName = "Textures/" + leavesParams[1];
+	barkMaterial = Material::bark1();
+	normalVisualisation = false;
+	meshWiring = false;
+	position = vec3(-1 * posModifier, 0, -1 * posModifier);
+	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+
 	paramsFileName = "LindenmayerRules/" + treeParams[15];
 	leavesTextureName = "Textures/" + leavesParams[1];
 	barkMaterial = Material::bark1();
-	normalVisualisation = true;
+	normalVisualisation = false;
 	meshWiring = false;
-	position = vec3(0, 0, 0);
+	position = vec3(-1 * posModifier, 0, 1 * posModifier);
+	//go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
-	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+	paramsFileName = "LindenmayerRules/" + treeParams[16];
+	leavesTextureName = "Textures/" + leavesParams[1];
+	barkMaterial = Material::bark1();
+	normalVisualisation = false;
+	meshWiring = false;
+	position = vec3(1 * posModifier, 0, -1 * posModifier);
+	//go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+
+	paramsFileName = "LindenmayerRules/" + treeParams[17];
+	leavesTextureName = "Textures/" + leavesParams[1];
+	barkMaterial = Material::bark1();
+	normalVisualisation = false;
+	meshWiring = false;
+	position = vec3(1 * posModifier, 0, 1 * posModifier);
+	//go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
 	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 

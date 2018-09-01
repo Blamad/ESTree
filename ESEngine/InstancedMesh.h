@@ -25,6 +25,8 @@ public:
 	Material material;
 	vector<Vertex> vertices;
 	vector<int> indices;
+	vector<InstancedTransform> instanceMatricies;
+	mat4 initialTransfom;
 
 	InstancedMesh(vector<Vertex> &vertices, vector<int> &indices, vector<InstancedTransform> &instancedTransforms, shared_ptr<Shader> shader, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
 	~InstancedMesh();
@@ -41,8 +43,6 @@ protected:
 	bool initialized = false;
 	int bufferUsage = GL_STATIC_DRAW;
 	unique_ptr<VertexArray> vertexArray;
-
-	vector<InstancedTransform> instanceMatricies;
 
 	void setupMesh();
 
