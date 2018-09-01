@@ -5,6 +5,7 @@
 #include "MouseManager.h"
 #include "ConsoleUtils.h"
 #include "ModelExporter.h"
+#include "Logger.h"
 
 class ConsoleModelExportCommand : public ConsoleCustomCommand {
 public:
@@ -12,6 +13,8 @@ public:
 
 	bool processCommandLine(vector<string> commandLine) override;
 	void printHelpText() override;
+private:
+	static Logger logger;
 };
 
 #endif

@@ -1,5 +1,7 @@
 #include "ConsoleModelExportCommand.h"
 
+Logger ConsoleModelExportCommand::logger("ConsoleModelExportCommand");
+
 bool ConsoleModelExportCommand::processCommandLine(vector<string> line) {
 	if (line[0] == "export") {
 
@@ -19,6 +21,7 @@ bool ConsoleModelExportCommand::processCommandLine(vector<string> line) {
 		}
 
 		if (selected != nullptr) {
+			logger.log(INFO, "Exporting of " + selected->name + " started..");
 			vector<Component*> components = (vector<Component*>)selected->getComponents(RENDERABLE);
 			vector<Renderable*> renderables;
 			for (auto & component : components) 
@@ -30,6 +33,7 @@ bool ConsoleModelExportCommand::processCommandLine(vector<string> line) {
 			}
 			ModelExporter::exportToFile(renderables, filename);
 			ConsoleUtils::logToConsole(selected->name + " exported to file");
+			logger.log(INFO, "Exporting of " + selected->name + " finished.");
 		}
 		return true;
 	}
