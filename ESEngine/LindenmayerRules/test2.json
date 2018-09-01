@@ -1,9 +1,9 @@
 {
   "parameters": {
-    "depth": 30,
+    "depth": 2,
     "initialLength": 4.5,
     "initialRadius": 0.5,
-    "leavesGrowthProbability": 0.0,
+    "leavesGrowthProbability": 1.0,
     "tropismBendingFactor": 0.5,
     "angle": 30,
     "a1": 90,
@@ -13,11 +13,7 @@
   "rules": [
     {
       "symbol": "a",
-      "production": "`(w)[>(45)fb][<(45)fb][^(45)fb][v(45)fb]"
-    },
-    {
-      "symbol": "b",
-      "production": "`(w)[fTb]"
+      "production": "fa"
     }
   ]
 }

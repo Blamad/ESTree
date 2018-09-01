@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "depth": 3,
+    "depth": 1,
     "initialLength": 4.5,
     "initialRadius": 0.5,
     "angle": 45,
