@@ -120,6 +120,7 @@ void LindenmayerTree::generateInstancedLeaves() {
 	}
 
 	shared_ptr<InstancedMesh> leavesMesh = createInstancedLeavesPanelMesh(instancedTransforms);
+	leavesMesh->initialTransfom = transform->getModelMatrix();
 	shared_ptr<GameObject> go(new GameObject());
 	go->addComponent(leavesMesh);
 	this->addGameObject(go);

@@ -8,6 +8,7 @@
 #include "ConsoleInterpreter.h"
 #include "ConsoleTreeCommand.h"
 #include "ConsoleCubeCommand.h"
+#include "ConsoleModelExportCommand.h"
 
 using namespace glm;
 
@@ -36,6 +37,7 @@ int main() {
 
 	ConsoleInterpreter::addCustomCommand(make_shared<ConsoleTreeCommand>(ConsoleTreeCommand()));
 	ConsoleInterpreter::addCustomCommand(make_shared<ConsoleCubeCommand>(ConsoleCubeCommand()));
+	ConsoleInterpreter::addCustomCommand(make_shared<ConsoleModelExportCommand>(ConsoleModelExportCommand()));
 
 	engine->startRendering();
 

@@ -41,5 +41,27 @@ public:
 
 	static Material diffuseTextureOnly(string fileName);
 
+	bool operator<(Material const& r) const {
+		Material l = *this;
+
+		if (l.texDiffuse != nullptr && r.texDiffuse == nullptr) return true;
+		if (l.texDiffuse == nullptr && r.texDiffuse != nullptr) return false;
+		if (l.texDiffuse > r.texDiffuse) return true;
+		if (l.texDiffuse < r.texDiffuse) return false;
+
+		if (l.texSpecular != nullptr && r.texSpecular == nullptr) return true;
+		if (l.texSpecular == nullptr && r.texSpecular != nullptr) return false;
+		if (l.texSpecular > r.texSpecular) return true;
+		if (l.texSpecular < r.texSpecular) return false;
+
+		if (l.diffuse.length() < r.diffuse.length())  return true;
+		if (l.diffuse.length() > r.diffuse.length())  return false;
+
+		if (l.specular.length() < r.specular.length())  return true;
+		if (l.specular.length() > r.specular.length())  return false;
+
+		// Otherwise both are equal
+		return false;
+	}
 };
 #endif

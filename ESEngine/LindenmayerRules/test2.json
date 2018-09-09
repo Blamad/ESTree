@@ -1,9 +1,9 @@
 {
   "parameters": {
-    "depth": 30,
+    "depth": 2,
     "initialLength": 4.5,
     "initialRadius": 0.5,
-    "leavesGrowthProbability": 0.0,
+    "leavesGrowthProbability": 1.0,
     "tropismBendingFactor": 0.5,
     "angle": 30,
     "a1": 90,
@@ -12,39 +12,8 @@
   "axiom": "F(70)X",
   "rules": [
     {
-      "X:t>5='""~(1)F(10)/(45)XA!",
       "symbol": "a",
-      "production": "`(w)[>(45)fb][<(45)fb][^(45)fb][v(45)fb]"
-    },
-    {
-      "A=T(Q);~(10)F(50)" [ "&(18.95)F(50)A" ]
-      "/(94.74)",
-      [ "&(18.95)F(50)A" ]
-      "/(132.63)",
-      [ "&(18.95)F(50)A" ],
-      : 0.4,
-      "symbol": "a",
-      "production": "`(w)[>(45)fb][<(45)fb][^(45)fb][v(45)fb]"
-    },
-    {
-      "A=T(Q);~(10)F(50)" [ "^(18.95)F(50)A" ]
-      "/(94.74)",
-      [ "&(18.95)F(50)A" ]
-      "/(132.63)",
-      [ "&(18.95)F(50)A" ],
-      : 0.3,
-      "symbol": "a",
-      "production": "`(w)[>(45)fb][<(45)fb][^(45)fb][v(45)fb]"
-    },
-    {
-      "F(l)="F(l*1.109)",
-      "symbol": "a",
-      "production": "`(w)[>(45)fb][<(45)fb][^(45)fb][v(45)fb]"
-    },
-    {
-      "!(w)=!(w*0.1732)",
-      "symbol": "b",
-      "production": "`(w)[fTb]"
+      "production": "fa"
     }
   ]
 }
