@@ -4,6 +4,7 @@ Logger ConsoleComponent::logger("ConsoleComponent");
 
 ConsoleComponent::ConsoleComponent(vec3 fontColor) : fontColor(fontColor) {
 	memory.reset(new ConsoleMemory());
+	interpreter.reset(new ConsoleInterpreter());
 	consoleXPos = Screen::getScreenWidth() * .01f;
 	consoleYPos = Screen::getScreenHeight() * .01f;
 	isFocused = false;
@@ -127,7 +128,7 @@ void ConsoleComponent::writeLine(string line) {
 
 void ConsoleComponent::processInputLine() {
 	memory->pushInputLine(inputLine); 
-	ConsoleInterpreter::processInput(inputLine);
+	interpreter->processInput(inputLine);
 	inputLine.clear();
 }
 

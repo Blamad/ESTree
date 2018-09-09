@@ -39,7 +39,7 @@ void PhysicsManager::removeRigidBody(RigidBody *rigidBody) {
 	dynamicsWorld->removeRigidBody(rigidBody->rigidBody);
 }
 
-void PhysicsManager::step(double deltaTime) {
+void PhysicsManager::update(double deltaTime) {
 	dynamicsWorld->stepSimulation(deltaTime, 10);
 }
 

@@ -9,12 +9,11 @@ void Logger::log(LogLevel level, string message) {
 
 string Logger::getCurrentTime() {
 	boost::posix_time::ptime timeLocal =
-		boost::posix_time::second_clock::local_time();
+		boost::posix_time::microsec_clock::local_time();
 	
 	stringstream sstream;
 
-	sstream << formatValue(timeLocal.time_of_day().hours(), 2) << ":" << formatValue(timeLocal.time_of_day().minutes(), 2) << ":" << formatValue(timeLocal.time_of_day().seconds(), 2);
-	//sstream << "." << formatValue(timeLocal.time_of_day().total_milliseconds(), 4);
+	sstream << formatValue(timeLocal.time_of_day().hours(), 2) << ":" << formatValue(timeLocal.time_of_day().minutes(), 2) << ":" << formatValue(timeLocal.time_of_day().seconds(), 2) << "." << formatValue(timeLocal.time_of_day().fractional_seconds(), 3);
 
 	return sstream.str();
 }
@@ -30,5 +29,5 @@ string Logger::formatValue(int value, int space) {
 	if (value != 0)
 		sstream << value;
 
-	return sstream.str();
+	return sstream.str().substr(0, space);
 }

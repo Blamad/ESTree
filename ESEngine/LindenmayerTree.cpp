@@ -18,15 +18,18 @@ void LindenmayerTree::generate() {
 
 void LindenmayerTree::generateTree() {
 	logger.log(INFO, "Generation started: " + params.name);
-	generateMeshSkeleton();
+	boost::posix_time::ptime startTime = boost::posix_time::microsec_clock::local_time();
+	generateMeshDescription();
 	generateMeshData();
 	generateInstancedLeaves();
 	//generateLeaves();
-	logger.log(INFO, "Generation finished. " + to_string(mesh->indices.size() / 3) + " tris.");
+	boost::posix_time::ptime endTime = boost::posix_time::microsec_clock::local_time();
+	int totalMilisecs = (endTime - startTime).total_milliseconds();
+	logger.log(INFO, "Generation finished. " + to_string(mesh->indices.size() / 3) + " tris. Time: " + to_string(totalMilisecs) + "ms");
 }
 
 void LindenmayerTree::generateTreeMesh() {
-	generateMeshSkeleton();
+	generateMeshDescription();
 	generateMeshData();
 }
 
@@ -37,12 +40,11 @@ void LindenmayerTree::generateMeshData() {
 }
 
 //PARSING L DATA
-void LindenmayerTree::generateMeshSkeleton() {
+void LindenmayerTree::generateMeshDescription() {
 	product = LindenmayerTreeSolver::generateTreeProduction(params);
 }
 
 //MESH AND VERTICES STUFF
-
 void LindenmayerTree::createMeshComponent() {
 	vector<Vertex> v;
 	vector<int> i;

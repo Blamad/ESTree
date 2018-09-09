@@ -20,7 +20,7 @@ public:
 	void addRigidBody(RigidBody* rigidBody);
 	void reloadRigidBody(RigidBody* rigidBody);
 	void removeRigidBody(RigidBody * rigidBody);
-	void step(double deltaTime);
+	void update(double deltaTime);
 	GameObject* raycast(Ray &ray);
 
 private:

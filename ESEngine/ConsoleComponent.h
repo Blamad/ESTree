@@ -59,6 +59,7 @@ private:
 	int consoleScrollOffset = 0;
 
 	unique_ptr<ConsoleMemory> memory;
+	unique_ptr<ConsoleInterpreter> interpreter;
 
 	void initFreeType();
 	void renderLine(std::string text, GLfloat x, GLfloat y);

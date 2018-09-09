@@ -48,7 +48,7 @@ SceneManager* Engine::getSceneManager() {
 }
 
 void Engine::renderingLoop() {
-
+	Context::setStartTime();
 	while (!window->shouldClose()) {
 		double currentTime = window->getTime();
 		Context::setTime(currentTime);
@@ -62,5 +62,11 @@ void Engine::renderingLoop() {
 		window->prepareFrameRendering();
 		sceneManager->getActiveScene()->renderFrame(*renderer);
 		window->finishFrameRendering();
+
+		if (Context::getFrameCounterValue() > 1000) {
+			Context::clearFrameCounter();
+			Context::setStartTime();
+		}
+		Context::increaseFrameCounter();
 	}
 }

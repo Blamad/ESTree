@@ -3,7 +3,7 @@
     "depth": 4,
     "initialLength": 0.5,
     "initialRadius": 0.25,
-    "leavesGrowthProbability": 0.0,
+    "leavesGrowthProbability": 1.0,
     "angle": 7,
 	"a1": 35
   },

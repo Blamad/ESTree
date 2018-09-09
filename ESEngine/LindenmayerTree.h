@@ -8,6 +8,7 @@
 #include <boost/generator_iterator.hpp>
 #include <boost/foreach.hpp>
 #include <boost/thread/thread.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 #include "ShaderManager.h"
 #include "Segment.h"
@@ -58,7 +59,7 @@ private:
 	void generateTree();
 
 	//Parsing l-data
-	void generateMeshSkeleton();
+	void generateMeshDescription();
 	
 	//Creating mesh generation data
 	void generateMeshData();

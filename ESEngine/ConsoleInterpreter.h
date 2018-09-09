@@ -16,7 +16,7 @@ using namespace std;
 
 class ConsoleInterpreter {
 public:
-	static void processInput(string &input);
+	void processInput(string &input);
 	static void addCustomCommand(shared_ptr<ConsoleCustomCommand> consoleCommand);
 private:
 	static Logger logger;

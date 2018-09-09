@@ -25,7 +25,7 @@ void LightsManager::removeLight(Light* light) {
 	lights[light->lightType].erase(removedLight);
 }
 
-void LightsManager::updateLights(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader*)> renderObjectsFunction) {
+void LightsManager::prepareShadowBuffer(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader*)> renderObjectsFunction) {
 	mat4 lightProjection = DirectionalLight::getProjectionMatrix();
 	mat4 lightView;
 

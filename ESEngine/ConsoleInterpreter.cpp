@@ -95,6 +95,25 @@ void ConsoleInterpreter::processInput(string &input) {
 			return;
 		}
 
+		if (line[0] == "fps") {
+			boost::posix_time::ptime startTime = Context::getStartTime();
+			boost::posix_time::ptime endTime = boost::posix_time::microsec_clock::local_time();
+			long frames = Context::getFrameCounterValue();
+
+			int milliseconds = (endTime - startTime).total_milliseconds();
+			float fps = float(frames) * 1000/ milliseconds;
+			ConsoleUtils::logToConsole("Current fps: '" + to_string(fps) + "'");
+
+			if (line.size() == 2) {
+				if (line[1] == "clr") {
+					Context::clearFrameCounter();
+					Context::setStartTime();
+				}
+			}
+
+			return;
+		}
+
 		BOOST_FOREACH(auto& command, customConsoleCommands) {
 			if (command->processCommandLine(line)) {
 				return;

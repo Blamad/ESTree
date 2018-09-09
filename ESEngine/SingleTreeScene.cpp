@@ -28,7 +28,9 @@ void SingleTreeScene::initialize() {
 		"parametricTernaryTreeB.json",
 		"parametricTernaryTreeC.json",
 		"parametricTernaryTreeD.json",
+		"parametricTernaryTreeE.json",
 		"test.json",
+		//20
 		"test2.json"
 	};
 
@@ -43,29 +45,44 @@ void SingleTreeScene::initialize() {
 
 	GameObject* go;
 	Material barkMaterial;
-	vec3 position = vec3(-7,0,0);
+	vec3 position = vec3(-0,0,0);
 	string paramsFileName;
 	string leavesTextureName;
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[15];
-	leavesTextureName = "Textures/" + leavesParams[1];
-	barkMaterial = Material::bark1();
-	normalVisualisation = true;
+	paramsFileName = "LindenmayerRules/" + treeParams[18];
+	leavesTextureName = "Textures/" + leavesParams[2];
+	barkMaterial = Material::bark3();
+	normalVisualisation = false;
 	meshWiring = false;
-	position = vec3(0, 0, 0);
 
+	float posMod = 10;
+
+	position = vec3(0, 0, 0);
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
-	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
+	/*position = vec3(-1 * posMod, 0, -1 * posMod);
+	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+
+	position = vec3(-1 * posMod, 0, 1 * posMod);
+	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+
+	position = vec3(1 * posMod, 0, - 1 * posMod);
+	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+
+	position = vec3(1 * posMod, 0, 1 * posMod);
+	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);*/
+	
+
+	//generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
 
 	generateGrass();
 	generateTerrain();
 	addSkybox();
 
 	//Light
-	vec3 dir = normalize(vec3(-0.5, -0.5, 0));
+	vec3 dir = normalize(vec3(0, -0.5, -0.5));
 	vec3 distance = vec3(-20);
 	createDirectionalLight(distance * dir, dir);
 

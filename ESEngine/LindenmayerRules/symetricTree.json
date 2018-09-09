@@ -5,7 +5,8 @@
     "initialRadius": 0.5,
     "angle": 30,
 	"a1": 90,
-	"w": 0.707
+	"w": 0.707,
+	"leavesGrowthProbability":  0.0
   },
   "axiom": "fa",
   "rules": [

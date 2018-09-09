@@ -67,8 +67,11 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 						"parametricSympodialTreeB.json",
 						"parametricSympodialTreeC.json",
 						"parametricSympodialTreeD.json",
-						"parametricTernaryTreeA.json"
+						"parametricTernaryTreeA.json",
 						//15
+						"parametricTernaryTreeB.json",
+						"parametricTernaryTreeC.json",
+						"parametricTernaryTreeD.json"
 					};
 					lindenmayerParameters = LindenmayerTreeParams("LindenmayerRules/" + (treeParams.size() > index ? treeParams[index] : treeParams[0]));
 				}

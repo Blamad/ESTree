@@ -679,6 +679,9 @@
     <None Include="LindenmayerRules\parametricTernaryTreeB.json">
       <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
     </None>
+    <None Include="LindenmayerRules\parametricTernaryTreeE.json">
+      <Filter>TestProject\Models\Trees\Tree Models\Parametric</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\barkTexture1.jpg">

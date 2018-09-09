@@ -171,6 +171,7 @@
     <None Include="LindenmayerRules\parametricTernaryTreeB.json" />
     <None Include="LindenmayerRules\parametricTernaryTreeC.json" />
     <None Include="LindenmayerRules\parametricTernaryTreeD.json" />
+    <None Include="LindenmayerRules\parametricTernaryTreeE.json" />
     <None Include="LindenmayerRules\randomTree.json" />
     <None Include="LindenmayerRules\randomTree2.json" />
     <None Include="LindenmayerRules\symetricTree.json" />

@@ -52,7 +52,7 @@ void Scene::setFrameBuffer(unique_ptr<FrameBuffer> frameBuffer) {
 }
 
 void Scene::update(double &dt, InputState &inputState) {
-	physicsManager->step(dt);
+	physicsManager->update(dt);
 	uiManager->update(dt, inputState);
 	mouseManager->update(dt, inputState);
 
@@ -106,7 +106,7 @@ function<void(Renderer&, Shader*)> Scene::prepareDrawObjectsCall() {
 }
 
 void Scene::renderFrame(Renderer &renderer) {
-	lightsManager->updateLights(activeCamera->position, renderer, prepareDrawObjectsCall());
+	lightsManager->prepareShadowBuffer(activeCamera->position, renderer, prepareDrawObjectsCall());
 	Shader::updateViewMatrix(activeCamera->getViewMatrix());
 
 	preSceneRenderRoutine(renderer);

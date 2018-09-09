@@ -21,7 +21,7 @@ class LightsManager {
 public:
 	LightsManager();
 
-	void updateLights(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader*)> renderObjectsFunction);
+	void prepareShadowBuffer(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader*)> renderObjectsFunction);
 
 	void addLight(Light* light);
 	void removeLight(Light* light);

@@ -1,8 +1,8 @@
 {
   "parameters": {
     "depth": 5,
-    "initialLength": 3,
-    "initialRadius": 0.6,
+    "initialLength": 3.5,
+    "initialRadius": 0.8,
     "angle": 15
   },
   "axiom": "fb",

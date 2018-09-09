@@ -1,9 +1,9 @@
 {
   "parameters": {
-    "depth": 5,
+    "depth": 6,
     "initialLength": 1.5,
     "initialRadius": 0.4,
-    "leavesGrowthProbability":  0.0,
+    "leavesGrowthProbability":  1.0,
     "angle": 10,
 	"a1": 20,
 	"a2": 30
