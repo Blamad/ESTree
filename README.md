@@ -19,45 +19,16 @@ Sample screenshot presenting current engine abilities regarding tree generation:
   
  * Ternary tree models generated from rules described in "The Algorithmic Beauty of Plants":
   ![Sample screenshot](/images/ternaryTreeA.PNG)
-  ![Sample screenshot](/images/ternaryTreeB.PNG)
   ![Sample screenshot](/images/ternaryTreeE.PNG)
-  
- * Meterial works sample:
-   ![Sample screenshot](/images/materialsSample.PNG)
    
  Usage:
  Scene navigation: RMB + WSAD (Space and left alt to move vertically)
  Object selection/pick up: LMB
  Console toggle: ~
  
- Application has number of commands available in built-in user console:
-|Command|Parameter|Description|Expected value|
-|---|---|---|:---:|
-|help|–|Displays available commands|–|
-|depth|–|Controlls visibility of depth preview component rendered from directional lights perspective|on/off|
-|hdr|–|Enables/disables HDR feature|on/off|
-|normals|–|Enables/disables normals view on selected mesh|on/off|
-|wiring|-|Enables/disables mesh wiring on selected mesh|on/off|
-|clr|–|Clears user console|–|
-|rm|–|Removes selected object from scene|–|
-|mv|–|Moves selected object by given vector|vec3 (x,y,z)|
-|tree||Creates tree object||
-||pos|Tree position|vec3 (x,y,z)|
-||file|Configuration filename located in LindenmayerRules directory|string|
-||name|Object name|string|
-||bark|Bark texture filename located in Textures directory|string|
-||leaves|Leaves texture filename located in Textures directory|string|
-|cube||Creates cube object||
-||pos|Tree position|vec3 (x,y,z)|
-||name|Object name|string|
-|export|file|Exports selected model to .obj file in models directory|string|
-|rtree||Re-executes selected tree generation||
-||pos|Tree position|vec3 (x,y,z)|
-||file|Configuration filename located in LindenmayerRules directory|string|
-||name|Object name|string|
-||bark|Bark texture filename located in Textures directory|string|
-||leaves|Leaves texture filename located in Textures directory|string|
-|light|Creates cube being movable lightsource||
-||pos|Cube position|vec3 (x,y,z)|
-||name|Object name|string|
-||strength|Light strenght|1/2/3|
+ Application has number of commands available in built-in user console such as:
+ * adding and removing objects from scene,
+ * creating movable light sources,
+ * generating Lindenmayer trees from configuration files,
+ * exporting models to .obj files,
+ * help listing all actual commands.
