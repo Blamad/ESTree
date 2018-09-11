@@ -1,6 +1,6 @@
 # ESTree
 Simple game engine capable of rendering scene, performing physics simulations and generating tree models using Lindenmayer sytem formal grammar.
-Created as masters degree project.
+Created as a part of masters dissertation.
 
 ESTree is using few libraries:
  * __BOOST__: general perfomance purposes
