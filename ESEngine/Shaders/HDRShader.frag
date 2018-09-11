@@ -5,9 +5,6 @@ in vec2 texCoords;
 
 uniform sampler2D screenTexture;
 
-void adaptativeToneMapping();
-void noHDR();
-
 subroutine void hdrMode();
 subroutine uniform hdrMode hdrModeSubroutine;
 

@@ -26,6 +26,7 @@ float pi2wt = PI48*time;
 subroutine void renderMode();
 subroutine uniform renderMode renderModeSubroutine;
 
+//http://shadersmods.com/sonic-ethers-unbelievable-shaders-mod/ - wave calculation based gbuffers_terrain.vsh
 vec3 calcWave(in vec3 pos, in float fm, in float mm, in float ma, in float f0, in float f1, in float f2, in float f3, in float f4, in float f5) {
     vec3 ret;
     float magnitude,d0,d1,d2,d3;
@@ -43,10 +44,6 @@ vec3 calcMove(in vec3 pos, in float f0, in float f1, in float f2, in float f3, i
     vec3 move1 = calcWave(pos      , 0.0027, 0.0400, 0.0400, 0.0127, 0.0089, 0.0114, 0.0063, 0.0224, 0.0015) * amp1;
 	vec3 move2 = calcWave(pos+move1, 0.0348, 0.0400, 0.0400, f0, f1, f2, f3, f4, f5) * amp2;
     return move1+move2;
-}
-
-vec3 calcMyMove(in vec3 pos, in float f0, in float f1, in float f2, in float f3, in float f4, in float f5, in vec3 amp1, in vec3 amp2) {
-	return vec3(sin(pi2wt*0.05), 0, 0);
 }
 
 subroutine (renderMode)

@@ -28,7 +28,7 @@ public:
 	}
 
 	static mat4 getProjectionMatrix() {
-		return ortho(-1 * shadingBufferSize, 1 * shadingBufferSize, -1 * shadingBufferSize, 1 * shadingBufferSize, 0.1f, shadingFarPane);
+		return ortho(-1 * shadingBufferSize, 1 * shadingBufferSize, -1 * shadingBufferSize, 1 * shadingBufferSize, 0.01f, shadingFarPane);
 	}
 
 private:

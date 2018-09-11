@@ -74,8 +74,8 @@ void SingleTreeScene::initialize() {
 	position = vec3(1 * posMod, 0, 1 * posMod);
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);*/
 	
-
-	//generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
+	generateTestBox(vec3(8, 2, 8), vec3(0.5, 0.5, 0.5));
+	generateTestBox(vec3(8, 4, 8), vec3(0.5, 0.5, 0.5));
 
 	generateGrass();
 	generateTerrain();
@@ -86,7 +86,7 @@ void SingleTreeScene::initialize() {
 	vec3 distance = vec3(-20);
 	createDirectionalLight(distance * dir, dir);
 
-	setActiveCamera(createCamera(vec3(0, 5, 15), -90, -10));
+	setActiveCamera(createCamera(vec3(0, 10, 15), -90, -10));
 
 	generateFrameBuffer();
 }

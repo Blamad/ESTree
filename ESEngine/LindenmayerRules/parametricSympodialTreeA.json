@@ -5,7 +5,7 @@
     "initialRadius": 0.8,
     "angle": 34.37,
     "leavesAngleDiversity": 15,
-	"leavesGrowthProbability": 0,
+	"leavesGrowthProbability": 1.0,
     "r1": 0.9,
     "r2": 0.7,
     "a1": 10,
