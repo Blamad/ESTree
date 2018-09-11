@@ -33,7 +33,8 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	}
 	catch (std::ifstream::failure e)
 	{
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+		std::cout << vertexPath << std::endl;
+		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " << std::endl;
 	}
 	const GLchar* vShaderCode = vertexCode.c_str();
 	const GLchar* fShaderCode = fragmentCode.c_str();
@@ -80,6 +81,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	if (!success)
 	{
 		glGetProgramInfoLog(this->program, 512, NULL, infoLog);
+		std::cout << vertexPath << ", " << fragmentPath<< std::endl;
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
 

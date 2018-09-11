@@ -122,9 +122,13 @@ void ConsoleInterpreter::processInput(string &input) {
 
 		ConsoleUtils::logToConsole("Unknown command or wrong args: '"+ input +"'");
 	}
-	catch (exception e) {
+	catch (exception& e) {
 		ConsoleUtils::logToConsole("Something went wrong!");
 		logger.log(ERROR, e.what());
+	}
+	catch (...) {
+		ConsoleUtils::logToConsole("Something went wrong!");
+		logger.log(ERROR, "Unknown exception while parsing command");
 	}
 }
 

@@ -10,92 +10,92 @@ void TreeScene::initialize() {
 	vec3 position;
 	string paramsFileName;
 	
-	bool debug = true;
+	bool debug = false;
 	string arrow = "Textures/arrow.png";
 
 	paramsFileName = "LindenmayerRules/parametricSympodialTreeA.json";
 	position = vec3(20, 0, 20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves1.png"), debug);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves1.png"), "parametricSympodialTreeA", debug);
 
 	paramsFileName = "LindenmayerRules/parametricSympodialTreeB.json";
 	position = vec3(20, 0, 7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), debug);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), "parametricSympodialTreeB", debug);
 
-	paramsFileName = "LindenmayerRules/parametricSympodialTreeC.json";
+	paramsFileName = "LindenmayerRules/advancedTree2.json";
 	position = vec3(20, 0, -7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), debug);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), "advancedTree2", debug);
 
-	paramsFileName = "LindenmayerRules/parametricSympodialTreeD.json";
+	paramsFileName = "LindenmayerRules/advancedTree2.json";
 	position = vec3(20, 0, -20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves4.png"), debug);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves4.png"), "advancedTree2", debug);
 
 	paramsFileName = "LindenmayerRules/parametricMonopodialTreeA.json";
 	position = vec3(7.5, 0, 20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), debug);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), "parametricMonopodialTreeA", debug);
 
 	paramsFileName = "LindenmayerRules/parametricMonopodialTreeB.json";
 	position = vec3(7.5, 0, 7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), debug);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), "parametricMonopodialTreeB", debug);
 
 	paramsFileName = "LindenmayerRules/parametricMonopodialTreeC.json";
 	position = vec3(7.5, 0, -7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), debug);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), "parametricMonopodialTreeC", debug);
 
 	paramsFileName = "LindenmayerRules/parametricMonopodialTreeD.json";
 	position = vec3(7.5, 0, -20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves4.png"), debug);
+	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves4.png"), "parametricMonopodialTreeD", debug);
 	
-	/*
 	paramsFileName = "LindenmayerRules/randomTree.json";
 	position = vec3(-7.5, 0, 20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves5.png"));
+	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves5.png"), "randomTree");
 
-	paramsFileName = "LindenmayerRules/randomTree.json";
+	paramsFileName = "LindenmayerRules/parametricTernaryTreeA.json";
 	position = vec3(-7.5, 0, 7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2());
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2(), "parametricTernaryTreeA");
 	
 	paramsFileName = "LindenmayerRules/symetricTree.json";
 	position = vec3(-7.5, 0, -7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("Textures/leaves4.png"));
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("Textures/leaves4.png"), "symetricTree");
 
 	paramsFileName = "LindenmayerRules/fibbonacciTree.json";
 	position = vec3(-7.5, 0, -20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves1());
+	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves1(), "fibbonacciTree");
 
 	paramsFileName = "LindenmayerRules/advancedTree2.json";
 	position = vec3(-20, 0, 20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"));
+	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), "advancedTree2");
 
-	paramsFileName = "LindenmayerRules/advancedTree2.json";
+	paramsFileName = "LindenmayerRules/parametricTernaryTreeB.json";
 	position = vec3(-20, 0, 7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves5.png"));
+	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves5.png"), "parametricTernaryTreeB");
 
-	paramsFileName = "LindenmayerRules/advancedTree2.json";
+	paramsFileName = "LindenmayerRules/parametricTernaryTreeE.json";
 	position = vec3(-20, 0, -7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves1.png"));
+	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves1.png"), "parametricTernaryTreeE");
 
-	paramsFileName = "LindenmayerRules/advancedTree2.json";
+	paramsFileName = "LindenmayerRules/parametricTernaryTreeD.json";
 	position = vec3(-20, 0, -20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves3.png"));*/
+	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves3.png"), "parametricTernaryTreeD");
 
 	generateTestBox(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5));
 
 	generateTerrain();
 	addSkybox();
 
+	float distance = 50;
 	vec3 dir = normalize(vec3(-1, -0.5, -1));
-	createDirectionalLight(vec3(dir.x * -10, 15, dir.z * -10), dir);
+	createDirectionalLight(vec3(dir.x * -distance, dir.x * -distance, dir.z * -distance), dir);
 
 	setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
 
 	generateFrameBuffer();
 }
 
-GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial, bool debug) {
+GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial, string name, bool debug) {
 	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
 
 	unique_ptr<GameObject> go = unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, debug));
-	go->name = "Tree";
+	go->name = name;
 	Transform *transform = getTransform(go.get());
 	transform->translate(position);
 	((LindenmayerTree*)go.get())->generate();

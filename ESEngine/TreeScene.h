@@ -21,7 +21,7 @@ public:
 
 	void initialize();
 
-	GameObject* createLindenmayerTree(string configurationFileName, vec3 &position, Material &material, Material &leavesMaterial, bool debug = false);
+	GameObject* createLindenmayerTree(string configurationFileName, vec3 &position, Material &material, Material &leavesMaterial, string name, bool debug = false);
 
 	GameObject* createWhiteLampCube(vec3 position, PointLightStrength str);
 	GameObject* createDirectionalLight(vec3 position, vec3 direction);

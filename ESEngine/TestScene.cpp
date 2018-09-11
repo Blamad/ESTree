@@ -9,7 +9,7 @@ void TestScene::initialize() {
 	go->name = "WoodenCube";
 	transform = getTransform(go.get());
 	transform->translate(vec3(3, 1, 3));
-	//go->addComponent(shared_ptr<Behaviour>(new RotationBehaviour()));
+	go->addComponent(shared_ptr<Behaviour>(new RotationBehaviour()));
 	rigidBody = shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(2);
