@@ -14,19 +14,19 @@ void ConsoleInterpreter::processInput(string &input) {
 	try {
 		vector<string> line = ConsoleUtils::split(input, " ");
 
-		if (line[0] == "help") {
+		if (line.at(0) == "help") {
 			displayHelp();
 			return;
 		}
 
-		if (line[0] == "normals" && line.size() == 2) {
+		if (line.at(0) == "normals" && line.size() == 2) {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
 				Mesh *mesh = (Mesh*)selected->getComponent(RENDERABLE);
-				if (line[1] == "off") {
+				if (line.at(1) == "off") {
 					mesh->hideNormalVisualisation();
 				}
-				if (line[1] == "on") {
+				if (line.at(1) == "on") {
 					mesh->showNormalVisualisation();
 				}
 			}
@@ -34,14 +34,14 @@ void ConsoleInterpreter::processInput(string &input) {
 			return;
 		}
 
-		if (line[0] == "wiring" && line.size() == 2) {
+		if (line.at(0) == "wiring" && line.size() == 2) {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
 				Mesh *mesh = (Mesh*)selected->getComponent(RENDERABLE);
-				if (line[1] == "off") {
+				if (line.at(1) == "off") {
 					mesh->hideMeshWiring();
 				}
-				if (line[1] == "on") {
+				if (line.at(1) == "on") {
 					mesh->showMeshWiring();
 				}
 			}
@@ -49,17 +49,17 @@ void ConsoleInterpreter::processInput(string &input) {
 			return;
 		}
 
-		if (line[0] == "depth" && line.size() == 2) {
-			if (line[1] == "off") {
+		if (line.at(0) == "depth" && line.size() == 2) {
+			if (line.at(1) == "off") {
 				Context::getUIManager()->toggleDepthBufferComponent(false);
 			}
-			if (line[1] == "on") {
+			if (line.at(1) == "on") {
 				Context::getUIManager()->toggleDepthBufferComponent(true);
 			}
 			return;
 		}
 
-		if (line[0] == "rm") {
+		if (line.at(0) == "rm") {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
 				string name = selected->name;
@@ -69,33 +69,33 @@ void ConsoleInterpreter::processInput(string &input) {
 			return;
 		}
 
-		if (line[0] == "clr") {
+		if (line.at(0) == "clr") {
 			Context::getConsoleMemory()->clear();
 			return;
 		}
 
-		if (line[0] == "hdr" && line.size() == 2) {
-			if (line[1] == "on") {
+		if (line.at(0) == "hdr" && line.size() == 2) {
+			if (line.at(1) == "on") {
 				Context::setHdrToggle(true);
 				return;
 			}
-			if (line[1] == "off") {
+			if (line.at(1) == "off") {
 				Context::setHdrToggle(false);
 				return;
 			}
 		}
 
-		if (line[0] == "mv" && line.size() == 2) {
+		if (line.at(0) == "mv" && line.size() == 2) {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
-				vec3 position = ConsoleUtils::parseCoords(line[1]);
+				vec3 position = ConsoleUtils::parseCoords(line.at(1));
 				RigidBody *rigidbody = (RigidBody*)selected->getComponent(RIGIDBODY);
 				rigidbody->translate(position);
 			}
 			return;
 		}
 
-		if (line[0] == "fps") {
+		if (line.at(0) == "fps") {
 			boost::posix_time::ptime startTime = Context::getStartTime();
 			boost::posix_time::ptime endTime = boost::posix_time::microsec_clock::local_time();
 			long frames = Context::getFrameCounterValue();
@@ -105,7 +105,7 @@ void ConsoleInterpreter::processInput(string &input) {
 			ConsoleUtils::logToConsole("Current fps: '" + to_string(fps) + "'");
 
 			if (line.size() == 2) {
-				if (line[1] == "clr") {
+				if (line.at(1) == "clr") {
 					Context::clearFrameCounter();
 					Context::setStartTime();
 				}

@@ -1,7 +1,7 @@
 #include "ConsoleCubeCommand.h"
 
 bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
-	if (line[0] == "cube") {
+	if (line.at(0) == "cube") {
 
 		map<string, string> params = ConsoleUtils::generateParamsMap(line);
 		vec3 pos(0, 0, 0);
@@ -30,11 +30,12 @@ bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
 		go->addComponent(rigidBody);
 		rigidBody->initAsBox(1);
 		rigidBody->makeDynamic();
+		Context::getMouseManager()->setSelectedGameObject(go.get());
 		Context::getSceneManager()->getActiveScene()->addGameObject(move(go));
 		return true;
 	}
 
-	if (line[0] == "light") {
+	if (line.at(0) == "light") {
 
 		map<string, string> params = ConsoleUtils::generateParamsMap(line);
 		vec3 pos(0, 0, 0);
@@ -52,8 +53,8 @@ bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
 				params.erase("name");
 				continue;
 			}
-			if (params.find("strength") != params.end()) {
-				switch (ConsoleUtils::strToInt(params["strength"])) {
+			if (params.find("str") != params.end()) {
+				switch (ConsoleUtils::strToInt(params["str"])) {
 				case 0:
 					strength = PointLightStrength::WEAK;
 					break;
@@ -67,7 +68,7 @@ bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
 					ConsoleUtils::logToConsole("Invalid strength value, medium used");
 					strength = PointLightStrength::MEDIUM;
 				}
-				params.erase("strength");
+				params.erase("str");
 				continue;
 			}
 
@@ -85,6 +86,7 @@ bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
 		go->addComponent(rigidBody);
 		rigidBody->initAsBox(1);
 		rigidBody->makeDynamic();
+		Context::getMouseManager()->setSelectedGameObject(go.get());
 		Context::getSceneManager()->getActiveScene()->addGameObject(move(go));
 		return true;
 	}
@@ -95,6 +97,6 @@ bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
 void ConsoleCubeCommand::printHelpText() {
 	ConsoleUtils::logToConsole(" - cube pos <vec3> name <string>");
 	ConsoleUtils::logToConsole("    generate cube");
-	ConsoleUtils::logToConsole(" - light pos <vec3> name <string> strength <0-2>");
+	ConsoleUtils::logToConsole(" - light pos <vec3> name <string> str <0-2>");
 	ConsoleUtils::logToConsole("    generate point light source");
 }

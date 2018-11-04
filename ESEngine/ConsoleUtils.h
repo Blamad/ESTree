@@ -27,7 +27,7 @@ public:
 
 	static vec3 parseCoords(string &line) {
 		vector<string> position = split(line, ",");
-		return vec3(strToInt(position[0]), strToInt(position[1]), strToInt(position[2]));
+		return vec3(strToInt(position.at(0)), strToInt(position.at(1)), strToInt(position.at(2)));
 	}
 
 	static int strToInt(string &value) {
@@ -37,7 +37,7 @@ public:
 	static map<string, string> generateParamsMap(vector<string> &input) {
 		map<string, string> params;
 		for (int i = 1; i < input.size(); i += 2) {
-			params[input[i]] = input[i + 1];
+			params[input.at(i)] = input.at(i + 1);
 		}
 		return params;
 	}
