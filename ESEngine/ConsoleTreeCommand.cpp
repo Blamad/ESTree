@@ -1,7 +1,7 @@
 #include "ConsoleTreeCommand.h"
 
 bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
-	if (line[0] != "rtree" && line[0] != "tree") {
+	if (line.at(0) != "rtree" && line.at(0) != "tree") {
 		return false;
 	}
 
@@ -16,7 +16,7 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 
 	map<string, string> params = ConsoleUtils::generateParamsMap(line);
 
-	if (line[0] == "rtree") {
+	if (line.at(0) == "rtree") {
 		selected = (LindenmayerTree*) Context::getMouseManager()->getSelectedGameObject();
 		if (selected != nullptr) {
 			rldTree = true;
@@ -45,8 +45,9 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 				continue;
 			}
 			if (params.find("file") != params.end()) {
+				string filePath = "";
 				if (params["file"].length() > 2) {
-					lindenmayerParameters = LindenmayerTreeParams("LindenmayerRules/" + params["file"]);
+					filePath = "LindenmayerRules/" + params["file"];
 				}
 				else {
 					int index = stoi(params["file"]);
@@ -73,8 +74,14 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 						"parametricTernaryTreeC.json",
 						"parametricTernaryTreeD.json"
 					};
-					lindenmayerParameters = LindenmayerTreeParams("LindenmayerRules/" + (treeParams.size() > index ? treeParams[index] : treeParams[0]));
+					filePath = "LindenmayerRules/" + (treeParams.size() > index ? treeParams.at(index) : treeParams.at(0));
 				}
+				struct stat buffer;
+				if (stat(filePath.c_str(), &buffer) != 0) {
+					ConsoleUtils::logToConsole("There is no such file: " + filePath);
+					return false;
+				}
+				lindenmayerParameters = LindenmayerTreeParams(filePath);
 				params.erase("file");
 				continue;
 			}
@@ -93,7 +100,7 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 						"treeTexture1.jpg",
 						"treeTexture2.jpg"
 					};
-					barkMaterial = Material::diffuseTextureOnly("Textures/" + (barkTextures.size() > index ? barkTextures[index] : barkTextures[0]));
+					barkMaterial = Material::diffuseTextureOnly("Textures/" + (barkTextures.size() > index ? barkTextures[index] : barkTextures.at(0)));
 				}
 				params.erase("bark");
 				continue;
@@ -112,7 +119,7 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 						"leaves5.png",
 						"arrow.png"
 					};
-					leavesMaterial = Material::diffuseTextureOnly("Textures/" + (leaves.size() > index ? leaves[index] : leaves[0]));
+					leavesMaterial = Material::diffuseTextureOnly("Textures/" + (leaves.size() > index ? leaves[index] : leaves.at(0)));
 				}
 				params.erase("leaves");
 				continue;
@@ -128,8 +135,8 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 	GameObject *go = LindenmayerTreeFactory::getInstance().generateTree(lindenmayerParameters, name, barkMaterial, leavesMaterial, pos);
 	if (rldTree) {
 		Context::getSceneManager()->getActiveScene()->removeGameObject(selected);
-		Context::getMouseManager()->setSelectedGameObject(go);
 	}
+	Context::getMouseManager()->setSelectedGameObject(go);
 
 	return true;
 }

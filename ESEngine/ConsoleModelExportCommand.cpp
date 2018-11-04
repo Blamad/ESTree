@@ -3,7 +3,7 @@
 Logger ConsoleModelExportCommand::logger("ConsoleModelExportCommand");
 
 bool ConsoleModelExportCommand::processCommandLine(vector<string> line) {
-	if (line[0] == "export") {
+	if (line.at(0) == "export") {
 
 		map<string, string> params = ConsoleUtils::generateParamsMap(line);
 		string filename = "esTreeModel";

@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) {
 		options_description desc("Allowed options");
 		desc.add_options()
 			("help,h", "produce help message")
-			("width,w", value<int>()->default_value(1024), "set window width")
-			("height,h", value<int>()->default_value(768), "set window height")
+			("width,W", value<int>()->default_value(1024), "set window width")
+			("height,H", value<int>()->default_value(768), "set window height")
 			("scene,s", value<int>()->default_value(0), "load one of four scenes (0-3)");
 
 		variables_map vm;
