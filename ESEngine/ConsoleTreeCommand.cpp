@@ -86,8 +86,9 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 				continue;
 			}
 			if (params.find("bark") != params.end()) {
+				string barkTexPath = "";
 				if (params["bark"].length() > 2) {
-					barkMaterial = Material::diffuseTextureOnly("Textures/" + params["bark"]);
+					barkTexPath = "Textures/" + params["bark"];
 				}
 				else {
 					int index = stoi(params["bark"]);
@@ -100,14 +101,22 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 						"treeTexture1.jpg",
 						"treeTexture2.jpg"
 					};
-					barkMaterial = Material::diffuseTextureOnly("Textures/" + (barkTextures.size() > index ? barkTextures[index] : barkTextures.at(0)));
+					barkTexPath = "Textures/" + (barkTextures.size() > index ? barkTextures[index] : barkTextures.at(0));
 				}
+				struct stat buffer;
+				if (stat(barkTexPath.c_str(), &buffer) != 0) {
+					ConsoleUtils::logToConsole("There is no such file: " + barkTexPath);
+					return false;
+				}
+
+				barkMaterial = Material::diffuseTextureOnly(barkTexPath);
 				params.erase("bark");
 				continue;
 			}
 			if (params.find("leaves") != params.end()) {
+				string leavesTexPath = "";
 				if (params["leaves"].length() > 2) {
-					leavesMaterial = Material::diffuseTextureOnly("Textures/" + params["leaves"]);
+					leavesTexPath = "Textures/" + params["leaves"];
 				}
 				else {
 					int index = stoi(params["leaves"]);
@@ -119,8 +128,15 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 						"leaves5.png",
 						"arrow.png"
 					};
-					leavesMaterial = Material::diffuseTextureOnly("Textures/" + (leaves.size() > index ? leaves[index] : leaves.at(0)));
+					leavesTexPath = "Textures/" + (leaves.size() > index ? leaves[index] : leaves.at(0));
 				}
+				struct stat buffer;
+				if (stat(leavesTexPath.c_str(), &buffer) != 0) {
+					ConsoleUtils::logToConsole("There is no such file: " + leavesTexPath);
+					return false;
+				}
+
+				leavesMaterial = Material::diffuseTextureOnly(leavesTexPath);
 				params.erase("leaves");
 				continue;
 			}
