@@ -14,7 +14,7 @@ public:
 	Engine();
 	~Engine();
 
-	Window* initialize(int width, int height);
+	Window* initialize(int width, int height, bool fullScreenMode);
 	SceneManager* getSceneManager();
 
 	void startRendering();

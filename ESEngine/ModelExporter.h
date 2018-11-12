@@ -5,8 +5,10 @@
 #include <fstream>
 #include <map>
 #include <boost/foreach.hpp>
+#include <boost/filesystem.hpp>
 #include "Mesh.h"
 #include "InstancedMesh.h"
+#include "Logger.h"
 
 using namespace std;
 
@@ -15,6 +17,8 @@ public:
 	static void exportToFile(vector<Renderable*> &renderables, string &filename);
 
 private:
+	static Logger logger;
+
 	static map<Material, vector<Renderable*>> mapRenderables(vector<Renderable*> &renderables);
 
 	static string toString(float val) {

@@ -4,6 +4,7 @@
 #include "TestScene.h"
 #include "PhysicsScene.h"
 #include "SingleTreeScene.h"
+#include "ForestScene.h"
 #include "Logger.h"
 #include "ConsoleInterpreter.h"
 #include "ConsoleTreeCommand.h"
@@ -18,21 +19,24 @@ void testScene(SceneManager *sceneManager);
 void treeScene(SceneManager *sceneManager);
 void physicsScene(SceneManager *sceneManager);
 void singleTreeScene(SceneManager *sceneManager);
+void forestScene(SceneManager *sceneManager);
 
 Logger logger("ESTree");
 
-Engine* initEngine(int width, int height);
+Engine* initEngine(int width, int height, bool fullScreenMode);
 
 int main(int argc, char* argv[]) {
 	int width, height, scene = 0;
+	bool fullScreenMode = false;
 
 	try {
 		options_description desc("Allowed options");
 		desc.add_options()
 			("help,h", "produce help message")
-			("width,W", value<int>()->default_value(1024), "set window width")
+			("width,W", value<int>()->default_value(1366), "set window width")
 			("height,H", value<int>()->default_value(768), "set window height")
-			("scene,s", value<int>()->default_value(0), "load one of four scenes (0-3)");
+			("scene,s", value<int>()->default_value(2), "load one of four scenes (0-3)")
+			("fullscreen,f", bool_switch(&fullScreenMode), "launch application in fullscreen mode");
 
 		variables_map vm;
 		store(parse_command_line(argc, argv, desc), vm);
@@ -57,7 +61,7 @@ int main(int argc, char* argv[]) {
 	}
 	
 	logger.log(INFO, "Starting engine..");
-	Engine* engine = initEngine(width, height);
+	Engine* engine = initEngine(width, height, fullScreenMode);
 	logger.log(INFO, "Creating scene..");
 	SceneManager* sceneManager = engine->getSceneManager();
 
@@ -69,10 +73,13 @@ int main(int argc, char* argv[]) {
 		physicsScene(sceneManager);
 		break;
 	case 2:
-		treeScene(sceneManager);
+		forestScene(sceneManager);
 		break;
 	case 3:
 		testScene(sceneManager);
+		break;
+	case 4:
+		treeScene(sceneManager);
 		break;
 	}
 	
@@ -97,6 +104,10 @@ void treeScene(SceneManager *sceneManager) {
 	sceneManager->setActiveScene(shared_ptr<Scene>(new TreeScene()));
 }
 
+void forestScene(SceneManager *sceneManager) {
+	sceneManager->setActiveScene(shared_ptr<Scene>(new ForestScene()));
+}
+
 void testScene(SceneManager *sceneManager) {
 	sceneManager->setActiveScene(shared_ptr<Scene>(new TestScene()));
 }
@@ -105,8 +116,8 @@ void singleTreeScene(SceneManager *sceneManager) {
 	sceneManager->setActiveScene(shared_ptr<Scene>(new SingleTreeScene()));
 }
 
-Engine* initEngine(int width, int height) {
+Engine* initEngine(int width, int height, bool fullScreenMode) {
 	Engine* engine = new Engine();
-	Window* window = engine->initialize(width, height);
+	Window* window = engine->initialize(width, height, fullScreenMode);
 	return engine;
 }

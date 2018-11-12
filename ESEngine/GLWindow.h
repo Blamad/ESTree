@@ -16,7 +16,7 @@
 
 class GLWindow : public Window {
 public:
-	GLWindow(int width, int height) : Window(width, height) { };
+	GLWindow(int width, int height, bool fullScreenMode) : Window(width, height, fullScreenMode) { };
 	~GLWindow();
 
 	bool shouldClose();

@@ -56,7 +56,7 @@ Material Material::greenRubber() {
 
 Material Material::textured1() {
 	Material material;
-	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/treeTexture1.jpg", DIFFUSE);
+	material.texDiffuse = TextureManager::getInstance().createTexture("Textures/barkTexture6.jpg", DIFFUSE);
 	material.shininess = 64.0f;
 	return material;
 }

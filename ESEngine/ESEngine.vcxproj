@@ -27,6 +27,7 @@
     <ClCompile Include="DepthFrameBuffer.cpp" />
     <ClCompile Include="DepthFramePreviewComponent.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="ForestScene.cpp" />
     <ClCompile Include="Grass.cpp" />
     <ClCompile Include="ConsoleModelExportCommand.cpp" />
     <ClCompile Include="ModelExporter.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="ConsoleCustomCommand.h" />
     <ClInclude Include="DepthFrameBuffer.h" />
     <ClInclude Include="DepthFramePreviewComponent.h" />
+    <ClInclude Include="ForestScene.h" />
     <ClInclude Include="Grass.h" />
     <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="LindenmayerTreeFactory.h" />

@@ -26,9 +26,9 @@ void Engine::startRendering() {
 	}
 }
 
-Window* Engine::initialize(int width, int height) {
+Window* Engine::initialize(int width, int height, bool fullScreenMode) {
 #ifdef OPENGL
-	window.reset(new GLWindow(width, height));
+	window.reset(new GLWindow(width, height, fullScreenMode));
 	renderer.reset(new GLRenderer());
 #endif
 	window->initialize();

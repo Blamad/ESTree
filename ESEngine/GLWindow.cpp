@@ -50,7 +50,7 @@ bool GLWindow::initGlfw() {
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	//Inicjalizacja okna GLFW
-	glfwWindow = glfwCreateWindow(width, height, "EsTree", nullptr, nullptr);
+	glfwWindow = glfwCreateWindow(width, height, "EsTree", isFullScreenMode() ? glfwGetPrimaryMonitor() : nullptr, nullptr);
 	if (glfwWindow == nullptr)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;

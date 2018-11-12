@@ -12,13 +12,12 @@
     "a": 36,
     "lr": 1.07,
     "vr": 0.9,
-	"len": 0.7
+	  "len": 0.7
   },
   "axiom": "=(1.2)F(2)T+(45)A",
   "rules": [
     {
       "symbol": "A",
-	  "probability": 0.9,
       "production": "F(len)T[=(vr)v(a)F(len)TA]+(d1)[=(vr)v(a)F(len)TA]+(d2)[=(vr)v(a)F(len)TA]"
     },
     {

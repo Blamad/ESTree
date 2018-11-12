@@ -6,15 +6,15 @@
     "angle": 34.37,
     "tropism": [ 0, -1, 0 ],
     "tropismBendingFactor": 0.14,
-    "leavesGrowthProbability": 0.7,
+    "leavesGrowthProbability": 1.0,
     "d1": 137.5,
     "d2": 137.5,
     "a": 22.5,
     "lr": 1.109,
     "vr": 0.91,
-	"len": 0.7
+	  "len": 0.7
   },
-  "axiom": "=(1)F(1.5)F(1.5)T+(45)A",
+  "axiom": "=(1)F(0.8)F(0.8)T+(45)A",
   "rules": [
     {
       "symbol": "A",

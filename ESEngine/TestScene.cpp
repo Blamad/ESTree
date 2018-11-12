@@ -53,6 +53,7 @@ void TestScene::initialize() {
 
 	generateTerrain();
 	//generateSkybox();
+	Context::setHdrToggle(false);
 
 	//Light
 	createWhiteLampCube(vec3(-15, 20, 0), WEAK);

@@ -1,11 +1,18 @@
 #include "ModelExporter.h"
 
+Logger ModelExporter::logger("ModelExporter");
+
 void ModelExporter::exportToFile(vector<Renderable*> &renderables, string &filename) {
 	map<Material, vector<Renderable*>> renderablesMap = mapRenderables(renderables);
 	pair<Material, vector<Renderable*>> renderablePair;
 	int matNumber = 0;
 	int meshNumber = 0;
 	int faceOffset = 0;
+
+	boost::filesystem::path dir("models");
+	if (boost::filesystem::create_directory(dir)) {
+		logger.log(WARN, "\'models\' directory created");
+	}
 
 	//Init mtlfile
 	ofstream mtlFile;

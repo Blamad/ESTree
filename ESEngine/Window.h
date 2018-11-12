@@ -9,7 +9,7 @@ using namespace std;
 
 class Window {
 public:
-	Window(int width, int height) : width(width), height(height) { 
+	Window(int width, int height, bool fullScreenMode) : width(width), height(height), fullScreenMode(fullScreenMode) {
 		aspectRatio = width / height;
 	};
 
@@ -27,6 +27,7 @@ public:
 
 	int getWidth() { return width; }
 	int getHeight() { return height; }
+	bool isFullScreenMode() { return fullScreenMode; }
 	float getAspectRatio() { return aspectRatio; };
 
 	virtual double getTime() = 0;
@@ -35,6 +36,7 @@ public:
 protected:
 	float aspectRatio;
 	int width, height;
+	bool fullScreenMode;
 private:
 	Window();
 };

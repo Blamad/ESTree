@@ -333,6 +333,9 @@
     <ClCompile Include="ConsoleModelExportCommand.cpp">
       <Filter>TestProject\Console\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ForestScene.cpp">
+      <Filter>TestProject\Scenes\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -503,9 +506,6 @@
     <ClInclude Include="DepthFrameBuffer.h">
       <Filter>GraphicEngine\Framebuffer\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SingleTreeScene.h">
-      <Filter>TestProject\Scenes\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ShaderManager.h">
       <Filter>Engine\Manager\Header Files</Filter>
     </ClInclude>
@@ -577,6 +577,12 @@
     </ClInclude>
     <ClInclude Include="ConsoleModelExportCommand.h">
       <Filter>TestProject\Console\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleTreeScene.h">
+      <Filter>TestProject\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ForestScene.h">
+      <Filter>TestProject\Scenes\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
