@@ -74,7 +74,7 @@ void ModelExporter::exportToFile(vector<Renderable*> &renderables, string &filen
 						objFile << "vn " + toString(normal.x) + " " + toString(normal.y) + " " + toString(normal.z) + "\n";
 					}
 					BOOST_FOREACH(Vertex vertex, mesh->vertices) {
-						objFile << "vt " + toString(vertex.texCoords.x) + " " + toString(vertex.texCoords.y) + "\n";
+						objFile << "vt " + toString(vertex.texCoords.x) + " " + toString(1.0f - vertex.texCoords.y) + "\n";
 					}
 
 					for (int i = 0; i < mesh->indices.size(); i += 6) {
