@@ -5,6 +5,10 @@ SceneManager::SceneManager() {
 	Context::setSceneManager(this);
 }
 
+SceneManager::~SceneManager() {
+	
+}
+
 GameObject* SceneManager::addGameObject(unique_ptr<GameObject> go) {
 	return currentScene->addGameObject(std::move(go));
 }

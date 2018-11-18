@@ -19,11 +19,7 @@ PhysicsManager::PhysicsManager() {
 }
 
 PhysicsManager::~PhysicsManager() {
-	delete dynamicsWorld;
-	delete solver;
-	delete dispatcher;
-	delete collisionConfiguration;
-	delete broadphase;
+	
 }
 
 void PhysicsManager::addRigidBody(RigidBody *rigidBody) {

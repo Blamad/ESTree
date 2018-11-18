@@ -8,6 +8,7 @@
 class SceneManager {
 public:
 	SceneManager();
+	~SceneManager();
 
 	Scene* getActiveScene();
 	Scene* setActiveScene(shared_ptr<Scene> scene);

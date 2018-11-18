@@ -8,6 +8,12 @@ UIManager::UIManager() {
 	Context::setUIManager(this);
 }
 
+UIManager::~UIManager() {
+	for (auto & component : uiComponents) {
+		component.release();
+	}
+}
+
 void UIManager::toggleDepthBufferComponent(bool enabled) {
 	if (depthPreviewComponent != nullptr)
 		depthPreviewComponent->enabled = enabled;

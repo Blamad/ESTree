@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
 			("help,h", "produce help message")
 			("width,W", value<int>()->default_value(1366), "set window width")
 			("height,H", value<int>()->default_value(768), "set window height")
-			("scene,s", value<int>()->default_value(2), "load one of four scenes (0-3)")
+			("scene,s", value<int>()->default_value(0), "load one of four scenes (0-3)")
 			("fullscreen,f", bool_switch(&fullScreenMode), "launch application in fullscreen mode");
 
 		variables_map vm;

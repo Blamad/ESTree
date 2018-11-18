@@ -7,6 +7,18 @@ Scene::Scene() {
 	uiManager.reset(new UIManager());
 }
 
+Scene::~Scene() {
+	skybox.reset();
+	mouseManager.reset();
+	lightsManager.reset();
+	physicsManager.reset();
+	uiManager.reset();
+	sceneFrameBuffer.reset();
+	for (auto &node : gameObjects) {
+		node.second.release();
+	}
+}
+
 void Scene::setActiveCamera(GameObject *gameObject) {
 	activeCamera = (Camera*)gameObject->getComponent(CAMERA);
 	mouseManager->setCamera((CameraBehaviour*)gameObject->getComponent(BEHAVIOUR), activeCamera);

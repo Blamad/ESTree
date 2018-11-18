@@ -14,6 +14,7 @@ using namespace std;
 class UIManager {
 public:
 	UIManager();
+	~UIManager();
 
 	void toggleDepthBufferComponent(bool enabled);
 
