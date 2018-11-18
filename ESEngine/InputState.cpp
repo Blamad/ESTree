@@ -12,7 +12,7 @@ bool InputState::isKeyReleased(int key) {
 	return !keys[key];
 }
 
-const deque<Point2d> InputState::getMousePositionEvents() {
+const vector<Point2d> InputState::getMousePositionEvents() {
 	return mousePosition;
 }
 
@@ -20,19 +20,19 @@ const Point2d InputState::getLastMousePosition() {
 	return lastMousePosition;
 }
 
-const deque<Point2d> InputState::getMouseScrollEvents() {
+const vector<Point2d> InputState::getMouseScrollEvents() {
 	return mouseScroll;
 }
 
-const deque<ClickEvent> InputState::getMouseClickEvents() {
+const vector<ClickEvent> InputState::getMouseClickEvents() {
 	return mouseClick;
 }
 
-const deque<KeyEvent> InputState::getKeyboardEvents() {
+const vector<KeyEvent> InputState::getKeyboardEvents() {
 	return keyEvents;
 }
 
-const deque<char> InputState::getCharacterEvents() {
+const vector<char> InputState::getCharacterEvents() {
 	return charEvents;
 }
 
@@ -72,4 +72,12 @@ void InputState::pushCharEvent(char character) {
 void InputState::pushKeyEvent(int key, KeyState state) {
 	keyEvents.push_back(KeyEvent(key, state));
 	keys[key] = state == RELEASED ? false : true;
+}
+
+InputState::~InputState() {
+	delete &mousePosition;
+	delete &mouseScroll;
+	delete &mouseClick;
+	delete &keyEvents;
+	delete &charEvents;
 }

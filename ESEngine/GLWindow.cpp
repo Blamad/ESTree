@@ -6,6 +6,8 @@ GLWindow* GLWindow::instance;
 Logger GLWindow::logger("GLWindow");
 
 GLWindow::~GLWindow() {
+	instance = nullptr;
+	inputState.release();
 	glfwTerminate();
 }
 
@@ -113,8 +115,11 @@ bool GLWindow::shouldClose() {
 
 void GLWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 	if (instance) {
-		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 			glfwSetWindowShouldClose(window, GL_TRUE);
+			instance = nullptr;
+			return;
+		}
 
 		KeyState state;
 		if (action == GLFW_REPEAT)
@@ -123,7 +128,7 @@ void GLWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action
 			state = PRESSED;
 		if (action == GLFW_RELEASE)
 			state = RELEASED;
-		
+		if(instance->inputState) 
 		instance->inputState->pushKeyEvent(key, state);
 	}
 }

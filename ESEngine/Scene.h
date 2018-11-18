@@ -27,6 +27,7 @@ using namespace std;
 class Scene {
 public:
 	Scene();
+	~Scene();
 
 	void update(double &dt, InputState &inputState);
 	void renderObjectsUsingShader(Renderer &renderer, Shader *shader);
