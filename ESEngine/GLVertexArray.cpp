@@ -1,7 +1,7 @@
 #include "GLVertexArray.h"
 
-void GLVertexArray::setVertexArray(const std::vector<Vertex> & vertices, const std::vector<int> & indices)
-{
+void GLVertexArray::setVertexArray(const std::vector<Vertex> & vertices, const std::vector<int> & indices) {
+	updateBufferParams(vertices, indices);
 	glGenVertexArrays(1, &this->VAO);
 	glGenBuffers(1, &this->VBO);
 	glGenBuffers(1, &this->EBO);
@@ -36,7 +36,7 @@ void GLVertexArray::setVertexArray(const std::vector<Vertex> & vertices, const s
 }
 
 void GLVertexArray::updateVertexArray(const std::vector<Vertex> &vertices, const std::vector<int> &indices) {
-	indiciesLength = indices.size();
+	updateBufferParams(vertices, indices);
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex) * vertices.size(), &vertices[0]);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
@@ -102,11 +102,17 @@ void GLVertexArray::setInstancedVertexArray(const std::vector<Vertex> &vertices,
 }
 
 void GLVertexArray::updateInstancedVertexArray(const std::vector<Vertex> &vertices, const std::vector<int> &indices, const std::vector<InstancedTransform> &instanceTransforms) {
-	indiciesLength = indices.size();
+	updateBufferParams(vertices, indices);
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex) * vertices.size(), &vertices[0]);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
 	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLuint) * indices.size(), &indices[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, instancedModelMatriciesBuffer);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, instanceTransforms.size() * sizeof(InstancedTransform), &instanceTransforms[0]);
+}
+
+void GLVertexArray::updateBufferParams(const std::vector<Vertex> &vertices, const std::vector<int> &indices) {
+	indiciesLength = indices.size();
+	iBufferSize = indices.size();
+	vBufferSize = vertices.size();
 }

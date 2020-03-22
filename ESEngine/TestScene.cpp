@@ -5,18 +5,18 @@ void TestScene::initialize() {
 	Transform* transform;
 	std::shared_ptr<RigidBody> rigidBody;
 
-	std::unique_ptr<GameObject> go(new Cube(Material::container()));
+	std::unique_ptr<GameObject> go(new Cube(Material::bark1()));
 	go->name = "WoodenCube";
 	transform = getTransform(go.get());
-	//transform->translate(glm::vec3(3, 1, 3));
-	//go->addComponent(std::shared_ptr<Behaviour>(new RotationBehaviour()));
+	transform->translate(glm::vec3(3, 1, 3));
+	go->addComponent(std::shared_ptr<Behaviour>(new RotationBehaviour()));
 	rigidBody = std::shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(2);
-	//rigidBody->makeDynamic();
+	rigidBody->makeDynamic();
 	addGameObject(move(go));
 
-	/*go = std::unique_ptr<GameObject>(new Cube(Material::container()));
+	go = std::unique_ptr<GameObject>(new Cube(Material::container()));
 	go->name = "CrateCube";
 	transform = getTransform(go.get());
 	transform->translate(glm::vec3(0, 6, -2));
@@ -49,18 +49,18 @@ void TestScene::initialize() {
 	rigidBody->initAsBox(2);
 	rigidBody->makeDynamic();
 
-	addGameObject(move(go));*/
+	addGameObject(move(go));
 
-	//generateTerrain();
-	//generateSkybox();
-	Context::setHdrToggle(false);
+	generateTerrain();
+	generateSkybox();
+	Context::setHdrToggle(true);
 
 	//Light
 	createWhiteLampCube(glm::vec3(-15, 20, 0), WEAK);
-	//createWhiteLampCube(glm::vec3(15, 20, 0), WEAK);
-	//createWhiteLampCube(glm::vec3(0, -5, 0), WEAK);
-	//glm::vec3 dir = normalize(glm::vec3(-1, -0.5, -1));
-	//createDirectionalLight(glm::vec3(dir.x * -10, 15, dir.z * -10), dir);
+	createWhiteLampCube(glm::vec3(15, 20, 0), WEAK);
+	createWhiteLampCube(glm::vec3(0, -5, 0), WEAK);
+	glm::vec3 dir = normalize(glm::vec3(-1, -0.5, -1));
+	createDirectionalLight(glm::vec3(dir.x * -10, 15, dir.z * -10), dir);
 	setActiveCamera(createCamera(glm::vec3(0, 5, 15), -90, -10));
 
 	generateFrameBuffer();

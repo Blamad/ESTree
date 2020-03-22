@@ -73,15 +73,11 @@ void InstancedMesh::draw(Renderer &renderer, Shader *shader) {
 }
 
 InstancedMesh::InstancedMesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::vector<InstancedTransform> &instancedTransforms, std::shared_ptr<Shader> shader, int vBufferSize, int iBufferSize, int bufferUsage) : Renderable(shader) {
-	if (vBufferSize == -1)
-		vBufferSize = vertices.size();
-	if (iBufferSize == -1)
-		iBufferSize = indices.size();
 	this->instanceMatricies = std::vector<InstancedTransform>(instancedTransforms);
 	this->vertices = std::vector<Vertex>(vertices);
 	this->indices = std::vector<int>(indices);
 
-	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(bufferUsage));
 	this->bufferUsage = bufferUsage;
 	setupMesh();
 }

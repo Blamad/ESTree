@@ -66,7 +66,7 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${VENDORS_SOURCES})
 target_link_libraries(${PROJECT_NAME} glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}
-                      BulletDynamics BulletCollision LinearMath freetype freetype.dll
+                      BulletDynamics BulletCollision LinearMath freetype
 					  libboost_date_time-vc140-mt-gd-x64-1_72 libboost_thread-vc140-mt-gd-x64-1_72
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES

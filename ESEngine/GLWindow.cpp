@@ -23,9 +23,9 @@ void GLWindow::setupWindowParams() {
 	glViewport(0, 0, width, height);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 	glEnable(GL_MULTISAMPLE);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 
 	setCursorVisible();
 }

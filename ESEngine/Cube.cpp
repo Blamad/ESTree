@@ -44,16 +44,16 @@ std::shared_ptr<Mesh> Cube::createMesh(std::shared_ptr<Shader> shader) {
 	v.reserve(100);
 	i.reserve(100);
 
-	std::shared_ptr<Mesh> mesh = std::shared_ptr<Mesh>(new Mesh(v, i, shader, 100, 100, GL_STREAM_DRAW));
+	//std::shared_ptr<Mesh> mesh = std::shared_ptr<Mesh>(new Mesh(v, i, shader, 100, 100, GL_STREAM_DRAW));
 
 	std::vector<Vertex> vertices = {
 		//front
-		createVertex(glm::vec3( 1.0f, -1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),		glm::vec2(1, 0)),
-		createVertex(glm::vec3( 1.0f,  1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),		glm::vec2(1, 1)),
-		createVertex(glm::vec3(-1.0f,  1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),		glm::vec2(0, 1)),
-		createVertex(glm::vec3(-1.0f, -1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),		glm::vec2(0, 0)),
+		createVertex(glm::vec3( 1.0f, -1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),	glm::vec2(1, 0)),
+		createVertex(glm::vec3( 1.0f,  1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),	glm::vec2(1, 1)),
+		createVertex(glm::vec3(-1.0f,  1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),	glm::vec2(0, 1)),
+		createVertex(glm::vec3(-1.0f, -1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),	glm::vec2(0, 0)),
 		//back
-		createVertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(0.0f, 0.0f, -1.0f),	glm::vec2(0, 0)),
+		createVertex(glm::vec3(-1.0f, -1.0f, -1.0f),	glm::vec3(0.0f, 0.0f, -1.0f),	glm::vec2(0, 0)),
 		createVertex(glm::vec3(-1.0f,  1.0f, -1.0f),	glm::vec3(0.0f, 0.0f, -1.0f),	glm::vec2(0, 1)),
 		createVertex(glm::vec3( 1.0f,  1.0f, -1.0f),	glm::vec3(0.0f, 0.0f, -1.0f),	glm::vec2(1, 1)),
 		createVertex(glm::vec3( 1.0f, -1.0f, -1.0f),	glm::vec3(0.0f, 0.0f, -1.0f),	glm::vec2(1, 0)),
@@ -61,20 +61,20 @@ std::shared_ptr<Mesh> Cube::createMesh(std::shared_ptr<Shader> shader) {
 		createVertex(glm::vec3(-1.0f, -1.0f,  1.0f),	glm::vec3(-1.0f, 0.0f, 0.0f),	glm::vec2(0, 1)),
 		createVertex(glm::vec3(-1.0f,  1.0f,  1.0f),	glm::vec3(-1.0f, 0.0f, 0.0f),	glm::vec2(1, 1)),
 		createVertex(glm::vec3(-1.0f,  1.0f, -1.0f),	glm::vec3(-1.0f, 0.0f, 0.0f),	glm::vec2(1, 0)),
-		createVertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(-1.0f, 0.0f, 0.0f),	glm::vec2(0, 0)),
+		createVertex(glm::vec3(-1.0f, -1.0f, -1.0f),	glm::vec3(-1.0f, 0.0f, 0.0f),	glm::vec2(0, 0)),
 		//right
-		createVertex(glm::vec3(1.0f, -1.0f, -1.0f),	glm::vec3(1.0f, 0.0f, 0.0f),		glm::vec2(0, 0)),
-		createVertex(glm::vec3(1.0f,  1.0f, -1.0f),	glm::vec3(1.0f, 0.0f, 0.0f),		glm::vec2(1, 0)),
-		createVertex(glm::vec3(1.0f,  1.0f,  1.0f),	glm::vec3(1.0f, 0.0f, 0.0f),		glm::vec2(1, 1)),
-		createVertex(glm::vec3(1.0f, -1.0f,  1.0f),	glm::vec3(1.0f, 0.0f, 0.0f),		glm::vec2(0, 1)),
+		createVertex(glm::vec3(1.0f, -1.0f, -1.0f),		glm::vec3(1.0f, 0.0f, 0.0f),	glm::vec2(0, 0)),
+		createVertex(glm::vec3(1.0f,  1.0f, -1.0f),		glm::vec3(1.0f, 0.0f, 0.0f),	glm::vec2(1, 0)),
+		createVertex(glm::vec3(1.0f,  1.0f,  1.0f),		glm::vec3(1.0f, 0.0f, 0.0f),	glm::vec2(1, 1)),
+		createVertex(glm::vec3(1.0f, -1.0f,  1.0f),		glm::vec3(1.0f, 0.0f, 0.0f),	glm::vec2(0, 1)),
 		//top
-		createVertex(glm::vec3( 1.0f, 1.0f,  1.0f),	glm::vec3(0.0f, 1.0f, 0.0f),		glm::vec2(1, 1)),
-		createVertex(glm::vec3( 1.0f, 1.0f, -1.0f),	glm::vec3(0.0f, 1.0f, 0.0f),		glm::vec2(1, 0)),
-		createVertex(glm::vec3(-1.0f, 1.0f, -1.0f),	glm::vec3(0.0f, 1.0f, 0.0f),		glm::vec2(0, 0)),
-		createVertex(glm::vec3(-1.0f, 1.0f,  1.0f),	glm::vec3(0.0f, 1.0f, 0.0f),		glm::vec2(0, 1)),
+		createVertex(glm::vec3( 1.0f, 1.0f,  1.0f),		glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(1, 1)),
+		createVertex(glm::vec3( 1.0f, 1.0f, -1.0f),		glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(1, 0)),
+		createVertex(glm::vec3(-1.0f, 1.0f, -1.0f),		glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(0, 0)),
+		createVertex(glm::vec3(-1.0f, 1.0f,  1.0f),		glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(0, 1)),
 		//bottom
 		createVertex(glm::vec3(-1.0f, -1.0f,  1.0f),	glm::vec3(0.0f, -1.0f, 0.0f),	glm::vec2(0, 1)),
-		createVertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(0.0f, -1.0f, 0.0f),	glm::vec2(0, 0)),
+		createVertex(glm::vec3(-1.0f, -1.0f, -1.0f),	glm::vec3(0.0f, -1.0f, 0.0f),	glm::vec2(0, 0)),
 		createVertex(glm::vec3( 1.0f, -1.0f, -1.0f),	glm::vec3(0.0f, -1.0f, 0.0f),	glm::vec2(1, 0)),
 		createVertex(glm::vec3( 1.0f, -1.0f,  1.0f),	glm::vec3(0.0f, -1.0f, 0.0f),	glm::vec2(1, 1)),
 	};
@@ -88,14 +88,13 @@ std::shared_ptr<Mesh> Cube::createMesh(std::shared_ptr<Shader> shader) {
 		20, 21, 23, 21, 22, 23
 	};
 
-	for (int i = 0; i < vertices.size(); i++)
+	/*for (int i = 0; i < vertices.size(); i++)
 		mesh->vertices.push_back(vertices[i]);
 	for (int i = 0; i < indices.size(); i++)
 		mesh->indices.push_back(indices[i]);
 
-	mesh->updateMesh();
-
-	//shared_ptr<Mesh> mesh = shared_ptr<Mesh>(new Mesh(vertices, indices, shader));
+	mesh->updateMesh();*/
+	std::shared_ptr<Mesh> mesh = std::shared_ptr<Mesh>(new Mesh(vertices, indices, shader));
 
 	return mesh;
 }

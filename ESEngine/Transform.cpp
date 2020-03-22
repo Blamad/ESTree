@@ -2,7 +2,7 @@
 
 glm::mat4 Transform::getModelMatrix() {
 	if (modelValueChanged) {
-		modelMatrix = glm::mat4();
+		modelMatrix = glm::mat4(1.0f);
 		modelMatrix = glm::translate(modelMatrix, getPosition());
 		modelMatrix *= mat4_cast(getRotation());
 		modelMatrix = glm::scale(modelMatrix, scaleVec);

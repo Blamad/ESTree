@@ -91,23 +91,13 @@ void Mesh::draw(Renderer &renderer, Shader *shader) {
 }
 
 Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::shared_ptr<Shader> shader, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shader) {
-	if (vBufferSize == -1)
-		vBufferSize = vertices.size();
-	if (iBufferSize == -1)
-		iBufferSize = indices.size();
-
-	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(bufferUsage));
 	this->bufferUsage = bufferUsage;
 	setupMeshes();
 }
 
 Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::vector<std::shared_ptr<Shader>> shaders, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shaders) {
-	if (vBufferSize == -1)
-		vBufferSize = vertices.size();
-	if (iBufferSize == -1)
-		iBufferSize = indices.size();
-
-	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(bufferUsage));
 	this->bufferUsage = bufferUsage;
 	setupMeshes();
 }
