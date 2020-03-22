@@ -18,16 +18,16 @@ public:
 
 	void initialize();
 
-	GameObject* createDirectionalLight(vec3 position, vec3 direction);
+	GameObject* createDirectionalLight(glm::vec3 position, glm::vec3 direction);
 	GameObject* createCamera(glm::vec3 position, float yaw, float pitch);
 
 	void generateTerrain();
 	void addSkybox();
 
-	void generateTower(vec3 center, int floors);
-	void generateFloor(vec3 center);
-	void generateBlock(vec3 pos, bool rotate);
-	void generateTestBox(vec3 pos, vec3 scale);
+	void generateTower(glm::vec3 center, int floors);
+	void generateFloor(glm::vec3 center);
+	void generateBlock(glm::vec3 pos, bool rotate);
+	void generateTestBox(glm::vec3 pos, glm::vec3 scale);
 	void generateFrameBuffer();
 
 protected:

@@ -1,6 +1,6 @@
 #include "ConsoleTreeCommand.h"
 
-bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
+bool ConsoleTreeCommand::processCommandLine(std::vector<std::string> line)  {
 	if (line.at(0) != "rtree" && line.at(0) != "tree") {
 		return false;
 	}
@@ -8,13 +8,13 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 	LindenmayerTree *selected = nullptr;
 	bool rldTree = false;
 
-	vec3 pos(0, 0, 0);
-	string name = "Tree";
+	glm::vec3 pos(0, 0, 0);
+	std::string name = "Tree";
 	LindenmayerTreeParams lindenmayerParameters = LindenmayerTreeParams("LindenmayerRules/randomTree.json");
 	Material barkMaterial = Material::diffuseTextureOnly("Textures/barkTexture3.jpg");
 	Material leavesMaterial = Material::diffuseTextureOnly("Textures/leaves3.png");
 
-	map<string, string> params = ConsoleUtils::generateParamsMap(line);
+	std::map<std::string, std::string> params = ConsoleUtils::generateParamsMap(line);
 
 	if (line.at(0) == "rtree") {
 		selected = (LindenmayerTree*) Context::getMouseManager()->getSelectedGameObject();
@@ -45,13 +45,13 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 				continue;
 			}
 			if (params.find("file") != params.end()) {
-				string filePath = "";
+				std::string filePath = "";
 				if (params["file"].length() > 2) {
 					filePath = "LindenmayerRules/" + params["file"];
 				}
 				else {
 					int index = stoi(params["file"]);
-					static vector<string> treeParams = {
+					static std::vector<std::string> treeParams = {
 						"randomTree.json",
 						"symetricTree.json",
 						"fibbonacciTree.json",
@@ -86,13 +86,13 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 				continue;
 			}
 			if (params.find("bark") != params.end()) {
-				string barkTexPath = "";
+				std::string barkTexPath = "";
 				if (params["bark"].length() > 2) {
 					barkTexPath = "Textures/" + params["bark"];
 				}
 				else {
 					int index = stoi(params["bark"]);
-					static vector<string> barkTextures = {
+					static std::vector<std::string> barkTextures = {
 						"barkTexture1.jpg",
 						"barkTexture2.jpg",
 						"barkTexture3.jpg",
@@ -114,13 +114,13 @@ bool ConsoleTreeCommand::processCommandLine(vector<string> line)  {
 				continue;
 			}
 			if (params.find("leaves") != params.end()) {
-				string leavesTexPath = "";
+				std::string leavesTexPath = "";
 				if (params["leaves"].length() > 2) {
 					leavesTexPath = "Textures/" + params["leaves"];
 				}
 				else {
 					int index = stoi(params["leaves"]);
-					static vector<string> leaves = {
+					static std::vector<std::string> leaves = {
 						"leaves1.png",
 						"leaves2.png",
 						"leaves3.png",

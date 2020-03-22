@@ -55,7 +55,7 @@ void MouseManager::pickObject(GameObject* go) {
 	pickedGameObjectMass = rb->getCurrentMass();
 	rb->changeMass(0);
 	rb->clearForces();
-	logger.log(INFO, "Rigidbody picked...");
+	logger.log(LOG_INFO, "Rigidbody picked...");
 
 	Screen::setCursorState(HIDDEN);
 }
@@ -67,29 +67,29 @@ void MouseManager::releaseObject() {
 	pickedGameObject = nullptr;
 	lastXPos = NULL;
 	lastYPos = NULL;
-	logger.log(INFO, "Rigidbody released!");
+	logger.log(LOG_INFO, "Rigidbody released!");
 
 	Screen::setCursorState(VISIBLE);
 }
 
 void MouseManager::moveGameObject(GameObject *go, double x, double y) {
 
-	vec3 distVec = camera->position - ((Transform*)go->getComponent(TRANSFORM))->getPosition();
+	glm::vec3 distVec = camera->position - ((Transform*)go->getComponent(TRANSFORM))->getPosition();
 	float dist = sqrtf(dot(distVec, distVec));
 	
 	double distanceMod = dist * 0.0015;
-	vec4 transform(x * distanceMod, -y * distanceMod, 0, 0);
+	glm::vec4 transform(x * distanceMod, -y * distanceMod, 0, 0);
 	transform = transform * camera->getViewMatrix();
 	
-	((RigidBody*)go->getComponent(RIGIDBODY))->translate(vec3(transform));
+	((RigidBody*)go->getComponent(RIGIDBODY))->translate(glm::vec3(transform));
 }
 
-float MouseManager::calcDistance(vec3 vecA, vec3 vecB) {
-	vec3 tmp = vecA - vecB;
+float MouseManager::calcDistance(glm::vec3 vecA, glm::vec3 vecB) {
+	glm::vec3 tmp = vecA - vecB;
 	return sqrtf((powf(tmp.x, 2) + powf(tmp.y, 2) + powf(tmp.z, 2)));
 }
 
-string MouseManager::vecToString(vec3 vec) {
+std::string MouseManager::vecToString(glm::vec3 vec) {
 	return "["+std::to_string(vec.x) + ", " + std::to_string(vec.y) + ", " + std::to_string(vec.z) + "]";
 }
 

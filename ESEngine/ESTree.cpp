@@ -12,9 +12,6 @@
 #include "ConsoleModelExportCommand.h"
 #include <boost/program_options.hpp>
 
-using namespace glm;
-using namespace boost::program_options;
-
 void testScene(SceneManager *sceneManager);
 void treeScene(SceneManager *sceneManager);
 void physicsScene(SceneManager *sceneManager);
@@ -30,20 +27,20 @@ int main(int argc, char* argv[]) {
 	bool fullScreenMode = false;
 
 	try {
-		options_description desc("Allowed options");
+		boost::program_options::options_description desc("Allowed options");
 		desc.add_options()
 			("help,h", "produce help message")
-			("width,W", value<int>()->default_value(1366), "set window width")
-			("height,H", value<int>()->default_value(768), "set window height")
-			("scene,s", value<int>()->default_value(0), "load one of four scenes (0-3)")
-			("fullscreen,f", bool_switch(&fullScreenMode), "launch application in fullscreen mode");
+			("width,W", boost::program_options::value<int>()->default_value(1366), "set window width")
+			("height,H", boost::program_options::value<int>()->default_value(768), "set window height")
+			("scene,s", boost::program_options::value<int>()->default_value(3), "load one of four scenes (0-3)")
+			("fullscreen,f", boost::program_options::bool_switch(&fullScreenMode), "launch application in fullscreen mode");
 
-		variables_map vm;
+		boost::program_options::variables_map vm;
 		store(parse_command_line(argc, argv, desc), vm);
-		notify(vm);
+		boost::program_options::notify(vm);
 
 		if (vm.count("help")) {
-			cout << desc << "\n";
+			std::cout << desc << "\n";
 			return 0;
 		}
 
@@ -51,18 +48,18 @@ int main(int argc, char* argv[]) {
 		height = vm["height"].as<int>();
 		scene = vm["scene"].as<int>();
 	}
-	catch (exception& e) {
-		cerr << "error: " << e.what() << "\n";
+	catch (std::exception& e) {
+		std::cerr << "error: " << e.what() << "\n";
 		return 1;
 	}
 	catch (...) {
-		cerr << "Exception of unknown type!\n";
+		std::cerr << "Exception of unknown type!\n";
 		return 1;
 	}
 	
-	logger.log(INFO, "Starting engine..");
+	logger.log(LOG_INFO, "Starting engine..");
 	Engine* engine = initEngine(width, height, fullScreenMode);
-	logger.log(INFO, "Creating scene..");
+	logger.log(LOG_INFO, "Creating scene..");
 	SceneManager* sceneManager = engine->getSceneManager();
 
 	switch (scene) {
@@ -83,13 +80,14 @@ int main(int argc, char* argv[]) {
 		break;
 	}
 	
-	logger.log(INFO, "Scene created. Rendering..");
+	logger.log(LOG_INFO, "Scene created. Rendering..");
 
-	ConsoleInterpreter::addCustomCommand(make_shared<ConsoleTreeCommand>(ConsoleTreeCommand()));
-	ConsoleInterpreter::addCustomCommand(make_shared<ConsoleCubeCommand>(ConsoleCubeCommand()));
-	ConsoleInterpreter::addCustomCommand(make_shared<ConsoleModelExportCommand>(ConsoleModelExportCommand()));
+	ConsoleInterpreter::addCustomCommand(std::make_shared<ConsoleTreeCommand>(ConsoleTreeCommand()));
+	ConsoleInterpreter::addCustomCommand(std::make_shared<ConsoleCubeCommand>(ConsoleCubeCommand()));
+	ConsoleInterpreter::addCustomCommand(std::make_shared<ConsoleModelExportCommand>(ConsoleModelExportCommand()));
 
 	engine->startRendering();
+	logger.log(LOG_INFO, "Quitting..");
 
 	delete(engine);
 
@@ -97,23 +95,23 @@ int main(int argc, char* argv[]) {
 }
 
 void physicsScene(SceneManager *sceneManager) {
-	sceneManager->setActiveScene(shared_ptr<Scene>(new PhysicsScene()));
+	sceneManager->setActiveScene(std::shared_ptr<Scene>(new PhysicsScene()));
 }
 
 void treeScene(SceneManager *sceneManager) {
-	sceneManager->setActiveScene(shared_ptr<Scene>(new TreeScene()));
+	sceneManager->setActiveScene(std::shared_ptr<Scene>(new TreeScene()));
 }
 
 void forestScene(SceneManager *sceneManager) {
-	sceneManager->setActiveScene(shared_ptr<Scene>(new ForestScene()));
+	sceneManager->setActiveScene(std::shared_ptr<Scene>(new ForestScene()));
 }
 
 void testScene(SceneManager *sceneManager) {
-	sceneManager->setActiveScene(shared_ptr<Scene>(new TestScene()));
+	sceneManager->setActiveScene(std::shared_ptr<Scene>(new TestScene()));
 }
 
 void singleTreeScene(SceneManager *sceneManager) {
-	sceneManager->setActiveScene(shared_ptr<Scene>(new SingleTreeScene()));
+	sceneManager->setActiveScene(std::shared_ptr<Scene>(new SingleTreeScene()));
 }
 
 Engine* initEngine(int width, int height, bool fullScreenMode) {

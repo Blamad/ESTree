@@ -22,8 +22,8 @@ public:
 	GameObject* createCube(Material material);
 	GameObject* createRotatingCube(Material material);
 
-	GameObject* createWhiteLampCube(vec3 position, PointLightStrength str);
-	GameObject* createDirectionalLight(vec3 position, vec3 direction);
+	GameObject* createWhiteLampCube(glm::vec3 position, PointLightStrength str);
+	GameObject* createDirectionalLight(glm::vec3 position, glm::vec3 direction);
 
 	void generateTerrain();
 	GameObject * createCamera(glm::vec3 position, float yaw, float pitch);

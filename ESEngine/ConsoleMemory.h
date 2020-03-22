@@ -4,8 +4,6 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 class ConsoleMemory {
 public:
 	ConsoleMemory() {
@@ -13,17 +11,17 @@ public:
 	}
 
 	void clear() { lines.clear(); }
-	void pushLine(string line) { lines.push_back(line); }
+	void pushLine(std::string line) { lines.push_back(line); }
 	void resetInputHistoryIndex() { lastInputIndex = 0;  }
-	vector<string> getLines() { return lines; }
+	std::vector<std::string> getLines() { return lines; }
 
-	void pushInputLine(string line) {
+	void pushInputLine(std::string line) {
 		resetInputHistoryIndex();
 		lines.push_back(line);
 		inputHistory.push_back(line);
 	}
 	
-	string getPreviousInput() {
+	std::string getPreviousInput() {
 		if (inputHistory.empty())
 			return "";
 
@@ -33,7 +31,7 @@ public:
 		return inputHistory[lastInputIndex];
 	}
 
-	string getNextInput() {
+	std::string getNextInput() {
 		if (inputHistory.empty())
 			return "";
 		
@@ -44,9 +42,9 @@ public:
 	}
 
 private:
-	vector<string> lines;
+	std::vector<std::string> lines;
 	
-	vector<string> inputHistory;
+	std::vector<std::string> inputHistory;
 	int lastInputIndex;
 
 };

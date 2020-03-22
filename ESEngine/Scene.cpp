@@ -28,11 +28,11 @@ Camera* Scene::getActiveCamera() {
 	return activeCamera;
 }
 
-void Scene::setSkybox(unique_ptr<Skybox> skybox) {
+void Scene::setSkybox(std::unique_ptr<Skybox> skybox) {
 	this->skybox = std::move(skybox);
 }
 
-GameObject* Scene::addGameObject(unique_ptr<GameObject> go) {
+GameObject* Scene::addGameObject(std::unique_ptr<GameObject> go) {
 	Uuid uuid = go->id;
 	gameObjects[uuid] = std::move(go);
 	if (gameObjects[uuid]->getComponent(RIGIDBODY) != nullptr)
@@ -43,7 +43,7 @@ GameObject* Scene::addGameObject(unique_ptr<GameObject> go) {
 }
 
 GameObject* Scene::createGameObject() {
-	unique_ptr<GameObject> go = unique_ptr<GameObject>(new GameObject());
+	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new GameObject());
 	Uuid uuid = go->id;
 	gameObjects[uuid] = std::move(go);
 	return gameObjects[uuid].get();
@@ -59,7 +59,7 @@ void Scene::removeGameObject(GameObject *gameObject) {
 	gameObjects.erase(uuid);
 }
 
-void Scene::setFrameBuffer(unique_ptr<FrameBuffer> frameBuffer) {
+void Scene::setFrameBuffer(std::unique_ptr<FrameBuffer> frameBuffer) {
 	this->sceneFrameBuffer = move(frameBuffer);
 }
 
@@ -111,8 +111,8 @@ void Scene::renderSkybox(Renderer &renderer) {
 	}
 }
 
-function<void(Renderer&, Shader*)> Scene::prepareDrawObjectsCall() {
-	function<void(Renderer&, Shader*)> renderObjectsFunction;
+std::function<void(Renderer&, Shader*)> Scene::prepareDrawObjectsCall() {
+	std::function<void(Renderer&, Shader*)> renderObjectsFunction;
 	renderObjectsFunction = [this](Renderer &renderer, Shader *shader) { renderObjectsUsingShader(renderer, shader); };
 	return renderObjectsFunction;
 }

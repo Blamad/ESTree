@@ -3,7 +3,7 @@
 
 #include <map>
 #include <vector>
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
@@ -11,8 +11,6 @@
 #include <sstream>
 #include <iostream>
 #include <boost\foreach.hpp>
-
-using namespace std;
 
 enum ShaderSubroutine {
 	RENDER_PASS, SHADOW_DEPTH_PASS, SINGLE_MESH_MODE, INSTANCED_MESH_MODE
@@ -54,12 +52,12 @@ public:
 	void registerLightsUBO();
 
 private:
-	map<string, GLuint> attribList;
-	map<string, GLuint> unifLocationList;
-	map<GLenum, map<string, GLuint>> subroutineList;
-	map<int, bool> initializedBy;
+	std::map<std::string, GLuint> attribList;
+	std::map<std::string, GLuint> unifLocationList;
+	std::map<GLenum, std::map<std::string, GLuint>> subroutineList;
+	std::map<int, bool> initializedBy;
 
-	vector<ShaderSubroutine> shaderSubroutines;
+	std::vector<ShaderSubroutine> shaderSubroutines;
 
 	static GLuint matricesUBO;
 

@@ -38,9 +38,9 @@ public:
 private:
 	static Logger logger;
 	
-	PhysicsManager *pManager;
-	Camera *camera;
-	CameraBehaviour *cameraBehaviour;
+	PhysicsManager *pManager = nullptr;
+	Camera *camera = nullptr;
+	CameraBehaviour *cameraBehaviour = nullptr;
 	bool objectPickingMode;
 
 	void processTriggeringInputEvents(InputState & inputState);
@@ -50,8 +50,8 @@ private:
 	bool checkIfMouseRightClickEventHappened(InputState& inputState, bool pressed);
 	//RigidBody stuff
 
-	GameObject *pickedGameObject;
-	GameObject *selectedGameObject;
+	GameObject *pickedGameObject = nullptr;
+	GameObject *selectedGameObject = nullptr;
 	double pickedGameObjectMass = -1;
 	double lastXPos = NULL;
 	double lastYPos = NULL;
@@ -63,8 +63,8 @@ private:
 	void pickObject(GameObject * go);
 	void releaseObject();
 
-	string vecToString(vec3 vec); 
-	float calcDistance(vec3 vecA, vec3 vecB);
+	std::string vecToString(glm::vec3 vec);
+	float calcDistance(glm::vec3 vecA, glm::vec3 vecB);
 };
 
 #endif

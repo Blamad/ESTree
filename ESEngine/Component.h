@@ -6,8 +6,6 @@
 #include <iomanip>
 #include "GameObject.h"
 
-using namespace std;
-
 enum ComponentType {
 	RENDERABLE, TRANSFORM, CAMERA, BEHAVIOUR, LIGHT, RIGIDBODY
 };
@@ -20,7 +18,7 @@ public:
 		this->parent = &parent;
 	}
 
-	vector<Component*> getComponents(const ComponentType &type) {
+	std::vector<Component*> getComponents(const ComponentType &type) {
 		return parent->getComponents(type);
 	}
 

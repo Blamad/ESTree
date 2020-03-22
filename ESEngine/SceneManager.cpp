@@ -9,7 +9,7 @@ SceneManager::~SceneManager() {
 	
 }
 
-GameObject* SceneManager::addGameObject(unique_ptr<GameObject> go) {
+GameObject* SceneManager::addGameObject(std::unique_ptr<GameObject> go) {
 	return currentScene->addGameObject(std::move(go));
 }
 
@@ -23,16 +23,16 @@ GameObject* SceneManager::createEmptyGameObject() {
 
 GameObject* SceneManager::createCamera(glm::vec3 position, float yaw, float pitch) {
 	GameObject *go = createEmptyGameObject();
-	shared_ptr<Camera> camera = shared_ptr<Camera>(new Camera(position, glm::vec3(0.0f, 1.0f, 0.0f), yaw, pitch));
+	std::shared_ptr<Camera> camera = std::shared_ptr<Camera>(new Camera(position, glm::vec3(0.0f, 1.0f, 0.0f), yaw, pitch));
 	go->addComponent(camera);
-	shared_ptr<CameraBehaviour> cameraBehaviour = shared_ptr<CameraBehaviour>(new CameraBehaviour(camera.get()));
+	std::shared_ptr<CameraBehaviour> cameraBehaviour = std::shared_ptr<CameraBehaviour>(new CameraBehaviour(camera.get()));
 	go->addComponent(cameraBehaviour);
 	currentScene->setActiveCamera(go);
 
 	return go;
 }
 
-Scene* SceneManager::setActiveScene(shared_ptr<Scene> scene) {
+Scene* SceneManager::setActiveScene(std::shared_ptr<Scene> scene) {
 	currentScene = scene;
 	return currentScene.get();
 }

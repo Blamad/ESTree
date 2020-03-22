@@ -4,18 +4,16 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-using namespace glm;
-
 struct InstancedTransform {
 public:
-	mat4 modelMatrix;
+	glm::mat4 modelMatrix;
 	//mat4 normalModelMatrix;
 
-	void translateModel(vec3 &position) {
+	void translateModel(glm::vec3 &position) {
 		modelMatrix = translate(modelMatrix, position);
 	}
 
-	void rotateModel(float &angle, vec3 &axis) {
+	void rotateModel(float &angle, glm::vec3 &axis) {
 		modelMatrix = rotate(modelMatrix, angle, axis);
 	}
 

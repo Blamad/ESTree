@@ -10,33 +10,31 @@
 #include "InstancedMesh.h"
 #include "Logger.h"
 
-using namespace std;
-
 class ModelExporter {
 public:
-	static void exportToFile(vector<Renderable*> &renderables, string &filename);
+	static void exportToFile(std::vector<Renderable*> &renderables, std::string &filename);
 
 private:
 	static Logger logger;
 
-	static map<Material, vector<Renderable*>> mapRenderables(vector<Renderable*> &renderables);
+	static std::map<Material, std::vector<Renderable*>> mapRenderables(std::vector<Renderable*> &renderables);
 
-	static string toString(float val) {
+	static std::string toString(float val) {
 		if (val < 0.001 && val > -0.001)
 			return "0";
 		else
-			return to_string(val);
+			return std::to_string(val);
 	}
 
-	static string toString(int val) {
-		return to_string(val);
+	static std::string toString(int val) {
+		return std::to_string(val);
 	}
 
-	static string toFaceInfo(int val) {
+	static std::string toFaceInfo(int val) {
 		return toString(val + 1) + "/" + toString(val + 1) + "/" + toString(val + 1);
 	}
 
-	static string processTextureFilename(string val) {
+	static std::string processTextureFilename(std::string val) {
 		return val.substr(val.find_last_of('/') + 1);
 	}
 

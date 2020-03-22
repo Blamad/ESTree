@@ -3,12 +3,10 @@
 
 #include "Texture.h"
 
-using namespace std;
-
 struct Texture2D : public Texture
 {
 	int width, height, channels;
-	Texture2D(string path, int width, int height, int channels, const unsigned char* const texture, TextureType type);
+	Texture2D(std::string path, int width, int height, int channels, const unsigned char* const texture, TextureType type);
 };
 
 #endif

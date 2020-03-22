@@ -1,8 +1,7 @@
 #ifndef GL_WINDOW_H
 #define GL_WINDOW_H
-//GLEW
-#define GLEW_STATIC
-#include <GL/glew.h>
+//GLAD
+#include <glad/glad.h>
 //GLFW
 #include <GLFW/glfw3.h>
 //GLM
@@ -47,10 +46,10 @@ private:
 
 	GLfloat lastTime;
 	GLFWwindow* glfwWindow;
-	unique_ptr<InputState> inputState;
+	std::unique_ptr<InputState> inputState;
 
 	bool initGlfw();
-	bool initGlew();
+	bool initGlad();
 	void setupWindowParams();
 
 	//input managment stuff

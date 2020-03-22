@@ -8,8 +8,6 @@
 #include "Texture2D.h"
 #include "CubeMap.h"
 
-using namespace std;
-
 class TextureManager {
 public:
 	static TextureManager& getInstance();
@@ -17,12 +15,12 @@ public:
 	TextureManager(TextureManager const&) = delete;
 	~TextureManager();
 
-	shared_ptr<Texture> createTexture(string fileName, TextureType type);
-	shared_ptr<Texture> createCubeMap(string* fileName);
+	std::shared_ptr<Texture> createTexture(std::string fileName, TextureType type);
+	std::shared_ptr<Texture> createCubeMap(std::string* fileName);
 
 private:
 	TextureManager() {};
-	vector <shared_ptr<Texture>> textureBuffers;
+	std::vector <std::shared_ptr<Texture>> textureBuffers;
 };
 
 

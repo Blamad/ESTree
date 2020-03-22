@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Camera.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\CameraBehaviour.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleCubeCommand.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleInterpreter.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleModelExportCommand.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleTreeCommand.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Context.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Cube.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\CubeMap.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\DepthFrameBuffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\DepthFramePreviewComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\DirectionalLight.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ESTree.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Engine.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ForestScene.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\GLRenderer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\GLVertexArray.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\GLWindow.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\GameObject.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Grass.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\HDRFrameBuffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\InputState.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\InstancedCube.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\InstancedMesh.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LampCube.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LightsManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LightsUtils.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTree.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTreeFactory.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTreeInterpreter.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTreeMeshGenerator.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTreeParams.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTreeSolver.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Logger.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Material.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Mesh.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ModelExporter.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\MouseManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\PhysicsManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\PhysicsScene.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\PostEffectFrameBuffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\RigidBody.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Scene.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\SceneManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Screen.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Shader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ShaderManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\SingleTreeScene.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Skybox.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Terrain.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\TestScene.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Texture2D.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\TextureBuffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\TextureManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Transform.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\TreeBehaviour.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\TreeScene.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\UIManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Vendor\glad\src\glad.c">
+      <Filter>Vendors</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Behaviour.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Camera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\CameraBehaviour.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ClickEvent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Component.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleComponent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleCubeCommand.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleCustomCommand.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleInterpreter.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleMemory.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleModelExportCommand.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleTreeCommand.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ConsoleUtils.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Context.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Cube.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\CubeMap.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\DepthFrameBuffer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\DepthFramePreviewComponent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\DirectionalLight.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Engine.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ForestScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\FrameBuffer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\GLRenderer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\GLVertexArray.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\GLWindow.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\GameObject.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Grass.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\HDRFrameBuffer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\InputState.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\InstancedCube.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\InstancedMesh.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\InstancedTransform.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\KeyEvent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LampCube.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Light.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LightsManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LightsUtils.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTree.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTreeFactory.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTreeInterpreter.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTreeMeshGenerator.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTreeParams.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\LindenmayerTreeSolver.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Logger.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Material.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Mesh.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ModelExporter.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\MouseManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\PhysicsManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\PhysicsScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Point2d.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\PointLight.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\PostEffectFrameBuffer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Ray.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Renderable.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Renderer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\RigidBody.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\RotationBehaviour.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Scene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\SceneManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Screen.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Segment.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Shader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\ShaderManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\SingleTreeScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Skybox.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Terrain.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\TestScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Texture.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Texture2D.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\TextureBuffer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\TextureManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Transform.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\TreeBehaviour.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\TreeScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\UIComponent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\UIManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Vertex.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\VertexArray.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESEngine\Window.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\DepthQuadDebug.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\FontShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\GenericShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\GeometryDebugShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\HDRShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\LampShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\PostEffectShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\SkyboxShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\MeshWiringShader.geom">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\NormalVisualisationShader.geom">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\FontShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\GenericShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\GeometryDebugShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\HDRShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\LampShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\PostEffectShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\SkyboxShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\README.md" />
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\.gitattributes" />
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\.gitignore" />
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\.gitmodules" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{949E9968-0DC4-3DC0-B4FC-75AE5B445AFB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{AF6D9BDC-B5BF-3B10-9924-7EBE29901F8C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{E39B7948-5D52-345E-896B-51B476FC84C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors">
+      <UniqueIdentifier>{E90FAD58-2017-3AFC-8947-F21A786AE8EF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

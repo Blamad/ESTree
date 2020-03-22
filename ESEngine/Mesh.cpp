@@ -3,7 +3,7 @@
 Logger Mesh::logger("Mesh");
 
 void Mesh::draw(Renderer &renderer) {
-	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
+	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
 		draw(renderer, shader.get());
 	}
 	if (isNormalsShaderEnabled) {
@@ -16,11 +16,11 @@ void Mesh::draw(Renderer &renderer) {
 
 void Mesh::draw(Renderer &renderer, Shader *shader) {
 	if (!shader->active) {
-		logger.log(WARN, "Trying to draw with inactive shader!");
+		logger.log(LOG_WARN, "Trying to draw with inactive shader!");
 		return;
 	}
 
-	BOOST_FOREACH(shared_ptr<GameObject> child, parent->children) {
+	BOOST_FOREACH(std::shared_ptr<GameObject> child, parent->children) {
 		if (child->getComponent(RENDERABLE) != nullptr) {
 			((Renderable*)child->getComponent(RENDERABLE))->draw(renderer, shader);
 		}
@@ -90,24 +90,24 @@ void Mesh::draw(Renderer &renderer, Shader *shader) {
 	}
 }
 
-Mesh::Mesh(vector<Vertex> &vertices, vector<int> &indices, shared_ptr<Shader> shader, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shader) {
+Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::shared_ptr<Shader> shader, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shader) {
 	if (vBufferSize == -1)
 		vBufferSize = vertices.size();
 	if (iBufferSize == -1)
 		iBufferSize = indices.size();
 
-	vertexArray = unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
 	this->bufferUsage = bufferUsage;
 	setupMeshes();
 }
 
-Mesh::Mesh(vector<Vertex> &vertices, vector<int> &indices, vector<shared_ptr<Shader>> shaders, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shaders) {
+Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::vector<std::shared_ptr<Shader>> shaders, int vBufferSize, int iBufferSize, int bufferUsage) : vertices(vertices), indices(indices), Renderable(shaders) {
 	if (vBufferSize == -1)
 		vBufferSize = vertices.size();
 	if (iBufferSize == -1)
 		iBufferSize = indices.size();
 
-	vertexArray = unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
 	this->bufferUsage = bufferUsage;
 	setupMeshes();
 }
@@ -117,7 +117,7 @@ Mesh::~Mesh() {
 }
 
 void Mesh::setupMeshes() {
-	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
+	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
 		setupMesh(shader);
 	}
 }
@@ -126,13 +126,13 @@ void Mesh::updateMesh() {
 	vertexArray->updateVertexArray(vertices, indices);
 }
 
-void Mesh::setupMesh(shared_ptr<Shader> shader) {
+void Mesh::setupMesh(std::shared_ptr<Shader> shader) {
 	vertexArray->setVertexArray(vertices, indices);
 	shader->registerMatriciesUBO();
 	shader->registerLightsUBO();
 }
 
-void Mesh::addNewShader(shared_ptr<Shader> shader) {
+void Mesh::addNewShader(std::shared_ptr<Shader> shader) {
 	addShader(shader);
 	setupMesh(shader);
 }

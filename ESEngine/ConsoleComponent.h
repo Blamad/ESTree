@@ -14,52 +14,49 @@
 #include <memory>
 #include <map>
 #include <GLM\glm.hpp>
-#include <GL\glew.h>
 #include <chrono>
 #include <boost\foreach.hpp>
 
+#include <glad\glad.h>
 #include <GLFW\glfw3.h>
-
-using namespace std;
-using namespace std::chrono;
 
 struct Character {
 	GLuint  textureID;
-	ivec2	size;
-	ivec2	bearing;
+	glm::ivec2	size;
+	glm::ivec2	bearing;
 	GLuint	advance;    
 };
 
 class ConsoleComponent : public UIComponent {
 public:
-	ConsoleComponent(vec3 fontColor = vec3(1.0, .0f, .0f));
+	ConsoleComponent(glm::vec3 fontColor = glm::vec3(1.0, .0f, .0f));
 
 	void init();
 	void draw();
 	void update(double &dt, InputState &inputState);
-	void writeLine(string line);
+	void writeLine(std::string line);
 	ConsoleMemory* getConsoleMemory() { return memory.get(); }
 
 private:
 	static Logger logger;
 
 	GLuint VAO, VBO;
-	map<GLchar, Character> characters;
-	shared_ptr<Shader> fontShader;
-	vec3 fontColor;
+	std::map<GLchar, Character> characters;
+	std::shared_ptr<Shader> fontShader;
+	glm::vec3 fontColor;
 	bool isFocused;
 	int consoleXPos;
 	int consoleYPos;
 
-	string inputLine;
+	std::string inputLine;
 
 	float lineOffset = 18.0f;
 	float fontScale = 0.7f;
 	int maxLines = 10;
 	int consoleScrollOffset = 0;
 
-	unique_ptr<ConsoleMemory> memory;
-	unique_ptr<ConsoleInterpreter> interpreter;
+	std::unique_ptr<ConsoleMemory> memory;
+	std::unique_ptr<ConsoleInterpreter> interpreter;
 
 	void initFreeType();
 	void renderLine(std::string text, GLfloat x, GLfloat y);

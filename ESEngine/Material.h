@@ -8,13 +8,11 @@
 #include <glm/glm.hpp>
 #include <memory>
 
-using namespace glm;
-
 class Material {
 public:
-	vec3 ambient = vec3(0, 0, 0);
-	vec3 diffuse = vec3(0, 0, 0);
-	vec3 specular = vec3(0, 0, 0);
+	glm::vec3 ambient = glm::vec3(0, 0, 0);
+	glm::vec3 diffuse = glm::vec3(0, 0, 0);
+	glm::vec3 specular = glm::vec3(0, 0, 0);
 	GLfloat shininess = 0;
 
 	std::shared_ptr<Texture> texDiffuse;
@@ -39,7 +37,7 @@ public:
 	static Material bark4();
 	static Material bark5();
 
-	static Material diffuseTextureOnly(string fileName);
+	static Material diffuseTextureOnly(std::string fileName);
 
 	bool operator<(Material const& r) const {
 		Material l = *this;

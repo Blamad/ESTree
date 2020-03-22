@@ -22,8 +22,6 @@
 #include "DepthFrameBuffer.h"
 #include "UIManager.h"
 
-using namespace std;
-
 class Scene {
 public:
 	Scene();
@@ -34,28 +32,28 @@ public:
 	void renderObjects(Renderer &renderer);
 	void renderFrame(Renderer &renderer);
 
-	GameObject* addGameObject(unique_ptr<GameObject> go);
+	GameObject* addGameObject(std::unique_ptr<GameObject> go);
 	GameObject* createGameObject();
 	void removeGameObject(GameObject *gameObject);
 
 	void setActiveCamera(GameObject *gameObject);
 	Camera * getActiveCamera();
-	void setSkybox(unique_ptr<Skybox> skybox);
-	void setFrameBuffer(unique_ptr<FrameBuffer> frameBuffer);
+	void setSkybox(std::unique_ptr<Skybox> skybox);
+	void setFrameBuffer(std::unique_ptr<FrameBuffer> frameBuffer);
 
 private:
-	Camera *activeCamera;
-	unique_ptr<Skybox> skybox;
-	unique_ptr<MouseManager> mouseManager;
-	unique_ptr<LightsManager> lightsManager;
-	unique_ptr<PhysicsManager> physicsManager;
-	unique_ptr<UIManager> uiManager;
-	map<Uuid, unique_ptr<GameObject>> gameObjects;
-	unique_ptr<FrameBuffer> sceneFrameBuffer;
+	Camera *activeCamera = nullptr;
+	std::unique_ptr<Skybox> skybox;
+	std::unique_ptr<MouseManager> mouseManager;
+	std::unique_ptr<LightsManager> lightsManager;
+	std::unique_ptr<PhysicsManager> physicsManager;
+	std::unique_ptr<UIManager> uiManager;
+	std::map<Uuid, std::unique_ptr<GameObject>> gameObjects;
+	std::unique_ptr<FrameBuffer> sceneFrameBuffer;
 
 	void renderSkybox(Renderer &renderer);
 
-	function<void(Renderer&, Shader*)> prepareDrawObjectsCall();
+	std::function<void(Renderer&, Shader*)> prepareDrawObjectsCall();
 
 	void preSceneRenderRoutine(Renderer &renderer);
 	void postSceneRenderRoutine(Renderer &renderer);

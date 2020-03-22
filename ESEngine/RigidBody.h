@@ -17,7 +17,7 @@ public:
 	void initAsAHullShape(double mass);
 	void initAsAStaticPlane();
 	
-	btRigidBody* rigidBody;
+	btRigidBody* rigidBody = nullptr;
 	bool pickable = false;
 	bool needsReload = false;
 	
@@ -39,7 +39,7 @@ private:
 	static Logger logger;
 
 	double mass;
-	Transform* transform;
+	Transform* transform = nullptr;
 
 	btCollisionShape* calculateHullCollisionShape(Mesh* mesh);
 };

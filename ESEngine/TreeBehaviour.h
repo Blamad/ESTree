@@ -5,8 +5,6 @@
 
 #include <GLFW\glfw3.h>
 
-using namespace glm;
-
 class TreeBehaviour : public Behaviour {
 public:
 

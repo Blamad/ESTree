@@ -18,56 +18,52 @@
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
 
-using namespace std;
-using namespace glm;
-using namespace rapidjson;
-
 class Rule {
 public:
-	Rule(string symbol, string replacement, float probability = 1.0f, int allowedDepth = 0, vector<string> variables = {}) : symbol(symbol), production(replacement), probability(probability), allowedDepth(allowedDepth), parameters(variables) { };
-	string symbol;
+	Rule(std::string symbol, std::string replacement, float probability = 1.0f, int allowedDepth = 0, std::vector<std::string> variables = {}) : symbol(symbol), production(replacement), probability(probability), allowedDepth(allowedDepth), parameters(variables) { };
+	std::string symbol;
 	int allowedDepth;
-	string production;
+	std::string production;
 	float probability;
-	vector<string> parameters;
+	std::vector<std::string> parameters;
 };
 
 class LindenmayerTreeParams {
 public:
-	LindenmayerTreeParams(string axiom, int depth, float initialLength = 1.0f, float initialRadius = 1.0f, float defaultAngle = 15.0f, float leafGrowthProb = 1.0)
+	LindenmayerTreeParams(std::string axiom, int depth, float initialLength = 1.0f, float initialRadius = 1.0f, float defaultAngle = 15.0f, float leafGrowthProb = 1.0)
 		: axiom(axiom), depth(depth), initialLength(initialLength), initialRadius(initialRadius), angle(radians(defaultAngle)), leafGrowthProb(leafGrowthProb) { };
 
-	LindenmayerTreeParams(string filePath);
+	LindenmayerTreeParams(std::string filePath);
 
-	string filepath;
-	string name;
+	std::string filepath;
+	std::string name;
 
-	string axiom;
+	std::string axiom;
 	int depth;
 	float initialLength = 1.0f;
 	float initialRadius = 1.0f;
 	float angle = 15.0f;
 	float leafGrowthProb = 1.0f;
 	float leavesAngleDiversity = 0.0f;
-	vec3 tropism = vec3(0,-1,0);
+	glm::vec3 tropism = glm::vec3(0,-1,0);
 	float tropismBendingFactor = 0.2f;
 
-	map<string, float> customParameters;
+	std::map<std::string, float> customParameters;
 
 	void addRule(Rule &rule);
-	vector<Rule> getRules(string &symbol);
-	vector<string> getAvailableRules();
+	std::vector<Rule> getRules(std::string &symbol);
+	std::vector<std::string> getAvailableRules();
 	double radians(double angle);
 
 protected:
-	map<string, vector<Rule>> rules;
+	std::map<std::string, std::vector<Rule>> rules;
 	
 
-	void loadFile(string &filepath);
-	void readLFile(string filePath);
-	void readJSONFile(string filePath);
+	void loadFile(std::string &filepath);
+	void readLFile(std::string filePath);
+	void readJSONFile(std::string filePath);
 	
-	vector<string> split(string lane);
-	vector<string> split(string lane, string splitter);
-	string fillRuleWithVariables(string rule, map<string, float> variables);
+	std::vector<std::string> split(std::string lane);
+	std::vector<std::string> split(std::string lane, std::string splitter);
+	std::string fillRuleWithVariables(std::string rule, std::map<std::string, float> variables);
 };

@@ -7,23 +7,21 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/posix_time_io.hpp>
 
-using namespace std;
-
 enum LogLevel {
-	INFO, WARN, ERROR
+	LOG_INFO, LOG_WARN, LOG_ERROR
 };
 
 class Logger {
 public:
-	Logger(string className) : className(className) {};
-	void log(LogLevel level, string info);
+	Logger(std::string className) : className(className) {};
+	void log(LogLevel level, std::string info);
 
 private:
 	static const char* levelName[];
-	string className;
+	std::string className;
 	
-	static string getCurrentTime();
-	static string formatValue(int val, int space);
+	static std::string getCurrentTime();
+	static std::string formatValue(int val, int space);
 };
 
 #endif

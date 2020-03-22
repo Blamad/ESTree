@@ -1,8 +1,9 @@
 #include "ConsoleComponent.h"
+#include <windows.h>
 
 Logger ConsoleComponent::logger("ConsoleComponent");
 
-ConsoleComponent::ConsoleComponent(vec3 fontColor) : fontColor(fontColor) {
+ConsoleComponent::ConsoleComponent(glm::vec3 fontColor) : fontColor(fontColor) {
 	memory.reset(new ConsoleMemory());
 	interpreter.reset(new ConsoleInterpreter());
 	consoleXPos = Screen::getScreenWidth() * .01f;
@@ -16,7 +17,7 @@ ConsoleComponent::ConsoleComponent(vec3 fontColor) : fontColor(fontColor) {
 void ConsoleComponent::init() {
 	initFreeType();
 
-	mat4 projection = glm::ortho(.0f, .0f + Screen::getScreenWidth(), .0f, .0f + Screen::getScreenHeight());
+	glm::mat4 projection = glm::ortho(.0f, .0f + Screen::getScreenWidth(), .0f, .0f + Screen::getScreenHeight());
 
 	fontShader = ShaderManager::getShader("Shaders/FontShader.vert", "Shaders/FontShader.frag");
 	fontShader->use();
@@ -54,7 +55,7 @@ void ConsoleComponent::draw() {
 		renderLine(memory->getLines()[index], consoleXPos, consoleYPos + lineOffset * (i - consoleScrollOffset + 1));
 	}
 
-	string inputLineDisplayed = ">" + inputLine + (isFocused ? "_" : "");
+	std::string inputLineDisplayed = ">" + inputLine + (isFocused ? "_" : "");
 	renderLine(inputLineDisplayed, consoleXPos, consoleYPos);
 
 	glBindVertexArray(0);
@@ -122,7 +123,7 @@ void ConsoleComponent::scrollDown() {
 	}
 }
 
-void ConsoleComponent::writeLine(string line) {
+void ConsoleComponent::writeLine(std::string line) {
 	memory->pushLine(line);
 }
 
@@ -141,7 +142,7 @@ void ConsoleComponent::removeLastCharFromInput(int key) {
 }
 
 void ConsoleComponent::renderLine(std::string text, GLfloat x, GLfloat y) {
-	string::const_iterator c;
+	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
 	{
 		Character ch = characters[*c];
@@ -176,53 +177,57 @@ void ConsoleComponent::renderLine(std::string text, GLfloat x, GLfloat y) {
 }
 
 void ConsoleComponent::initFreeType() {
-	FT_Library ft;
-	if (FT_Init_FreeType(&ft))
-		logger.log(ERROR, "Could not init FreeType Library");
-	FT_Face face;
-	if (FT_New_Face(ft, "Fonts/arial_bold.ttf", 0, &face))
-		logger.log(ERROR, "Failed to load font");
-	FT_Set_Pixel_Sizes(face, 0, 24);
-	
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	try {
+		FT_Library ft;
+		if (FT_Init_FreeType(&ft))
+			logger.log(LOG_ERROR, "Could not init FreeType Library");
+		FT_Face face;
+		if (FT_New_Face(ft, "Fonts/arial_bold.ttf", 0, &face))
+			logger.log(LOG_ERROR, "Failed to load font");
+		FT_Set_Pixel_Sizes(face, 0, 24);
 
-	for (GLubyte c = 0; c < 128; c++)
-	{
-		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+		for (GLubyte c = 0; c < 128; c++)
 		{
-			logger.log(ERROR, "Failed to load Glyph");
-			continue;
+			if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+			{
+				continue;
+			}
+
+			GLuint texture;
+			glGenTextures(1, &texture);
+			glBindTexture(GL_TEXTURE_2D, texture);
+			glTexImage2D(
+				GL_TEXTURE_2D,
+				0,
+				GL_RED,
+				face->glyph->bitmap.width,
+				face->glyph->bitmap.rows,
+				0,
+				GL_RED,
+				GL_UNSIGNED_BYTE,
+				face->glyph->bitmap.buffer
+			);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			Character character = {
+				texture,
+				glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+				glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+				face->glyph->advance.x
+			};
+			characters.insert(std::pair<GLchar, Character>(c, character));
 		}
 
-		GLuint texture;
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glTexImage2D(
-			GL_TEXTURE_2D,
-			0,
-			GL_RED,
-			face->glyph->bitmap.width,
-			face->glyph->bitmap.rows,
-			0,
-			GL_RED,
-			GL_UNSIGNED_BYTE,
-			face->glyph->bitmap.buffer
-		);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		Character character = {
-			texture,
-			ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-			ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-			face->glyph->advance.x
-		};
-		characters.insert(std::pair<GLchar, Character>(c, character));
+		FT_Done_Face(face);
+		FT_Done_FreeType(ft);
 	}
-
-	FT_Done_Face(face);
-	FT_Done_FreeType(ft);
+	catch (std::string obj) {
+		logger.log(LOG_ERROR, obj);
+	}
 }

@@ -5,11 +5,11 @@ boost::uuids::random_generator GameObject::uuidGenerator;
 
 GameObject::GameObject() {
 	this->id = uuidGenerator();
-	addComponent(shared_ptr<Transform>(new Transform()));
+	addComponent(std::shared_ptr<Transform>(new Transform()));
 }
 
-vector<Component*> GameObject::getComponents(ComponentType type) {
-	vector<Component*> filteredComponents;
+std::vector<Component*> GameObject::getComponents(ComponentType type) {
+	std::vector<Component*> filteredComponents;
 	for (auto & comp : components) {
 		if(comp->type == type)
 			filteredComponents.push_back(comp.get());
@@ -26,12 +26,12 @@ Component* GameObject::getComponent(ComponentType type) {
 	return component;
 }
 
-void GameObject::addComponent(shared_ptr<Component> component) {
+void GameObject::addComponent(std::shared_ptr<Component> component) {
 	component->setParent(*this);
 	components.push_back(component);
 }
 
-void GameObject::addGameObject(shared_ptr<GameObject> go) {
+void GameObject::addGameObject(std::shared_ptr<GameObject> go) {
 	this->children.push_back(go);
 	go->parent = this;
 }

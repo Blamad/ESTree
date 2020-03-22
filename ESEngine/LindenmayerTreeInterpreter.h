@@ -11,38 +11,36 @@
 #include "LindenmayerTreeParams.h"
 #include "LindenmayerTreeMeshGenerator.h"
 
-using namespace glm;
-
 class LindenmayerTreeInterpreter {
 public:
-	static vector<shared_ptr<Segment>> generateMeshData(LindenmayerTreeParams &params, string product, LindenmayerTreeMeshGenerator *meshGenerator);
+	static std::vector<std::shared_ptr<Segment>> generateMeshData(LindenmayerTreeParams &params, std::string product, LindenmayerTreeMeshGenerator *meshGenerator);
 
 private:
 	static boost::variate_generator<boost::mt19937, boost::uniform_real<>> randomGenerator;
 
-	static shared_ptr<Segment> createRoot(SegmentTransform &transform);
-	static float getNumericParameter(string product, int index);
-	static float returnNewIndexAfterParameter(string product, int index);
-	static quat applyTropism(SegmentTransform &transform, vec3 tropismDir, float bendingFactor);
-	static quat restoreHorizontalOrientation(SegmentTransform &transform);
-	static quat restoreHorizontalOrientationAlfa(SegmentTransform &transform);
-	static quat getQuaternionTransformingFromTo(vec3 from, vec3 to);
-	static shared_ptr<Segment> createSegment(shared_ptr<Segment> parent, SegmentTransform &transform, LindenmayerTreeMeshGenerator *meshGenerator);
+	static std::shared_ptr<Segment> createRoot(SegmentTransform &transform);
+	static float getNumericParameter(std::string product, int index);
+	static float returnNewIndexAfterParameter(std::string product, int index);
+	static glm::quat applyTropism(SegmentTransform &transform, glm::vec3 tropismDir, float bendingFactor);
+	static glm::quat restoreHorizontalOrientation(SegmentTransform &transform);
+	static glm::quat restoreHorizontalOrientationAlfa(SegmentTransform &transform);
+	static glm::quat getQuaternionTransformingFromTo(glm::vec3 from, glm::vec3 to);
+	static std::shared_ptr<Segment> createSegment(std::shared_ptr<Segment> parent, SegmentTransform &transform, LindenmayerTreeMeshGenerator *meshGenerator);
 
-	static vec3 getFrontVector(quat q) {
-		//https://www.gamedev.net/forums/topic/56471-extracting-direction-vectors-from-quaternion/
-		//Quat up vec (tutle's front)
-		return vec3(2 * (q.x*q.y - q.w * q.z), 1 - 2 * (q.x*q.x + q.z * q.z), 2 * (q.y*q.z + q.w * q.x));
-		//Quat front vec
-		//return vec3(2 * (q.x*q.z + q.w * q.y), 2 * (q.y*q.z - q.w * q.x), 1 - 2 * (q.x*q.x + q.y * q.y));
+	static glm::vec3 getFrontVector(glm::quat q) {
+		//https://www.gamedev.net/forums/topic/56471-extracting-direction-glm::vectors-from-glm::quaternion/
+		//Quat up glm::vec (tutle's front)
+		return glm::vec3(2 * (q.x*q.y - q.w * q.z), 1 - 2 * (q.x*q.x + q.z * q.z), 2 * (q.y*q.z + q.w * q.x));
+		//Quat front glm::vec
+		//return glm::vec3(2 * (q.x*q.z + q.w * q.y), 2 * (q.y*q.z - q.w * q.x), 1 - 2 * (q.x*q.x + q.y * q.y));
 	}
 
-	static vec3 getProperFrontVector(quat q) {
-		return vec3(2 * (q.x*q.z + q.w * q.y), 2 * (q.y*q.z - q.w * q.x), 1 - 2 * (q.x*q.x + q.y * q.y));
+	static glm::vec3 getProperFrontVector(glm::quat q) {
+		return glm::vec3(2 * (q.x*q.z + q.w * q.y), 2 * (q.y*q.z - q.w * q.x), 1 - 2 * (q.x*q.x + q.y * q.y));
 	}
 
-	static vec3 getLeftVector(quat q) {
-		return vec3(1 - 2 * (q.y*q.y + q.z*q.z), 2 * (q.x*q.y + q.w * q.z), 2 * (q.x*q.z - q.w * q.y));
+	static glm::vec3 getLeftVector(glm::quat q) {
+		return glm::vec3(1 - 2 * (q.y*q.y + q.z*q.z), 2 * (q.x*q.y + q.w * q.z), 2 * (q.x*q.z - q.w * q.y));
 	}
 
 	static float toRadians(float angle) {
@@ -54,22 +52,22 @@ private:
 	}
 
 	//Stuff
-	static string number(float val) {
+	static std::string number(float val) {
 		if (val < 0.001 && val > -0.001)
 			return "0";
 		else
-			return to_string(val);
+			return std::to_string(val);
 	}
 
-	static void printVec3(vec3 val) {
-		cout << number(val.x) + " " + number(val.y) + " " + number(val.z) << endl;
+	static void printVec3(glm::vec3 val) {
+		std::cout << number(val.x) + " " + number(val.y) + " " + number(val.z) << std::endl;
 	}
 
-	static void printMat4(mat4 val) {
+	static void printMat4(glm::mat4 val) {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++)
-				cout << number(val[j][i]) << " ";
-			cout << endl;
+				std::cout << number(val[j][i]) << " ";
+			std::cout << std::endl;
 		}
 	}
 };

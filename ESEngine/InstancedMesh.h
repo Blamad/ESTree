@@ -18,17 +18,15 @@
 
 #include "Logger.h"
 
-using namespace std;
-
 class InstancedMesh : public Renderable {
 public:
 	Material material;
-	vector<Vertex> vertices;
-	vector<int> indices;
-	vector<InstancedTransform> instanceMatricies;
-	mat4 initialTransfom;
+	std::vector<Vertex> vertices;
+	std::vector<int> indices;
+	std::vector<InstancedTransform> instanceMatricies;
+	glm::mat4 initialTransfom;
 
-	InstancedMesh(vector<Vertex> &vertices, vector<int> &indices, vector<InstancedTransform> &instancedTransforms, shared_ptr<Shader> shader, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
+	InstancedMesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::vector<InstancedTransform> &instancedTransforms, std::shared_ptr<Shader> shader, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
 	~InstancedMesh();
 
 	void draw(Renderer &renderer) override;
@@ -42,7 +40,7 @@ protected:
 
 	bool initialized = false;
 	int bufferUsage = GL_STATIC_DRAW;
-	unique_ptr<VertexArray> vertexArray;
+	std::unique_ptr<VertexArray> vertexArray;
 
 	void setupMesh();
 

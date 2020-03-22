@@ -12,15 +12,13 @@
 
 #include "Logger.h"
 
-using namespace std;
-
 class ConsoleInterpreter {
 public:
-	void processInput(string &input);
-	static void addCustomCommand(shared_ptr<ConsoleCustomCommand> consoleCommand);
+	void processInput(std::string &input);
+	static void addCustomCommand(std::shared_ptr<ConsoleCustomCommand> consoleCommand);
 private:
 	static Logger logger;
-	static vector<shared_ptr<ConsoleCustomCommand>> customConsoleCommands;
+	static std::vector<std::shared_ptr<ConsoleCustomCommand>> customConsoleCommands;
 
 	static void displayHelp();
 };

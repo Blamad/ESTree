@@ -1,8 +1,8 @@
 #include "Terrain.h"
 
 Terrain::Terrain(Material material, bool useMeshWiring, bool useNormalVisualisation) : GameObject() {
-	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
-	shared_ptr<Mesh> mesh = createMesh(shader);
+	std::shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	std::shared_ptr<Mesh> mesh = createMesh(shader);
 	mesh->material = material;
 	if (useMeshWiring)
 		mesh->showMeshWiring();
@@ -11,7 +11,7 @@ Terrain::Terrain(Material material, bool useMeshWiring, bool useNormalVisualisat
 	addComponent(mesh);
 };
 
-Vertex Terrain::createVertex(vec3 position, vec3 normal, vec2 texCoords) {
+Vertex Terrain::createVertex(glm::vec3 position, glm::vec3 normal, glm::vec2 texCoords) {
 	Vertex vert;
 	vert.position = position;
 	vert.normal = normal;
@@ -20,25 +20,26 @@ Vertex Terrain::createVertex(vec3 position, vec3 normal, vec2 texCoords) {
 	return vert;
 }
 
-shared_ptr<Mesh> Terrain::createMesh(shared_ptr<Shader> shader) {
-	vector<Vertex> v;
-	vector<int> i;
+std::shared_ptr<Mesh> Terrain::createMesh(std::shared_ptr<Shader> shader) {
+	std::vector<Vertex> v;
+	std::vector<int> i;
 
 	v.reserve(4);
 	i.reserve(6);
 
-	shared_ptr<Mesh> mesh = shared_ptr<Mesh>(new Mesh(v, i, shader, 100, 100, GL_STREAM_DRAW));
+	std::shared_ptr<Mesh> mesh = std::shared_ptr<Mesh>(new Mesh(v, i, shader, 100, 100, GL_STREAM_DRAW));
 
-	vector<Vertex> vertices = {
+	std::vector<Vertex> vertices = {
 		//top
-		createVertex(vec3(1.0f, 0.0f,  1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(1, 1)),
-		createVertex(vec3(1.0f, 0.0f, -1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(1, 0)),
-		createVertex(vec3(-1.0f, 0.0f, -1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(0, 0)),
-		createVertex(vec3(-1.0f, 0.0f,  1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(0, 1)),
+		createVertex(glm::vec3(1.0f, 0.0f,  1.0f),	glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(1, 1)),
+		createVertex(glm::vec3(1.0f, 0.0f, -1.0f),	glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(1, 0)),
+		createVertex(glm::vec3(-1.0f, 0.0f, -1.0f),	glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(0, 0)),
+		createVertex(glm::vec3(-1.0f, 0.0f,  1.0f),	glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(0, 1)),
 	};
 
-	vector<int> indices = {
-		0, 1, 3, 1, 2, 3
+	std::vector<int> indices = {
+		0, 1, 3, 
+		1, 2, 3
 	};
 
 	for (int i = 0; i < vertices.size(); i++)

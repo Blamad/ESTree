@@ -5,7 +5,7 @@
 
 class LampCube : public Cube {
 public:
-	LampCube(vec4 color);
+	LampCube(glm::vec4 color);
 };
 
 #endif

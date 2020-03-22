@@ -14,8 +14,8 @@ public:
 	Terrain(Material material, bool useMeshWiring = false, bool useNormalVisualisation = false);
 
 protected:
-	Vertex createVertex(vec3 position, vec3 normal, vec2 texCoords);
-	shared_ptr<Mesh> createMesh(shared_ptr<Shader> shader);
+	Vertex createVertex(glm::vec3 position, glm::vec3 normal, glm::vec2 texCoords);
+	std::shared_ptr<Mesh> createMesh(std::shared_ptr<Shader> shader);
 };
 
 #endif

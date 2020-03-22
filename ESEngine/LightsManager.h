@@ -15,13 +15,11 @@
 #include "LightsUtils.h"
 #include "Camera.h"
 
-using namespace std;
-
 class LightsManager {
 public:
 	LightsManager();
 
-	void prepareShadowBuffer(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader*)> renderObjectsFunction);
+	void prepareShadowBuffer(glm::vec3& viewPos, Renderer& renderer, std::function<void(Renderer&, Shader*)> renderObjectsFunction);
 
 	void addLight(Light* light);
 	void removeLight(Light* light);
@@ -30,11 +28,11 @@ public:
 private:
 	static GLuint lightsUBO;
 
-	unique_ptr<DepthFrameBuffer> depthBuffer;
-	map<LightType, set<Light*>> lights;
+	std::unique_ptr<DepthFrameBuffer> depthBuffer;
+	std::map<LightType, std::set<Light*>> lights;
 
 	void initialize();
-	void updateLightsUBO(vec3& viewPos);
+	void updateLightsUBO(glm::vec3& viewPos);
 };
 
 #endif

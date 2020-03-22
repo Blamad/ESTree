@@ -8,7 +8,7 @@ class ConsoleCustomCommand {
 public:
 	ConsoleCustomCommand() {}
 
-	virtual bool processCommandLine(vector<string> commandLine) = 0;
+	virtual bool processCommandLine(std::vector<std::string> commandLine) = 0;
 	virtual void printHelpText() = 0;
 };
 

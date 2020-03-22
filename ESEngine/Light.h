@@ -5,10 +5,8 @@
 #include <GLFW\glfw3.h>
 #include "Component.h"
 
-using namespace glm;
-
 enum LightType {
-	POINT, DIRECTIONAL, SPOT
+	LIGHT_POINT, LIGHT_DIRECTIONAL, LIGHT_SPOT
 };
 
 class Light : public Component {

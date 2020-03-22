@@ -3,14 +3,14 @@
 Logger InstancedMesh::logger("InstancedMesh");
 
 void InstancedMesh::draw(Renderer &renderer) {
-	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
+	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
 		draw(renderer, shader.get());
 	}
 }
 
 void InstancedMesh::draw(Renderer &renderer, Shader *shader) {
 	if (!shader->active) {
-		logger.log(WARN, "Trying to draw with inactive shader!");
+		logger.log(LOG_WARN, "Trying to draw with inactive shader!");
 		return;
 	}
 
@@ -72,16 +72,16 @@ void InstancedMesh::draw(Renderer &renderer, Shader *shader) {
 	}
 }
 
-InstancedMesh::InstancedMesh(vector<Vertex> &vertices, vector<int> &indices, vector<InstancedTransform> &instancedTransforms, shared_ptr<Shader> shader, int vBufferSize, int iBufferSize, int bufferUsage) : Renderable(shader) {
+InstancedMesh::InstancedMesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::vector<InstancedTransform> &instancedTransforms, std::shared_ptr<Shader> shader, int vBufferSize, int iBufferSize, int bufferUsage) : Renderable(shader) {
 	if (vBufferSize == -1)
 		vBufferSize = vertices.size();
 	if (iBufferSize == -1)
 		iBufferSize = indices.size();
-	this->instanceMatricies = vector<InstancedTransform>(instancedTransforms);
-	this->vertices = vector<Vertex>(vertices);
-	this->indices = vector<int>(indices);
+	this->instanceMatricies = std::vector<InstancedTransform>(instancedTransforms);
+	this->vertices = std::vector<Vertex>(vertices);
+	this->indices = std::vector<int>(indices);
 
-	vertexArray = unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
 	this->bufferUsage = bufferUsage;
 	setupMesh();
 }
@@ -99,7 +99,7 @@ void InstancedMesh::updateMesh() {
 }
 
 void InstancedMesh::setupMesh() {
-	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
+	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
 		vertexArray->setInstancedVertexArray(vertices, indices, instanceMatricies);
 		shader->registerMatriciesUBO();
 		shader->registerLightsUBO();

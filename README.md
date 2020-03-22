@@ -4,10 +4,12 @@ Created as a part of masters dissertation.
 
 ESTree is using few libraries:
  * __BOOST__: general perfomance purposes
- * __GLFW, GLM, GLEW, OpenGL__: scene rendering
+ * __GLFW, GLM, GLAD, OpenGL__: scene rendering
  * __BulletPhysics__: physics simulation (collisions, mouse picking, collapsing towers made of blocks) 
  * __RapidJSON__: parsing configuration files
  * __FreeType__: text rendering
+ * __STB__: texture loading
+ * __Freetype__: fonts
 
 Sample screenshot presenting current engine abilities regarding tree generation:
 

@@ -22,11 +22,11 @@ public:
 private:
 	static Logger logger;
 
-	unique_ptr<Window> window;
-	unique_ptr<Renderer> renderer;
-	unique_ptr<SceneManager> sceneManager;
+	std::unique_ptr<Window> window;
+	std::unique_ptr<Renderer> renderer;
+	std::unique_ptr<SceneManager> sceneManager;
 
-	InputState* inputState;
+	InputState* inputState = nullptr;
 	double lastTime;
 
 	void renderingLoop();

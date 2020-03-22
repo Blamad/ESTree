@@ -12,7 +12,7 @@ class LindenmayerTreeMeshGenerator {
 public:
 	LindenmayerTreeMeshGenerator(Mesh *mesh, int &ringDensity);
 
-	void enqueueGenerationData(float &radius, mat4 &transform, int textureY);
+	void enqueueGenerationData(float &radius, glm::mat4 &transform, int textureY);
 	void createIndiciesForSegment();
 	int getVerticesLength() { return mesh->vertices.size(); }
 	int getIndicesLength() { return mesh->indices.size(); }
@@ -25,27 +25,27 @@ public:
 	void generateInstancedLeaves();
 	
 private:
-	vector<VertexGenerationAttributes> threadGenerationData;
+	std::vector<VertexGenerationAttributes> threadGenerationData;
 	float textureXStep;
 	int ringDensity; 
-	Mesh *mesh;
+	Mesh *mesh = nullptr;
 
 	void computeRingPoint(int startIndex, int endIndex, Mesh *mesh);
 
-	shared_ptr<Mesh> generateLeaf();
-	shared_ptr<InstancedMesh> createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms);
+	std::shared_ptr<Mesh> generateLeaf();
+	std::shared_ptr<InstancedMesh> createInstancedLeavesPanelMesh(std::vector<InstancedTransform> &instancedTransforms);
 };
 
 class VertexGenerationAttributes {
 public:
-	VertexGenerationAttributes(int verticesOffset, int vertexNumber, float &theta, float &radius, mat4 &transform, int textureY)
+	VertexGenerationAttributes(int verticesOffset, int vertexNumber, float &theta, float &radius, glm::mat4 &transform, int textureY)
 		: verticesOffset(verticesOffset), vertexNumber(vertexNumber), theta(theta), radius(radius), transform(transform), textureY(textureY) { };
 
 	int verticesOffset;
 	int vertexNumber;
 	float theta;
 	float radius;
-	mat4 transform;
+	glm::mat4 transform;
 	int textureY;
 };
 

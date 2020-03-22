@@ -5,14 +5,14 @@ LindenmayerTreeFactory& LindenmayerTreeFactory::getInstance() {
 	return factory;
 }
 
-GameObject* LindenmayerTreeFactory::generateTree(LindenmayerTreeParams &params, string &name, Material &bark, Material &leaves, vec3 &position) {
-	unique_ptr<GameObject> go = unique_ptr<GameObject>(new LindenmayerTree(params, bark, leaves, false, false));
+GameObject* LindenmayerTreeFactory::generateTree(LindenmayerTreeParams &params, std::string &name, Material &bark, Material &leaves, glm::vec3 &position) {
+	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new LindenmayerTree(params, bark, leaves, false, false));
 	go->name = name;
 	Transform *transform = (Transform*)go->getComponent(TRANSFORM);
 	transform->translate(position);
 	((LindenmayerTree*)go.get())->generate();
 
-	shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	std::shared_ptr<RigidBody> rigidBody = std::shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsAHullShape(0);
 	GameObject *objectPtr = go.get();

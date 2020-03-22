@@ -5,8 +5,6 @@
 #include "Renderer.h"
 #include "InputState.h"
 
-using namespace std;
-
 class Window {
 public:
 	Window(int width, int height, bool fullScreenMode) : width(width), height(height), fullScreenMode(fullScreenMode) {

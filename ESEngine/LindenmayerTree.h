@@ -21,8 +21,6 @@
 
 #include "Logger.h"
 
-using namespace glm;
-
 class LindenmayerTree : public GameObject {
 public:
 	LindenmayerTree(LindenmayerTreeParams &params, Material &material = Material::bark5(), Material &leavesMaterial = Material::leaves2(), bool useMeshWiring = false, bool normalVisualisation = false);
@@ -39,8 +37,8 @@ protected:
 	Material leavesMaterial;
 	LindenmayerTreeParams params;
 
-	shared_ptr<Mesh> mesh;
-	vector<shared_ptr<Segment>> segmentsVec;
+	std::shared_ptr<Mesh> mesh;
+	std::vector<std::shared_ptr<Segment>> segmentsVec;
 
 	int vBufferSize = 1000;
 	int iBufferSize = 4000;
@@ -51,8 +49,8 @@ protected:
 private:
 	static Logger logger;
 
-	unique_ptr<LindenmayerTreeMeshGenerator> meshGenerator;
-	string product;
+	std::unique_ptr<LindenmayerTreeMeshGenerator> meshGenerator;
+	std::string product;
 
 	static boost::variate_generator<boost::mt19937, boost::uniform_real<>> randomGenerator;
 
@@ -69,29 +67,29 @@ private:
 	void createMeshComponent();
 	
 	void generateLeaves();
-	shared_ptr<Mesh> generateLeaf();
+	std::shared_ptr<Mesh> generateLeaf();
 
 	//Leaves generation
 	void generateInstancedLeaves();
-	shared_ptr<InstancedMesh> createInstancedLeavesPanelMesh(vector<InstancedTransform> &instancedTransforms);
+	std::shared_ptr<InstancedMesh> createInstancedLeavesPanelMesh(std::vector<InstancedTransform> &instancedTransforms);
 	
 	//Stuff
-	string number(float val) {
+	std::string number(float val) {
 		if (val < 0.001 && val > -0.001)
 			return "0";
 		else
-			return to_string(val);
+			return std::to_string(val);
 	}
 
-	void printVec3(vec3 val) {
-		cout << number(val.x) + " " + number(val.y) + " " + number(val.z) << endl;
+	void printVec3(glm::vec3 val) {
+		std::cout << number(val.x) + " " + number(val.y) + " " + number(val.z) << std::endl;
 	}
 
-	void printMat4(mat4 val) {
+	void printMat4(glm::mat4 val) {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++)
-				cout << number(val[j][i]) << " ";
-			cout << endl;
+				std::cout << number(val[j][i]) << " ";
+			std::cout << std::endl;
 		}
 	}
 };

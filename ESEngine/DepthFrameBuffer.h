@@ -5,7 +5,7 @@
 
 class DepthFrameBuffer : public FrameBuffer {
 public:
-	DepthFrameBuffer(shared_ptr<Shader> shader, int width, int height);
+	DepthFrameBuffer(std::shared_ptr<Shader> shader, int width, int height);
 
 	void mountFrameBuffer();
 	void unmountFrameBuffer();

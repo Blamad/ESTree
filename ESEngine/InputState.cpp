@@ -12,7 +12,7 @@ bool InputState::isKeyReleased(int key) {
 	return !keys[key];
 }
 
-const vector<Point2d> InputState::getMousePositionEvents() {
+const std::vector<Point2d> InputState::getMousePositionEvents() {
 	return mousePosition;
 }
 
@@ -20,19 +20,19 @@ const Point2d InputState::getLastMousePosition() {
 	return lastMousePosition;
 }
 
-const vector<Point2d> InputState::getMouseScrollEvents() {
+const std::vector<Point2d> InputState::getMouseScrollEvents() {
 	return mouseScroll;
 }
 
-const vector<ClickEvent> InputState::getMouseClickEvents() {
+const std::vector<ClickEvent> InputState::getMouseClickEvents() {
 	return mouseClick;
 }
 
-const vector<KeyEvent> InputState::getKeyboardEvents() {
+const std::vector<KeyEvent> InputState::getKeyboardEvents() {
 	return keyEvents;
 }
 
-const vector<char> InputState::getCharacterEvents() {
+const std::vector<char> InputState::getCharacterEvents() {
 	return charEvents;
 }
 

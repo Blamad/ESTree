@@ -18,17 +18,15 @@
 #include "Context.h"
 #include "Logger.h"
 
-using namespace std;
-
 class Mesh : public Renderable {
 public:
 	Material material;
-	vector<Vertex> vertices;
-	vector<int> indices;
+	std::vector<Vertex> vertices;
+	std::vector<int> indices;
 
-	Mesh(shared_ptr<Shader> shader, int bufferUsage = GL_STATIC_DRAW) : bufferUsage(bufferUsage), Renderable(shader) {};
-	Mesh(vector<Vertex> &vertices, vector<int> &indices, shared_ptr<Shader> shader, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
-	Mesh(vector<Vertex> &vertices, vector<int> &indices, vector<shared_ptr<Shader>> shaders, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
+	Mesh(std::shared_ptr<Shader> shader, int bufferUsage = GL_STATIC_DRAW) : bufferUsage(bufferUsage), Renderable(shader) {};
+	Mesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::shared_ptr<Shader> shader, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
+	Mesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::vector<std::shared_ptr<Shader>> shaders, int vBufferSize = -1, int iBufferSize = -1, int bufferUsage = GL_STATIC_DRAW);
 	~Mesh();
 
 	void draw(Renderer &renderer) override;
@@ -46,17 +44,17 @@ protected:
 
 	bool initialized = false;
 	int bufferUsage = GL_STATIC_DRAW;
-	unique_ptr<VertexArray> vertexArray;
+	std::unique_ptr<VertexArray> vertexArray;
 
-	shared_ptr<Shader> normalVisualisationShader;
-	shared_ptr<Shader> meshWiringShader;
+	std::shared_ptr<Shader> normalVisualisationShader;
+	std::shared_ptr<Shader> meshWiringShader;
 
 	bool isNormalsShaderEnabled = false;
 	bool isMeshWiringShaderEnabled = false;
 
 	void setupMeshes();
-	void setupMesh(shared_ptr<Shader> shader);
-	void addNewShader(shared_ptr<Shader> shader);
+	void setupMesh(std::shared_ptr<Shader> shader);
+	void addNewShader(std::shared_ptr<Shader> shader);
 
 	Shader* getNormalsShader() {
 		if (normalVisualisationShader == nullptr) {

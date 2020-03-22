@@ -21,7 +21,7 @@ Engine::~Engine() {
 
 void Engine::startRendering() {
 	if (window) {
-		logger.log(INFO, "Rendering started");
+		logger.log(LOG_INFO, "Rendering started");
 		renderingLoop();
 	}
 }

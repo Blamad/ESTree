@@ -3,7 +3,7 @@
 TextureBuffer* DepthFrameBuffer::debugQuadTextureBuffer = nullptr;
 
 
-DepthFrameBuffer::DepthFrameBuffer(shared_ptr<Shader> shader, int width, int height) : FrameBuffer(move(shader), width, height) {
+DepthFrameBuffer::DepthFrameBuffer(std::shared_ptr<Shader> shader, int width, int height) : FrameBuffer(move(shader), width, height) {
 	init();
 };
 
@@ -12,7 +12,7 @@ void DepthFrameBuffer::init() {
 	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
 	//Depth buffer
-	buffer = unique_ptr<TextureBuffer>(new TextureBuffer());
+	buffer = std::unique_ptr<TextureBuffer>(new TextureBuffer());
 	buffer->setTextureBuffer(nullptr, width, height, 3, DEPTH_BUFFER);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, buffer->id, 0);
 

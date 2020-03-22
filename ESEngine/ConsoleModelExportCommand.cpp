@@ -2,11 +2,11 @@
 
 Logger ConsoleModelExportCommand::logger("ConsoleModelExportCommand");
 
-bool ConsoleModelExportCommand::processCommandLine(vector<string> line) {
+bool ConsoleModelExportCommand::processCommandLine(std::vector<std::string> line) {
 	if (line.at(0) == "export") {
 
-		map<string, string> params = ConsoleUtils::generateParamsMap(line);
-		string filename = "esTreeModel";
+		std::map<std::string, std::string> params = ConsoleUtils::generateParamsMap(line);
+		std::string filename = "esTreeModel";
 
 		GameObject *selected = (GameObject*)Context::getMouseManager()->getSelectedGameObject();;
 
@@ -21,19 +21,19 @@ bool ConsoleModelExportCommand::processCommandLine(vector<string> line) {
 		}
 
 		if (selected != nullptr) {
-			logger.log(INFO, "Exporting of " + selected->name + " started..");
-			vector<Component*> components = (vector<Component*>)selected->getComponents(RENDERABLE);
-			vector<Renderable*> renderables;
+			logger.log(LOG_INFO, "Exporting of " + selected->name + " started..");
+			std::vector<Component*> components = (std::vector<Component*>)selected->getComponents(RENDERABLE);
+			std::vector<Renderable*> renderables;
 			for (auto & component : components) 
 				renderables.push_back((Renderable*) component);
 			for (auto & child : selected->children) {
-				components = (vector<Component*>)child->getComponents(RENDERABLE);
+				components = (std::vector<Component*>)child->getComponents(RENDERABLE);
 				for (auto & component : components)
 					renderables.push_back((Renderable*)component);
 			}
 			ModelExporter::exportToFile(renderables, filename);
 			ConsoleUtils::logToConsole(selected->name + " exported to file");
-			logger.log(INFO, "Exporting of " + selected->name + " finished.");
+			logger.log(LOG_INFO, "Exporting of " + selected->name + " finished.");
 		}
 		return true;
 	}

@@ -11,13 +11,13 @@ public:
 	~SceneManager();
 
 	Scene* getActiveScene();
-	Scene* setActiveScene(shared_ptr<Scene> scene);
-	GameObject* addGameObject(unique_ptr<GameObject> go);
+	Scene* setActiveScene(std::shared_ptr<Scene> scene);
+	GameObject* addGameObject(std::unique_ptr<GameObject> go);
 	GameObject* createEmptyGameObject();
 	GameObject* createCamera(glm::vec3 position, float yaw, float pitch);
 
 private:
-	shared_ptr<Scene> currentScene;
+	std::shared_ptr<Scene> currentScene;
 };
 
 #endif

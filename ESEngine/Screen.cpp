@@ -1,6 +1,6 @@
 #include "Screen.h"
 
-Window* Screen::instance;
+Window* Screen::instance = nullptr;
 
 int Screen::getScreenWidth() {
 	if (instance) {

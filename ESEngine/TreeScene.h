@@ -21,16 +21,16 @@ public:
 
 	void initialize();
 
-	GameObject* createLindenmayerTree(string configurationFileName, vec3 &position, Material &material, Material &leavesMaterial, string name, bool debug = false);
+	GameObject* createLindenmayerTree(std::string configurationFileName, glm::vec3 &position, Material &material, Material &leavesMaterial, std::string name, bool debug = false);
 
-	GameObject* createWhiteLampCube(vec3 position, PointLightStrength str);
-	GameObject* createDirectionalLight(vec3 position, vec3 direction);
+	GameObject* createWhiteLampCube(glm::vec3 position, PointLightStrength str);
+	GameObject* createDirectionalLight(glm::vec3 position, glm::vec3 direction);
 	GameObject* createCamera(glm::vec3 position, float yaw, float pitch);
 
 	void generateTerrain();
 	void addSkybox();
 
-	void generateTestBox(vec3 pos, vec3 scale);
+	void generateTestBox(glm::vec3 pos, glm::vec3 scale);
 	void generateFrameBuffer();
 
 protected:

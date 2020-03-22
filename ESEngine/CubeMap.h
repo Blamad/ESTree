@@ -5,12 +5,10 @@
 
 #include "Texture.h"
 
-using namespace std;
-
 struct CubeMap : public Texture
 {
 	int* widths, *heights;
-	CubeMap(string fileName, int* widths, int* heights, vector<const unsigned char*>& textures);
+	CubeMap(std::string fileName, int* widths, int* heights, std::vector<const unsigned char*>& textures);
 };
 
 #endif

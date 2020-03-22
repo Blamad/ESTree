@@ -4,8 +4,8 @@ LindenmayerTreeMeshGenerator::LindenmayerTreeMeshGenerator(Mesh *mesh, int &ring
 	this->textureXStep = 1.0f / (ringDensity - 1);
 };
 
-void LindenmayerTreeMeshGenerator::enqueueGenerationData(float &radius, mat4 &transform, int textureY) {
-	float theta = 2 * pi<float>() / float(ringDensity - 1);
+void LindenmayerTreeMeshGenerator::enqueueGenerationData(float &radius, glm::mat4 &transform, int textureY) {
+	float theta = 2 * glm::pi<float>() / float(ringDensity - 1);
 	int verticesOffset = mesh->vertices.size();
 
 	for (int j = 0; j < ringDensity; j++) {
@@ -42,8 +42,8 @@ void LindenmayerTreeMeshGenerator::generateMesh() {
 void LindenmayerTreeMeshGenerator::computeRingPoint(int startIndex, int endIndex, Mesh *mesh) {
 
 	float arg, sin, cos;
-	vec4 tmpPosition;
-	vec3 position, normal;
+	glm::vec4 tmpPosition;
+	glm::vec3 position, normal;
 	Vertex *vert;
 	VertexGenerationAttributes *vga;
 
@@ -53,16 +53,16 @@ void LindenmayerTreeMeshGenerator::computeRingPoint(int startIndex, int endIndex
 		sin = sinf(arg) / 2;
 		cos = cosf(arg) / 2;
 
-		mat3 rotationMatrix(vga->transform);
+		glm::mat3 rotationMatrix(vga->transform);
 
-		tmpPosition = vec4(vga->radius * cos, 0, vga->radius * sin, 1);
-		position = vec3(vga->transform * tmpPosition);
-		normal = normalize(rotationMatrix * vec3(tmpPosition) * vec3(2, 2, 2));
+		tmpPosition = glm::vec4(vga->radius * cos, 0, vga->radius * sin, 1);
+		position = glm::vec3(vga->transform * tmpPosition);
+		normal = normalize(rotationMatrix * glm::vec3(tmpPosition) * glm::vec3(2, 2, 2));
 
 		//output verticies
 		vert = &mesh->vertices[vga->verticesOffset + vga->vertexNumber];
 		vert->position = position;
 		vert->normal = normal;
-		vert->texCoords = vec2(textureXStep * vga->vertexNumber, vga->textureY);
+		vert->texCoords = glm::vec2(textureXStep * vga->vertexNumber, vga->textureY);
 	}
 }

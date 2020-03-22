@@ -2,24 +2,24 @@
 
 Logger ModelExporter::logger("ModelExporter");
 
-void ModelExporter::exportToFile(vector<Renderable*> &renderables, string &filename) {
-	map<Material, vector<Renderable*>> renderablesMap = mapRenderables(renderables);
-	pair<Material, vector<Renderable*>> renderablePair;
+void ModelExporter::exportToFile(std::vector<Renderable*> &renderables, std::string &filename) {
+	std::map<Material, std::vector<Renderable*>> renderablesMap = mapRenderables(renderables);
+	std::pair<Material, std::vector<Renderable*>> renderablePair;
 	int matNumber = 0;
 	int meshNumber = 0;
 	int faceOffset = 0;
 
 	boost::filesystem::path dir("models");
 	if (boost::filesystem::create_directory(dir)) {
-		logger.log(WARN, "\'models\' directory created");
+		logger.log(LOG_WARN, "\'models\' directory created");
 	}
 
 	//Init mtlfile
-	ofstream mtlFile;
+	std::ofstream mtlFile;
 	mtlFile.open("models/" + filename + ".mtl");
 
 	//Init objfile
-	ofstream objFile;
+	std::ofstream objFile;
 	objFile.open("models/" + filename + ".obj");
 	objFile << "#Model generated using ESTree\n";
 	objFile << "mtllib " + filename + ".mtl\n";
@@ -27,7 +27,7 @@ void ModelExporter::exportToFile(vector<Renderable*> &renderables, string &filen
 
 	BOOST_FOREACH(renderablePair, renderablesMap) {
 		Material mat = renderablePair.first;
-		vector<Renderable*> meshes = renderablePair.second;
+		std::vector<Renderable*> meshes = renderablePair.second;
 
 		//Insert material
 		mtlFile << "newmtl material_" + toString(matNumber) + "\n";
@@ -66,11 +66,11 @@ void ModelExporter::exportToFile(vector<Renderable*> &renderables, string &filen
 				InstancedMesh* mesh = (InstancedMesh*)renderable;
 				BOOST_FOREACH(InstancedTransform transform, mesh->instanceMatricies) {
 					BOOST_FOREACH(Vertex vertex, mesh->vertices) {
-						vec3 position = vec3(inverse(mesh->initialTransfom) * transform.modelMatrix * vec4(vertex.position, 1.0f));
+						glm::vec3 position = glm::vec3(inverse(mesh->initialTransfom) * transform.modelMatrix * glm::vec4(vertex.position, 1.0f));
 						objFile << "v " + toString(position.x) + " " + toString(position.y) + " " + toString(position.z) + "\n";
 					}
 					BOOST_FOREACH(Vertex vertex, mesh->vertices) {
-						vec3 normal = mat3(transpose(inverse(transform.modelMatrix))) * vertex.normal;
+						glm::vec3 normal = glm::mat3(transpose(inverse(transform.modelMatrix))) * vertex.normal;
 						objFile << "vn " + toString(normal.x) + " " + toString(normal.y) + " " + toString(normal.z) + "\n";
 					}
 					BOOST_FOREACH(Vertex vertex, mesh->vertices) {
@@ -90,8 +90,8 @@ void ModelExporter::exportToFile(vector<Renderable*> &renderables, string &filen
 	objFile.close();
 }
 
-map<Material, vector<Renderable*>> ModelExporter::mapRenderables(vector<Renderable*> &renderables) {
-	map<Material, vector<Renderable*>> renderablesMap;
+std::map<Material, std::vector<Renderable*>> ModelExporter::mapRenderables(std::vector<Renderable*> &renderables) {
+	std::map<Material, std::vector<Renderable*>> renderablesMap;
 	
 	BOOST_FOREACH(Renderable *renderable, renderables) {
 		Material material;
@@ -104,7 +104,7 @@ map<Material, vector<Renderable*>> ModelExporter::mapRenderables(vector<Renderab
 		}
 
 		if (!renderablesMap.count(material)) {
-			renderablesMap[material] = vector<Renderable*>();
+			renderablesMap[material] = std::vector<Renderable*>();
 		}
 		renderablesMap[material].push_back(renderable);
 	}

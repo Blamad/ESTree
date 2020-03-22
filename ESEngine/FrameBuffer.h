@@ -11,10 +11,10 @@ class FrameBuffer {
 public:
 	GLuint FBO;
 	GLuint quadVAO;
-	shared_ptr<Shader> shader;
+	std::shared_ptr<Shader> shader;
 
 	FrameBuffer() : width(Screen::getScreenWidth()), height(Screen::getScreenHeight()) {};
-	FrameBuffer(shared_ptr<Shader> shader, int width = Screen::getScreenWidth(), int height = Screen::getScreenHeight()) : shader(move(shader)), width(width), height(height) {	}
+	FrameBuffer(std::shared_ptr<Shader> shader, int width = Screen::getScreenWidth(), int height = Screen::getScreenHeight()) : shader(move(shader)), width(width), height(height) {	}
 
 	TextureBuffer* getBuffer() {
 		return buffer.get();
@@ -39,7 +39,7 @@ public:
 
 protected:
 	int width, height;
-	unique_ptr<TextureBuffer> buffer;
+	std::unique_ptr<TextureBuffer> buffer;
 	
 
 	virtual void init() = 0;

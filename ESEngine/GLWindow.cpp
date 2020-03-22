@@ -1,7 +1,7 @@
 #include "GLWindow.h"
 #include <iostream>
 
-GLWindow* GLWindow::instance;
+GLWindow* GLWindow::instance = nullptr;
 
 Logger GLWindow::logger("GLWindow");
 
@@ -12,7 +12,7 @@ GLWindow::~GLWindow() {
 }
 
 bool GLWindow::initialize() {
-	if (!initGlfw() || !initGlew())
+	if (!initGlfw() || !initGlad())
 		return false;
 	setupWindowParams();
 
@@ -25,19 +25,14 @@ void GLWindow::setupWindowParams() {
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_MULTISAMPLE);
-
-	if (false)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else
-		glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 
 	setCursorVisible();
 }
 
-bool GLWindow::initGlew() {
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK) {
-		std::cout << "Failed to initialize GLEW" << std::endl;
+bool GLWindow::initGlad() {
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+		std::cout << "Failed to initialize GLAD" << std::endl;
 		return false;
 	}
 	return true;

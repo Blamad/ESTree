@@ -5,8 +5,6 @@
 
 #include "TextureBuffer.h"
 
-using namespace std;
-
 enum TextureType {
 	DIFFUSE,
 	SPECULAR,
@@ -20,8 +18,8 @@ enum TextureType {
 class Texture {
 public:
 	TextureType type;
-	string fileName;
-	shared_ptr<TextureBuffer> textureBuffer;
+	std::string fileName;
+	std::shared_ptr<TextureBuffer> textureBuffer;
 };
 
 #endif

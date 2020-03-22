@@ -3,8 +3,6 @@
 #include "Transform.h"
 #include "RigidBody.h"
 
-using namespace glm;
-
 class RotationBehaviour : public Behaviour {
 public:
 
@@ -20,17 +18,17 @@ public:
 		angle += dt*0.01;
 		angle = fmod(angle, 360);
 		if (rigidBody != nullptr) {
-			rigidBody->rotate(radians(angle), vec3(0, 1, 0));
+			rigidBody->rotate(glm::radians(angle), glm::vec3(0, 1, 0));
 		}
 		else {
 			transform->clearRotation();
-			transform->rotate(angle, vec3(0, 1, 0));
-			transform->rotate(radians(45.0f), vec3(1, 0, 1));
+			transform->rotate(angle, glm::vec3(0, 1, 0));
+			transform->rotate(glm::radians(45.0f), glm::vec3(1, 0, 1));
 		}
 	}
 
 private:
-	vec4 baseRotation;
+	glm::vec4 baseRotation;
 	double angle = 0;
 	Transform *transform = nullptr;
 	RigidBody *rigidBody = nullptr;

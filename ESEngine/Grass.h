@@ -8,16 +8,14 @@
 
 #include <boost/random.hpp>
 
-using namespace glm;
-
 class Grass : public GameObject {
 public:
 	Grass() : GameObject() { };
 	Grass(Material material);
 
 protected:
-	Vertex createVertex(vec3 position, vec3 normal, vec2 texCoords);
-	shared_ptr<InstancedMesh> createMesh(shared_ptr<Shader> shader, vector<InstancedTransform> transforms);
+	Vertex createVertex(glm::vec3 position, glm::vec3 normal, glm::vec2 texCoords);
+	std::shared_ptr<InstancedMesh> createMesh(std::shared_ptr<Shader> shader, std::vector<InstancedTransform> transforms);
 
 	static boost::variate_generator<boost::mt19937, boost::uniform_real<>> randomGenerator;
 };

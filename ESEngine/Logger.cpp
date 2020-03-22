@@ -3,23 +3,23 @@
 const char* Logger::levelName[] = { "INFO", "WARN", "ERROR" };
 
 
-void Logger::log(LogLevel level, string message) {
-	cout << getCurrentTime() << " [" << levelName[level] << "][" << className << "] "<< message << endl;
+void Logger::log(LogLevel level, std::string message) {
+	std::cout << getCurrentTime() << " [" << levelName[level] << "][" << className << "] "<< message << std::endl;
 }
 
-string Logger::getCurrentTime() {
+std::string Logger::getCurrentTime() {
 	boost::posix_time::ptime timeLocal =
 		boost::posix_time::microsec_clock::local_time();
 	
-	stringstream sstream;
+	std::stringstream sstream;
 
 	sstream << formatValue(timeLocal.time_of_day().hours(), 2) << ":" << formatValue(timeLocal.time_of_day().minutes(), 2) << ":" << formatValue(timeLocal.time_of_day().seconds(), 2) << "." << formatValue(timeLocal.time_of_day().fractional_seconds(), 3);
 
 	return sstream.str();
 }
 
-string Logger::formatValue(int value, int space) {
-	stringstream sstream;
+std::string Logger::formatValue(int value, int space) {
+	std::stringstream sstream;
 	int places = pow(10, space-1);
 	while (places > value) {
 		places /= 10;

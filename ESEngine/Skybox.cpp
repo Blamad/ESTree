@@ -1,14 +1,14 @@
 #include "Skybox.h"
 
-Skybox::Skybox(string* paths) : Renderable(ShaderManager::getShader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag")) {
+Skybox::Skybox(std::string* paths) : Renderable(ShaderManager::getShader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag")) {
 	this->loadSkybox(paths);
 }
 
-Skybox::Skybox(string* paths, shared_ptr<Shader> shader) : Renderable(shader) {
+Skybox::Skybox(std::string* paths, std::shared_ptr<Shader> shader) : Renderable(shader) {
 	this->loadSkybox(paths);
 }
 
-void Skybox::loadSkybox(string* paths) {
+void Skybox::loadSkybox(std::string* paths) {
 	cubeMap = TextureManager::getInstance().createCubeMap(paths);
 	generateVertexArray();
 	setupSkybox();
@@ -37,52 +37,52 @@ void Skybox::draw(Renderer &renderer, Shader *shader) {
 }
 
 void Skybox::draw(Renderer& renderer) {
-	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
+	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
 		draw(renderer, shader.get());
 	}
 }
 
 void Skybox::setupSkybox() {
-	BOOST_FOREACH(shared_ptr<Shader> shader, shaders) {
+	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
 		shader->registerMatriciesUBO();
 	}
 }
 
 void Skybox::generateVertexArray() {
-	vector<Vertex> vertices = {
+	std::vector<Vertex> vertices = {
 		//front - z
-		Vertex::createVertex(vec3(1.0f, -1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 0)),
-		Vertex::createVertex(vec3(1.0f,  1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(1, 1)),
-		Vertex::createVertex(vec3(-1.0f,  1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 1)),
-		Vertex::createVertex(vec3(-1.0f, -1.0f,  1.0f),	vec3(0.0f, 0.0f, 1.0f),		vec2(0, 0)),
+		Vertex::createVertex(glm::vec3(1.0f, -1.0f,  1.0f),		glm::vec3(0.0f, 0.0f, 1.0f),	glm::vec2(1, 0)),
+		Vertex::createVertex(glm::vec3(1.0f,  1.0f,  1.0f),		glm::vec3(0.0f, 0.0f, 1.0f),	glm::vec2(1, 1)),
+		Vertex::createVertex(glm::vec3(-1.0f,  1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),	glm::vec2(0, 1)),
+		Vertex::createVertex(glm::vec3(-1.0f, -1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),	glm::vec2(0, 0)),
 		//back - z
-		Vertex::createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(0.0f, 0.0f, -1.0f),	vec2(0, 0)),
-		Vertex::createVertex(vec3(-1.0f,  1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(0, 1)),
-		Vertex::createVertex(vec3(1.0f,  1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 1)),
-		Vertex::createVertex(vec3(1.0f, -1.0f, -1.0f),	vec3(0.0f, 0.0f, -1.0f),	vec2(1, 0)),
+		Vertex::createVertex(glm::vec3(-1.0f, -1.0f, -1.0f),	glm::vec3(0.0f, 0.0f, -1.0f),	glm::vec2(0, 0)),
+		Vertex::createVertex(glm::vec3(-1.0f,  1.0f, -1.0f),	glm::vec3(0.0f, 0.0f, -1.0f),	glm::vec2(0, 1)),
+		Vertex::createVertex(glm::vec3(1.0f,  1.0f, -1.0f),		glm::vec3(0.0f, 0.0f, -1.0f),	glm::vec2(1, 1)),
+		Vertex::createVertex(glm::vec3(1.0f, -1.0f, -1.0f),		glm::vec3(0.0f, 0.0f, -1.0f),	glm::vec2(1, 0)),
 		//left - x
-		Vertex::createVertex(vec3(-1.0f, -1.0f,  1.0f),	vec3(-1.0f, 0.0f, 0.0f),	vec2(0, 1)),
-		Vertex::createVertex(vec3(-1.0f,  1.0f,  1.0f),	vec3(-1.0f, 0.0f, 0.0f),	vec2(1, 1)),
-		Vertex::createVertex(vec3(-1.0f,  1.0f, -1.0f),	vec3(-1.0f, 0.0f, 0.0f),	vec2(1, 0)),
-		Vertex::createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(-1.0f, 0.0f, 0.0f),	vec2(0, 0)),
+		Vertex::createVertex(glm::vec3(-1.0f, -1.0f,  1.0f),	glm::vec3(-1.0f, 0.0f, 0.0f),	glm::vec2(0, 1)),
+		Vertex::createVertex(glm::vec3(-1.0f,  1.0f,  1.0f),	glm::vec3(-1.0f, 0.0f, 0.0f),	glm::vec2(1, 1)),
+		Vertex::createVertex(glm::vec3(-1.0f,  1.0f, -1.0f),	glm::vec3(-1.0f, 0.0f, 0.0f),	glm::vec2(1, 0)),
+		Vertex::createVertex(glm::vec3(-1.0f, -1.0f, -1.0f),	glm::vec3(-1.0f, 0.0f, 0.0f),	glm::vec2(0, 0)),
 		//right - x
-		Vertex::createVertex(vec3(1.0f, -1.0f, -1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(0, 0)),
-		Vertex::createVertex(vec3(1.0f,  1.0f, -1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(1, 0)),
-		Vertex::createVertex(vec3(1.0f,  1.0f,  1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(1, 1)),
-		Vertex::createVertex(vec3(1.0f, -1.0f,  1.0f),	vec3(1.0f, 0.0f, 0.0f),		vec2(0, 1)),
+		Vertex::createVertex(glm::vec3(1.0f, -1.0f, -1.0f),		glm::vec3(1.0f, 0.0f, 0.0f),	glm::vec2(0, 0)),
+		Vertex::createVertex(glm::vec3(1.0f,  1.0f, -1.0f),		glm::vec3(1.0f, 0.0f, 0.0f),	glm::vec2(1, 0)),
+		Vertex::createVertex(glm::vec3(1.0f,  1.0f,  1.0f),		glm::vec3(1.0f, 0.0f, 0.0f),	glm::vec2(1, 1)),
+		Vertex::createVertex(glm::vec3(1.0f, -1.0f,  1.0f),		glm::vec3(1.0f, 0.0f, 0.0f),	glm::vec2(0, 1)),
 		//top - y
-		Vertex::createVertex(vec3(1.0f, 1.0f,  1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(1, 1)),
-		Vertex::createVertex(vec3(1.0f, 1.0f, -1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(1, 0)),
-		Vertex::createVertex(vec3(-1.0f, 1.0f, -1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(0, 0)),
-		Vertex::createVertex(vec3(-1.0f, 1.0f,  1.0f),	vec3(0.0f, 1.0f, 0.0f),		vec2(0, 1)),
+		Vertex::createVertex(glm::vec3(1.0f, 1.0f,  1.0f),		glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(1, 1)),
+		Vertex::createVertex(glm::vec3(1.0f, 1.0f, -1.0f),		glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(1, 0)),
+		Vertex::createVertex(glm::vec3(-1.0f, 1.0f, -1.0f),		glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(0, 0)),
+		Vertex::createVertex(glm::vec3(-1.0f, 1.0f,  1.0f),		glm::vec3(0.0f, 1.0f, 0.0f),	glm::vec2(0, 1)),
 		//bottom - y
-		Vertex::createVertex(vec3(-1.0f, -1.0f,  1.0f),	vec3(0.0f, -1.0f, 0.0f),	vec2(0, 1)),
-		Vertex::createVertex(vec3(-1.0f, -1.0f, -1.0f), vec3(0.0f, -1.0f, 0.0f),	vec2(0, 0)),
-		Vertex::createVertex(vec3(1.0f, -1.0f, -1.0f),	vec3(0.0f, -1.0f, 0.0f),	vec2(1, 0)),
-		Vertex::createVertex(vec3(1.0f, -1.0f,  1.0f),	vec3(0.0f, -1.0f, 0.0f),	vec2(1, 1)),
+		Vertex::createVertex(glm::vec3(-1.0f, -1.0f,  1.0f),	glm::vec3(0.0f, -1.0f, 0.0f),	glm::vec2(0, 1)),
+		Vertex::createVertex(glm::vec3(-1.0f, -1.0f, -1.0f),	glm::vec3(0.0f, -1.0f, 0.0f),	glm::vec2(0, 0)),
+		Vertex::createVertex(glm::vec3(1.0f, -1.0f, -1.0f),		glm::vec3(0.0f, -1.0f, 0.0f),	glm::vec2(1, 0)),
+		Vertex::createVertex(glm::vec3(1.0f, -1.0f,  1.0f),		glm::vec3(0.0f, -1.0f, 0.0f),	glm::vec2(1, 1)),
 	};
 
-	vector<int> indices = {
+	std::vector<int> indices = {
 		3, 1, 0, 3, 2, 1,
 		7, 5, 4, 7, 6, 5,
 		11, 9, 8, 11, 10, 9,
@@ -91,6 +91,6 @@ void Skybox::generateVertexArray() {
 		23, 21, 20, 23, 22, 21
 	};
 
-	vertexArray = unique_ptr<VertexArray>(new GLVertexArray(vertices.size(), indices.size(), GL_STATIC_DRAW));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(vertices.size(), indices.size(), GL_STATIC_DRAW));
 	vertexArray->setVertexArray(vertices, indices);
 }

@@ -22,7 +22,7 @@ private:
 	GLfloat height;
 	GLfloat width;
 	bool initialized;
-	shared_ptr<Shader> shader;
+	std::shared_ptr<Shader> shader;
 
 	GLuint VAO, VBO;
 };

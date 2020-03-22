@@ -4,15 +4,15 @@
 #include "SceneManager.h"
 
 Logger ConsoleInterpreter::logger("ConsoleInterpreter");
-vector<shared_ptr<ConsoleCustomCommand>> ConsoleInterpreter::customConsoleCommands;
+std::vector<std::shared_ptr<ConsoleCustomCommand>> ConsoleInterpreter::customConsoleCommands;
 
-void ConsoleInterpreter::addCustomCommand(shared_ptr<ConsoleCustomCommand> consoleCommand) {
+void ConsoleInterpreter::addCustomCommand(std::shared_ptr<ConsoleCustomCommand> consoleCommand) {
 	customConsoleCommands.push_back(consoleCommand);
 }
 
-void ConsoleInterpreter::processInput(string &input) {
+void ConsoleInterpreter::processInput(std::string &input) {
 	try {
-		vector<string> line = ConsoleUtils::split(input, " ");
+		std::vector<std::string> line = ConsoleUtils::split(input, " ");
 
 		if (line.at(0) == "help") {
 			displayHelp();
@@ -62,7 +62,7 @@ void ConsoleInterpreter::processInput(string &input) {
 		if (line.at(0) == "rm") {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
-				string name = selected->name;
+				std::string name = selected->name;
 				Context::getSceneManager()->getActiveScene()->removeGameObject(selected);
 				ConsoleUtils::logToConsole("'" + name + "' removed");
 			}
@@ -88,7 +88,7 @@ void ConsoleInterpreter::processInput(string &input) {
 		if (line.at(0) == "mv" && line.size() == 2) {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
-				vec3 position = ConsoleUtils::parseCoords(line.at(1));
+				glm::vec3 position = ConsoleUtils::parseCoords(line.at(1));
 				RigidBody *rigidbody = (RigidBody*)selected->getComponent(RIGIDBODY);
 				rigidbody->translate(position);
 			}
@@ -102,7 +102,7 @@ void ConsoleInterpreter::processInput(string &input) {
 
 			int milliseconds = (endTime - startTime).total_milliseconds();
 			float fps = float(frames) * 1000/ milliseconds;
-			ConsoleUtils::logToConsole("Current fps: '" + to_string(fps) + "'");
+			ConsoleUtils::logToConsole("Current fps: '" + std::to_string(fps) + "'");
 
 			if (line.size() == 2) {
 				if (line.at(1) == "clr") {
@@ -122,13 +122,13 @@ void ConsoleInterpreter::processInput(string &input) {
 
 		ConsoleUtils::logToConsole("Unknown command or wrong args: '"+ input +"'");
 	}
-	catch (exception& e) {
+	catch (std::exception& e) {
 		ConsoleUtils::logToConsole("Something went wrong!");
-		logger.log(ERROR, e.what());
+		logger.log(LOG_ERROR, e.what());
 	}
 	catch (...) {
 		ConsoleUtils::logToConsole("Something went wrong!");
-		logger.log(ERROR, "Unknown exception while parsing command");
+		logger.log(LOG_ERROR, "Unknown exception while parsing command");
 	}
 }
 

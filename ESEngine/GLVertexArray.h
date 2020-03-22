@@ -1,7 +1,7 @@
 #ifndef GL_VERTEXARRAY_H
 #define GL_VERTEXARRAY_H
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include "VertexArray.h"
 
 class GLVertexArray : public VertexArray

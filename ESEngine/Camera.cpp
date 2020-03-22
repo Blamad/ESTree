@@ -5,12 +5,12 @@ Camera::~Camera() {
 }
 
 glm::mat4 Camera::getViewMatrix() {
-	mat4 view = lookAt(this->position, this->position + this->front, this->up);
+	glm::mat4 view = lookAt(this->position, this->position + this->front, this->up);
 	return view;
 }
 
 glm::mat4 Camera::getProjectionMatrix() {
-	mat4 projection = perspective(ZOOM, float(Screen::getScreenWidth()) / Screen::getScreenHeight(), 1.0f, 100.0f);
+	glm::mat4 projection = glm::perspective(ZOOM, float(Screen::getScreenWidth()) / Screen::getScreenHeight(), 1.0f, 100.0f);
 	return projection;
 }
 
@@ -89,25 +89,25 @@ Ray Camera::cameraToViewportRay(Point2d mousePos) {
 		1.0f
 	);
 
-	mat4 InverseProjectionMatrix = inverse(getProjectionMatrix());
+	glm::mat4 InverseProjectionMatrix = inverse(getProjectionMatrix());
 
 	// The View Matrix goes from World Space to Camera Space.
 	// So inverse(ViewMatrix) goes from Camera Space to World Space.
-	mat4 InverseViewMatrix = inverse(getViewMatrix());
+	glm::mat4 InverseViewMatrix = inverse(getViewMatrix());
 
-	vec4 lRayStart_camera = InverseProjectionMatrix * lRayStart_NDC;    lRayStart_camera /= lRayStart_camera.w;
-	vec4 lRayStart_world = InverseViewMatrix		* lRayStart_camera; lRayStart_world /= lRayStart_world.w;
-	vec4 lRayEnd_camera = InverseProjectionMatrix	* lRayEnd_NDC;      lRayEnd_camera /= lRayEnd_camera.w;
-	vec4 lRayEnd_world = InverseViewMatrix			* lRayEnd_camera;   lRayEnd_world /= lRayEnd_world.w;
+	glm::vec4 lRayStart_camera = InverseProjectionMatrix * lRayStart_NDC;    lRayStart_camera /= lRayStart_camera.w;
+	glm::vec4 lRayStart_world = InverseViewMatrix		* lRayStart_camera; lRayStart_world /= lRayStart_world.w;
+	glm::vec4 lRayEnd_camera = InverseProjectionMatrix	* lRayEnd_NDC;      lRayEnd_camera /= lRayEnd_camera.w;
+	glm::vec4 lRayEnd_world = InverseViewMatrix			* lRayEnd_camera;   lRayEnd_world /= lRayEnd_world.w;
 
 	//Directory vector
 	glm::vec3 lRayDir_world(lRayEnd_world - lRayStart_world);
 	lRayDir_world = glm::normalize(lRayDir_world);
 
 	//Start point
-	vec3 out_origin(lRayStart_world);
+	glm::vec3 out_origin(lRayStart_world);
 	//End point
-	vec3 out_end = out_origin + lRayDir_world*1000.0f;
+	glm::vec3 out_end = out_origin + lRayDir_world*1000.0f;
 
 	Ray ray;
 	ray.origin = out_origin;

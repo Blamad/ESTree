@@ -19,7 +19,7 @@ void PostEffectFrameBuffer::init() {
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
 	//Color buffer
-	buffer = unique_ptr<TextureBuffer>(new TextureBuffer());
+	buffer = std::unique_ptr<TextureBuffer>(new TextureBuffer());
 	buffer->setTextureBuffer(nullptr, width, height, 3, BUFFER);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, buffer->id, 0);
 

@@ -181,8 +181,8 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLcha
 
 void Shader::init() {
 	active = true;
-	subroutineList[GL_VERTEX_SHADER] = map<string, GLuint>();
-	subroutineList[GL_FRAGMENT_SHADER] = map<string, GLuint>();
+	subroutineList[GL_VERTEX_SHADER] = std::map<std::string, GLuint>();
+	subroutineList[GL_FRAGMENT_SHADER] = std::map<std::string, GLuint>();
 }
 
 void Shader::use() {

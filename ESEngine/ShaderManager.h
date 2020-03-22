@@ -6,12 +6,10 @@
 
 #include "Shader.h"
 
-using namespace std;
-
 class ShaderManager {
 public:
-	static shared_ptr<Shader> getShader(const GLchar* vertexPath, const GLchar* fragmentPath);
-	static shared_ptr<Shader> getShader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath);
+	static std::shared_ptr<Shader> getShader(const GLchar* vertexPath, const GLchar* fragmentPath);
+	static std::shared_ptr<Shader> getShader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath);
 
 	void operator=(ShaderManager const&) = delete;
 	ShaderManager(ShaderManager const&) = delete;
@@ -19,11 +17,11 @@ public:
 
 private:
 	ShaderManager() {};
-	map<string, shared_ptr<Shader>> shaders;
+	std::map<std::string, std::shared_ptr<Shader>> shaders;
 
 	static ShaderManager& getInstance();
-	shared_ptr<Shader> findOrCreateShader(const GLchar* vertexPath, const GLchar* fragmentPath);
-	shared_ptr<Shader> findOrCreateShader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath);
+	std::shared_ptr<Shader> findOrCreateShader(const GLchar* vertexPath, const GLchar* fragmentPath);
+	std::shared_ptr<Shader> findOrCreateShader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath);
 };
 
 #endif

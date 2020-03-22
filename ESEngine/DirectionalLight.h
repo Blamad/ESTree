@@ -6,20 +6,20 @@
 
 class DirectionalLight : public Light {
 public:
-	vec3 directory;
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
-	mat4 lightSpace;
+	glm::vec3 directory;
+	glm::vec3 ambient;
+	glm::vec3 diffuse;
+	glm::vec3 specular;
+	glm::mat4 lightSpace;
 
-	DirectionalLight(vec3 direction = vec3(0,-1, 1), vec3 ambient = vec3(0.05f, 0.05f, 0.05f), vec3 diffuse = vec3(0.4f, 0.4f, 0.4f), vec3 specular = vec3(0.5f, 0.5f, 0.5f)) : directory(directory), ambient(ambient), diffuse(diffuse), specular(specular), Light(DIRECTIONAL) { };
+	DirectionalLight(glm::vec3 direction = glm::vec3(0,-1, 1), glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3 diffuse = glm::vec3(0.4f, 0.4f, 0.4f), glm::vec3 specular = glm::vec3(0.5f, 0.5f, 0.5f)) : directory(directory), ambient(ambient), diffuse(diffuse), specular(specular), Light(LIGHT_DIRECTIONAL) { };
 
-	static mat4 getViewMatrix(DirectionalLight* dLight) {
+	static glm::mat4 getViewMatrix(DirectionalLight* dLight) {
 		Transform *transform = (Transform*)dLight->getComponent(TRANSFORM);
 
 		return lookAt(transform->getPosition(),
 			dLight->directory,
-			vec3(0.0f, 1.0f, 0.0f));
+			glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 
 	static void setProjectionParams(float bufferSize, float farPane) {
@@ -27,8 +27,8 @@ public:
 		shadingFarPane = farPane;
 	}
 
-	static mat4 getProjectionMatrix() {
-		return ortho(-1 * shadingBufferSize, 1 * shadingBufferSize, -1 * shadingBufferSize, 1 * shadingBufferSize, 0.01f, shadingFarPane);
+	static glm::mat4 getProjectionMatrix() {
+		return glm::ortho(-1 * shadingBufferSize, 1 * shadingBufferSize, -1 * shadingBufferSize, 1 * shadingBufferSize, 0.01f, shadingFarPane);
 	}
 
 private:

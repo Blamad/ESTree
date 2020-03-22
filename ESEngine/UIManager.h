@@ -9,8 +9,6 @@
 #include "ConsoleComponent.h"
 #include "Context.h"
 
-using namespace std;
-
 class UIManager {
 public:
 	UIManager();
@@ -18,13 +16,13 @@ public:
 
 	void toggleDepthBufferComponent(bool enabled);
 
-	void addComponent(unique_ptr<UIComponent> component);
+	void addComponent(std::unique_ptr<UIComponent> component);
 	void draw();
 	void update(double &dt, InputState &inputState);
 
 private:
 	DepthFramePreviewComponent *depthPreviewComponent;
-	vector<unique_ptr<UIComponent>> uiComponents;
+	std::vector<std::unique_ptr<UIComponent>> uiComponents;
 };
 
 #endif

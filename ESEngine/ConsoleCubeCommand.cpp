@@ -1,11 +1,11 @@
 #include "ConsoleCubeCommand.h"
 
-bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
+bool ConsoleCubeCommand::processCommandLine(std::vector<std::string> line) {
 	if (line.at(0) == "cube") {
 
-		map<string, string> params = ConsoleUtils::generateParamsMap(line);
-		vec3 pos(0, 0, 0);
-		string name = "CrateCube";
+		std::map<std::string, std::string> params = ConsoleUtils::generateParamsMap(line);
+		glm::vec3 pos(0, 0, 0);
+		std::string name = "CrateCube";
 
 		while (!params.empty()) {
 			if (params.find("pos") != params.end()) {
@@ -22,11 +22,11 @@ bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
 			break;
 		}
 
-		unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container(), false, false));
+		std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new Cube(Material::container(), false, false));
 		go->name = name;
 		Transform *transform = (Transform*)go->getComponent(TRANSFORM);
 		transform->translate(pos);
-		shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
+		std::shared_ptr<RigidBody> rigidBody = std::shared_ptr<RigidBody>(new RigidBody());
 		go->addComponent(rigidBody);
 		rigidBody->initAsBox(1);
 		rigidBody->makeDynamic();
@@ -37,9 +37,9 @@ bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
 
 	if (line.at(0) == "light") {
 
-		map<string, string> params = ConsoleUtils::generateParamsMap(line);
-		vec3 pos(0, 0, 0);
-		string name = "light";
+		std::map<std::string, std::string> params = ConsoleUtils::generateParamsMap(line);
+		glm::vec3 pos(0, 0, 0);
+		std::string name = "light";
 		PointLightStrength strength = PointLightStrength::STRONG;
 
 		while (!params.empty()) {
@@ -76,13 +76,13 @@ bool ConsoleCubeCommand::processCommandLine(vector<string> line) {
 			break;
 		}
 
-		unique_ptr<GameObject> go = unique_ptr<GameObject>(new LampCube(vec4(1,1,1,1)));
+		std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new LampCube(glm::vec4(1,1,1,1)));
 		go->name = name;
-		go->addComponent(shared_ptr<PointLight>(new PointLight(strength)));
+		go->addComponent(std::shared_ptr<PointLight>(new PointLight(strength)));
 		Transform *transform = (Transform*)go->getComponent(TRANSFORM);
 		transform->translate(pos);
-		transform->scale(vec3(0.5, 0.5, 0.5));
-		shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
+		transform->scale(glm::vec3(0.5, 0.5, 0.5));
+		std::shared_ptr<RigidBody> rigidBody = std::shared_ptr<RigidBody>(new RigidBody());
 		go->addComponent(rigidBody);
 		rigidBody->initAsBox(1);
 		rigidBody->makeDynamic();

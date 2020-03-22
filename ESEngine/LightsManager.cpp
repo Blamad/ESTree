@@ -3,9 +3,9 @@
 GLuint LightsManager::lightsUBO = 0;
 
 LightsManager::LightsManager() {
-	lights[POINT] = set<Light*>();
-	lights[SPOT] = set<Light*>();
-	lights[DIRECTIONAL] = set<Light*>();
+	lights[LIGHT_POINT] = std::set<Light*>();
+	lights[LIGHT_SPOT] = std::set<Light*>();
+	lights[LIGHT_DIRECTIONAL] = std::set<Light*>();
 
 	initialize();
 }
@@ -25,18 +25,18 @@ void LightsManager::removeLight(Light* light) {
 	lights[light->lightType].erase(removedLight);
 }
 
-void LightsManager::prepareShadowBuffer(vec3& viewPos, Renderer& renderer, function<void(Renderer&, Shader*)> renderObjectsFunction) {
-	mat4 lightProjection = DirectionalLight::getProjectionMatrix();
-	mat4 lightView;
+void LightsManager::prepareShadowBuffer(glm::vec3& viewPos, Renderer& renderer, std::function<void(Renderer&, Shader*)> renderObjectsFunction) {
+	glm::mat4 lightProjection = DirectionalLight::getProjectionMatrix();
+	glm::mat4 lightView;
 
 	Shader::updateProjectionMatrix(lightProjection);
 
 	depthBuffer->mountFrameBuffer();
 	depthBuffer->shader->setShaderSubroutine("shadowDepthPass");
 
-	BOOST_FOREACH(Light* light, lights[DIRECTIONAL]) {
+	BOOST_FOREACH(Light* light, lights[LIGHT_DIRECTIONAL]) {
 		DirectionalLight* dLight = (DirectionalLight*)light;
-		mat4 lightView = DirectionalLight::getViewMatrix(dLight);
+		glm::mat4 lightView = DirectionalLight::getViewMatrix(dLight);
 
 		Shader::updateViewMatrix(lightView);
 		dLight->lightSpace = lightProjection * lightView;
@@ -49,14 +49,14 @@ void LightsManager::prepareShadowBuffer(vec3& viewPos, Renderer& renderer, funct
 	updateLightsUBO(viewPos);
 }
 
-void LightsManager::updateLightsUBO(vec3 &viewPos) {
-	LightsData data = LightsUtils::extractData(lights[POINT], lights[DIRECTIONAL], viewPos);
+void LightsManager::updateLightsUBO(glm::vec3 &viewPos) {
+	LightsData data = LightsUtils::extractData(lights[LIGHT_POINT], lights[LIGHT_DIRECTIONAL], viewPos);
 
 	glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(LightsData), &data);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-	for (int i = 2; i < lights[DIRECTIONAL].size() + 2; i++) {
+	for (int i = 2; i < lights[LIGHT_DIRECTIONAL].size() + 2; i++) {
 		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, depthBuffer->getBuffer()->id);
 	}
@@ -73,7 +73,7 @@ void LightsManager::initializeLightsUBO() {
 
 void LightsManager::initialize() {
 	float sizeMod = 4;
-	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	std::shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
 	shader->initializeMatricesUBO();
-	depthBuffer = unique_ptr<DepthFrameBuffer>(new DepthFrameBuffer(shader, Screen::getScreenWidth() * sizeMod, Screen::getScreenHeight() * sizeMod));
+	depthBuffer = std::unique_ptr<DepthFrameBuffer>(new DepthFrameBuffer(shader, Screen::getScreenWidth() * sizeMod, Screen::getScreenHeight() * sizeMod));
 }

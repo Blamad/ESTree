@@ -1,9 +1,9 @@
 #include "UIManager.h"
 
 UIManager::UIManager() {
-	addComponent(make_unique<DepthFramePreviewComponent>());
+	addComponent(std::make_unique<DepthFramePreviewComponent>());
 	depthPreviewComponent = (DepthFramePreviewComponent*)uiComponents[0].get();
-	addComponent(make_unique<ConsoleComponent>());
+	addComponent(std::make_unique<ConsoleComponent>());
 
 	Context::setUIManager(this);
 }
@@ -19,8 +19,8 @@ void UIManager::toggleDepthBufferComponent(bool enabled) {
 		depthPreviewComponent->enabled = enabled;
 }
 
-void UIManager::addComponent(unique_ptr<UIComponent> component) {
-	uiComponents.push_back(move(component));
+void UIManager::addComponent(std::unique_ptr<UIComponent> component) {
+	uiComponents.push_back(std::move(component));
 }
 
 void UIManager::update(double &dt, InputState &inputState) {

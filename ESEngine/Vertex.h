@@ -4,18 +4,16 @@
 #include <glm/glm.hpp>
 #include <bitset>
 
-using namespace glm;
-
 enum VertexFlag {
 	POSITION, NORMAL, TEXCOORDS, COLOR
 };
 
 struct Vertex {
 
-	vec3 position;
-	vec3 normal;
-	vec2 texCoords;
-	vec4 color;
+	glm::vec3 position;
+	glm::vec3 normal;
+	glm::vec2 texCoords;
+	glm::vec4 color;
 
 	Vertex copy() {
 		Vertex v;
@@ -27,14 +25,14 @@ struct Vertex {
 		return v;
 	}
 
-	void transform(mat4 modelMatrix) {
-		vec4 tmpPosition = vec4(position, 1);
-		position = vec3(modelMatrix * tmpPosition);
+	void transform(glm::mat4 modelMatrix) {
+		glm::vec4 tmpPosition = glm::vec4(position, 1);
+		position = glm::vec3(modelMatrix * tmpPosition);
 		tmpPosition.z = 0;
-		normal = normalize(vec3(modelMatrix * tmpPosition));
+		normal = normalize(glm::vec3(modelMatrix * tmpPosition));
 	}
 
-	static Vertex createVertex(vec3 position, vec3 normal, vec2 texCoords) {
+	static Vertex createVertex(glm::vec3 position, glm::vec3 normal, glm::vec2 texCoords) {
 		Vertex vert;
 		vert.position = position;
 		vert.normal = normal;

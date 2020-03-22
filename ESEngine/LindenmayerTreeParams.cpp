@@ -1,28 +1,28 @@
 #include "LindenmayerTreeParams.h"
 
-LindenmayerTreeParams::LindenmayerTreeParams(string filePath) {
+LindenmayerTreeParams::LindenmayerTreeParams(std::string filePath) {
 	filepath = filePath;
 	loadFile(filepath);
 }
 
-void LindenmayerTreeParams::loadFile(string &filepath) {
+void LindenmayerTreeParams::loadFile(std::string &filepath) {
 	if (filepath.substr(filepath.find_last_of('.') + 1) == "l")
 		readLFile(filepath);
 	else
 		readJSONFile(filepath);
 }
 
-void LindenmayerTreeParams::readJSONFile(string filePath) {
+void LindenmayerTreeParams::readJSONFile(std::string filePath) {
 	name = filePath;
 
-	ifstream ifs(name);
-	IStreamWrapper isw(ifs);
-	Document document;
+	std::ifstream ifs(name);
+	rapidjson::IStreamWrapper isw(ifs);
+	rapidjson::Document document;
 	document.ParseStream(isw);
 
 	//PARAMETERS
 	for (auto& m : document["parameters"].GetObject()) {
-		string paramName = m.name.GetString();
+		std::string paramName = m.name.GetString();
 		
 		if (paramName == "initialLength") {
 			float paramValue = m.value.GetFloat();
@@ -45,7 +45,7 @@ void LindenmayerTreeParams::readJSONFile(string filePath) {
 			leavesAngleDiversity = radians(paramValue);
 		}
 		else if (paramName == "tropism") {
-			tropism = vec3(m.value.GetArray()[0].GetFloat(), m.value.GetArray()[1].GetFloat(), m.value.GetArray()[2].GetFloat());
+			tropism = glm::vec3(m.value.GetArray()[0].GetFloat(), m.value.GetArray()[1].GetFloat(), m.value.GetArray()[2].GetFloat());
 			tropism = normalize(tropism);
 		}
 		else if (paramName == "tropismBendingFactor") {
@@ -65,10 +65,10 @@ void LindenmayerTreeParams::readJSONFile(string filePath) {
 	//RULES
 	axiom = document["axiom"].GetString();
 	for (auto& rule : document["rules"].GetArray()) {
-		string symbol = rule.GetObject()["symbol"].GetString();
-		string production = rule.GetObject()["production"].GetString();
+		std::string symbol = rule.GetObject()["symbol"].GetString();
+		std::string production = rule.GetObject()["production"].GetString();
 
-		vector<string> parameters;
+		std::vector<std::string> parameters;
 		int intialDepth = 0;
 		float probability = 1.0;
 
@@ -89,16 +89,16 @@ void LindenmayerTreeParams::readJSONFile(string filePath) {
 	}
 }
 
-void LindenmayerTreeParams::readLFile(string filePath) {
+void LindenmayerTreeParams::readLFile(std::string filePath) {
 	name = filePath;
 
-	ifstream lindenFile;
-	lindenFile.exceptions(ifstream::badbit);
+	std::ifstream lindenFile;
+	lindenFile.exceptions(std::ifstream::badbit);
 	int parsedLineCounter = 0;
 	try
 	{
 		lindenFile.open(filePath);
-		string line;
+		std::string line;
 
 		for (; getline(lindenFile, line);) {
 			//Comments
@@ -107,7 +107,7 @@ void LindenmayerTreeParams::readLFile(string filePath) {
 
 			//Parameters
 			if (line.length() > 6 && line.substr(0, 6) == "define") {
-				vector<string> splitLane = split(line);
+				std::vector<std::string> splitLane = split(line);
 
 				if (splitLane[1] == "initialLength") {
 					initialLength = atof(splitLane[2].c_str());
@@ -137,15 +137,15 @@ void LindenmayerTreeParams::readLFile(string filePath) {
 			}
 
 			//Axioms and rules
-			vector<string> splitLine = split(line);
+			std::vector<std::string> splitLine = split(line);
 			if (splitLine.size() == 1) {
 				axiom = splitLine[0];
 				continue;
 			}
 
-			string symbol = splitLine[0];
+			std::string symbol = splitLine[0];
 			int allowedDepth = 0;
-			vector<string> variables;
+			std::vector<std::string> variables;
 
 			if (symbol.length() > 1) {
 				if (symbol[1] == '{') {
@@ -158,7 +158,7 @@ void LindenmayerTreeParams::readLFile(string filePath) {
 				}
 			}
 
-			string replacement = splitLine[1];
+			std::string replacement = splitLine[1];
 			double probability = 1.0;
 
 			if (splitLine.size() == 3)
@@ -169,9 +169,9 @@ void LindenmayerTreeParams::readLFile(string filePath) {
 			addRule(Rule(symbol, replacement, probability, allowedDepth, variables));
 		}
 	}
-	catch (ifstream::failure e)
+	catch (std::ifstream::failure e)
 	{
-		cout << "ERROR LOADING LINDENMAYER TREE MODEL: " << filePath << endl;
+		std::cout << "ERROR LOADING LINDENMAYER TREE MODEL: " << filePath << std::endl;
 	}
 }
 
@@ -179,7 +179,7 @@ void LindenmayerTreeParams::addRule(Rule &rule) {
 	rules[rule.symbol].push_back(rule);
 }
 
-vector<Rule> LindenmayerTreeParams::getRules(string &symbol) {
+std::vector<Rule> LindenmayerTreeParams::getRules(std::string &symbol) {
 	return rules[symbol];
 }
 
@@ -187,35 +187,35 @@ double LindenmayerTreeParams::radians(double angle) {
 	return (angle * 3.14159265359) / 180;
 }
 
-vector<string> LindenmayerTreeParams::split(string lane) {
+std::vector<std::string> LindenmayerTreeParams::split(std::string lane) {
 	return split(lane, " ");
 }
 
-vector<string> LindenmayerTreeParams::split(string lane, string splitter) {
-	vector<string> splitLane;
+std::vector<std::string> LindenmayerTreeParams::split(std::string lane, std::string splitter) {
+	std::vector<std::string> splitLane;
 	boost::split(splitLane, lane, boost::is_any_of(splitter));
 	return splitLane;
 }
 
-string LindenmayerTreeParams::fillRuleWithVariables(string rule, map<string, float> variables) {
-	string newRule = rule;
+std::string LindenmayerTreeParams::fillRuleWithVariables(std::string rule, std::map<std::string, float> variables) {
+	std::string newRule = rule;
 	
-	pair<string, float> pair;
+	std::pair<std::string, float> pair;
 	BOOST_FOREACH(pair, variables) {
-		regex regex("[^a-zA-Z0-9]{1}" + pair.first + "[^a-zA-Z0-9]{1}");
-		smatch res;	
-		string::const_iterator searchStart(newRule.cbegin());
+		std::regex regex("[^a-zA-Z0-9]{1}" + pair.first + "[^a-zA-Z0-9]{1}");
+		std::smatch res;
+		std::string::const_iterator searchStart(newRule.cbegin());
 
-		string temporaryStr;
+		std::string temporaryStr;
 
 		while (regex_search(searchStart, newRule.cend(), res, regex))
 		{
-			string found = res[0];
+			std::string found = res[0];
 			searchStart += res.position() + res.length();
 
 			temporaryStr += res.prefix();
 			temporaryStr += found[0];
-			temporaryStr += to_string(pair.second);
+			temporaryStr += std::to_string(pair.second);
 			temporaryStr += found[found.length()-1];
 		}
 		temporaryStr += res.suffix();
@@ -226,9 +226,9 @@ string LindenmayerTreeParams::fillRuleWithVariables(string rule, map<string, flo
 	return newRule;
 }
 
-vector<string> LindenmayerTreeParams::getAvailableRules() {
-	pair<string, vector<Rule>> pair;
-	vector<string> v;
+std::vector<std::string> LindenmayerTreeParams::getAvailableRules() {
+	std::pair<std::string, std::vector<Rule>> pair;
+	std::vector<std::string> v;
 	BOOST_FOREACH(pair, rules) {
 		v.push_back(pair.first);
 	}

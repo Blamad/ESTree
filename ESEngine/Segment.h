@@ -7,8 +7,6 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtc/quaternion.hpp>
 
-using namespace std;
-
 enum SegmentType {
 	STEM, SPLIT
 };
@@ -28,15 +26,15 @@ public:
 
 class Segment {
 public:
-	Segment(shared_ptr<Segment> parent = nullptr) : parent(parent) { };
+	Segment(std::shared_ptr<Segment> parent = nullptr) : parent(parent) { };
 	
-	void addChild(shared_ptr<Segment> child) {
+	void addChild(std::shared_ptr<Segment> child) {
 		children.push_back(child);
 		type = children.size() == 1 ? STEM : SPLIT;
 	}
 
-	shared_ptr<Segment> parent;
-	vector<shared_ptr<Segment>> children;
+	std::shared_ptr<Segment> parent;
+	std::vector<std::shared_ptr<Segment>> children;
 
 	bool isLastStem() {
 		return children.empty();

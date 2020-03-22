@@ -4,103 +4,103 @@ Logger TreeScene::logger("TreeScene");
 
 void TreeScene::initialize() {
 
-	logger.log(INFO, "Starting scene");
+	logger.log(LOG_INFO, "Starting scene");
 
 	GameObject* go;
-	vec3 position;
-	string paramsFileName;
+	glm::vec3 position;
+	std::string paramsFileName;
 	
 	bool debug = false;
-	string arrow = "Textures/arrow.png";
+	std::string arrow = "Textures/arrow.png";
 
 	paramsFileName = "LindenmayerRules/parametricSympodialTreeA.json";
-	position = vec3(20, 0, 20);
+	position = glm::vec3(20, 0, 20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves1.png"), "parametricSympodialTreeA", debug);
 
 	paramsFileName = "LindenmayerRules/parametricSympodialTreeB.json";
-	position = vec3(20, 0, 7.5);
+	position = glm::vec3(20, 0, 7.5);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), "parametricSympodialTreeB", debug);
 
 	paramsFileName = "LindenmayerRules/advancedTree2.json";
-	position = vec3(20, 0, -7.5);
+	position = glm::vec3(20, 0, -7.5);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), "advancedTree2", debug);
 
 	paramsFileName = "LindenmayerRules/advancedTree2.json";
-	position = vec3(20, 0, -20);
+	position = glm::vec3(20, 0, -20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves4.png"), "advancedTree2", debug);
 
 	paramsFileName = "LindenmayerRules/parametricMonopodialTreeA.json";
-	position = vec3(7.5, 0, 20);
+	position = glm::vec3(7.5, 0, 20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), "parametricMonopodialTreeA", debug);
 
 	paramsFileName = "LindenmayerRules/parametricMonopodialTreeB.json";
-	position = vec3(7.5, 0, 7.5);
+	position = glm::vec3(7.5, 0, 7.5);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Textures/leaves2.png"), "parametricMonopodialTreeB", debug);
 
 	paramsFileName = "LindenmayerRules/parametricMonopodialTreeC.json";
-	position = vec3(7.5, 0, -7.5);
+	position = glm::vec3(7.5, 0, -7.5);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), "parametricMonopodialTreeC", debug);
 
 	paramsFileName = "LindenmayerRules/parametricMonopodialTreeD.json";
-	position = vec3(7.5, 0, -20);
+	position = glm::vec3(7.5, 0, -20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves4.png"), "parametricMonopodialTreeD", debug);
 	
 	paramsFileName = "LindenmayerRules/randomTree.json";
-	position = vec3(-7.5, 0, 20);
+	position = glm::vec3(-7.5, 0, 20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves5.png"), "randomTree");
 
 	paramsFileName = "LindenmayerRules/parametricTernaryTreeA.json";
-	position = vec3(-7.5, 0, 7.5);
+	position = glm::vec3(-7.5, 0, 7.5);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2(), "parametricTernaryTreeA");
 	
 	paramsFileName = "LindenmayerRules/symetricTree.json";
-	position = vec3(-7.5, 0, -7.5);
+	position = glm::vec3(-7.5, 0, -7.5);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("Textures/leaves4.png"), "symetricTree");
 
 	paramsFileName = "LindenmayerRules/fibbonacciTree.json";
-	position = vec3(-7.5, 0, -20);
+	position = glm::vec3(-7.5, 0, -20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves1(), "fibbonacciTree");
 
 	paramsFileName = "LindenmayerRules/advancedTree2.json";
-	position = vec3(-20, 0, 20);
+	position = glm::vec3(-20, 0, 20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves3.png"), "advancedTree2");
 
 	paramsFileName = "LindenmayerRules/parametricTernaryTreeB.json";
-	position = vec3(-20, 0, 7.5);
+	position = glm::vec3(-20, 0, 7.5);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Textures/leaves5.png"), "parametricTernaryTreeB");
 
 	paramsFileName = "LindenmayerRules/parametricTernaryTreeE.json";
-	position = vec3(-20, 0, -7.5);
+	position = glm::vec3(-20, 0, -7.5);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Textures/leaves1.png"), "parametricTernaryTreeE");
 
 	paramsFileName = "LindenmayerRules/parametricTernaryTreeD.json";
-	position = vec3(-20, 0, -20);
+	position = glm::vec3(-20, 0, -20);
 	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Textures/leaves3.png"), "parametricTernaryTreeD");
 
-	generateTestBox(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5));
+	generateTestBox(glm::vec3(0, 1, 0), glm::vec3(0.5, 0.5, 0.5));
 
 	generateTerrain();
 	addSkybox();
 
 	float distance = 50;
-	vec3 dir = normalize(vec3(-1, -0.5, -1));
-	createDirectionalLight(vec3(dir.x * -distance, dir.x * -distance, dir.z * -distance), dir);
+	glm::vec3 dir = normalize(glm::vec3(-1, -0.5, -1));
+	createDirectionalLight(glm::vec3(dir.x * -distance, dir.x * -distance, dir.z * -distance), dir);
 
-	setActiveCamera(createCamera(vec3(-20, 15, -35), 45, -10));
+	setActiveCamera(createCamera(glm::vec3(-20, 15, -35), 45, -10));
 
 	generateFrameBuffer();
 }
 
-GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &position, Material &material, Material &leavesMaterial, string name, bool debug) {
+GameObject* TreeScene::createLindenmayerTree(std::string paramsFileName, glm::vec3 &position, Material &material, Material &leavesMaterial, std::string name, bool debug) {
 	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
 
-	unique_ptr<GameObject> go = unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, debug));
+	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, debug));
 	go->name = name;
 	Transform *transform = getTransform(go.get());
 	transform->translate(position);
 	((LindenmayerTree*)go.get())->generate();
 
-	shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	std::shared_ptr<RigidBody> rigidBody = std::shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsAHullShape(0);
 
@@ -109,8 +109,8 @@ GameObject* TreeScene::createLindenmayerTree(string paramsFileName, vec3 &positi
 
 void TreeScene::generateTerrain() {
 	Transform* transform;
-	shared_ptr<RigidBody> rigidBody;
-	unique_ptr<GameObject> go;
+	std::shared_ptr<RigidBody> rigidBody;
+	std::unique_ptr<GameObject> go;
 
 	int segmentSize = 6;
 	int segWidth = 6;
@@ -121,11 +121,11 @@ void TreeScene::generateTerrain() {
 
 	for (int i = 0; i < segWidth; i++) {
 		for (int j = 0; j < segHeight; j++) {
-			go = unique_ptr<GameObject>(new Cube(Material::grass()));
+			go = std::unique_ptr<GameObject>(new Cube(Material::grass()));
 			transform = getTransform(go.get());
-			transform->translate(vec3(segPosX + segmentSize * i * 2, 0, segPosZ + segmentSize * j * 2));
-			transform->scale(vec3(segmentSize, 0.1, segmentSize));
-			rigidBody = shared_ptr<RigidBody>(new RigidBody());
+			transform->translate(glm::vec3(segPosX + segmentSize * i * 2, 0, segPosZ + segmentSize * j * 2));
+			transform->scale(glm::vec3(segmentSize, 0.1, segmentSize));
+			rigidBody = std::shared_ptr<RigidBody>(new RigidBody());
 			go->addComponent(rigidBody);
 			rigidBody->initAsBox(0);
 			addGameObject(move(go));
@@ -133,21 +133,21 @@ void TreeScene::generateTerrain() {
 	}
 }
 
-GameObject* TreeScene::createWhiteLampCube(vec3 position, PointLightStrength str) {
-	vec4 color = vec4(1, 1, 1, 1);
-	unique_ptr<GameObject> go(new LampCube(color));
-	go->addComponent(shared_ptr<PointLight>(new PointLight(str)));
+GameObject* TreeScene::createWhiteLampCube(glm::vec3 position, PointLightStrength str) {
+	glm::vec4 color = glm::vec4(1, 1, 1, 1);
+	std::unique_ptr<GameObject> go(new LampCube(color));
+	go->addComponent(std::shared_ptr<PointLight>(new PointLight(str)));
 	Transform* transform = getTransform(go.get());
 	transform->translate(position);
-	transform->scale(vec3(.4, .4, .4));
+	transform->scale(glm::vec3(.4, .4, .4));
 	return addGameObject(move(go));
 }
 
-GameObject* TreeScene::createDirectionalLight(vec3 position, vec3 directory) {
+GameObject* TreeScene::createDirectionalLight(glm::vec3 position, glm::vec3 directory) {
 	DirectionalLight::setProjectionParams(20.0f, 60.0f);
 	
-	unique_ptr<GameObject> go(new GameObject());
-	go->addComponent(shared_ptr<DirectionalLight>(new DirectionalLight()));
+	std::unique_ptr<GameObject> go(new GameObject());
+	go->addComponent(std::shared_ptr<DirectionalLight>(new DirectionalLight()));
 	go->name = "DirLight";
 	Transform* transform = getTransform(go.get());
 	transform->translate(position);
@@ -157,20 +157,20 @@ GameObject* TreeScene::createDirectionalLight(vec3 position, vec3 directory) {
 }
 
 GameObject* TreeScene::createCamera(glm::vec3 position, float yaw, float pitch) {
-	unique_ptr<GameObject> go(new GameObject());
-	shared_ptr<Camera> camera = shared_ptr<Camera>(new Camera(position, glm::vec3(0.0f, 1.0f, 0.0f), yaw, pitch));
+	std::unique_ptr<GameObject> go(new GameObject());
+	std::shared_ptr<Camera> camera = std::shared_ptr<Camera>(new Camera(position, glm::vec3(0.0f, 1.0f, 0.0f), yaw, pitch));
 	go->addComponent(camera);
-	shared_ptr<CameraBehaviour> cameraBehaviour = shared_ptr<CameraBehaviour>(new CameraBehaviour(camera.get()));
+	std::shared_ptr<CameraBehaviour> cameraBehaviour = std::shared_ptr<CameraBehaviour>(new CameraBehaviour(camera.get()));
 	go->addComponent(cameraBehaviour);
 	return addGameObject(move(go));
 }
 
-void TreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1,1,1)) {
-	unique_ptr<GameObject> go = unique_ptr<GameObject>(new Cube(Material::container()));
+void TreeScene::generateTestBox(glm::vec3 pos, glm::vec3 scale = glm::vec3(1,1,1)) {
+	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new Cube(Material::container()));
 	go->name = "CrateCube";
 	Transform* transform = getTransform(go.get());
 	transform->translate(pos);
-	shared_ptr<RigidBody> rigidBody = shared_ptr<RigidBody>(new RigidBody());
+	std::shared_ptr<RigidBody> rigidBody = std::shared_ptr<RigidBody>(new RigidBody());
 	go->addComponent(rigidBody);
 	rigidBody->initAsBox(1);
 	rigidBody->makeDynamic();
@@ -179,7 +179,7 @@ void TreeScene::generateTestBox(vec3 pos, vec3 scale = vec3(1,1,1)) {
 }
 
 void TreeScene::addSkybox() {
-	string skyboxTex[] = {
+	std::string skyboxTex[] = {
 		"Textures/Skybox_darkforest/right.jpg",
 		"Textures/Skybox_darkforest/left.jpg",
 		"Textures/Skybox_darkforest/top.jpg",
@@ -188,10 +188,10 @@ void TreeScene::addSkybox() {
 		"Textures/Skybox_darkforest/front.jpg"
 	};
 
-	unique_ptr<Skybox> skybox(new Skybox(skyboxTex));
+	std::unique_ptr<Skybox> skybox(new Skybox(skyboxTex));
 	setSkybox(std::move(skybox));
 }
 
 void TreeScene::generateFrameBuffer() {
-	setFrameBuffer(unique_ptr<FrameBuffer>(new HDRFrameBuffer()));
+	setFrameBuffer(std::unique_ptr<FrameBuffer>(new HDRFrameBuffer()));
 }

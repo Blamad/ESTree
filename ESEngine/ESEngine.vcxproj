@@ -231,7 +231,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{554B3083-88AD-4D1A-9B3B-C646A3463B59}</ProjectGuid>
     <RootNamespace>ESEngine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -280,7 +280,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(FREETYPE2_LIB)\Includes;$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(RAPIDJSON_LIB);$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
-    <LibraryPath>$(FREETYPE2_LIB)\Libs-MD;$(BULLET_LIB)\Libs-MDd;$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs-MD;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;msvcrt.lib;msvcmrt.lib</LibraryPath>
+    <LibraryPath>$(FREETYPE2_LIB)\Libs-MT;$(BULLET_LIB)\Libs-MT;$(BOOST_LIB)\Libs;$(OPENGL_LIB)\Libs-MT;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;msvcrt.lib;msvcmrt.lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(FREETYPE2_LIB)\Includes;$(BULLET_LIB)\Includes;$(BOOST_LIB)\Includes;$(RAPIDJSON_LIB);$(OPENGL_LIB)\Includes;$(IncludePath)</IncludePath>
@@ -296,7 +296,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <StringPooling>false</StringPooling>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>

@@ -1,6 +1,6 @@
 #include "LampCube.h"
 
-LampCube::LampCube(vec4 color) : Cube() {
-	shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/LampShader.vert", "Shaders/LampShader.frag");
+LampCube::LampCube(glm::vec4 color) : Cube() {
+	std::shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/LampShader.vert", "Shaders/LampShader.frag");
 	addComponent(createMesh(shader, color));
 }

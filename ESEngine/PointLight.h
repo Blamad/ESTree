@@ -10,16 +10,16 @@ enum PointLightStrength {
 
 class PointLight : public Light {
 public:
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
+	glm::vec3 ambient;
+	glm::vec3 diffuse;
+	glm::vec3 specular;
 	GLfloat constant;
 	GLfloat linear;
 	GLfloat quadratic;
 
-	PointLight(GLfloat constant = 1.0f, GLfloat linear = 0.045f, GLfloat quadratic = 0.0075f, vec3 ambient = vec3(0.05f, 0.05f, 0.05f), vec3 diffuse = vec3(1, 1, 1), vec3 specular = vec3(1, 1, 1)) : ambient(ambient), diffuse(diffuse), specular(specular), constant(constant), linear(linear), quadratic(quadratic), Light(POINT) { };
+	PointLight(GLfloat constant = 1.0f, GLfloat linear = 0.045f, GLfloat quadratic = 0.0075f, glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3 diffuse = glm::vec3(1, 1, 1), glm::vec3 specular = glm::vec3(1, 1, 1)) : ambient(ambient), diffuse(diffuse), specular(specular), constant(constant), linear(linear), quadratic(quadratic), Light(LIGHT_POINT) { };
 	
-	PointLight(PointLightStrength strength, vec3 ambient = vec3(0.05f, 0.05f, 0.05f), vec3 diffuse = vec3(1, 1, 1), vec3 specular = vec3(1, 1, 1)) : ambient(ambient), diffuse(diffuse), specular(specular), Light(POINT) {
+	PointLight(PointLightStrength strength, glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3 diffuse = glm::vec3(1, 1, 1), glm::vec3 specular = glm::vec3(1, 1, 1)) : ambient(ambient), diffuse(diffuse), specular(specular), Light(LIGHT_POINT) {
 		switch (strength) {
 			constant = 1;
 		case WEAK:

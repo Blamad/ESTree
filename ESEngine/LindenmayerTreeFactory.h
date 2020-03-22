@@ -10,8 +10,6 @@
 #include <GLM\glm.hpp>
 #include <memory>
 
-using namespace std;
-
 class LindenmayerTreeFactory {
 public:
 
@@ -21,7 +19,7 @@ public:
 	LindenmayerTreeFactory(LindenmayerTreeFactory const&) = delete;
 	~LindenmayerTreeFactory() {}
 	
-	GameObject* generateTree(LindenmayerTreeParams &params, string &name, Material &bark, Material &leaves, vec3 &position);
+	GameObject* generateTree(LindenmayerTreeParams &params, std::string &name, Material &bark, Material &leaves, glm::vec3 &position);
 
 private:
 	static LindenmayerTreeFactory factory;

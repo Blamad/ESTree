@@ -11,7 +11,7 @@ class ConsoleModelExportCommand : public ConsoleCustomCommand {
 public:
 	ConsoleModelExportCommand() : ConsoleCustomCommand() {};
 
-	bool processCommandLine(vector<string> commandLine) override;
+	bool processCommandLine(std::vector<std::string> commandLine) override;
 	void printHelpText() override;
 private:
 	static Logger logger;

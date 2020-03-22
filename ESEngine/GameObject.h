@@ -10,29 +10,28 @@
 class Component;
 enum ComponentType;
 
-using namespace std;
 typedef boost::uuids::uuid Uuid;
 
 class GameObject {
 public:
 	GameObject();
 	
-	vector<Component*> getComponents(ComponentType componentType);
+	std::vector<Component*> getComponents(ComponentType componentType);
 	Component* getComponent(ComponentType componentType);
-	void addComponent(shared_ptr<Component> component);
+	void addComponent(std::shared_ptr<Component> component);
 
-	void addGameObject(shared_ptr<GameObject> go);
+	void addGameObject(std::shared_ptr<GameObject> go);
 
 	Uuid id;
-	string name = "";
+	std::string name = "";
 
 	GameObject* parent = nullptr;
-	vector<shared_ptr<GameObject>> children;
+	std::vector<std::shared_ptr<GameObject>> children;
 
 private:
 	static boost::uuids::random_generator uuidGenerator;
 	
-	vector<shared_ptr<Component>> components;
+	std::vector<std::shared_ptr<Component>> components;
 };
 
 #endif GAMEOBJECT_H

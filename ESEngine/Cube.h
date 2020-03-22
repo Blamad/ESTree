@@ -6,8 +6,6 @@
 #include "GameObject.h"
 #include "Material.h"
 
-using namespace glm;
-
 class Cube : public GameObject {
 public:
 	//Default constr. for overriding
@@ -15,9 +13,9 @@ public:
 	Cube(Material material, bool useMeshWiring = false, bool useNormalVisualisation = false);
 
 protected:
-	Vertex createVertex(vec3 position, vec3 normal, vec2 texCoords);
-	Vertex createVertex(vec3 position, vec3 normal, vec4 color);
-	Vertex createVertex(vec3 position, vec3 normal);
-	shared_ptr<Mesh> createMesh(shared_ptr<Shader> shader);
-	shared_ptr<Mesh> createMesh(shared_ptr<Shader> shader, vec4 color);
+	Vertex createVertex(glm::vec3 position, glm::vec3 normal, glm::vec2 texCoords);
+	Vertex createVertex(glm::vec3 position, glm::vec3 normal, glm::vec4 color);
+	Vertex createVertex(glm::vec3 position, glm::vec3 normal);
+	std::shared_ptr<Mesh> createMesh(std::shared_ptr<Shader> shader);
+	std::shared_ptr<Mesh> createMesh(std::shared_ptr<Shader> shader, glm::vec4 color);
 };

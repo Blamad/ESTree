@@ -2,16 +2,16 @@
 
 boost::variate_generator<boost::mt19937, boost::uniform_real<> > LindenmayerTreeInterpreter::randomGenerator(boost::mt19937(time(0)), boost::uniform_real<>(0, 1));
 
-vector<shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(LindenmayerTreeParams &params, string product, LindenmayerTreeMeshGenerator *meshGenerator) {
-	vector<shared_ptr<Segment>> segmentsVec;
-	stack<shared_ptr<Segment>> segmentStack;
-	stack<SegmentTransform> transformStack;
+std::vector<std::shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(LindenmayerTreeParams &params, std::string product, LindenmayerTreeMeshGenerator *meshGenerator) {
+	std::vector<std::shared_ptr<Segment>> segmentsVec;
+	std::stack<std::shared_ptr<Segment>> segmentStack;
+	std::stack<SegmentTransform> transformStack;
 
-	shared_ptr<Segment> currentSegment;
+	std::shared_ptr<Segment> currentSegment;
 
 	float customParameter = -1;
 
-	SegmentTransform transform = SegmentTransform(quat(), quat(), params.initialLength, params.initialRadius, params.angle);
+	SegmentTransform transform = SegmentTransform(glm::quat(), glm::quat(), params.initialLength, params.initialRadius, params.angle);
 	currentSegment = createRoot(transform);
 	segmentsVec.push_back(currentSegment);
 
@@ -36,7 +36,7 @@ vector<shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(Lindenm
 				i = returnNewIndexAfterParameter(product, i);
 				customParameter = toRadians(customParameter);
 			}
-			transform.rotation *= angleAxis(customParameter, vec3(1, 0, 0));
+			transform.rotation *= angleAxis(customParameter, glm::vec3(1, 0, 0));
 			break;
 		case 'v': //pitch X axis -
 			customParameter = getNumericParameter(product, i);
@@ -46,7 +46,7 @@ vector<shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(Lindenm
 				i = returnNewIndexAfterParameter(product, i);
 				customParameter = toRadians(customParameter);
 			}
-			transform.rotation *= angleAxis(-customParameter, vec3(1, 0, 0));
+			transform.rotation *= angleAxis(-customParameter, glm::vec3(1, 0, 0));
 			break;
 		case '<': //yaw Z axis +
 			customParameter = getNumericParameter(product, i);
@@ -57,7 +57,7 @@ vector<shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(Lindenm
 				customParameter = toRadians(customParameter);
 			}
 
-			transform.rotation *= angleAxis(customParameter, vec3(0, 0, 1));
+			transform.rotation *= angleAxis(customParameter, glm::vec3(0, 0, 1));
 			break;
 		case '>': //yaw Z axis -
 			customParameter = getNumericParameter(product, i);
@@ -68,7 +68,7 @@ vector<shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(Lindenm
 				customParameter = toRadians(customParameter);
 			}
 
-			transform.rotation *= angleAxis(-customParameter, vec3(0, 0, 1));
+			transform.rotation *= angleAxis(-customParameter, glm::vec3(0, 0, 1));
 			break;
 		case '+': //roll Y axis +
 			customParameter = getNumericParameter(product, i);
@@ -80,7 +80,7 @@ vector<shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(Lindenm
 			}
 
 			transform.roll += customParameter;
-			transform.rotation *= angleAxis(customParameter, vec3(0, 1, 0));
+			transform.rotation *= angleAxis(customParameter, glm::vec3(0, 1, 0));
 			break;
 		case '-': //roll Y axis -
 			customParameter = getNumericParameter(product, i);
@@ -92,7 +92,7 @@ vector<shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(Lindenm
 			}
 
 			transform.roll -= customParameter;
-			transform.rotation *= angleAxis(-customParameter, vec3(0, 1, 0));
+			transform.rotation *= angleAxis(-customParameter, glm::vec3(0, 1, 0));
 			break;
 		case ';': //scale angle
 			customParameter = getNumericParameter(product, i);
@@ -148,7 +148,7 @@ vector<shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(Lindenm
 			currentSegment = createSegment(currentSegment, transform, meshGenerator);
 			segmentsVec.push_back(currentSegment);
 
-			transform = SegmentTransform(quat(), transform.totalRotation * transform.rotation, params.initialLength, transform.radius, transform.angle, transform.lengthScale, transform.roll);
+			transform = SegmentTransform(glm::quat(), transform.totalRotation * transform.rotation, params.initialLength, transform.radius, transform.angle, transform.lengthScale, transform.roll);
 			break;
 		}
 	}
@@ -156,12 +156,12 @@ vector<shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(Lindenm
 	return segmentsVec;
 }
 
-shared_ptr<Segment> LindenmayerTreeInterpreter::createRoot(SegmentTransform &transform) {
-	mat4 segmentMatrix = mat4();
+std::shared_ptr<Segment> LindenmayerTreeInterpreter::createRoot(SegmentTransform &transform) {
+	glm::mat4 segmentMatrix = glm::mat4();
 	if (transform.rotation.w != 1)
 		segmentMatrix = segmentMatrix * mat4_cast(transform.rotation);
 
-	shared_ptr<Segment> root = shared_ptr<Segment>(new Segment());
+	std::shared_ptr<Segment> root = std::shared_ptr<Segment>(new Segment());
 	root->indiciesOffset = 0;
 	root->verticiesOffset = 0;
 	root->radius = transform.radius;
@@ -170,50 +170,50 @@ shared_ptr<Segment> LindenmayerTreeInterpreter::createRoot(SegmentTransform &tra
 	return root;
 }
 
-float LindenmayerTreeInterpreter::returnNewIndexAfterParameter(string product, int index) {
+float LindenmayerTreeInterpreter::returnNewIndexAfterParameter(std::string product, int index) {
 	int endIndex = index;
 	while (product.at(endIndex) != ')')
 		endIndex++;
 	return endIndex;
 }
 
-quat LindenmayerTreeInterpreter::applyTropism(SegmentTransform &transform, vec3 tropismDir, float bendingFactor) {
-	vec3 front = getFrontVector(transform.totalRotation * transform.rotation);
-	vec3 crossVec = cross(front, tropismDir);
+glm::quat LindenmayerTreeInterpreter::applyTropism(SegmentTransform &transform, glm::vec3 tropismDir, float bendingFactor) {
+	glm::vec3 front = getFrontVector(transform.totalRotation * transform.rotation);
+	glm::vec3 crossVec = cross(front, tropismDir);
 	float angleVal = angle(front, tropismDir);
 	angleVal *= sin(angleVal) * bendingFactor;
 
-	quat transformQuat = angleAxis(-transform.roll, vec3(0, 1, 0)) * angleAxis(angleVal, crossVec) * angleAxis(transform.roll, vec3(0, 1, 0));
+	glm::quat transformQuat = angleAxis(-transform.roll, glm::vec3(0, 1, 0)) * angleAxis(angleVal, crossVec) * angleAxis(transform.roll, glm::vec3(0, 1, 0));
 
 	return transform.rotation * transformQuat;
 }
 
-quat LindenmayerTreeInterpreter::restoreHorizontalOrientationAlfa(SegmentTransform &transform) {
-	vec3 worldUp = vec3(0, 1, 0);
+glm::quat LindenmayerTreeInterpreter::restoreHorizontalOrientationAlfa(SegmentTransform &transform) {
+	glm::vec3 worldUp(0, 1, 0);
 
-	vec3 up = getFrontVector(transform.totalRotation * transform.rotation);
-	vec3 left = normalize(cross(up, worldUp));
+	glm::vec3 up = getFrontVector(transform.totalRotation * transform.rotation);
+	glm::vec3 left = normalize(cross(up, worldUp));
 	left *= -1;
-	vec3 front = normalize(cross(up, left));
+	glm::vec3 front = normalize(cross(up, left));
 	front *= -1;
 
-	mat4 matrix = make_mat4(new float[16]{
+	glm::mat4 matrix = glm::make_mat4(new float[16]{
 		left.x, left.y, left.z, 0,
 		up.x, up.y, up.z, 0,
 		front.x, front.y, front.z, 0,
 		0, 0, 0, 0
 		});
 
-	quat rotationQuat = quat(matrix);
+	glm::quat rotationQuat(matrix);
 	return rotationQuat;
 }
 
-quat LindenmayerTreeInterpreter::restoreHorizontalOrientation(SegmentTransform &transform) {
-	vec3 worldUp = vec3(0, -1, 0);
+glm::quat LindenmayerTreeInterpreter::restoreHorizontalOrientation(SegmentTransform &transform) {
+	glm::vec3 worldUp(0, -1, 0);
 
-	vec3 front = getFrontVector(transform.rotation);
-	vec3 left = normalize(cross(front, worldUp));
-	vec3 up = normalize(cross(front, left));
+	glm::vec3 front = getFrontVector(transform.rotation);
+	glm::vec3 left = normalize(cross(front, worldUp));
+	glm::vec3 up = normalize(cross(front, left));
 
 	float matrix[16] = {
 		left.x, front.x, up.x, 0,
@@ -222,23 +222,23 @@ quat LindenmayerTreeInterpreter::restoreHorizontalOrientation(SegmentTransform &
 		0,		0,		 0,	   0
 	};
 
-	mat4 rotationMatrix = make_mat4(matrix);
-	return quat(rotationMatrix);
+	glm::mat4 rotationMatrix = glm::make_mat4(matrix);
+	return glm::quat(rotationMatrix);
 }
 
-shared_ptr<Segment> LindenmayerTreeInterpreter::createSegment(shared_ptr<Segment> parent, SegmentTransform &segTransform, LindenmayerTreeMeshGenerator *meshGenerator) {
-	mat4 segmentMatrix = mat4();
+std::shared_ptr<Segment> LindenmayerTreeInterpreter::createSegment(std::shared_ptr<Segment> parent, SegmentTransform &segTransform, LindenmayerTreeMeshGenerator *meshGenerator) {
+	glm::mat4 segmentMatrix = glm::mat4();
 	if (segTransform.rotation.w != 1)
 		segmentMatrix = segmentMatrix * mat4_cast(segTransform.rotation);
-	segmentMatrix = translate(segmentMatrix, vec3(0, segTransform.length, 0));
+	segmentMatrix = translate(segmentMatrix, glm::vec3(0, segTransform.length, 0));
 
 	//Create textured bottom ring and rotate it to match top ring rotation:
 	float roll = segTransform.roll - parent->roll;
 
-	mat4 alignmentTransform = parent->modelMatrix * mat4_cast(quat(vec3(0, roll, 0)));
+	glm::mat4 alignmentTransform = parent->modelMatrix * mat4_cast(glm::quat(glm::vec3(0, roll, 0)));
 	meshGenerator->enqueueGenerationData(parent->radius, alignmentTransform, 0);
 
-	shared_ptr<Segment> stem = shared_ptr<Segment>(new Segment(parent));
+	std::shared_ptr<Segment> stem = std::shared_ptr<Segment>(new Segment(parent));
 	stem->indiciesOffset = meshGenerator->getIndicesLength();
 	stem->verticiesOffset = meshGenerator->getVerticesLength();
 	stem->modelMatrix = parent->modelMatrix * segmentMatrix;
@@ -256,7 +256,7 @@ shared_ptr<Segment> LindenmayerTreeInterpreter::createSegment(shared_ptr<Segment
 	return stem;
 }
 
-float LindenmayerTreeInterpreter::getNumericParameter(string product, int index) {
+float LindenmayerTreeInterpreter::getNumericParameter(std::string product, int index) {
 	float value = -1;
 	bool randomizeValue = false;
 	if (product.length() > (index + 1)) {
@@ -269,7 +269,7 @@ float LindenmayerTreeInterpreter::getNumericParameter(string product, int index)
 			int offset = 0;
 			while (product.length() > (index + offset) && product.at(index + offset) != ')')
 				offset++;
-			string strValue = product.substr(index + 2, offset - 2);
+			std::string strValue = product.substr(index + 2, offset - 2);
 			value = atof(strValue.c_str());
 		}
 	}
