@@ -1,7 +1,7 @@
 #include "GLVertexArray.h"
 
 void GLVertexArray::setVertexArray(const std::vector<Vertex> & vertices, const std::vector<int> & indices) {
-	updateBufferParams(vertices, indices);
+	indiciesLength = indices.size();
 	glGenVertexArrays(1, &this->VAO);
 	glGenBuffers(1, &this->VBO);
 	glGenBuffers(1, &this->EBO);
@@ -12,7 +12,6 @@ void GLVertexArray::setVertexArray(const std::vector<Vertex> & vertices, const s
 	glBufferData(GL_ARRAY_BUFFER, vBufferSize * sizeof(Vertex),	vertices.size() == 0 ? NULL : &vertices[0], usage);
 
 	//Indices
-	indiciesLength = indices.size();
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, iBufferSize * sizeof(GLuint), indices.size() == 0 ? NULL : &indices[0], usage);
 	
@@ -36,7 +35,7 @@ void GLVertexArray::setVertexArray(const std::vector<Vertex> & vertices, const s
 }
 
 void GLVertexArray::updateVertexArray(const std::vector<Vertex> &vertices, const std::vector<int> &indices) {
-	updateBufferParams(vertices, indices);
+	indiciesLength = indices.size();
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex) * vertices.size(), &vertices[0]);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
@@ -102,17 +101,11 @@ void GLVertexArray::setInstancedVertexArray(const std::vector<Vertex> &vertices,
 }
 
 void GLVertexArray::updateInstancedVertexArray(const std::vector<Vertex> &vertices, const std::vector<int> &indices, const std::vector<InstancedTransform> &instanceTransforms) {
-	updateBufferParams(vertices, indices);
+	indiciesLength = indices.size();
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex) * vertices.size(), &vertices[0]);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
 	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLuint) * indices.size(), &indices[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, instancedModelMatriciesBuffer);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, instanceTransforms.size() * sizeof(InstancedTransform), &instanceTransforms[0]);
-}
-
-void GLVertexArray::updateBufferParams(const std::vector<Vertex> &vertices, const std::vector<int> &indices) {
-	indiciesLength = indices.size();
-	iBufferSize = indices.size();
-	vBufferSize = vertices.size();
 }

@@ -77,7 +77,7 @@ InstancedMesh::InstancedMesh(std::vector<Vertex> &vertices, std::vector<int> &in
 	this->vertices = std::vector<Vertex>(vertices);
 	this->indices = std::vector<int>(indices);
 
-	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(bufferUsage));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(indices.size(), vertices.size(), bufferUsage));
 	this->bufferUsage = bufferUsage;
 	setupMesh();
 }

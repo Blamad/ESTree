@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
 			("help,h", "produce help message")
 			("width,W", boost::program_options::value<int>()->default_value(1366), "set window width")
 			("height,H", boost::program_options::value<int>()->default_value(768), "set window height")
-			("scene,s", boost::program_options::value<int>()->default_value(0), "load one of four scenes (0-3)")
+			("scene,s", boost::program_options::value<int>()->default_value(2), "load one of four scenes (0-3)")
 			("fullscreen,f", boost::program_options::bool_switch(&fullScreenMode), "launch application in fullscreen mode");
 
 		boost::program_options::variables_map vm;

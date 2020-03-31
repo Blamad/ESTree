@@ -91,6 +91,6 @@ void Skybox::generateVertexArray() {
 		23, 21, 20, 23, 22, 21
 	};
 
-	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(GL_STATIC_DRAW));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(indices.size(), vertices.size(), GL_STATIC_DRAW));
 	vertexArray->setVertexArray(vertices, indices);
 }

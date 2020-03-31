@@ -60,25 +60,25 @@
   <PropertyGroup Label="UserMacros" />
     <PropertyGroup>
       <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESTree\Debug\</OutDir>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Debug\</OutDir>
       <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ESTree.dir\Debug\</IntDir>
       <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ESTree</TargetName>
       <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
       <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
       <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESTree\Release\</OutDir>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Release\</OutDir>
       <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ESTree.dir\Release\</IntDir>
       <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ESTree</TargetName>
       <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
       <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
       <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESTree\MinSizeRel\</OutDir>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\MinSizeRel\</OutDir>
       <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">ESTree.dir\MinSizeRel\</IntDir>
       <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">ESTree</TargetName>
       <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
       <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
       <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
-      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\ESTree\RelWithDebInfo\</OutDir>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\RelWithDebInfo\</OutDir>
       <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">ESTree.dir\RelWithDebInfo\</IntDir>
       <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">ESTree</TargetName>
       <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
@@ -121,7 +121,7 @@
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/Debug/ESTree.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/ESTree/Debug/ESTree.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/Debug/ESTree.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
       <Version></Version>
     </Link>
@@ -164,7 +164,7 @@
       <GenerateDebugInformation>No</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/Release/ESTree.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/ESTree/Release/ESTree.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/Release/ESTree.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
       <Version></Version>
     </Link>
@@ -207,7 +207,7 @@
       <GenerateDebugInformation>No</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/MinSizeRel/ESTree.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/ESTree/MinSizeRel/ESTree.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/MinSizeRel/ESTree.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
       <Version></Version>
     </Link>
@@ -250,7 +250,7 @@
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/RelWithDebInfo/ESTree.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/ESTree/RelWithDebInfo/ESTree.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>D:/Workspaces/Visual Studio 2017/Projects/ESTree_fixed/ESTree/RelWithDebInfo/ESTree.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
       <Version></Version>
     </Link>

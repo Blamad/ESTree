@@ -41,7 +41,7 @@ private:
 	std::vector<ClickEvent> mouseClick;
 	std::vector<KeyEvent> keyEvents;
 	std::vector<char> charEvents;
-	bool keys[500];
+	bool keys[500] = { false };
 	bool blocked;
 
 	Point2d lastMousePosition;

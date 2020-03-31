@@ -13,10 +13,10 @@ option(BUILD_OPENGL3_DEMOS OFF)
 option(BUILD_UNIT_TESTS OFF)
 add_subdirectory(ESEngine/Vendor/bullet3)
 
-option(RAPIDJSON_BUILD_DOC OFF)
-option(RAPIDJSON_BUILD_EXAMPLES OFF)
-option(RAPIDJSON_BUILD_TESTS OFF)
-option(RAPIDJSON_BUILD_THIRDPARTY_GTEST OFF)
+set(RAPIDJSON_BUILD_DOC OFF)
+set(RAPIDJSON_BUILD_EXAMPLES OFF)
+set(RAPIDJSON_BUILD_TESTS OFF)
+set(RAPIDJSON_BUILD_THIRDPARTY_GTEST OFF)
 add_subdirectory(ESEngine/Vendor/rapidjson)
 
 link_directories($ENV{FREETYPE2_LIB}/Libs/)
@@ -70,4 +70,4 @@ target_link_libraries(${PROJECT_NAME} glfw
 					  libboost_date_time-vc140-mt-gd-x64-1_72 libboost_thread-vc140-mt-gd-x64-1_72
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
