@@ -19,6 +19,7 @@ public:
 	
 	btRigidBody* rigidBody = nullptr;
 	bool pickable = false;
+	//marked when we update rigidbody position externally
 	bool needsReload = false;
 	
 	void update();

@@ -27,7 +27,7 @@ private:
 	std::unique_ptr<SceneManager> sceneManager;
 
 	InputState* inputState = nullptr;
-	double lastTime;
+	double lastTime = 0.;
 
 	void renderingLoop();
 };

@@ -11,12 +11,12 @@ void RigidBody::update() {
 }
 
 void RigidBody::updateTransform() {
-	transform->transform = rigidBody->getCenterOfMassTransform();
+	transform->transform = rigidBody->getWorldTransform();
 	transform->updateModelMatrix();
 }
 
 void RigidBody::updateRigidBody() {
-	rigidBody->setCenterOfMassTransform(transform->getBtTransform());
+	rigidBody->setWorldTransform(transform->getBtTransform());
 }
 
 void RigidBody::initAsBox(double mass) {

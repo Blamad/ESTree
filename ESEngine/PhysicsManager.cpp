@@ -36,7 +36,7 @@ void PhysicsManager::removeRigidBody(RigidBody *rigidBody) {
 }
 
 void PhysicsManager::update(double deltaTime) {
-	dynamicsWorld->stepSimulation(deltaTime, 10);
+	dynamicsWorld->stepSimulation(btScalar(deltaTime), 10);
 }
 
 GameObject* PhysicsManager::raycast(Ray &ray) {

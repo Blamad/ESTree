@@ -75,8 +75,10 @@ void Scene::update(double &dt, InputState &inputState) {
 		
 		RigidBody *rigidBody = (RigidBody*)go->getComponent(RIGIDBODY);
 		if (rigidBody != nullptr) {
-			if (rigidBody->needsReload)
+			if (rigidBody->needsReload) {
 				physicsManager->reloadRigidBody(rigidBody);
+				rigidBody->needsReload = false;
+			}
 			rigidBody->update();
 		}
 		

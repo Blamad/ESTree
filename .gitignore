@@ -255,7 +255,7 @@ paket-files/
 
 # CMake
 CMakeLists.txt.user
-CMakeCache.txt	
+CMakeCache.txt
 CMakeFiles/
 CMakeScripts/
 Testing/
