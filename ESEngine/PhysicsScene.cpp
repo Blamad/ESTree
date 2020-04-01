@@ -128,12 +128,12 @@ GameObject* PhysicsScene::createCamera(glm::vec3 position, float yaw, float pitc
 
 void PhysicsScene::addSkybox() {
 	std::string skyboxTex[] = {
-		"Textures/Skybox_darkforest/right.jpg",
-		"Textures/Skybox_darkforest/left.jpg",
-		"Textures/Skybox_darkforest/top.jpg",
-		"Textures/Skybox_darkforest/bottom.jpg",
-		"Textures/Skybox_darkforest/back.jpg",
-		"Textures/Skybox_darkforest/front.jpg"
+		"Resources/Textures/Skybox_darkforest/right.jpg",
+		"Resources/Textures/Skybox_darkforest/left.jpg",
+		"Resources/Textures/Skybox_darkforest/top.jpg",
+		"Resources/Textures/Skybox_darkforest/bottom.jpg",
+		"Resources/Textures/Skybox_darkforest/back.jpg",
+		"Resources/Textures/Skybox_darkforest/front.jpg"
 	};
 
 	std::unique_ptr<Skybox> skybox(new Skybox(skyboxTex));

@@ -27,7 +27,7 @@ void LightsManager::removeLight(Light* light) {
 
 void LightsManager::prepareShadowBuffer(glm::vec3& viewPos, Renderer& renderer, std::function<void(Renderer&, Shader*)> renderObjectsFunction) {
 	glm::mat4 lightProjection = DirectionalLight::getProjectionMatrix();
-	glm::mat4 lightView;
+	glm::mat4 lightView = glm::mat4(1);
 
 	Shader::updateProjectionMatrix(lightProjection);
 
@@ -73,7 +73,7 @@ void LightsManager::initializeLightsUBO() {
 
 void LightsManager::initialize() {
 	float sizeMod = 4;
-	std::shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	std::shared_ptr<Shader> shader = ShaderManager::getShader("Resources/Shaders/GenericShader.vert", "Resources/Shaders/GenericShader.frag");
 	shader->initializeMatricesUBO();
 	depthBuffer = std::unique_ptr<DepthFrameBuffer>(new DepthFrameBuffer(shader, Screen::getScreenWidth() * sizeMod, Screen::getScreenHeight() * sizeMod));
 }

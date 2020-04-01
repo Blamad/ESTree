@@ -58,14 +58,14 @@ protected:
 
 	Shader* getNormalsShader() {
 		if (normalVisualisationShader == nullptr) {
-			normalVisualisationShader = ShaderManager::getShader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/NormalVisualisationShader.geom");
+			normalVisualisationShader = ShaderManager::getShader("Resources/Shaders/GeometryDebugShader.vert", "Resources/Shaders/GeometryDebugShader.frag", "Resources/Shaders/NormalVisualisationShader.geom");
 		}
 		return normalVisualisationShader.get();
 	}
 
 	Shader* getMeshWiringShader() {
 		if (meshWiringShader == nullptr) {
-			meshWiringShader = ShaderManager::getShader("Shaders/GeometryDebugShader.vert", "Shaders/GeometryDebugShader.frag", "Shaders/MeshWiringShader.geom");
+			meshWiringShader = ShaderManager::getShader("Resources/Shaders/GeometryDebugShader.vert", "Resources/Shaders/GeometryDebugShader.frag", "Resources/Shaders/MeshWiringShader.geom");
 		}
 		return meshWiringShader.get();
 	}

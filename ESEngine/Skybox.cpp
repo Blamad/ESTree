@@ -1,6 +1,6 @@
 #include "Skybox.h"
 
-Skybox::Skybox(std::string* paths) : Renderable(ShaderManager::getShader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag")) {
+Skybox::Skybox(std::string* paths) : Renderable(ShaderManager::getShader("Resources/Shaders/SkyboxShader.vert", "Resources/Shaders/SkyboxShader.frag")) {
 	this->loadSkybox(paths);
 }
 
@@ -32,7 +32,7 @@ void Skybox::draw(Renderer &renderer, Shader *shader) {
 	glActiveTexture(GL_TEXTURE0);
 	glUniform1i(shader->getUniformLocation("cubemap"), 0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap->textureBuffer->id);
-	renderer.renderObject(*vertexArray, shaders[0].get());
+	renderer.renderObject(*vertexArray, shader);
 	glDepthFunc(GL_LESS);
 }
 

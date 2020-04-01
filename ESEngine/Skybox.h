@@ -34,7 +34,7 @@ private:
 	void generateVertexArray();
 
 	glm::mat4 getModelMatrix() {
-		return translate(glm::mat4(), position);
+		return  translate(glm::mat4(1), position);
 	}
 };
 

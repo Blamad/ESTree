@@ -3,7 +3,7 @@
 boost::variate_generator<boost::mt19937, boost::uniform_real<>> Grass::randomGenerator(boost::mt19937(time(0)), boost::uniform_real<>(-1, 1));
 
 Grass::Grass(Material material) : GameObject() {
-	std::shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	std::shared_ptr<Shader> shader = ShaderManager::getShader("Resources/Shaders/GenericShader.vert", "Resources/Shaders/GenericShader.frag");
 
 	float scale = 1;
 	std::vector<InstancedTransform> transforms;

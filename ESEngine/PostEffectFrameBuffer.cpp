@@ -3,7 +3,7 @@
 PostEffectFrameBuffer::PostEffectFrameBuffer() : FrameBuffer() {
 	this->width = Screen::getScreenWidth();
 	this->height = Screen::getScreenHeight();
-	this->shader = ShaderManager::getShader("Shaders/PostEffectShader.vert", "Shaders/PostEffectShader.frag");
+	this->shader = ShaderManager::getShader("Resources/Shaders/PostEffectShader.vert", "Resources/Shaders/PostEffectShader.frag");
 	init();
 };
 

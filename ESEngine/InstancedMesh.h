@@ -24,7 +24,7 @@ public:
 	std::vector<Vertex> vertices;
 	std::vector<int> indices;
 	std::vector<InstancedTransform> instanceMatricies;
-	glm::mat4 initialTransfom;
+	glm::mat4 initialTransfom = glm::mat4(1);
 
 	InstancedMesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::vector<InstancedTransform> &instancedTransforms, std::shared_ptr<Shader> shader, int vBufferSize = 0, int iBufferSize = 0, int bufferUsage = GL_STATIC_DRAW);
 	~InstancedMesh();

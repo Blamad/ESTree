@@ -15,7 +15,7 @@ void DepthFramePreviewComponent::draw() {
 }
 
 void DepthFramePreviewComponent::init() {
-	shader = ShaderManager::getShader("Shaders/FontShader.vert", "Shaders/DepthQuadDebug.frag");
+	shader = ShaderManager::getShader("Resources/Shaders/FontShader.vert", "Resources/Shaders/DepthQuadDebug.frag");
 	glm::mat4 projection = glm::ortho(.0f, .0f + Screen::getScreenWidth(), .0f, .0f + Screen::getScreenHeight());
 
 	shader->use();

@@ -14,8 +14,8 @@ public:
 
 	void enqueueGenerationData(float &radius, glm::mat4 &transform, int textureY);
 	void createIndiciesForSegment();
-	int getVerticesLength() { return mesh->vertices.size(); }
-	int getIndicesLength() { return mesh->indices.size(); }
+	size_t getVerticesLength() { return mesh->vertices.size(); }
+	size_t getIndicesLength() { return mesh->indices.size(); }
 	int getVerticesPerRing() { return ringDensity; }
 
 	void generateMesh();
@@ -45,7 +45,7 @@ public:
 	int vertexNumber;
 	float theta;
 	float radius;
-	glm::mat4 transform;
+	glm::mat4 transform = glm::mat4(1);
 	int textureY;
 };
 

@@ -28,7 +28,7 @@ struct DirectionalLightData {
 	glm::vec4 ambient;
 	glm::vec4 diffuse;
 	glm::vec4 specular;
-	glm::mat4 lightSpace;
+	glm::mat4 lightSpace = glm::mat4(1);
 };
 
 struct LightsData {

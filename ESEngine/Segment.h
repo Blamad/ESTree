@@ -19,8 +19,8 @@ public:
 	float radius;
 	float angle;
 	
-	glm::quat rotation;
-	glm::quat totalRotation;
+	glm::quat rotation = glm::quat(1.f, .0f, .0f, .0f);
+	glm::quat totalRotation = glm::quat(1.f, .0f, .0f, .0f);
 	float roll;
 };
 
@@ -48,12 +48,12 @@ public:
 	//Segment radius scale
 	float radius = 0;
 	//Rotation
-	glm::quat rotation;
+	glm::quat rotation = glm::quat(1.f, .0f, .0f, .0f);
 	//Position
 	glm::vec3 position;
 
 	//Transform matrix
-	glm::mat4 modelMatrix;
+	glm::mat4 modelMatrix = glm::mat4(1);
 
 	float roll;
 };

@@ -3,7 +3,7 @@
 HDRFrameBuffer::HDRFrameBuffer() : FrameBuffer() {
 	this->width = Screen::getScreenWidth() * 2;
 	this->height = Screen::getScreenHeight() * 2;
-	this->shader = ShaderManager::getShader("Shaders/HDRShader.vert", "Shaders/HDRShader.frag");
+	this->shader = ShaderManager::getShader("Resources/Shaders/HDRShader.vert", "Resources/Shaders/HDRShader.frag");
 	init();
 };
 

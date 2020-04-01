@@ -51,8 +51,8 @@ void SingleTreeScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[0];
-	leavesTextureName = "Textures/" + leavesParams[2];
+	paramsFileName = "Resources/LindenmayerRules/" + treeParams[0];
+	leavesTextureName = "Resources/Textures/" + leavesParams[2];
 	barkMaterial = Material::bark3();
 	normalVisualisation = false;
 	meshWiring = false;
@@ -109,7 +109,7 @@ GameObject* SingleTreeScene::createLindenmayerTree(std::string paramsFileName, g
 }
 
 void SingleTreeScene::generateGrass() {
-	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new Grass(Material::diffuseTextureOnly("Textures/grassBlades2.png")));
+	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new Grass(Material::diffuseTextureOnly("Resources/Textures/grassBlades2.png")));
 	addGameObject(move(go));
 }
 
@@ -174,12 +174,12 @@ void SingleTreeScene::generateTestBox(glm::vec3 pos, glm::vec3 scale = glm::vec3
 
 void SingleTreeScene::addSkybox() {
 	std::string skyboxTex[] = {
-		"Textures/Skybox_darkforest/right.jpg",
-		"Textures/Skybox_darkforest/left.jpg",
-		"Textures/Skybox_darkforest/top.jpg",
-		"Textures/Skybox_darkforest/bottom.jpg",
-		"Textures/Skybox_darkforest/back.jpg",
-		"Textures/Skybox_darkforest/front.jpg"
+		"Resources/Textures/Skybox_darkforest/right.jpg",
+		"Resources/Textures/Skybox_darkforest/left.jpg",
+		"Resources/Textures/Skybox_darkforest/top.jpg",
+		"Resources/Textures/Skybox_darkforest/bottom.jpg",
+		"Resources/Textures/Skybox_darkforest/back.jpg",
+		"Resources/Textures/Skybox_darkforest/front.jpg"
 	};
 
 	std::unique_ptr<Skybox> skybox(new Skybox(skyboxTex));

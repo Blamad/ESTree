@@ -44,10 +44,10 @@ include_directories(ESEngine/Headers/
 file(GLOB VENDORS_SOURCES ESEngine/Vendor/glad/src/glad.c)
 file(GLOB PROJECT_HEADERS ESEngine/*.h)
 file(GLOB PROJECT_SOURCES ESEngine/*.cpp)
-file(GLOB PROJECT_SHADERS Shaders/*.comp
-                          Shaders/*.frag
-                          Shaders/*.geom
-                          Shaders/*.vert)
+file(GLOB PROJECT_SHADERS Resources/Shaders/*.comp
+                          Resources/Shaders/*.frag
+                          Resources/Shaders/*.geom
+                          Resources/Shaders/*.vert)
 file(GLOB PROJECT_CONFIGS CMakeLists.txt
                           Readme.md
                          .gitattributes
@@ -55,7 +55,7 @@ file(GLOB PROJECT_CONFIGS CMakeLists.txt
                          .gitmodules)
 
 source_group("Headers" FILES ${PROJECT_HEADERS})
-source_group("Shaders" FILES ${PROJECT_SHADERS})
+source_group("Resources/Shaders" FILES ${PROJECT_SHADERS})
 source_group("Sources" FILES ${PROJECT_SOURCES})
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 

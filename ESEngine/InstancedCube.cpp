@@ -1,7 +1,7 @@
 #include "InstancedCube.h"
 
 InstancedCube::InstancedCube(Material material, std::vector<InstancedTransform> &instancedTransforms) : GameObject() {
-	std::shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/InstancedShader.vert", "Shaders/InstancedShader.frag");
+	std::shared_ptr<Shader> shader = ShaderManager::getShader("Resources/Shaders/InstancedShader.vert", "Resources/Shaders/InstancedShader.frag");
 	addComponent(createMesh(shader, material, instancedTransforms));
 }
 void InstancedCube::addInstance(InstancedTransform transform) {

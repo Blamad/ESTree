@@ -1,6 +1,6 @@
 #include "LindenmayerTreeInterpreter.h"
 
-boost::variate_generator<boost::mt19937, boost::uniform_real<> > LindenmayerTreeInterpreter::randomGenerator(boost::mt19937(time(0)), boost::uniform_real<>(0, 1));
+boost::variate_generator<boost::mt19937, boost::uniform_real<>> LindenmayerTreeInterpreter::randomGenerator(boost::mt19937(time(0)), boost::uniform_real<>(0, 1));
 
 std::vector<std::shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshData(LindenmayerTreeParams &params, std::string product, LindenmayerTreeMeshGenerator *meshGenerator) {
 	std::vector<std::shared_ptr<Segment>> segmentsVec;
@@ -148,7 +148,7 @@ std::vector<std::shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshDa
 			currentSegment = createSegment(currentSegment, transform, meshGenerator);
 			segmentsVec.push_back(currentSegment);
 
-			transform = SegmentTransform(glm::quat(), transform.totalRotation * transform.rotation, params.initialLength, transform.radius, transform.angle, transform.lengthScale, transform.roll);
+			transform = SegmentTransform(glm::quat(1.f, .0f, .0f, .0f), transform.totalRotation * transform.rotation, params.initialLength, transform.radius, transform.angle, transform.lengthScale, transform.roll);
 			break;
 		}
 	}
@@ -157,7 +157,7 @@ std::vector<std::shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshDa
 }
 
 std::shared_ptr<Segment> LindenmayerTreeInterpreter::createRoot(SegmentTransform &transform) {
-	glm::mat4 segmentMatrix = glm::mat4();
+	glm::mat4 segmentMatrix(1);
 	if (transform.rotation.w != 1)
 		segmentMatrix = segmentMatrix * mat4_cast(transform.rotation);
 
@@ -227,7 +227,7 @@ glm::quat LindenmayerTreeInterpreter::restoreHorizontalOrientation(SegmentTransf
 }
 
 std::shared_ptr<Segment> LindenmayerTreeInterpreter::createSegment(std::shared_ptr<Segment> parent, SegmentTransform &segTransform, LindenmayerTreeMeshGenerator *meshGenerator) {
-	glm::mat4 segmentMatrix = glm::mat4();
+	glm::mat4 segmentMatrix(1);
 	if (segTransform.rotation.w != 1)
 		segmentMatrix = segmentMatrix * mat4_cast(segTransform.rotation);
 	segmentMatrix = translate(segmentMatrix, glm::vec3(0, segTransform.length, 0));

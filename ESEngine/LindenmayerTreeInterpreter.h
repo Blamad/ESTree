@@ -44,11 +44,11 @@ private:
 	}
 
 	static float toRadians(float angle) {
-		return angle * 3.14159265359 / 180;
+		return angle * 3.14159265359f / 180.f;
 	}
 
 	static float fromRadians(float radians) {
-		return radians * 180 / 3.14159265359;
+		return radians * 180.f / 3.14159265359f;
 	}
 
 	//Stuff

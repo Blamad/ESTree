@@ -10,9 +10,9 @@ bool ConsoleTreeCommand::processCommandLine(std::vector<std::string> line)  {
 
 	glm::vec3 pos(0, 0, 0);
 	std::string name = "Tree";
-	LindenmayerTreeParams lindenmayerParameters = LindenmayerTreeParams("LindenmayerRules/randomTree.json");
-	Material barkMaterial = Material::diffuseTextureOnly("Textures/barkTexture3.jpg");
-	Material leavesMaterial = Material::diffuseTextureOnly("Textures/leaves3.png");
+	LindenmayerTreeParams lindenmayerParameters = LindenmayerTreeParams("Resources/LindenmayerRules/randomTree.json");
+	Material barkMaterial = Material::diffuseTextureOnly("Resources/Textures/barkTexture3.jpg");
+	Material leavesMaterial = Material::diffuseTextureOnly("Resources/Textures/leaves3.png");
 
 	std::map<std::string, std::string> params = ConsoleUtils::generateParamsMap(line);
 
@@ -47,7 +47,7 @@ bool ConsoleTreeCommand::processCommandLine(std::vector<std::string> line)  {
 			if (params.find("file") != params.end()) {
 				std::string filePath = "";
 				if (params["file"].length() > 2) {
-					filePath = "LindenmayerRules/" + params["file"];
+					filePath = "Resources/LindenmayerRules/" + params["file"];
 				}
 				else {
 					int index = stoi(params["file"]);
@@ -74,7 +74,7 @@ bool ConsoleTreeCommand::processCommandLine(std::vector<std::string> line)  {
 						"parametricTernaryTreeC.json",
 						"parametricTernaryTreeD.json"
 					};
-					filePath = "LindenmayerRules/" + (treeParams.size() > index ? treeParams.at(index) : treeParams.at(0));
+					filePath = "Resources/LindenmayerRules/" + (treeParams.size() > index ? treeParams.at(index) : treeParams.at(0));
 				}
 				struct stat buffer;
 				if (stat(filePath.c_str(), &buffer) != 0) {
@@ -88,7 +88,7 @@ bool ConsoleTreeCommand::processCommandLine(std::vector<std::string> line)  {
 			if (params.find("bark") != params.end()) {
 				std::string barkTexPath = "";
 				if (params["bark"].length() > 2) {
-					barkTexPath = "Textures/" + params["bark"];
+					barkTexPath = "Resources/Textures/" + params["bark"];
 				}
 				else {
 					int index = stoi(params["bark"]);
@@ -101,7 +101,7 @@ bool ConsoleTreeCommand::processCommandLine(std::vector<std::string> line)  {
 						"treeTexture1.jpg",
 						"treeTexture2.jpg"
 					};
-					barkTexPath = "Textures/" + (barkTextures.size() > index ? barkTextures[index] : barkTextures.at(0));
+					barkTexPath = "Resources/Textures/" + (barkTextures.size() > index ? barkTextures[index] : barkTextures.at(0));
 				}
 				struct stat buffer;
 				if (stat(barkTexPath.c_str(), &buffer) != 0) {
@@ -116,7 +116,7 @@ bool ConsoleTreeCommand::processCommandLine(std::vector<std::string> line)  {
 			if (params.find("leaves") != params.end()) {
 				std::string leavesTexPath = "";
 				if (params["leaves"].length() > 2) {
-					leavesTexPath = "Textures/" + params["leaves"];
+					leavesTexPath = "Resources/Textures/" + params["leaves"];
 				}
 				else {
 					int index = stoi(params["leaves"]);
@@ -128,7 +128,7 @@ bool ConsoleTreeCommand::processCommandLine(std::vector<std::string> line)  {
 						"leaves5.png",
 						"arrow.png"
 					};
-					leavesTexPath = "Textures/" + (leaves.size() > index ? leaves[index] : leaves.at(0));
+					leavesTexPath = "Resources/Textures/" + (leaves.size() > index ? leaves[index] : leaves.at(0));
 				}
 				struct stat buffer;
 				if (stat(leavesTexPath.c_str(), &buffer) != 0) {

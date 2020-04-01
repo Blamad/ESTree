@@ -52,7 +52,7 @@ void LindenmayerTree::createMeshComponent() {
 	v.reserve(vBufferSize);
 	i.reserve(iBufferSize);
 
-	std::shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	std::shared_ptr<Shader> shader = ShaderManager::getShader("Resources/Shaders/GenericShader.vert", "Resources/Shaders/GenericShader.frag");
 	mesh = std::shared_ptr<Mesh>(new Mesh(v, i, shader, vBufferSize, iBufferSize, GL_STREAM_DRAW));
 
 	if (meshWiring)
@@ -77,7 +77,7 @@ void LindenmayerTree::generateLeaves() {
 			Transform* leafTransform = (Transform*)go->getComponent(TRANSFORM);
 
 			if (params.leavesAngleDiversity > 0) { 
-				glm::mat4 leafRotation;
+				glm::mat4 leafRotation(1);
 				float angle = randomGenerator() * 2 * params.leavesAngleDiversity - params.leavesAngleDiversity;
 				leafRotation = rotate(leafRotation, angle, glm::vec3(0,1,0));
 				leafTransform->setModelMatrix(leafRotation * seg->modelMatrix);
@@ -106,7 +106,7 @@ void LindenmayerTree::generateInstancedLeaves() {
 			InstancedTransform it;
 
 			if (params.leavesAngleDiversity > 0) {
-				glm::mat4 leafRotation;
+				glm::mat4 leafRotation(1);
 				float angle = randomGenerator() * 2 * params.leavesAngleDiversity - params.leavesAngleDiversity;
 				leafRotation = rotate(leafRotation, angle, glm::vec3(0, 1, 0));
 				it.modelMatrix = transform->getModelMatrix() * seg->modelMatrix * leafRotation;
@@ -127,7 +127,7 @@ void LindenmayerTree::generateInstancedLeaves() {
 }
 
 std::shared_ptr<Mesh> LindenmayerTree::generateLeaf() {
-	std::shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	std::shared_ptr<Shader> shader = ShaderManager::getShader("Resources/Shaders/GenericShader.vert", "Resources/Shaders/GenericShader.frag");
 
 	std::vector<Vertex> vertices = {
 		//front
@@ -153,7 +153,7 @@ std::shared_ptr<Mesh> LindenmayerTree::generateLeaf() {
 }
 
 std::shared_ptr<InstancedMesh> LindenmayerTree::createInstancedLeavesPanelMesh(std::vector<InstancedTransform> &instancedTransforms) {
-	std::shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	std::shared_ptr<Shader> shader = ShaderManager::getShader("Resources/Shaders/GenericShader.vert", "Resources/Shaders/GenericShader.frag");
 
 	std::vector<Vertex> vertices = {
 		//front

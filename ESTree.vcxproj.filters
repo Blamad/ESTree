@@ -428,56 +428,56 @@
     <CustomBuild Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\DepthQuadDebug.frag">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\DepthQuadDebug.frag">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\FontShader.frag">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\FontShader.frag">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\GenericShader.frag">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\GenericShader.frag">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\GeometryDebugShader.frag">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\GeometryDebugShader.frag">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\HDRShader.frag">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\HDRShader.frag">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\LampShader.frag">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\LampShader.frag">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\PostEffectShader.frag">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\PostEffectShader.frag">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\SkyboxShader.frag">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\SkyboxShader.frag">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\MeshWiringShader.geom">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\MeshWiringShader.geom">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\NormalVisualisationShader.geom">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\NormalVisualisationShader.geom">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\FontShader.vert">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\FontShader.vert">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\GenericShader.vert">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\GenericShader.vert">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\GeometryDebugShader.vert">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\GeometryDebugShader.vert">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\HDRShader.vert">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\HDRShader.vert">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\LampShader.vert">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\LampShader.vert">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\PostEffectShader.vert">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\PostEffectShader.vert">
+      <Filter>Resources/Shaders</Filter>
     </None>
-    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Shaders\SkyboxShader.vert">
-      <Filter>Shaders</Filter>
+    <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\Resources\Shaders\SkyboxShader.vert">
+      <Filter>Resources/Shaders</Filter>
     </None>
     <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\README.md" />
     <None Include="D:\Workspaces\Visual Studio 2017\Projects\ESTree_fixed\ESTree\.gitattributes" />
@@ -488,8 +488,8 @@
     <Filter Include="Headers">
       <UniqueIdentifier>{949E9968-0DC4-3DC0-B4FC-75AE5B445AFB}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{AF6D9BDC-B5BF-3B10-9924-7EBE29901F8C}</UniqueIdentifier>
+    <Filter Include="Resources/Shaders">
+      <UniqueIdentifier>{4CD4B8B5-EF63-3663-9640-68DB171D90A8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources">
       <UniqueIdentifier>{E39B7948-5D52-345E-896B-51B476FC84C6}</UniqueIdentifier>

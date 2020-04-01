@@ -53,8 +53,8 @@ void ForestScene::initialize() {
 	bool normalVisualisation;
 	bool meshWiring;
 
-	paramsFileName = "LindenmayerRules/" + treeParams[14];
-	leavesTextureName = "Textures/" + leavesParams[5];
+	paramsFileName = "Resources/LindenmayerRules/" + treeParams[14];
+	leavesTextureName = "Resources/Textures/" + leavesParams[5];
 	barkMaterial = Material::bark1();
 	normalVisualisation = false;
 	meshWiring = false;
@@ -64,8 +64,8 @@ void ForestScene::initialize() {
 	position = glm::vec3(0, 0, -spacingMod);
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
-	paramsFileName = "LindenmayerRules/" + treeParams[18];
-	leavesTextureName = "Textures/" + leavesParams[2];
+	paramsFileName = "Resources/LindenmayerRules/" + treeParams[18];
+	leavesTextureName = "Resources/Textures/" + leavesParams[2];
 	barkMaterial = Material::bark2();
 	normalVisualisation = false;
 	meshWiring = false;
@@ -73,8 +73,8 @@ void ForestScene::initialize() {
 	position = glm::vec3(-spacingMod, 0, spacingMod);
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
-	paramsFileName = "LindenmayerRules/" + treeParams[15];
-	leavesTextureName = "Textures/" + leavesParams[6];
+	paramsFileName = "Resources/LindenmayerRules/" + treeParams[15];
+	leavesTextureName = "Resources/Textures/" + leavesParams[6];
 	barkMaterial = Material::bark3();
 	normalVisualisation = false;
 	meshWiring = false;
@@ -82,9 +82,9 @@ void ForestScene::initialize() {
 	position = glm::vec3(spacingMod, 0, spacingMod);
 	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
 
-	paramsFileName = "LindenmayerRules/" + treeParams[4];
-	leavesTextureName = "Textures/" + leavesParams[1];
-	barkMaterial = Material::diffuseTextureOnly("Textures/treeTexture2.jpg");
+	paramsFileName = "Resources/LindenmayerRules/" + treeParams[4];
+	leavesTextureName = "Resources/Textures/" + leavesParams[1];
+	barkMaterial = Material::diffuseTextureOnly("Resources/Textures/treeTexture2.jpg");
 	normalVisualisation = false;
 	meshWiring = false;
 
@@ -125,7 +125,7 @@ GameObject* ForestScene::createLindenmayerTree(std::string paramsFileName, glm::
 }
 
 void ForestScene::generateGrass() {
-	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new Grass(Material::diffuseTextureOnly("Textures/grassBlades2.png")));
+	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new Grass(Material::diffuseTextureOnly("Resources/Textures/grassBlades2.png")));
 	addGameObject(move(go));
 }
 
@@ -190,12 +190,12 @@ void ForestScene::generateTestBox(glm::vec3 pos, glm::vec3 scale = glm::vec3(1, 
 
 void ForestScene::addSkybox() {
 	std::string skyboxTex[] = {
-		"Textures/Skybox_darkforest/right.jpg",
-		"Textures/Skybox_darkforest/left.jpg",
-		"Textures/Skybox_darkforest/top.jpg",
-		"Textures/Skybox_darkforest/bottom.jpg",
-		"Textures/Skybox_darkforest/back.jpg",
-		"Textures/Skybox_darkforest/front.jpg"
+		"Resources/Textures/Skybox_darkforest/right.jpg",
+		"Resources/Textures/Skybox_darkforest/left.jpg",
+		"Resources/Textures/Skybox_darkforest/top.jpg",
+		"Resources/Textures/Skybox_darkforest/bottom.jpg",
+		"Resources/Textures/Skybox_darkforest/back.jpg",
+		"Resources/Textures/Skybox_darkforest/front.jpg"
 	};
 
 	std::unique_ptr<Skybox> skybox(new Skybox(skyboxTex));

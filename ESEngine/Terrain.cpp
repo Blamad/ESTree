@@ -1,7 +1,7 @@
 #include "Terrain.h"
 
 Terrain::Terrain(Material material, bool useMeshWiring, bool useNormalVisualisation) : GameObject() {
-	std::shared_ptr<Shader> shader = ShaderManager::getShader("Shaders/GenericShader.vert", "Shaders/GenericShader.frag");
+	std::shared_ptr<Shader> shader = ShaderManager::getShader("Resources/Shaders/GenericShader.vert", "Resources/Shaders/GenericShader.frag");
 	std::shared_ptr<Mesh> mesh = createMesh(shader);
 	mesh->material = material;
 	if (useMeshWiring)

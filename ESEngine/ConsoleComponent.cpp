@@ -19,7 +19,7 @@ void ConsoleComponent::init() {
 
 	glm::mat4 projection = glm::ortho(.0f, .0f + Screen::getScreenWidth(), .0f, .0f + Screen::getScreenHeight());
 
-	fontShader = ShaderManager::getShader("Shaders/FontShader.vert", "Shaders/FontShader.frag");
+	fontShader = ShaderManager::getShader("Resources/Shaders/FontShader.vert", "Resources/Shaders/FontShader.frag");
 	fontShader->use();
 	if (!fontShader->isInitializedBy(3)) {
 		glUniformMatrix4fv(glGetUniformLocation(fontShader->program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -182,7 +182,7 @@ void ConsoleComponent::initFreeType() {
 		if (FT_Init_FreeType(&ft))
 			logger.log(LOG_ERROR, "Could not init FreeType Library");
 		FT_Face face;
-		if (FT_New_Face(ft, "Fonts/arial_bold.ttf", 0, &face))
+		if (FT_New_Face(ft, "Resources/Fonts/arial_bold.ttf", 0, &face))
 			logger.log(LOG_ERROR, "Failed to load font");
 		FT_Set_Pixel_Sizes(face, 0, 24);
 
