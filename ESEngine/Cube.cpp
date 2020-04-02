@@ -38,14 +38,6 @@ Vertex Cube::createVertex(glm::vec3 position, glm::vec3 normal) {
 }
 
 std::shared_ptr<Mesh> Cube::createMesh(std::shared_ptr<Shader> shader) {
-	std::vector<Vertex> v;
-	std::vector<int> i;
-
-	v.reserve(100);
-	i.reserve(100);
-
-	std::shared_ptr<Mesh> mesh = std::shared_ptr<Mesh>(new Mesh(v, i, shader, 100, 100, GL_STREAM_DRAW));
-
 	std::vector<Vertex> vertices = {
 		//front
 		createVertex(glm::vec3( 1.0f, -1.0f,  1.0f),	glm::vec3(0.0f, 0.0f, 1.0f),	glm::vec2(1, 0)),
@@ -88,14 +80,7 @@ std::shared_ptr<Mesh> Cube::createMesh(std::shared_ptr<Shader> shader) {
 		20, 21, 23, 21, 22, 23
 	};
 
-	for (int i = 0; i < vertices.size(); i++)
-		mesh->vertices.push_back(vertices[i]);
-	for (int i = 0; i < indices.size(); i++)
-		mesh->indices.push_back(indices[i]);
-
-	mesh->updateMesh();
-
-	return mesh;
+	return std::shared_ptr<Mesh>(new Mesh(vertices, indices, shader));
 }
 
 std::shared_ptr<Mesh> Cube::createMesh(std::shared_ptr<Shader> shader, glm::vec4 color) {

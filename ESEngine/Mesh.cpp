@@ -97,7 +97,7 @@ Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::shared
 	if (iBufferSize == 0) {
 		iBufferSize = indices.size();
 	}
-	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(iBufferSize, vBufferSize, bufferUsage));
 	this->bufferUsage = bufferUsage;
 	setupMeshes();
 }
@@ -109,7 +109,7 @@ Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<int> &indices, std::vector
 	if (iBufferSize == 0) {
 		iBufferSize = indices.size();
 	}
-	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(vBufferSize, iBufferSize, bufferUsage));
+	vertexArray = std::unique_ptr<VertexArray>(new GLVertexArray(iBufferSize, vBufferSize, bufferUsage));
 	this->bufferUsage = bufferUsage;
 	setupMeshes();
 }
