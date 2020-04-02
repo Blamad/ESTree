@@ -6,10 +6,10 @@
 
 class DirectionalLight : public Light {
 public:
-	glm::vec3 directory;
-	glm::vec3 ambient;
-	glm::vec3 diffuse;
-	glm::vec3 specular;
+	glm::vec3 directory = glm::vec3();
+	glm::vec3 ambient = glm::vec3();
+	glm::vec3 diffuse = glm::vec3();
+	glm::vec3 specular = glm::vec3();
 	glm::mat4 lightSpace = glm::mat4(1);
 
 	DirectionalLight(glm::vec3 direction = glm::vec3(0,-1, 1), glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3 diffuse = glm::vec3(0.4f, 0.4f, 0.4f), glm::vec3 specular = glm::vec3(0.5f, 0.5f, 0.5f)) : directory(directory), ambient(ambient), diffuse(diffuse), specular(specular), Light(LIGHT_DIRECTIONAL) { };

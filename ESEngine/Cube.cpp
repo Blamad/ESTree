@@ -94,7 +94,6 @@ std::shared_ptr<Mesh> Cube::createMesh(std::shared_ptr<Shader> shader) {
 		mesh->indices.push_back(indices[i]);
 
 	mesh->updateMesh();
-//	std::shared_ptr<Mesh> mesh = std::shared_ptr<Mesh>(new Mesh(vertices, indices, shader));
 
 	return mesh;
 }
