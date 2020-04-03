@@ -2,6 +2,9 @@
 Simple game engine capable of rendering scene, performing physics simulations and generating tree models using Lindenmayer sytem formal grammar.
 Created as a part of masters dissertation.
 
+YouTube clip demonstrating project capabilities:<br/>
+[![main_scene_clip](https://img.youtube.com/vi/CheCvFOeFZI/0.jpg)](https://youtu.be/CheCvFOeFZI)
+
 ESTree is using few libraries:
  * __BOOST__: general perfomance purposes
  * __GLFW, GLM, GLAD, OpenGL__: scene rendering
@@ -11,7 +14,10 @@ ESTree is using few libraries:
  * __STB__: texture loading
  * __Freetype__: fonts
 
-Sample screenshot presenting current engine abilities regarding tree generation:
+Single tree scene clip:<br/>
+[![single_tree_scene_clip](https://img.youtube.com/vi/QXZW_28LS78/0.jpg)](https://youtu.be/QXZW_28LS78)
+
+Sample screenshots presenting current engine abilities regarding tree generation:
 
  * Simple bush model: <br/>
   ![Sample screenshot](/images/withHdr.PNG) 
