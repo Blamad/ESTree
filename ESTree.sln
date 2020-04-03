@@ -22,52 +22,52 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxp
 		{15892308-858E-3D6F-99FB-D0CEC91BD028} = {15892308-858E-3D6F-99FB-D0CEC91BD028}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet2FileLoader", "ESEngine\Vendor\bullet3\src\Bullet3Serialize\Bullet2FileLoader\Bullet2FileLoader.vcxproj", "{F3F920A4-ACED-3446-A561-CA99BDE03005}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet2FileLoader", "Vendor\bullet3\src\Bullet3Serialize\Bullet2FileLoader\Bullet2FileLoader.vcxproj", "{F3F920A4-ACED-3446-A561-CA99BDE03005}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3Collision", "ESEngine\Vendor\bullet3\src\Bullet3Collision\Bullet3Collision.vcxproj", "{570C2E45-F5B6-3D67-8477-3F327C36FE1F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3Collision", "Vendor\bullet3\src\Bullet3Collision\Bullet3Collision.vcxproj", "{570C2E45-F5B6-3D67-8477-3F327C36FE1F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3Common", "ESEngine\Vendor\bullet3\src\Bullet3Common\Bullet3Common.vcxproj", "{60711431-C4B1-3DBD-A566-AB690B680B1C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3Common", "Vendor\bullet3\src\Bullet3Common\Bullet3Common.vcxproj", "{60711431-C4B1-3DBD-A566-AB690B680B1C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3Dynamics", "ESEngine\Vendor\bullet3\src\Bullet3Dynamics\Bullet3Dynamics.vcxproj", "{47DB4A5D-6F41-3EDF-9722-00A4762552D3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3Dynamics", "Vendor\bullet3\src\Bullet3Dynamics\Bullet3Dynamics.vcxproj", "{47DB4A5D-6F41-3EDF-9722-00A4762552D3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3Geometry", "ESEngine\Vendor\bullet3\src\Bullet3Geometry\Bullet3Geometry.vcxproj", "{27F1B278-79F3-339C-A390-9860D522C709}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3Geometry", "Vendor\bullet3\src\Bullet3Geometry\Bullet3Geometry.vcxproj", "{27F1B278-79F3-339C-A390-9860D522C709}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3OpenCL_clew", "ESEngine\Vendor\bullet3\src\Bullet3OpenCL\Bullet3OpenCL_clew.vcxproj", "{0483F21B-ABFB-3D5E-9BC2-A03D2C29D484}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3OpenCL_clew", "Vendor\bullet3\src\Bullet3OpenCL\Bullet3OpenCL_clew.vcxproj", "{0483F21B-ABFB-3D5E-9BC2-A03D2C29D484}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletCollision", "ESEngine\Vendor\bullet3\src\BulletCollision\BulletCollision.vcxproj", "{46AE66CE-DB22-349D-B9AF-F0C38223456B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletCollision", "Vendor\bullet3\src\BulletCollision\BulletCollision.vcxproj", "{46AE66CE-DB22-349D-B9AF-F0C38223456B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletDynamics", "ESEngine\Vendor\bullet3\src\BulletDynamics\BulletDynamics.vcxproj", "{E2D88C18-3866-3016-A0A8-8EE3B7BE55E1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletDynamics", "Vendor\bullet3\src\BulletDynamics\BulletDynamics.vcxproj", "{E2D88C18-3866-3016-A0A8-8EE3B7BE55E1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletInverseDynamics", "ESEngine\Vendor\bullet3\src\BulletInverseDynamics\BulletInverseDynamics.vcxproj", "{10B39CDB-277C-385B-B78E-2E1E44164DDB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletInverseDynamics", "Vendor\bullet3\src\BulletInverseDynamics\BulletInverseDynamics.vcxproj", "{10B39CDB-277C-385B-B78E-2E1E44164DDB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletSoftBody", "ESEngine\Vendor\bullet3\src\BulletSoftBody\BulletSoftBody.vcxproj", "{40DF03BE-B128-3FD1-BD33-4054AC579043}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletSoftBody", "Vendor\bullet3\src\BulletSoftBody\BulletSoftBody.vcxproj", "{40DF03BE-B128-3FD1-BD33-4054AC579043}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
@@ -87,7 +87,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "INSTALL", "INSTALL.vcxproj"
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LinearMath", "ESEngine\Vendor\bullet3\src\LinearMath\LinearMath.vcxproj", "{04CD99E0-6E40-39BC-8A88-C2508CAE4B85}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LinearMath", "Vendor\bullet3\src\LinearMath\LinearMath.vcxproj", "{04CD99E0-6E40-39BC-8A88-C2508CAE4B85}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
@@ -96,17 +96,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vc
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "ESEngine\Vendor\glfw\src\glfw.vcxproj", "{15892308-858E-3D6F-99FB-D0CEC91BD028}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "Vendor\glfw\src\glfw.vcxproj", "{15892308-858E-3D6F-99FB-D0CEC91BD028}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "travis_doc", "ESEngine\Vendor\rapidjson\travis_doc.vcxproj", "{7226787D-D714-3487-BE54-0204392FCF43}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "travis_doc", "Vendor\rapidjson\travis_doc.vcxproj", "{7226787D-D714-3487-BE54-0204392FCF43}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uninstall", "ESEngine\Vendor\glfw\uninstall.vcxproj", "{8388C01F-57B5-32C5-A9B3-4296CE99AB2C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uninstall", "Vendor\glfw\uninstall.vcxproj", "{8388C01F-57B5-32C5-A9B3-4296CE99AB2C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BC2CBBEF-8DF1-3197-A039-5104D3B99EA0} = {BC2CBBEF-8DF1-3197-A039-5104D3B99EA0}
 	EndProjectSection

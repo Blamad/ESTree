@@ -4,20 +4,20 @@ project(ESTree)
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
-add_subdirectory(ESEngine/Vendor/glfw)
+add_subdirectory(Vendor/glfw)
 
 option(BUILD_BULLET2_DEMOS OFF)
 option(BUILD_CPU_DEMOS OFF)
 option(BUILD_EXTRAS OFF)
 option(BUILD_OPENGL3_DEMOS OFF)
 option(BUILD_UNIT_TESTS OFF)
-add_subdirectory(ESEngine/Vendor/bullet3)
+add_subdirectory(Vendor/bullet3)
 
 set(RAPIDJSON_BUILD_DOC OFF)
 set(RAPIDJSON_BUILD_EXAMPLES OFF)
 set(RAPIDJSON_BUILD_TESTS OFF)
 set(RAPIDJSON_BUILD_THIRDPARTY_GTEST OFF)
-add_subdirectory(ESEngine/Vendor/rapidjson)
+add_subdirectory(Vendor/rapidjson)
 
 link_directories($ENV{FREETYPE2_LIB}/Libs/)
 link_directories($ENV{BOOST_LIB}/Libs/)
@@ -31,39 +31,37 @@ else()
     endif()
 endif()
 
-include_directories(ESEngine/Headers/
-                    ESEngine/Vendor/bullet3/src/
-                    ESEngine/Vendor/glad/include/
-                    ESEngine/Vendor/glfw/include/
-                    ESEngine/Vendor/glm/
-                    ESEngine/Vendor/stb/
-                    ESEngine/Vendor/rapidjson/include/
+include_directories(ESEngine/
+                    Vendor/bullet3/src/
+                    Vendor/glad/include/
+                    Vendor/glfw/include/
+                    Vendor/glm/
+                    Vendor/stb/
+                    Vendor/rapidjson/include/
 					$ENV{BOOST_LIB}/Includes/
-					ESEngine/Vendor/freetype2/include/)
+					Vendor/freetype2/include/)
 
-file(GLOB VENDORS_SOURCES ESEngine/Vendor/glad/src/glad.c)
-file(GLOB PROJECT_HEADERS ESEngine/*.h)
-file(GLOB PROJECT_SOURCES ESEngine/*.cpp)
-file(GLOB PROJECT_SHADERS Resources/Shaders/*.comp
-                          Resources/Shaders/*.frag
-                          Resources/Shaders/*.geom
-                          Resources/Shaders/*.vert)
 file(GLOB PROJECT_CONFIGS CMakeLists.txt
                           Readme.md
                          .gitattributes
                          .gitignore
                          .gitmodules)
+						 
+file(GLOB VENDOR_SOURCES Vendor/glad/src/glad.c)
 
-source_group("Headers" FILES ${PROJECT_HEADERS})
-source_group("Resources/Shaders" FILES ${PROJECT_SHADERS})
-source_group("Sources" FILES ${PROJECT_SOURCES})
-source_group("Vendors" FILES ${VENDORS_SOURCES})
+file(GLOB_RECURSE SOURCE_LIST ESEngine/*.cpp ESEngine/*.h ESEngine/*.hpp ESEngine/*.c Resources/*.comp Resources/*.frag Resources/*.geom Resources/*.vert Resources/*.json)
+foreach(_source IN ITEMS ${SOURCE_LIST})
+    get_filename_component(_source_path "${_source}" PATH)
+    string(REPLACE "${CMAKE_SOURCE_DIR}" "" _group_path "${_source_path}")
+    string(REPLACE "/" "\\" _group_path "${_group_path}")
+    source_group("${_group_path}" FILES "${_source}")
+endforeach()
+source_group("Vendor" FILES ${VENDOR_SOURCES})
 
 add_definitions(-DGLFW_INCLUDE_NONE
                 -DPROJECT_SOURCE_DIR=\"ESEngine\")
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
-                               ${PROJECT_SHADERS} ${PROJECT_CONFIGS}
-                               ${VENDORS_SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCE_LIST}
+					${PROJECT_CONFIGS}	${VENDOR_SOURCES})
 target_link_libraries(${PROJECT_NAME} glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}
                       BulletDynamics BulletCollision LinearMath freetype
