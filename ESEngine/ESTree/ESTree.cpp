@@ -26,6 +26,10 @@ int main(int argc, char* argv[]) {
 	int width, height, scene = 0;
 	bool fullScreenMode = false;
 
+	char buf[256];
+	GetCurrentDirectoryA(256, buf);
+	logger.log(LOG_INFO, std::string(buf) + '\\');
+
 	try {
 		boost::program_options::options_description desc("Allowed options");
 		desc.add_options()

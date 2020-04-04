@@ -13,13 +13,8 @@ option(BUILD_OPENGL3_DEMOS OFF)
 option(BUILD_UNIT_TESTS OFF)
 add_subdirectory(Vendor/bullet3)
 
-set(RAPIDJSON_BUILD_DOC OFF)
-set(RAPIDJSON_BUILD_EXAMPLES OFF)
-set(RAPIDJSON_BUILD_TESTS OFF)
-set(RAPIDJSON_BUILD_THIRDPARTY_GTEST OFF)
-add_subdirectory(Vendor/rapidjson)
+add_subdirectory(Vendor/freetype2)
 
-link_directories($ENV{FREETYPE2_LIB}/Libs/)
 link_directories($ENV{BOOST_LIB}/Libs/)
 
 if(MSVC)
@@ -49,18 +44,29 @@ file(GLOB PROJECT_CONFIGS CMakeLists.txt
 						 
 file(GLOB VENDOR_SOURCES Vendor/glad/src/glad.c)
 
-file(GLOB_RECURSE SOURCE_LIST ESEngine/*.cpp ESEngine/*.h ESEngine/*.hpp ESEngine/*.c Resources/*.comp Resources/*.frag Resources/*.geom Resources/*.vert Resources/*.json)
+#Scan sources
+file(GLOB_RECURSE SOURCE_LIST ESEngine/*.cpp ESEngine/*.h ESEngine/*.hpp ESEngine/*.c)
 foreach(_source IN ITEMS ${SOURCE_LIST})
     get_filename_component(_source_path "${_source}" PATH)
     string(REPLACE "${CMAKE_SOURCE_DIR}" "" _group_path "${_source_path}")
     string(REPLACE "/" "\\" _group_path "${_group_path}")
     source_group("${_group_path}" FILES "${_source}")
 endforeach()
+
+#Scan resources
+file(GLOB_RECURSE RESOURCE_LIST Resources/*.comp Resources/*.frag Resources/*.geom Resources/*.vert Resources/*.json)
+foreach(_source IN ITEMS ${RESOURCE_LIST})
+    get_filename_component(_source_path "${_source}" PATH)
+    string(REPLACE "${CMAKE_SOURCE_DIR}" "" _group_path "${_source_path}")
+    string(REPLACE "/" "\\" _group_path "${_group_path}")
+    source_group("${_group_path}" FILES "${_source}")
+endforeach()
+
 source_group("Vendor" FILES ${VENDOR_SOURCES})
 
 add_definitions(-DGLFW_INCLUDE_NONE
                 -DPROJECT_SOURCE_DIR=\"ESEngine\")
-add_executable(${PROJECT_NAME} ${SOURCE_LIST}
+add_executable(${PROJECT_NAME} ${SOURCE_LIST} ${RESOURCE_LIST}
 					${PROJECT_CONFIGS}	${VENDOR_SOURCES})
 target_link_libraries(${PROJECT_NAME} glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}
@@ -68,4 +74,5 @@ target_link_libraries(${PROJECT_NAME} glfw
 					  libboost_date_time-vc140-mt-gd-x64-1_72 libboost_thread-vc140-mt-gd-x64-1_72
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+)
