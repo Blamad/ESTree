@@ -64,6 +64,11 @@ endforeach()
 
 source_group("Vendor" FILES ${VENDOR_SOURCES})
 
+set(BOOST_LIBRARIES 
+	debug libboost_date_time-vc140-mt-gd-x64-1_72 optimized libboost_date_time-vc140-mt-x64-1_72
+	debug libboost_thread-vc140-mt-gd-x64-1_72 optimized libboost_thread-vc140-mt-x64-1_72
+)
+
 add_definitions(-DGLFW_INCLUDE_NONE
                 -DPROJECT_SOURCE_DIR=\"ESEngine\")
 add_executable(${PROJECT_NAME} ${SOURCE_LIST} ${RESOURCE_LIST}
@@ -71,7 +76,7 @@ add_executable(${PROJECT_NAME} ${SOURCE_LIST} ${RESOURCE_LIST}
 target_link_libraries(${PROJECT_NAME} glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}
                       BulletDynamics BulletCollision LinearMath freetype
-					  libboost_date_time-vc140-mt-gd-x64-1_72 libboost_thread-vc140-mt-gd-x64-1_72
+					  ${BOOST_LIBRARIES}
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
