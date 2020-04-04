@@ -1,0 +1,28 @@
+[submodule "ESEngine/Vendor/glad"]
+	path = Vendor/glad
+	url = https://github.com/Dav1dde/glad.git
+	branch = c
+[submodule "ESEngine/Vendor/glfw"]
+	path = Vendor/glfw
+	url = https://github.com/glfw/glfw.git
+	branch = master
+[submodule "ESEngine/Vendor/glm"]
+	path = Vendor/glm
+	url = https://github.com/g-truc/glm.git
+	branch = master
+[submodule "ESEngine/Vendor/bullet3"]
+	path = Vendor/bullet3
+	url = https://github.com/bulletphysics/bullet3.git
+	branch = master
+[submodule "ESEngine/Vendor/rapidjson"]
+	path = Vendor/rapidjson
+	url = https://github.com/Tencent/rapidjson.git
+	branch = master
+[submodule "ESEngine/Vendor/freetype2"]
+	path = Vendor/freetype2
+	url = https://git.savannah.gnu.org/git/freetype/freetype2.git
+	branch = master
+[submodule "ESEngine/Vendor/stb"]
+	path = Vendor/stb
+	url = https://github.com/nothings/stb.git
+	branch = master

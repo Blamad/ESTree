@@ -21,6 +21,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+[Bb]uild/
+*.dir/
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -250,3 +252,20 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# CMake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+#DLLS, libs
+lib/
+*.dll

@@ -6,11 +6,13 @@ YouTube clip demonstrating project capabilities:<br/>
 [![main_scene_clip](https://img.youtube.com/vi/CheCvFOeFZI/0.jpg)](https://youtu.be/CheCvFOeFZI)
 
 ESTree is using few libraries:
- * __BOOST__: general perfomance purposes
- * __GLFW, GLM, GLEW, OpenGL__: scene rendering
+ * __BOOST__: general perfomance purposes, multithreading
+ * __GLFW, GLM, GLAD, OpenGL__: scene rendering
  * __BulletPhysics__: physics simulation (collisions, mouse picking, collapsing towers made of blocks) 
  * __RapidJSON__: parsing configuration files
  * __FreeType__: text rendering
+ * __STB__: texture loading
+ * __Freetype__: fonts
 
 Single tree scene clip:<br/>
 [![single_tree_scene_clip](https://img.youtube.com/vi/QXZW_28LS78/0.jpg)](https://youtu.be/QXZW_28LS78)
@@ -23,7 +25,13 @@ Sample screenshots presenting current engine abilities regarding tree generation
   ![Sample screenshot](/images/ternaryTreeA.PNG)
   ![Sample screenshot](/images/ternaryTreeE.PNG)
  
- Usage:<br/>
+ 
+ # Project setup
+ To setup VS 14 project locally recursively clone repo and run __setup.bat__. Script will create __build__ directory which will contain project files. </br>
+ Run __build/ESTree.sln__ and remember to mark __ESTree__ as startup project. </br>
+ Project requires built x64 Boost linked via env variable (check __CMakeLists.txt__) and __freetype.dll__ which can be placed in either __Windows/System32__ or project build directory.
+ 
+ # Usage
  Scene navigation: RMB + WSAD (Space and left alt to move vertically)<br/>
  Object selection/pick up: LMB<br/>
  Console toggle: ~<br/>
