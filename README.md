@@ -1,6 +1,6 @@
 # ESTree
 Simple game engine capable of rendering scene, performing physics simulations and generating tree models using Lindenmayer sytem formal grammar.
-Created as a part of masters dissertation.
+Created as a part of masters dissertation.</br>
 Executable available in __relase__ tab.
 
 YouTube clip demonstrating project capabilities:<br/>
