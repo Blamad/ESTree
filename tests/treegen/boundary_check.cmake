@@ -6,6 +6,9 @@
 # The target's include path already makes these includes fail to compile; this script is the second,
 # build-independent line of defence and reports every offender as <file>:<line>.
 
+# -P scripts run with the oldest policies unless told otherwise (CMP0012: while(TRUE) is a variable lookup).
+cmake_minimum_required(VERSION 3.21)
+
 if(NOT TREEGEN_DIR)
 	message(FATAL_ERROR "boundary_check: pass -DTREEGEN_DIR=<directory to scan>")
 endif()

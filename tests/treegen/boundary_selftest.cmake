@@ -2,6 +2,8 @@
 #
 #   cmake -DCHECK_SCRIPT=<boundary_check.cmake> -DWORK_DIR=<scratch dir> -P boundary_selftest.cmake
 
+cmake_minimum_required(VERSION 3.21)
+
 if(NOT CHECK_SCRIPT OR NOT WORK_DIR)
 	message(FATAL_ERROR "boundary_selftest: pass -DCHECK_SCRIPT and -DWORK_DIR")
 endif()
