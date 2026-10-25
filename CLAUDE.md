@@ -107,8 +107,10 @@ Fixed by the task named in brackets; leave them alone elsewhere.
 - RNG is a static `boost::variate_generator` seeded with `time(0)`; trees are not reproducible [T04, T05]
 - Fixed buffers: 100 000 vertices / 4 000 000 indices in `LindenmayerTree` ctor, no overflow check [T06]
 - `Scene::~Scene` calls `release()` on `unique_ptr`s (leak); many `(Type*)getComponent(...)` C-casts [T10]
-- Build still links prebuilt Boost 1.72 `vc140` libs (`BOOST_LIB`); removed by T09/T13. Linux is
-  untested [T11]
+- Build still links prebuilt Boost 1.72 `vc140` libs (`BOOST_LIB`); removed by T09/T13. Linux
+  builds in Docker/GCC 13 (engine ON, 15 tests); the CI workflow `.github/workflows/ci.yml` has never run on GitHub (T11)
+- Legacy `LindenmayerTreeSolver`/`LindenmayerTreeParams` read `std::regex` results after a failed search; on libstdc++ this
+  drops the tail of every rewrite (8 of 26 golden cases fail on Linux), so `legacy_characterization_tests` is MSVC-only [T04]
 
 ## Working on a task
 

@@ -1,6 +1,6 @@
 # T11 — CI (Windows + Linux) and headless Linux build — Implementation Plan
 
-**Status:** review · **Branch:** `task/T11-ci-and-linux-build` · **Base:** `modernization @ fc539f2`
+**Status:** done · **Branch:** `task/T11-ci-and-linux-build` · **Base:** `modernization @ fc539f2`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** GitHub Actions that build and test on `windows-latest` (MSVC) and `ubuntu-latest` (GCC) on every push/PR, and prove the non-engine targets build headless on Linux.
