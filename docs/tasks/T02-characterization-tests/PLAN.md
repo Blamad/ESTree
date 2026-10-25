@@ -1,6 +1,6 @@
 # T02 — Characterization tests of the legacy solver and params loader — Implementation Plan
 
-**Status:** in-progress · **Branch:** `task/T02-characterization-tests` · **Base:** `modernization @ fc539f2`
+**Status:** review · **Branch:** `task/T02-characterization-tests` · **Base:** `modernization @ fc539f2`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Freeze the current observable behavior of `LindenmayerTreeParams` and `LindenmayerTreeSolver::generateTreeProduction` as golden tests, and document confirmed defects as `KNOWN BUG:` tests.
@@ -31,10 +31,10 @@
 ## Steps
 
 - [x] 1 Plan + commit
-- [ ] 2 CMake block + skeleton, build, dump helper, generate params goldens, review by eye
-- [ ] 3 Solver goldens (deterministic files), property tests (stochastic), completeness test
-- [ ] 4 Probe suspected defects with minimal inputs; add `KNOWN BUG:` tests + `KNOWN_BUGS.md`
-- [ ] 5 READMEs, 20x repeat run, `git diff modernization --stat -- ESEngine` empty, commit, status `review`
+- [x] 2 CMake block + skeleton, build, dump helper, generate params goldens, review by eye
+- [x] 3 Solver goldens (deterministic files), property tests (stochastic), completeness test
+- [x] 4 Probe suspected defects with minimal inputs; add `KNOWN BUG:` tests + `KNOWN_BUGS.md`
+- [x] 5 READMEs, 20x repeat run, `git diff modernization --stat -- ESEngine` empty, commit, status `review`
 
 ## Review focus covered
 
@@ -42,7 +42,8 @@ Review Focus items 2, 4, 6 of `docs/PLAN.md` describe today's crash/UB behavior;
 
 ## Deviations from the brief
 
-(none so far)
+- Deterministic solver goldens skip the own-depth file for 4 .l files whose depth is never set (indeterminate).
+- Total test run takes ~19 s in Debug (std::regex on 55 KB products); ctest runs each TEST_CASE as its own process, so 26 cases cost ~8 min for 20 repeats.
 
 ## Blockers
 
