@@ -13,7 +13,13 @@ configure) and run through CTest. Tests are headless: never open a window or tou
   `<doctest/doctest.h>`.
 - Repo files: use the `ESTREE_REPO_ROOT` define (absolute path, no trailing slash), e.g.
   `std::string(ESTREE_REPO_ROOT) + "/Resources/..."`. The working directory is the repo root too.
-- Naming: files `<area>_tests.cpp`; cases `TEST_CASE("<unit>: <behavior>")`.
+- Naming: files `<area>_tests.cpp`; cases `TEST_CASE("<unit>: <behavior>")`. Do not put `[`, `]` or `;` in a case name:
+  CTest discovery (`doctest_discover_tests`) writes names into a CMake list and breaks on them.
+- `treegen` has one executable, `treegen_tests`, built from every `tests/treegen/*_tests.cpp` (CMake globs them, so a new
+  area is just a new file; `tests/treegen/main.cpp` holds the doctest main). Its fixtures live in `tests/treegen/data/`.
+  `treegen_boundary` (`boundary_check.cmake`) fails when a file under `ESEngine/TreeGen/` includes something outside the
+  standard library, glm and rapidjson; `treegen_boundary_selftest` proves the check catches planted violations. Both run
+  without the engine, so they and `treegen_tests` also run on the Linux and Windows CI jobs.
 - Do not link GLFW/glad/Bullet/FreeType into test executables.
 
 ## Reproducing CI locally

@@ -21,6 +21,7 @@ endfunction()
 
 estree_add_test(smoke_tests SOURCES smoke/smoke_tests.cpp)
 add_subdirectory(engine)
+add_subdirectory(treegen)
 
 # T02: golden tests of the unchanged legacy params loader + solver (Boost headers only, no engine/GL code).
 # MSVC only: the legacy solver reads std::regex results after a failed search (match_results::suffix()),
@@ -32,6 +33,7 @@ if(MSVC)
 		SOURCES
 			legacy_characterization/legacy_characterization_tests.cpp
 			${PROJECT_SOURCE_DIR}/ESEngine/ESTree/Models/Tree/LindenmayerTreeParams.cpp
-			${PROJECT_SOURCE_DIR}/ESEngine/ESTree/Models/Tree/LindenmayerTreeSolver.cpp)
+			${PROJECT_SOURCE_DIR}/ESEngine/ESTree/Models/Tree/LindenmayerTreeSolver.cpp
+		LIBS treegen) # LindenmayerTreeParams is an adapter over treegen since T03
 endif()
 

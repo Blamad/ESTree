@@ -1,9 +1,9 @@
 file=legacy/testX.l
 axiom=f(4.5)ab
-depth=UNSET
-initialLength=1
-initialRadius=1
-angle=15
+depth=1
+initialLength=1.5
+initialRadius=0.600000024
+angle=0.261799395
 leafGrowthProb=1
 leavesAngleDiversity=0
 tropism=0,-1,0

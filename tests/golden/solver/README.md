@@ -38,11 +38,12 @@ Legacy `.l`: `advancedTree`, `normalTest`, `parametricMonopodialTreeA..D`, `para
 
 - `test2.json`: its only rule is for `a`, the axiom `F(70)X` contains none, so every depth is `F(70)X`
   (the golden shows that the loader/solver round-trip is the identity there).
-- `legacy/advancedTree.l`, `testX.l`, `testY.l`, `testZ.l` never set a depth (their bare-number header lines are
-  read as axioms, see `KNOWN_BUGS.md`), so `params.depth` is uninitialized: only `d0..d3` are stored; there is no
-  own-depth golden.
-- `legacy/parametricTree2.l` contains rule-file mistakes (`[^+a)`, axiom with an unsubstituted `startLength`, a
-  rule with parameters applied to a bare `F`). The golden freezes the resulting nonsense on purpose.
+- `legacy/advancedTree.l`, `testX.l`, `testY.l`, `testZ.l` set their depth with a bare-number header line (depth 4 for
+  `advancedTree.l`, depth 1 for the others; T03 fixed the loader, `KNOWN_BUGS.md` #11). The own depth is `d4` for
+  `advancedTree.l` (new golden) and already covered by `d1` for the others.
+- `legacy/parametricTree2.l` contains rule-file mistakes (`[^+a)`, a rule with parameters applied to a bare `F`).
+  The golden freezes the resulting nonsense on purpose. Since T03 its axiom is substituted (`F(1.200000)` instead of
+  `F(startLength)`, `KNOWN_BUGS.md` #10), so `d0..d3` were regenerated.
 
 ## Platform note
 

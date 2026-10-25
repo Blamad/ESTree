@@ -124,6 +124,11 @@ else()
     endif()
 endif()
 
+# treegen is engine independent: it must be defined before the global include_directories()/add_definitions()
+# below (a subdirectory inherits the directory properties set at the time it is added), and it is built with
+# or without the engine.
+add_subdirectory(ESEngine/TreeGen)
+
 include_directories(ESEngine/
                     Vendor/bullet3/src/
                     Vendor/glad/include/
@@ -150,6 +155,8 @@ if(ESTREE_BUILD_ENGINE)
 
 	#Scan sources
 	file(GLOB_RECURSE SOURCE_LIST ESEngine/*.cpp ESEngine/*.h ESEngine/*.hpp ESEngine/*.c)
+	# treegen is its own library target (linked below), not part of the executable's sources
+	list(FILTER SOURCE_LIST EXCLUDE REGEX "/ESEngine/TreeGen/")
 	foreach(_source IN ITEMS ${SOURCE_LIST})
 	    get_filename_component(_source_path "${_source}" PATH)
 	    string(REPLACE "${CMAKE_SOURCE_DIR}" "" _group_path "${_source_path}")
@@ -189,6 +196,7 @@ if(ESTREE_BUILD_ENGINE)
 	target_link_libraries(${PROJECT_NAME} glfw
 	                      ${GLFW_LIBRARIES} ${GLAD_LIBRARIES}
 	                      BulletDynamics BulletCollision LinearMath freetype
+						  treegen
 						  ${BOOST_LIBRARIES}
 	)
 	if(WIN32)

@@ -79,6 +79,8 @@ struct TreeParams {
 };
 TreeParams loadTreeParams(const std::filesystem::path& file);   // .json or .l ; throws LoadError
 TreeParams parseTreeParamsJson(std::string_view json, std::string name = {});   // for tests
+TreeParams parseTreeParamsLegacy(std::string_view text, std::string name = {}); // .l text, for tests (added in T03)
+std::string substituteParameters(std::string_view text, const std::map<std::string, float>& values); // (added in T03)
 
 // treegen/Rewriter.h  (T04)
 struct RewriteOptions { uint32_t seed = 0; };
@@ -115,6 +117,22 @@ TreeModel generateTree(const TreeParams&, const GenerateOptions& = {});
 // treegen/ObjWriter.h  (T08)
 void writeObj(const std::filesystem::path& file, const MeshData& trunk, const std::vector<glm::mat4>& leaves);
 ```
+
+## Loader behaviour (T03)
+
+The extension `.l` (case-insensitive) selects the legacy parser, anything else is read as JSON. A `LoadError` message is
+`<path>[:<line>[:<col>]]: <reason>`; a missing file, invalid JSON, a missing or mistyped `axiom`/`rules`, a wrongly typed value
+or a malformed rule symbol is always a `LoadError`, never a crash.
+
+- JSON: `axiom` (string) and `rules` (array) are required, `parameters` is optional. The optional keys `seed` (integer
+  0..2^32-1) and `maxModules` (integer >= 1) are read at the top level or inside `parameters` (top level wins; in `.l`:
+  `define seed N`, `define maxModules N`) and are not substitution parameters.
+- Custom parameters are substituted (whole words, `[A-Za-z0-9]` boundaries, `std::to_string(float)`) into the axiom and every
+  production after the whole file has been read (`substituteParameters`).
+- Rule symbols are one character, optionally followed by `(names)`; `.l` files also accept `A{n}` (initialDepth).
+- Old `.l` files may start with the bare-number header `depth`, `initialLength`, `initialRadius`, `angle` (degrees) before the
+  axiom line. A UTF-8 BOM and `\r` are ignored.
+- The default `angle` is `radians(15)`; JSON/`.l` angles are degrees and stored as radians; `tropism` is normalized.
 
 ## Compatibility with the legacy pipeline
 

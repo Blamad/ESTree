@@ -1,14 +1,15 @@
 # Golden data for the legacy characterization tests
 
-Produced by `legacy_characterization_tests` (`tests/legacy_characterization/`), which compiles the unchanged
-`LindenmayerTreeParams.cpp` and `LindenmayerTreeSolver.cpp`. They record what the legacy code does today so
-that T03/T04 can prove a rewrite preserved it.
+Produced by `legacy_characterization_tests` (`tests/legacy_characterization/`), which compiles
+`LindenmayerTreeParams.cpp` (since T03 an adapter over `treegen`) and the unchanged `LindenmayerTreeSolver.cpp`. They
+record what the legacy code does so that T03/T04 can prove a rewrite preserved it. The `params/` goldens are also checked,
+on every platform, against `treegen::loadTreeParams` by `tests/treegen/loader_golden_tests.cpp`.
 
 | Path | Content |
 |---|---|
 | `params/<id>.txt` | `key=value` dump of the loaded params of every shipped rule file (axiom, depth, lengths, angle in radians, tropism, custom parameters, every rule with its substituted production, probability, initialDepth, parameter names). Floats are `%.9g`. `depth=UNSET` = the file never sets it |
 | `solver/<id>.dN.txt` | production string at depth N for the deterministic rule files, see `solver/README.md` |
-| `KNOWN_BUGS.md` | confirmed defects; the `KNOWN BUG:` tests assert the current wrong behavior |
+| `KNOWN_BUGS.md` | confirmed defects (open ones: the `KNOWN BUG:` tests assert the current wrong behavior; fixed ones with the test that now pins the correct behavior) |
 
 `<id>` = path below `Resources/LindenmayerRules/` with `/` replaced by `__` (`legacy__test.l`).
 Files are compared byte for byte, never line-ending converted (`.gitattributes`: `-text`).

@@ -1,9 +1,9 @@
 file=legacy/advancedTree.l
 axiom=F
-depth=UNSET
-initialLength=1
-initialRadius=1
-angle=15
+depth=4
+initialLength=0.5
+initialRadius=0.25
+angle=0.122173049
 leafGrowthProb=1
 leavesAngleDiversity=0
 tropism=0,-1,0

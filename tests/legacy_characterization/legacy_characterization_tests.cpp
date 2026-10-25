@@ -1,5 +1,6 @@
 // Characterization (golden) tests of the legacy Lindenmayer params loader and string rewriter.
-// Compiled from the UNCHANGED legacy sources; documents what the code does today, including its bugs.
+// Documents what the legacy solver does today, including its bugs (the solver is compiled unchanged; the params
+// loader is now an adapter over treegen, whose fixed loader defects are flipped to the correct expectations below).
 // Goldens: tests/golden/ (see tests/golden/README.md). Regenerate with `--regenerate`.
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
@@ -108,14 +109,21 @@ uint64_t fnv1a64(const std::string& s) {
 	return h;
 }
 
-// .l files that have no `define depth` line leave LindenmayerTreeParams::depth uninitialized (reading it is
-// indeterminate), see KNOWN_BUGS.md. JSON files always define it.
+// A .l file sets the depth with a `define depth` line or with a bare number as its first line (old header form:
+// depth, length, radius, angle). Without either the depth is just the default 0 and the goldens print UNSET.
+// JSON files always define it.
 bool definesDepth(const RuleFile& f) {
 	if (!f.legacyL) return true;
 	std::istringstream in(readFile(f.path));
 	std::string line;
-	while (std::getline(in, line))
+	bool first = true;
+	while (std::getline(in, line)) {
 		if (line.compare(0, 13, "define depth ") == 0) return true;
+		if (first && !line.empty() && line[0] != '#') {
+			first = false;
+			if (line.find_first_not_of("0123456789.") == std::string::npos) return true;
+		}
+	}
 	return false;
 }
 
@@ -359,18 +367,21 @@ TEST_CASE("params: custom parameters are substituted as std::to_string(float)") 
 
 // ---- known bugs: these assert the CURRENT, WRONG behavior (see tests/golden/KNOWN_BUGS.md) -------------
 
-TEST_CASE("KNOWN BUG: loader substitution skips the second of two adjacent identical parameters") {
-	// Each match also consumes its closing delimiter, so in "(a1,a1)" the ',' is eaten by the first match
-	// and the second "a1" has no leading delimiter left. Correct output: "F(35.000000,35.000000)". Owner: T03.
+TEST_CASE("params: substitution replaces the second of two adjacent identical parameters") {
+	// Was KNOWN BUG 1 (fixed in T03): each match used to consume its closing delimiter, so in "(a1,a1)" the ','
+	// was eaten by the first match and the second "a1" had no leading delimiter left ("F(35.000000,a1)").
 	ProbeParams p;
 	std::map<std::string, float> vars = { { "a1", 35.0f } };
-	CHECK(p.fillRuleWithVariables("F(a1,a1)", vars) == "F(35.000000,a1)");
+	CHECK(p.fillRuleWithVariables("F(a1,a1)", vars) == "F(35.000000,35.000000)");
 }
 
-TEST_CASE("KNOWN BUG: loader substitution needs a delimiter before the parameter name") {
-	// A parameter at the very start of a production is not replaced. Correct: "35.000000F". Owner: T03.
+TEST_CASE("params: substitution replaces a parameter at the start of a production") {
+	// Was KNOWN BUG 3 (fixed in T03): the name needed a delimiter before it, so "a1+F" stayed as it was.
+	// A name inside a longer word ("a1F") is a different identifier and is still left alone.
 	ProbeParams p;
 	std::map<std::string, float> vars = { { "a1", 35.0f } };
+	CHECK(p.fillRuleWithVariables("a1+F", vars) == "35.000000+F");
+	CHECK(p.fillRuleWithVariables("F+a1", vars) == "F+35.000000");
 	CHECK(p.fillRuleWithVariables("a1F", vars) == "a1F");
 }
 
@@ -421,33 +432,38 @@ TEST_CASE("KNOWN BUG: a rule with parameters applied to a symbol without argumen
 	CHECK(solve("A", 1, { Rule("A", "F(l*2)", 1.0f, 0, { "l" }) }) == "F(l*2)");
 }
 
-TEST_CASE("KNOWN BUG: custom parameters are not substituted into the axiom") {
-	// legacy/parametricTree2.l has axiom "B(1)F(startLength)+(45)A" with `define startLength 1.2`.
-	// Correct: "B(1)F(1.200000)+(45)A". Owner: T03.
+TEST_CASE("params: custom parameters are substituted into the axiom") {
+	// Was KNOWN BUG 10 (fixed in T03): legacy/parametricTree2.l has the axiom "B(1)F(startLength)+(45)A" with
+	// `define startLength 1.2`, which used to stay unsubstituted.
 	LindenmayerTreeParams p((kRulesDir / "legacy" / "parametricTree2.l").string());
-	CHECK(p.axiom == "B(1)F(startLength)+(45)A");
+	CHECK(p.axiom == "B(1)F(1.200000)+(45)A");
 }
 
-TEST_CASE("KNOWN BUG: bare-number header lines of old .l files are read as axioms") {
-	// testX.l and advancedTree.l start with "4 / 0.5 / 0.25 / 7" (depth, length, radius, angle), but the loader
-	// treats every one-token line as the axiom (last wins) and leaves depth/length/radius/angle at defaults.
-	// Correct: depth, initialLength, initialRadius, angle taken from the header. Owner: T03.
+TEST_CASE("params: bare-number header lines of old .l files are depth, length, radius and angle") {
+	// Was KNOWN BUG 11 (fixed in T03): testX.l and advancedTree.l start with "4 / 0.5 / 0.25 / 7"; the loader used to take
+	// every one-token line as the axiom, ignore the values and leave depth uninitialized.
 	LindenmayerTreeParams p((kRulesDir / "legacy" / "advancedTree.l").string());
 	CHECK(p.axiom == "F");
-	CHECK(p.initialLength == 1.0f);
-	CHECK(p.initialRadius == 1.0f);
-	CHECK(p.angle == 15.0f); // default is stored in degrees-as-radians: 15.0, not radians(15)
+	CHECK(p.depth == 4);
+	CHECK(p.initialLength == 0.5f);
+	CHECK(p.initialRadius == 0.25f);
+	CHECK(p.angle == doctest::Approx(0.12217305f)); // 7 degrees
+
+	LindenmayerTreeParams r((kRulesDir / "legacy" / "testX.l").string());
+	CHECK(r.axiom == "f(4.5)ab");
+	CHECK(r.depth == 1);
+	CHECK(r.initialLength == 1.5f);
+	CHECK(r.initialRadius == 0.6f);
+	CHECK(r.angle == doctest::Approx(0.2617994f)); // 15 degrees, converted like every other angle
 }
 
-TEST_CASE("KNOWN BUG: '.l' files ignore the tropism define and the default angle is not converted") {
-	// `define tropism ...` is a TODO in readLFile; the 15.0 default angle is not run through radians().
-	// Correct: defaults radians(15) = 0.261799. Owner: T03.
+TEST_CASE("params: the default angle is radians(15) for every constructor") {
+	// Was KNOWN BUG 12 (fixed in T03): the file loader's untouched default was 15.0 radians. `define tropism` is
+	// parsed now (covered by the treegen loader tests: no shipped .l file uses it).
 	LindenmayerTreeParams p((kRulesDir / "legacy" / "normalTest.l").string());
 	CHECK(p.tropism == glm::vec3(0, -1, 0));
 	LindenmayerTreeParams q("A", 1);
-	CHECK(q.angle == doctest::Approx(0.261799f)); // the string/axiom constructor converts...
-	LindenmayerTreeParams r((kRulesDir / "legacy" / "testX.l").string());
-	CHECK(r.angle == 15.0f); // ...the file loader's untouched default does not
+	CHECK(q.angle == doctest::Approx(0.261799f));
 }
 
 // ---- main -------------------------------------------------------------------------------------------

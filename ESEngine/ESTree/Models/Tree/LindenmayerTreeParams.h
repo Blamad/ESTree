@@ -10,6 +10,8 @@
 #include <glm/common.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+// The includes below are no longer needed by this header itself; the other legacy Lindenmayer files
+// (solver, interpreter, tree) still get them through it. They go away with those files (T07).
 #include <boost/random.hpp>
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string/split.hpp>
@@ -17,6 +19,8 @@
 
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
+
+#include <treegen/TreeParams.h>
 
 class Rule {
 public:
@@ -28,27 +32,18 @@ public:
 	std::vector<std::string> parameters;
 };
 
-class LindenmayerTreeParams {
+// Adapter over treegen::TreeParams (loading, parsing and the data live there). The fields callers read
+// (name, axiom, depth, initialLength, initialRadius, angle, leafGrowthProb, leavesAngleDiversity, tropism,
+// tropismBendingFactor, customParameters) are inherited unchanged; Rule/addRule/getRules are a facade over
+// treegen::Rule. Deleted together with the legacy pipeline in T07.
+class LindenmayerTreeParams : public treegen::TreeParams {
 public:
-	LindenmayerTreeParams(std::string axiom, int depth, float initialLength = 1.0f, float initialRadius = 1.0f, float defaultAngle = 15.0f, float leafGrowthProb = 1.0f)
-		: axiom(axiom), depth(depth), initialLength(initialLength), initialRadius(initialRadius), angle(radians(defaultAngle)), leafGrowthProb(leafGrowthProb) { };
+	LindenmayerTreeParams(std::string axiom, int depth, float initialLength = 1.0f, float initialRadius = 1.0f, float defaultAngle = 15.0f, float leafGrowthProb = 1.0f);
 
+	// Throws treegen::LoadError when the file is missing or malformed.
 	LindenmayerTreeParams(std::string filePath);
 
 	std::string filepath;
-	std::string name;
-
-	std::string axiom;
-	int depth;
-	float initialLength = 1.0f;
-	float initialRadius = 1.0f;
-	float angle = 15.0f;
-	float leafGrowthProb = 1.0f;
-	float leavesAngleDiversity = 0.0f;
-	glm::vec3 tropism = glm::vec3(0,-1,0);
-	float tropismBendingFactor = 0.2f;
-
-	std::map<std::string, float> customParameters;
 
 	void addRule(const Rule &rule);
 	std::vector<Rule> getRules(const std::string &symbol);
@@ -56,14 +51,5 @@ public:
 	double radians(double angle);
 
 protected:
-	std::map<std::string, std::vector<Rule>> rules;
-	
-
-	void loadFile(std::string &filepath);
-	void readLFile(std::string filePath);
-	void readJSONFile(std::string filePath);
-	
-	std::vector<std::string> split(std::string lane);
-	std::vector<std::string> split(std::string lane, std::string splitter);
 	std::string fillRuleWithVariables(std::string rule, std::map<std::string, float> variables);
 };
