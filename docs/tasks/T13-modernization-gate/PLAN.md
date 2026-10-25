@@ -1,6 +1,6 @@
 # T13 — Modernization gate — Implementation Plan
 
-**Status:** in-progress · **Branch:** `task/T13-modernization-gate` · **Base:** `modernization @ a6b77ac`
+**Status:** review · **Branch:** `task/T13-modernization-gate` · **Base:** `modernization @ a6b77ac`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Remove Boost from the build, verify the whole program on a fresh clone, audit the global constraints and leave the docs describing the repository as it is.
@@ -26,11 +26,11 @@
 
 ## Steps
 
-- [ ] 1 CMake/setup.bat/CI/docs Boost removal; reconfigure + build Debug/Release + ctest in the worktree (no `BOOST_LIB`)
-- [ ] 2 `grep -rni boost` audit, `actionlint` via Docker
-- [ ] 3 Fresh clone in `C:\temp\estree-gate`, README commands verbatim, treegen_cli, `--help`, scene smoke; Linux Docker engine OFF and ON
-- [ ] 4 Constraint audit + `/W4` warning count
-- [ ] 5 Docs refresh, SUMMARY.md, PLAN statuses, BACKLOG
+- [x] 1 CMake/setup.bat/CI/docs Boost removal; reconfigure + build Debug/Release + ctest in the worktree (no `BOOST_LIB`)
+- [x] 2 `grep -rni boost` audit, `actionlint` via Docker
+- [x] 3 Fresh clone in `C:\temp\estree-gate`, README commands verbatim, treegen_cli, `--help`, scene smoke; Linux Docker engine OFF and ON
+- [x] 4 Constraint audit + `/W4` warning count
+- [x] 5 Docs refresh, SUMMARY.md, PLAN statuses, BACKLOG
 
 ## Review focus covered
 
@@ -39,6 +39,8 @@ All six lines are audited in SUMMARY.md / the hand-off report with the owning te
 ## Deviations from the brief
 
 - `tests/engine/CMakeLists.txt` edited (it referenced `BOOST_LIBRARIES`).
+- Two Linux build breaks found by the fresh-clone check and fixed minimally: `LindenmayerTreeFactory.h` included `Rigidbody.h` (file is `RigidBody.h`), and GLFW 3.4 needs `wayland-scanner` unless `GLFW_BUILD_WAYLAND` is OFF (D-020). `setup.bat` uses `mklink /j` (`/d` needs elevation).
+- `SUMMARY.md` could not be written either (the harness refused it); its full text is in the hand-off message and must be created by the orchestrator (README, PLAN.md and CLAUDE.md link to it).
 - `REPORT.md` is not written (harness refuses it for subagents); `SUMMARY.md` plus the hand-off message replace it.
 
 ## Blockers
