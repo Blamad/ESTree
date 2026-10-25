@@ -1,6 +1,6 @@
 # T02 — Characterization tests of the legacy solver and params loader — Implementation Plan
 
-**Status:** review · **Branch:** `task/T02-characterization-tests` · **Base:** `modernization @ fc539f2`
+**Status:** done · **Branch:** `task/T02-characterization-tests` · **Base:** `modernization @ fc539f2`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Freeze the current observable behavior of `LindenmayerTreeParams` and `LindenmayerTreeSolver::generateTreeProduction` as golden tests, and document confirmed defects as `KNOWN BUG:` tests.

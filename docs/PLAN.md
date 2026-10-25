@@ -58,7 +58,7 @@ Status is maintained by the orchestrating session only. Legend: `todo` · `in-pr
 |---|---|---|---|---|
 | [T00](tasks/T00-build-baseline/BRIEF.md) | Reproducible build baseline (CMake presets, VS2019 toolset, C++17) | — | M | done |
 | [T01](tasks/T01-test-harness/BRIEF.md) | Test harness (doctest + CTest) | T00 | S | done |
-| [T02](tasks/T02-characterization-tests/BRIEF.md) | Characterization (golden) tests of the legacy solver and params loader | T01 | M | todo |
+| [T02](tasks/T02-characterization-tests/BRIEF.md) | Characterization (golden) tests of the legacy solver and params loader | T01 | M | done |
 | [T03](tasks/T03-treegen-scaffold-params/BRIEF.md) | `treegen` scaffold: CMake target, boundary check, `Module`, `TreeParams`, loaders | T02 | M | todo |
 | [T04](tasks/T04-treegen-rewriter/BRIEF.md) | `treegen` rewriter: expression evaluator, seeded stochastic rewriting | T03 | L | todo |
 | [T05](tasks/T05-treegen-turtle-skeleton/BRIEF.md) | `treegen` turtle interpreter → `Skeleton` | T03 | L | todo |
