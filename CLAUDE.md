@@ -21,7 +21,7 @@ Reply to the user in **Polish**. Code, comments, commit messages and docs are in
 | `ESEngine/GraphicEngine/` | Thin OpenGL layer: window (GLFW), renderer, shaders, VAO, framebuffers, input |
 | `ESEngine/ESTree/` | The application: `ESTree.cpp` (main), `Scenes/`, `Console/` commands, `Models/` |
 | `ESEngine/ESTree/Models/Tree/` | **Legacy** Lindenmayer pipeline (`Lindenmayer*` classes). Being replaced by `treegen` |
-| `ESEngine/TreeGen/` | **Target** engine-independent tree generator (created by T03). Does not exist yet |
+| `ESEngine/TreeGen/` | **Target** engine-independent tree generator, static lib `treegen` (T03: `Error`, `Rng`, `Module`, `TreeParams`, loaders; rewriter/turtle/geometry follow in T04–T06) |
 | `Resources/` | Shaders, textures, fonts, `LindenmayerRules/*.json` (+ `legacy/*.l`) |
 | `Vendor/` | Git submodules: glfw, glad, glm, bullet3, freetype2, rapidjson, stb. **Do not edit** (only T12 may bump them) |
 | `docs/` | Plan, architecture notes, per-task directories (see below) |

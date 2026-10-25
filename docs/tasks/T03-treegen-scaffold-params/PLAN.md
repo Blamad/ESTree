@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
 > or `superpowers:executing-plans`. Steps use checkbox (`- [ ]`) syntax.
 
-**Status:** review · **Branch:** `task/T03-treegen-scaffold-params` · **Base:** `modernization @ e2a1d9b`
+**Status:** done · **Branch:** `task/T03-treegen-scaffold-params` · **Base:** `modernization @ e2a1d9b`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Create the engine-independent `treegen` static library (`Error`, `Rng`, `Module`, `TreeParams`, `.json`/`.l` loaders)
