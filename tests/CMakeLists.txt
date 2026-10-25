@@ -33,6 +33,7 @@ if(MSVC)
 		SOURCES
 			legacy_characterization/legacy_characterization_tests.cpp
 			${PROJECT_SOURCE_DIR}/ESEngine/ESTree/Models/Tree/LindenmayerTreeParams.cpp
-			${PROJECT_SOURCE_DIR}/ESEngine/ESTree/Models/Tree/LindenmayerTreeSolver.cpp)
+			${PROJECT_SOURCE_DIR}/ESEngine/ESTree/Models/Tree/LindenmayerTreeSolver.cpp
+		LIBS treegen) # LindenmayerTreeParams is an adapter over treegen since T03
 endif()
 
