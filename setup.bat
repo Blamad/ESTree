@@ -13,5 +13,5 @@ if "%CLEAN%"=="1" if exist "build\%PRESET%" rmdir /s /q "build\%PRESET%"
 
 cmake --preset %PRESET% || exit /b 1
 
-if not exist "build\%PRESET%\Resources" mklink /d "build\%PRESET%\Resources" "%~dp0Resources"
+if not exist "build\%PRESET%\Resources" mklink /j "build\%PRESET%\Resources" "%~dp0Resources"
 endlocal
