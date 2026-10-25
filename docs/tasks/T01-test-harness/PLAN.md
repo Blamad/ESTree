@@ -1,6 +1,6 @@
 # T01 — Test harness (doctest + CTest) — Implementation Plan
 
-**Status:** review · **Branch:** `task/T01-test-harness` · **Base:** `modernization @ 3e1cbf1`
+**Status:** done · **Branch:** `task/T01-test-harness` · **Base:** `modernization @ 3e1cbf1`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** A `tests/` tree with a doctest runner wired into CTest, two passing smoke tests, and a documented way to add test executables.
