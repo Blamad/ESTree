@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
 > or `superpowers:executing-plans`. Steps use checkbox (`- [ ]`) syntax.
 
-**Status:** in-progress · **Branch:** `task/T10-ownership-and-sanitizers` · **Base:** `modernization @ 3e1cbf1`
+**Status:** review · **Branch:** `task/T10-ownership-and-sanitizers` · **Base:** `modernization @ 3e1cbf1`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Fix the confirmed ownership/lifetime defects in `Scene`/`GameObject`, replace the unsafe
@@ -108,27 +108,27 @@ turn from "hidden" into "crash on exit"; the changes are a few lines each — dr
 ## Steps
 
 ### Step group 1: plan and typed accessor
-- [ ] **1.1** Commit this plan (`T10: add plan`)
-- [ ] **1.2** Add `getComponentAs`/`getComponentsAs` to `GameObject`/`Component`; virtual `~Component`, `~GameObject`
-- [ ] **1.3** Replace casts in `Engine/Scene`, `Engine/GameObject`, `Engine/Manager`, three lines of `ConsoleInterpreter.cpp`
-- [ ] **1.4** Build Debug; `grep -rnE "\((Camera|Transform|RigidBody|Light|Behaviour|Renderable)\*\)" ESEngine/Engine` → empty. Commit
+- [x] **1.1** Commit this plan (`T10: add plan`)
+- [x] **1.2** Add `getComponentAs`/`getComponentsAs` to `GameObject`/`Component`; virtual `~Component`, `~GameObject`
+- [x] **1.3** Replace casts in `Engine/Scene`, `Engine/GameObject`, `Engine/Manager`, three lines of `ConsoleInterpreter.cpp`
+- [x] **1.4** Build Debug; `grep -rnE "\((Camera|Transform|RigidBody|Light|Behaviour|Renderable)\*\)" ESEngine/Engine` → empty. Commit
 
 ### Step group 2: Scene ownership
-- [ ] **2.1** `~Scene` (unregister, clear), `addGameObject`/`createGameObject` via iterator, `removeGameObject` guard + `MouseManager::forgetGameObject`, `LightsManager::removeLight`
-- [ ] **2.2** `grep -n "release()" ESEngine/Engine/Scene` → empty. Build. Commit
+- [x] **2.1** `~Scene` (unregister, clear), `addGameObject`/`createGameObject` via iterator, `removeGameObject` guard + `MouseManager::forgetGameObject`, `LightsManager::removeLight`
+- [x] **2.2** `grep -n "release()" ESEngine/Engine/Scene` → empty. Build. Commit
 
 ### Step group 3: the lifetime chain exposed by 2
-- [ ] **3.1** `PhysicsManager` dtor, `RigidBody` dtor + hull temporaries, `UIManager` `release()`
-- [ ] **3.2** `Window`/`VertexArray`/`UIComponent` virtual dtors, `GLWindow`, `InputState`, `Engine::~Engine`
-- [ ] **3.3** Build Debug + Release; warnings vs baseline (143); smoke scenes 0–4; try `CloseMainWindow()` for the quit path. Commit
+- [x] **3.1** `PhysicsManager` dtor, `RigidBody` dtor + hull temporaries, `UIManager` `release()`
+- [x] **3.2** `Window`/`VertexArray`/`UIComponent` virtual dtors, `GLWindow`, `InputState`, `Engine::~Engine`
+- [x] **3.3** Build Debug + Release; warnings vs baseline (143); smoke scenes 0–4; try `CloseMainWindow()` for the quit path. Commit
 
 ### Step group 4: sanitizer
-- [ ] **4.1** `ESTREE_SANITIZE` block + presets; configure and build `ninja-msvc-asan` Debug
-- [ ] **4.2** Run the exe under ASan (scenes 0–4, quit path); record findings. Commit
+- [x] **4.1** `ESTREE_SANITIZE` block + presets; configure and build `ninja-msvc-asan` Debug
+- [x] **4.2** Run the exe under ASan (scenes 0–4, quit path); record findings. Commit
 
 ### Step group 5: tests (blocked on T01)
-- [ ] **5.1** If `tests/CMakeLists.txt` exists on `modernization`: merge it into this branch; write `tests/engine/*_tests.cpp` (below); run `ctest` normally and under ASan
-- [ ] **5.2** Otherwise: record in REPORT.md that item 6 is pending on T01 and describe the tests
+- [x] **5.1** If `tests/CMakeLists.txt` exists on `modernization`: merge it into this branch; write `tests/engine/*_tests.cpp` (below); run `ctest` normally and under ASan
+- [x] **5.2** (not needed: T01 landed; tests written)
 
 Planned tests (`tests/engine/ownership_tests.cpp`, GL-free; `GameObject`, `Transform`, `Component`, Bullet
 `LinearMath`, boost uuid; no `Scene`: its constructor builds `LightsManager`, which compiles shaders → needs GL):
@@ -144,9 +144,15 @@ None of the PLAN.md review-focus items belong to T10.
 
 ## Deviations from the brief
 
-- Brief item 5 names the preset `vs2019-asan`; the Ninja preset `ninja-msvc-asan` is the one verified end to end
-  (MSVC 19.51 with the ASan runtime). `vs2019-asan` is added as well and verified as far as noted in REPORT.md.
-- Touches the files listed under "Touched outside the owned list" above.
+- The x64 ASan runtime is NOT in MSVC 19.51 (VS "18" has only the i386 one); it is in the VS 2019 Build Tools (14.29).
+  `ninja-msvc-asan` therefore needs `VCVARS64` set to the 2019 `vcvars64.bat`; `vs2019-asan` works as is. Both verified.
+  The 14.29 ASan runtime only starts with the 14.29 CRT DLLs beside the exe (System32 has a newer vcruntime), so the
+  ASan block copies them after each link (D-007). The block sits before the vendored `add_subdirectory` calls so Bullet is instrumented.
+- `tests/CMakeLists.txt` (T01's file): `add_subdirectory(engine)` and a 3-line `estree_asan_runtime` hook in `estree_add_test`.
+- `engine_physics_tests` links Bullet (tests/README says not to) — the point of the test is Bullet teardown order.
+- `GameObject` has no remove-component API, so tests cover add/get only.
+- Touches the files listed under "Touched outside the owned list" above; additionally `GraphicEngine/Core/Renderer.h`,
+  `GraphicEngine/Framebuffer/FrameBuffer.h` (virtual destructors, compiler warning C5205) and `docs/DECISIONS.md` (D-006, D-007).
 
 ## Blockers
 
