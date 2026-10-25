@@ -44,3 +44,13 @@ take them as axiom and leave `depth` uninitialized (`advancedTree.l`, `testX/Y/Z
 
 - T03 flips KNOWN BUG #1, #3, #10, #11, #12; T04 flips #2, #4–#9. Each flip needs a `DECISIONS.md` entry.
 - Consider a slimmer set of own-depth goldens if repository size becomes a concern (≈ 1 MB now).
+
+## Post-merge finding (orchestrator, Linux/Docker, 2026-10-25)
+
+Running the merged tests on Ubuntu 24.04 / GCC 13 (libstdc++, `ESTREE_BUILD_ENGINE=OFF`): **8 of 26 legacy cases fail**
+(`params: every shipped rule file loads...`, `solver: deterministic ... goldens`, `solver: stochastic...`, `expression folding`,
+`substitution keeps the text after the last match`, and three `KNOWN BUG` cases). Example: `A(-2)` with `F(l*3)` yields `F(-2*`
+instead of `F(-2.000000)` — the text after the last regex match is lost. This **confirms** the suspected defect "`res.suffix()` after
+a failed `regex_search`" (unspecified by the standard; MSVC happens to preserve the tail) and makes the legacy solver/loader non-portable.
+Consequence: `legacy_characterization_tests` is built **only for MSVC** (guard in `tests/CMakeLists.txt`); T03/T04 must not reuse the pattern,
+and the new `treegen` tests must be green on Linux too.
