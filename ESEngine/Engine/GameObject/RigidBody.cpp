@@ -6,6 +6,14 @@ RigidBody::RigidBody() : Component(RIGIDBODY) {
 	
 }
 
+RigidBody::~RigidBody() {
+	if (rigidBody == nullptr)
+		return;
+	delete rigidBody->getMotionState();
+	delete rigidBody->getCollisionShape();
+	delete rigidBody;
+}
+
 void RigidBody::update() {
 	updateTransform();
 }
@@ -20,7 +28,7 @@ void RigidBody::updateRigidBody() {
 }
 
 void RigidBody::initAsBox(double mass) {
-	this->transform = (Transform*)getComponent(TRANSFORM);
+	this->transform = getComponentAs<Transform>(TRANSFORM);
 	this->mass = mass;
 
 	btCollisionShape* boxCollisionShape = new btBoxShape(btVector3(1, 1, 1));
@@ -44,8 +52,8 @@ void RigidBody::initAsBox(double mass) {
 }
 
 void RigidBody::initAsAHullShape(double mass) {
-	this->transform = (Transform*)getComponent(TRANSFORM);
-	Mesh* mesh = (Mesh*)getComponent(RENDERABLE);
+	this->transform = getComponentAs<Transform>(TRANSFORM);
+	Mesh* mesh = getComponentAs<Mesh>(RENDERABLE);
 	this->mass = mass;
 
 	btCollisionShape* simplifiedConvexShape = calculateHullCollisionShape(mesh);
@@ -69,7 +77,7 @@ void RigidBody::initAsAHullShape(double mass) {
 }
 
 void RigidBody::initAsAStaticPlane() {
-	this->transform = (Transform*)getComponent(TRANSFORM);
+	this->transform = getComponentAs<Transform>(TRANSFORM);
 	this->mass = 0;
 	
 	btCollisionShape* boxCollisionShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
@@ -145,5 +153,10 @@ btCollisionShape* RigidBody::calculateHullCollisionShape(Mesh* mesh) {
 	btScalar margin = collisionShape->getMargin();
 	hull->buildHull(margin);
 	
-	return new btConvexHullShape((const btScalar*)hull->getVertexPointer(), hull->numVertices());
+	// btConvexHullShape copies the points, so the temporaries are no longer referenced.
+	btConvexHullShape *hullShape = new btConvexHullShape((const btScalar*)hull->getVertexPointer(), hull->numVertices());
+	delete hull;
+	delete collisionShape;
+	delete trimesh;
+	return hullShape;
 }

@@ -33,3 +33,13 @@ Consequences: Loader tests iterate over every file in `Resources/LindenmayerRule
 Decision: Root `cmake_minimum_required(3.21)` (presets schema v3). Presets pass `CMAKE_POLICY_VERSION_MINIMUM=3.5` so CMake 4.x accepts vendored projects (Bullet 2.4.3, FreeType 2.8) without editing `Vendor/`. Boost is configured through `BOOST_LIB` (env or cache) and linked explicitly (`date_time thread chrono system atomic filesystem program_options`, `vc140` static libs) with `BOOST_ALL_NO_LIB`, because auto-link would request non-existent `vc142/vc145` names. `bcrypt` is linked on Windows for `boost::uuids`. C++17 is the project standard.
 Why: Owner installed CMake 4.4.4; the bundled VS2019 CMake 3.20 cannot read schema v3 and cannot generate for VS 2026.
 Consequences: Revisit when Boost is removed (T13). `Vendor/` untouched.
+
+## D-006 — Typed component access keeps the `ComponentType` enum (2026-10-25, T10)
+Decision: `GameObject::getComponentAs<T>(ComponentType)` / `getComponentsAs<T>(ComponentType)` (and the forwarding `Component::getComponentAs<T>`) are `static_cast` accessors; `Component` has a virtual destructor so Debug builds `assert(dynamic_cast<T*>(...))`. `getComponent(TYPE)` is unchanged. Casts in `ESEngine/Engine` were replaced; the ones in `ESEngine/ESTree` (scenes, console commands, `Models/`) still use C-casts.
+Why: Smallest change that fits the existing enum scheme; no ECS redesign (BACKLOG).
+Consequences: A wrong `T` for a type (e.g. `InstancedMesh` read as `Mesh`) now asserts in Debug instead of being silent UB. Call sites in `ESTree/` can migrate at will.
+
+## D-007 — ASan build needs the VS 2019 Build Tools toolset on this machine (2026-10-25, T10)
+Decision: `ESTREE_SANITIZE=ON` (presets `ninja-msvc-asan`, `vs2019-asan`) adds `/fsanitize=address` to ESTree, the tests and the vendored libraries. The x64 ASan runtime exists only in the VS 2019 Build Tools here (VS "18" ships the i386 runtime only), so `ninja-msvc-asan` is configured with `VCVARS64` pointing at the 2019 `vcvars64.bat`. The 14.29 ASan runtime only starts together with the 14.29 CRT DLLs (a newer `vcruntime140.dll` in System32 gives 0xC0000142), so the CRT DLLs are copied next to each executable after linking. GCC/Clang get `-fsanitize=address,undefined`.
+Why: Without the copy no ASan executable runs on this machine.
+Consequences: ASan executables are self-contained next to their DLLs; on a machine whose System32 CRT matches the toolset the copy is redundant but harmless.

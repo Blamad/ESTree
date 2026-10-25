@@ -6,6 +6,7 @@
 
 class Renderer {
 public:
+	virtual ~Renderer() = default;
 	virtual void renderObject(VertexArray &vertexArray, Shader *shader) = 0;
 	virtual void renderInstancedObject(VertexArray &vertexArray, Shader *shader, int &amount) = 0;
 };

@@ -22,7 +22,7 @@ void ConsoleInterpreter::processInput(std::string &input) {
 		if (line.at(0) == "normals" && line.size() == 2) {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
-				Mesh *mesh = (Mesh*)selected->getComponent(RENDERABLE);
+				Mesh *mesh = selected->getComponentAs<Mesh>(RENDERABLE);
 				if (line.at(1) == "off") {
 					mesh->hideNormalVisualisation();
 				}
@@ -37,7 +37,7 @@ void ConsoleInterpreter::processInput(std::string &input) {
 		if (line.at(0) == "wiring" && line.size() == 2) {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
-				Mesh *mesh = (Mesh*)selected->getComponent(RENDERABLE);
+				Mesh *mesh = selected->getComponentAs<Mesh>(RENDERABLE);
 				if (line.at(1) == "off") {
 					mesh->hideMeshWiring();
 				}
@@ -89,7 +89,7 @@ void ConsoleInterpreter::processInput(std::string &input) {
 			GameObject *selected = Context::getMouseManager()->getSelectedGameObject();
 			if (selected != nullptr) {
 				glm::vec3 position = ConsoleUtils::parseCoords(line.at(1));
-				RigidBody *rigidbody = (RigidBody*)selected->getComponent(RIGIDBODY);
+				RigidBody *rigidbody = selected->getComponentAs<RigidBody>(RIGIDBODY);
 				rigidbody->translate(position);
 			}
 			return;

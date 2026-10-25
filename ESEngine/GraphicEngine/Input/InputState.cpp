@@ -74,10 +74,4 @@ void InputState::pushKeyEvent(int key, KeyState state) {
 	keys[key] = state == RELEASED ? false : true;
 }
 
-InputState::~InputState() {
-	delete &mousePosition;
-	delete &mouseScroll;
-	delete &mouseClick;
-	delete &keyEvents;
-	delete &charEvents;
-}
+InputState::~InputState() = default;

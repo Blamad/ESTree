@@ -19,7 +19,13 @@ PhysicsManager::PhysicsManager() {
 }
 
 PhysicsManager::~PhysicsManager() {
-	
+	// Reverse order of creation. The owner has to take all rigid bodies out of the world first:
+	// ~btCollisionWorld dereferences every body still registered.
+	delete dynamicsWorld;
+	delete solver;
+	delete dispatcher;
+	delete collisionConfiguration;
+	delete broadphase;
 }
 
 void PhysicsManager::addRigidBody(RigidBody *rigidBody) {
@@ -32,6 +38,8 @@ void PhysicsManager::reloadRigidBody(RigidBody *rigidBody) {
 }
 
 void PhysicsManager::removeRigidBody(RigidBody *rigidBody) {
+	if (rigidBody == nullptr || rigidBody->rigidBody == nullptr)
+		return;
 	dynamicsWorld->removeRigidBody(rigidBody->rigidBody);
 }
 

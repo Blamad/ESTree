@@ -11,6 +11,13 @@ void MouseManager::update(double dt, InputState &inputState) {
 		updateCameraBehaviour(dt, inputState);
 }
 
+void MouseManager::forgetGameObject(GameObject *go) {
+	if (pickedGameObject == go)
+		releaseObject();
+	if (selectedGameObject == go)
+		selectedGameObject = nullptr;
+}
+
 void MouseManager::updatePhysicsWorld(double dt, InputState &inputState) {
 	for (ClickEvent const& click : inputState.getMouseClickEvents())
 		processMouseClick(click);
@@ -45,7 +52,7 @@ void MouseManager::updatePickedObject(double dt, InputState& inputState) {
 }
 
 void MouseManager::pickObject(GameObject* go) {	
-	RigidBody *rb = (RigidBody*)go->getComponent(RIGIDBODY);
+	RigidBody *rb = go->getComponentAs<RigidBody>(RIGIDBODY);
 	setSelectedGameObject(go);
 	if (!rb->pickable) {
 		return;
@@ -61,7 +68,7 @@ void MouseManager::pickObject(GameObject* go) {
 }
 
 void MouseManager::releaseObject() {
-	RigidBody *rb = (RigidBody*)pickedGameObject->getComponent(RIGIDBODY);
+	RigidBody *rb = pickedGameObject->getComponentAs<RigidBody>(RIGIDBODY);
 	rb->changeMass(pickedGameObjectMass);
 
 	pickedGameObject = nullptr;
@@ -74,14 +81,14 @@ void MouseManager::releaseObject() {
 
 void MouseManager::moveGameObject(GameObject *go, double x, double y) {
 
-	glm::vec3 distVec = camera->position - ((Transform*)go->getComponent(TRANSFORM))->getPosition();
+	glm::vec3 distVec = camera->position - go->getComponentAs<Transform>(TRANSFORM)->getPosition();
 	float dist = sqrtf(dot(distVec, distVec));
 	
 	double distanceMod = dist * 0.0015;
 	glm::vec4 transform(x * distanceMod, -y * distanceMod, 0, 0);
 	transform = transform * camera->getViewMatrix();
 	
-	((RigidBody*)go->getComponent(RIGIDBODY))->translate(glm::vec3(transform));
+	go->getComponentAs<RigidBody>(RIGIDBODY)->translate(glm::vec3(transform));
 }
 
 float MouseManager::calcDistance(glm::vec3 vecA, glm::vec3 vecB) {

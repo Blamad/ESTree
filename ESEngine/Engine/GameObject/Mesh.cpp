@@ -22,11 +22,11 @@ void Mesh::draw(Renderer &renderer, Shader *shader) {
 
 	for (std::shared_ptr<GameObject> child : parent->children) {
 		if (child->getComponent(RENDERABLE) != nullptr) {
-			((Renderable*)child->getComponent(RENDERABLE))->draw(renderer, shader);
+			child->getComponentAs<Renderable>(RENDERABLE)->draw(renderer, shader);
 		}
 	}
 
-	Transform *transform = (Transform*)this->getComponent(TRANSFORM);
+	Transform *transform = getComponentAs<Transform>(TRANSFORM);
 
 	shader->use();
 

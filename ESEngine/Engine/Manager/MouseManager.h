@@ -34,6 +34,9 @@ public:
 		selectedGameObject = go;
 	}
 
+	// Must be called before a game object is destroyed: drops the picked/selected pointers to it.
+	void forgetGameObject(GameObject *go);
+
 private:
 	static Logger logger;
 	

@@ -2,16 +2,14 @@
 
 UIManager::UIManager() {
 	addComponent(std::make_unique<DepthFramePreviewComponent>());
-	depthPreviewComponent = (DepthFramePreviewComponent*)uiComponents[0].get();
+	depthPreviewComponent = static_cast<DepthFramePreviewComponent*>(uiComponents[0].get());
 	addComponent(std::make_unique<ConsoleComponent>());
 
 	Context::setUIManager(this);
 }
 
 UIManager::~UIManager() {
-	for (auto & component : uiComponents) {
-		component.release();
-	}
+
 }
 
 void UIManager::toggleDepthBufferComponent(bool enabled) {

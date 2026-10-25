@@ -14,9 +14,11 @@ Engine::Engine() {
 }
 
 Engine::~Engine() {
-	window.reset();
-	renderer.reset();
+	// Reverse of construction: scene objects may own GL resources, so they go before the window
+	// (whose destructor terminates GLFW and with it the GL context).
 	sceneManager.reset();
+	renderer.reset();
+	window.reset();
 }
 
 void Engine::startRendering() {

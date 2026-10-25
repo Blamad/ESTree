@@ -5,6 +5,62 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+option(ESTREE_SANITIZE "Instrument ESTree and its tests with AddressSanitizer (plus UBSan on GCC/Clang)" OFF)
+if(ESTREE_SANITIZE)
+	if(MSVC)
+		# Applies to every target defined below, the vendored libraries (Bullet, GLFW, FreeType) included, so that
+		# ASan also sees accesses made inside Bullet.
+		# ASan is incompatible with /RTC* and /ZI; the annotation macros avoid LNK2038 mismatches.
+		add_compile_options(/fsanitize=address)
+		add_compile_definitions(_DISABLE_VECTOR_ANNOTATION _DISABLE_STRING_ANNOTATION)
+		add_link_options(/INCREMENTAL:NO)
+		foreach(_lang C CXX)
+			foreach(_cfg DEBUG RELWITHDEBINFO)
+				string(REGEX REPLACE "/RTC[1csu]+" "" CMAKE_${_lang}_FLAGS_${_cfg} "${CMAKE_${_lang}_FLAGS_${_cfg}}")
+				string(REPLACE "/ZI" "/Zi" CMAKE_${_lang}_FLAGS_${_cfg} "${CMAKE_${_lang}_FLAGS_${_cfg}}")
+			endforeach()
+		endforeach()
+
+		# The ASan runtime of a toolset only initialises with the CRT DLLs of the same toolset; a newer
+		# vcruntime140.dll in System32 makes the process die with 0xC0000142. So the matching CRT DLLs and the
+		# ASan runtime are copied next to every executable (the exe directory wins over System32 and PATH).
+		get_filename_component(_msvc_tools "${CMAKE_CXX_COMPILER}/../../../.." ABSOLUTE)
+		get_filename_component(_msvc_ver "${_msvc_tools}" NAME)
+		file(GLOB _asan_crt_release "${_msvc_tools}/../../../Redist/MSVC/${_msvc_ver}/x64/Microsoft.VC*.CRT")
+		file(GLOB _asan_crt_debug "${_msvc_tools}/../../../Redist/MSVC/${_msvc_ver}/debug_nonredist/x64/Microsoft.VC*.DebugCRT")
+		set(_asan_bin "${_msvc_tools}/bin/Hostx64/x64")
+		# (release name, debug name) of every runtime DLL present in both redistributable folders
+		set(_asan_dlls "clang_rt.asan_dynamic-x86_64.dll|clang_rt.asan_dbg_dynamic-x86_64.dll")
+		foreach(_dll vcruntime140 vcruntime140_1 msvcp140 msvcp140_1 msvcp140_2 msvcp140_atomic_wait msvcp140_codecvt_ids concrt140)
+			if(EXISTS "${_asan_crt_release}/${_dll}.dll" AND EXISTS "${_asan_crt_debug}/${_dll}d.dll")
+				list(APPEND _asan_dlls "${_dll}.dll|${_dll}d.dll")
+			endif()
+		endforeach()
+		# One link at a time: test executables share an output directory and copy the same DLLs into it.
+		set_property(GLOBAL APPEND PROPERTY JOB_POOLS estree_asan_runtime=1)
+		function(estree_asan_runtime target)
+			set_property(TARGET ${target} PROPERTY JOB_POOL_LINK estree_asan_runtime)
+			foreach(_pair ${_asan_dlls})
+				string(REPLACE "|" ";" _pair "${_pair}")
+				list(GET _pair 0 _release_dll)
+				list(GET _pair 1 _debug_dll)
+				if(_release_dll MATCHES "^clang_rt")
+					set(_from_release "${_asan_bin}/${_release_dll}")
+					set(_from_debug "${_asan_bin}/${_debug_dll}")
+				else()
+					set(_from_release "${_asan_crt_release}/${_release_dll}")
+					set(_from_debug "${_asan_crt_debug}/${_debug_dll}")
+				endif()
+				add_custom_command(TARGET ${target} POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<IF:$<CONFIG:Debug>,${_from_debug},${_from_release}>" "$<TARGET_FILE_DIR:${target}>")
+			endforeach()
+		endfunction()
+	else()
+		add_compile_options(-fsanitize=address,undefined -fno-omit-frame-pointer)
+		add_link_options(-fsanitize=address,undefined)
+	endif()
+endif()
+
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
@@ -105,6 +161,9 @@ endif()
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
+if(COMMAND estree_asan_runtime)
+	estree_asan_runtime(${PROJECT_NAME})
+endif()
 
 option(ESTREE_BUILD_TESTS "Build unit tests (doctest)" ON)
 if(ESTREE_BUILD_TESTS)
