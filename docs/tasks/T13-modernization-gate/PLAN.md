@@ -1,6 +1,6 @@
 # T13 — Modernization gate — Implementation Plan
 
-**Status:** review · **Branch:** `task/T13-modernization-gate` · **Base:** `modernization @ a6b77ac`
+**Status:** done · **Branch:** `task/T13-modernization-gate` · **Base:** `modernization @ a6b77ac`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Remove Boost from the build, verify the whole program on a fresh clone, audit the global constraints and leave the docs describing the repository as it is.
