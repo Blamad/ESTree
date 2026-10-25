@@ -64,7 +64,7 @@ Status is maintained by the orchestrating session only. Legend: `todo` · `in-pr
 | [T05](tasks/T05-treegen-turtle-skeleton/BRIEF.md) | `treegen` turtle interpreter → `Skeleton` | T03 | L | done |
 | [T06](tasks/T06-treegen-geometry/BRIEF.md) | `treegen` geometry: `Skeleton` → `MeshData` + leaf transforms | T05 | L | done |
 | [T07](tasks/T07-engine-adapter-switchover/BRIEF.md) | Engine adapter switch-over; delete legacy `Lindenmayer*` pipeline | T04, T06 | M | todo |
-| [T08](tasks/T08-treegen-cli-obj-export/BRIEF.md) | Headless `treegen_cli` + OBJ writer | T04, T06 | S | todo |
+| [T08](tasks/T08-treegen-cli-obj-export/BRIEF.md) | Headless `treegen_cli` + OBJ writer | T04, T06 | S | done |
 | [T09](tasks/T09-drop-boost-engine/BRIEF.md) | Remove Boost from engine code outside `Models/Tree` | T00 | M | done |
 | [T10](tasks/T10-ownership-and-sanitizers/BRIEF.md) | Ownership fixes, casts, ASan/UBSan pass over the engine | T00 | M | done |
 | [T11](tasks/T11-ci-and-linux-build/BRIEF.md) | GitHub Actions CI (Windows + Linux), headless tests | T01 | M | done (CI not yet run on GitHub) |

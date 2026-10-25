@@ -1,6 +1,6 @@
 # T08 â€” Headless `treegen_cli` and OBJ writer â€” Implementation Plan
 
-**Status:** review Â· **Branch:** `task/T08-treegen-cli-obj-export` Â· **Base:** `modernization @ 1bb4e50`
+**Status:** done Â· **Branch:** `task/T08-treegen-cli-obj-export` Â· **Base:** `modernization @ 1bb4e50`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** A command-line tool linking only `treegen` that turns a rule file plus a seed into an OBJ file, with the OBJ writer living in `treegen`.
