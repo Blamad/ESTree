@@ -74,6 +74,9 @@ if(ESTREE_BUILD_ENGINE)
 	option(GLFW_BUILD_DOCS OFF)
 	option(GLFW_BUILD_EXAMPLES OFF)
 	option(GLFW_BUILD_TESTS OFF)
+	# GLFW 3.4 builds its Wayland backend by default on Linux and then needs wayland-scanner and protocol packages;
+	# the engine only targets X11 there (the CI engine-ON job installs the X11 packages only).
+	option(GLFW_BUILD_WAYLAND "Build support for Wayland" OFF)
 	add_subdirectory(Vendor/glfw)
 
 	option(BUILD_BULLET2_DEMOS OFF)
