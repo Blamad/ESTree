@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
 > or `superpowers:executing-plans`. Steps use checkbox (`- [ ]`) syntax.
 
-**Status:** review · **Branch:** `task/T10-ownership-and-sanitizers` · **Base:** `modernization @ 3e1cbf1`
+**Status:** done · **Branch:** `task/T10-ownership-and-sanitizers` · **Base:** `modernization @ 3e1cbf1`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Fix the confirmed ownership/lifetime defects in `Scene`/`GameObject`, replace the unsafe

@@ -22,3 +22,8 @@ Ideas that came up during analysis. Not scheduled; promote to a task only on the
 - Replace subroutines/`std140 binding=1` with a GL 3.3/4.1-compatible path (macOS), or a Vulkan/WebGPU backend behind `Renderer`.
 - Dear ImGui instead of the hand-written console UI for parameter editing.
 - Typed component access (`getComponent<T>()`) replacing C-casts everywhere (T10 only fixes the worst cases).
+
+## From T10 (ownership pass)
+- 26 remaining C-style casts in `ESEngine/ESTree`; typed `getComponent<T>()` migration there.
+- Removal of the active camera is unguarded; static `Context` pointers outlive their objects.
+- GL objects are never deleted (`glDelete*`), fine at exit, wrong if scenes are ever reloaded.
