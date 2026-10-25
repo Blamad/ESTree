@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
 > or `superpowers:executing-plans`. Steps use checkbox (`- [ ]`) syntax.
 
-**Status:** review · **Branch:** `task/T06-treegen-geometry` · **Base:** `modernization @ 9c59d75`
+**Status:** done · **Branch:** `task/T06-treegen-geometry` · **Base:** `modernization @ 9c59d75`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Turn a `Skeleton` into render-ready CPU data (`MeshData` trunk + leaf transforms) without any engine type, and
