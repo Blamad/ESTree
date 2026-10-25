@@ -7,7 +7,7 @@
 #include <fstream>
 #include <iostream>
 
-#include <GLM\common.hpp>
+#include <glm/common.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <boost/random.hpp>

@@ -3,7 +3,7 @@
 #include "Engine/GameObject/Transform.h"
 #include "Engine/GameObject/Mesh.h"
 
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 
 class TreeBehaviour : public Behaviour {
 public:

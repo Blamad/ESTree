@@ -33,20 +33,33 @@ Resource paths are relative to the working directory (`Resources/...`); `setup.b
 
 ## Build and test
 
-> **Provisional until task T00 lands.** T00 replaces this section with verified commands and
-> CMake presets. If a command here fails, fix it as part of T00 and record the result in
-> `docs/tasks/T00-build-baseline/REPORT.md`.
-
-Machine-specific paths (compilers, Boost location) are in `CLAUDE.local.md` (git-ignored).
+Requires CMake ≥ 3.21 and `BOOST_LIB` (env) pointing at Boost 1.72 (`Includes/`, `Libs/`) until
+Boost is removed (T09/T13). Machine-specific paths (CMake/Ninja location, compilers, Boost) are in
+`CLAUDE.local.md` (git-ignored). Verified in T00 (preset `vs2019`, MSVC v142, CMake 4.4.4):
 
 ```bash
-# configure (generator/paths: see CLAUDE.local.md)
-cmake -S . -B build -G "Visual Studio 16 2019" -A x64
-# build
-cmake --build build --config Debug
+cmake --preset vs2019                      # configure into build/vs2019
+cmake --build --preset vs2019-debug --parallel     # or vs2019-release
+# run (working directory must contain Resources/; setup.bat links it)
+cd build/vs2019 && ./Debug/ESTree.exe --help
 # tests (exist from T01 on)
-ctest --test-dir build -C Debug --output-on-failure
+ctest --test-dir build/vs2019 -C Debug --output-on-failure
 ```
+
+Faster alternative (Ninja + newest MSVC 19.51, verified Debug, ~1.5 min clean). Needs the MSVC
+environment, so wrap each command with `scripts\msvc-env.cmd` (set `VCVARS64` to override the
+`vcvars64.bat` path):
+
+```bash
+cmd //c "scripts\\msvc-env.cmd cmake --preset ninja-msvc"
+cmd //c "scripts\\msvc-env.cmd cmake --build --preset ninja-msvc-debug"
+```
+
+Presets: `vs2019` (verified Debug+Release), `ninja-msvc` (verified Debug), `vs2026` (does not
+configure on this machine: CMake can't see the VS 2026 Build Tools instance). Preset names are in
+`CMakePresets.json`. A clean `vs2019` build takes ~5 min (Bullet is the long pole); incremental
+builds of the app target take seconds. Baseline numbers: `docs/tasks/T00-build-baseline/notes/baseline.md`
+(143 unique `/W4` project warnings — don't add new ones).
 
 Agents cannot open a GL window and cannot judge rendered images. Anything that needs the running
 engine is **"needs human verification"**: say so explicitly in `REPORT.md` and give the exact
@@ -92,7 +105,8 @@ Fixed by the task named in brackets; leave them alone elsewhere.
 - Fixed buffers: 100 000 vertices / 4 000 000 indices in `LindenmayerTree` ctor, no overflow check [T06]
 - `Scene::~Scene` calls `release()` on `unique_ptr`s (leak); many `(Type*)getComponent(...)` C-casts [T10]
 - `ESTree.cpp --help` says scenes `0-3`, but scenes `0-4` exist [T09]
-- Build is hard-wired to VS14 2015 + Boost 1.72 `vc140` libs; `<GLM\common.hpp>` backslash include [T00, T11]
+- Build still links prebuilt Boost 1.72 `vc140` libs (`BOOST_LIB`); removed by T09/T13. Linux is
+  untested [T11]
 
 ## Working on a task
 

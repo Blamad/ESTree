@@ -4,7 +4,7 @@
 #include <memory>
 #include <map>
 #include <functional>
-#include <GLM/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "Engine/GameObject/GameObject.h"
 #include "GraphicEngine/Input/InputState.h"
