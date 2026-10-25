@@ -1,6 +1,6 @@
 # T11 — CI (Windows + Linux) and headless Linux build — Report
 
-**Result:** done locally; **never run on GitHub** · **Branch:** `task/T11-ci-and-linux-build` · **Final commit:** `3f76c2e` (merged into `modernization` as `c70f4fe`)
+**Result:** done; **green on GitHub since 2026-10-25** (after two workflow fixes, see the section at the end) · **Branch:** `task/T11-ci-and-linux-build` · **Final commit:** `3f76c2e` (merged into `modernization` as `c70f4fe`)
 
 The implementing subagent could not write this file; the orchestrator wrote it from the agent's hand-back and re-verified
 the Windows side and (after merging T02) the Linux side in Docker.

@@ -67,7 +67,7 @@ Status is maintained by the orchestrating session only. Legend: `todo` · `in-pr
 | [T08](tasks/T08-treegen-cli-obj-export/BRIEF.md) | Headless `treegen_cli` + OBJ writer | T04, T06 | S | done |
 | [T09](tasks/T09-drop-boost-engine/BRIEF.md) | Remove Boost from engine code outside `Models/Tree` | T00 | M | done |
 | [T10](tasks/T10-ownership-and-sanitizers/BRIEF.md) | Ownership fixes, casts, ASan/UBSan pass over the engine | T00 | M | done |
-| [T11](tasks/T11-ci-and-linux-build/BRIEF.md) | GitHub Actions CI (Windows + Linux), headless tests | T01 | M | done (CI not yet run on GitHub) |
+| [T11](tasks/T11-ci-and-linux-build/BRIEF.md) | GitHub Actions CI (Windows + Linux), headless tests | T01 | M | done (CI green on GitHub, 2026-10-25) |
 | [T12](tasks/T12-dependency-refresh/BRIEF.md) | Bump submodule pins (GLFW, glm, Bullet, FreeType, stb, rapidjson) | T07, T09, T10 | M | done |
 | [T13](tasks/T13-modernization-gate/BRIEF.md) | Final gate: Boost removed from CMake, docs, README, acceptance run | all | S | done |
 
@@ -77,7 +77,7 @@ Size: S ≈ half a day, M ≈ 1–2 days, L ≈ 2–4 days of focused agent work
 
 All tasks T00-T12 are merged into `modernization`; T13 is in review. The build is Boost-free, `treegen` is a standalone library with a
 headless CLI, 232 headless CTest entries pass on Windows (MSVC) and Linux (GCC 13), and the legacy `Lindenmayer*` pipeline is gone. Open items:
-the CI workflow has never run on GitHub, and the owner's visual/behavioural checklist (consolidated, with exact steps, in
+the CI workflow ran green on GitHub on 2026-10-25 (after two workflow fixes), and the owner's visual/behavioural checklist (consolidated, with exact steps, in
 [`tasks/T13-modernization-gate/SUMMARY.md`](tasks/T13-modernization-gate/SUMMARY.md)) is only partly confirmed. `modernization` is not merged into `master`;
 that is the owner's decision.
 

@@ -18,11 +18,11 @@ Branch: `modernization` (integration); `master` is still `c30a23c`.
 
 ## Remaining debt
 
-CI has never run on GitHub (and the Windows job now builds all of Bullet); the engine runs only on the NVIDIA GPU (Intel HD 530 driver crash, BACKLOG); 26 C-style casts remain in `ESEngine/ESTree`; GL objects are never deleted; project warnings remain; `obj_tests` write to the OS temp dir; the rewriter keeps a six-decimal numeric model for legacy digit-compatibility (D-014); owner verification is partial (below).
+The Windows CI job builds all of Bullet (slow; restrict to the three libraries in use); the engine runs only on the NVIDIA GPU (Intel HD 530 driver crash, BACKLOG); 26 C-style casts remain in `ESEngine/ESTree`; GL objects are never deleted; project warnings remain; `obj_tests` write to the OS temp dir; the rewriter keeps a six-decimal numeric model for legacy digit-compatibility (D-014); owner verification is partial (below).
 
 ## Recommended next steps
 
-1. Push `modernization` and read the first Actions run.
+1. (done) `modernization` is pushed and CI is green on GitHub.
 2. Finish the checklist below and decide on merging into `master`.
 3. Cheap wins: restrict Bullet to the three libraries in CI, warning cleanup with `/WX`, GLFW 3.5.1.
 4. Product work (see `docs/BACKLOG.md`): rule conditions, smooth shared-joint geometry, glTF export, then a Blender/Godot plugin or a WASM rule editor on top of `treegen`.
@@ -33,7 +33,7 @@ Already confirmed by the owner: window closes cleanly; moving a crate; `rm` twic
 
 Setup: `cd build\ninja-msvc` (or `build\vs2019` after `setup.bat`), run `Debug\ESTree.exe --scene N` on the NVIDIA GPU; `Resources` must be linked next to the binaries.
 
-1. **CI:** push `modernization`, open the Actions tab, check Windows Debug/Release (engine ON) and Linux ON/OFF, confirm the badge URL (`Blamad/ESTree`, `ci.yml`), paste failing logs.
+1. ~~CI~~ — done: pushed, fixed two workflow bugs (PowerShell `-D...=3.5` splitting, mixed generators in a shared FetchContent cache) and confirmed green by the owner on 2026-10-25 (Windows Debug/Release with the engine, Linux ON/OFF). Still worth a glance: the README badge URL (`Blamad/ESTree`, `ci.yml`).
 2. **Scenes 1, 2, 4:** scene 1 physics behaves sensibly and LMB picks a crate (Bullet 3.25); scenes 2 and 4 trees render; grass looks as before.
 3. **Console text:** `~`, `help` — text renders (FreeType 2.15), `tree`/`rtree` list `seed <int>`; window, input and resize work (GLFW 3.4).
 4. **Seeds (T07 items 5–6):** `tree file 4` twice gives different trees and seeds (not file 15, it is deterministic); with a tree selected `rtree` gives a new tree and seed, `rtree seed 42` reproduces the tree from `tree file 4 ... seed 42`.

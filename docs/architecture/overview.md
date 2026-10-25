@@ -2,7 +2,7 @@
 
 The engine layers below are the 2017-2020 design, cleaned up (ownership, casts, no Boost) but not redesigned. Tree generation lives in
 the engine-independent `treegen` library (section *Tree pipeline*). Around them: 232 CTest entries (doctest cases and CLI checks), a CLI tool
-(`tools/treegen_cli`), a GitHub Actions workflow (never run on GitHub yet) and CMake presets. Facts were read from the code and verified by
+(`tools/treegen_cli`), a GitHub Actions workflow (green on GitHub since 2026-10-25: Windows MSVC Debug/Release with the engine, Linux GCC engine ON/OFF) and CMake presets. Facts were read from the code and verified by
 builds/tests; what is drawn on screen is verified only by the owner.
 
 ## Engine

@@ -115,8 +115,9 @@ Also closed: Boost is gone from sources and build (T09, T07, T13); tropism `T` w
 accepted by the owner (D-010, D-016).
 
 Still open (details in `docs/BACKLOG.md` and `docs/tasks/T13-modernization-gate/SUMMARY.md`):
-- The CI workflow `.github/workflows/ci.yml` has never run on GitHub (neither the Windows engine build nor the Linux jobs); only its
-  commands were run locally.
+- CI (`.github/workflows/ci.yml`) is green on GitHub since 2026-10-25 (Windows MSVC Debug/Release with the engine, Linux GCC engine ON/OFF).
+  Gotchas found by the first run: quote every `-DNAME=3.5` argument in PowerShell steps, and keep the generator identical for every job
+  that shares a FetchContent cache directory. The Windows job builds all of Bullet (slow; BACKLOG).
 - The engine crashes the Intel HD 530 OpenGL driver (`ig9icd64.dll`); it runs on the NVIDIA GPU only.
 - 26 C-style casts remain in `ESEngine/ESTree`; removing the active camera is unguarded; static `Context` pointers outlive their
   objects; GL objects are never deleted (`glDelete*`); leaf sway may pause while the camera moves (unreproduced).
