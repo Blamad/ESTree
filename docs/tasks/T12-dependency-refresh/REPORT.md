@@ -43,3 +43,10 @@ No `glm/gtx` header is used; `glm/gtc/quaternion.hpp` only in `Turtle.cpp`, `Geo
 
 - Consider GLFW 3.5.1; `Vendor/stb` and `Vendor/rapidjson` follow master.
 - Bullet object paths exceed the Windows path limit in deep worktree paths (harmless; a shallower build path would be safer).
+
+## Orchestrator verification of the merged tree (clean build dir `build/clean`, Bullet 3.25 from scratch)
+
+- Debug: configure + full clean build exit 0 in 1m49s; `100% tests passed out of 232`. Release: build exit 0, `100% tests passed out of 232`.
+- Unique project `/W4` warnings on this clean full build, `Vendor/` excluded (orchestrator's script): **105** (the agent counted 121 with its own method on the same state; compare each method only with itself).
+- Smoke, scenes 0–4: alive after 14 s, closed cleanly with `Quitting..`, trees generated (scene 0: 1, scene 2: 4, scene 4: 16), no crash events.
+- Linux Docker (Ubuntu 24.04/GCC 13, engine OFF, main checkout with the new pins): `100% tests passed, 0 tests failed out of 219`.

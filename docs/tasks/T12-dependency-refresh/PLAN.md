@@ -1,6 +1,6 @@
 # T12 — Dependency refresh — Implementation Plan
 
-**Status:** review  ·  **Branch:** `task/T12-dependency-refresh`  ·  **Base:** `modernization @ 5c90420`
+**Status:** done  ·  **Branch:** `task/T12-dependency-refresh`  ·  **Base:** `modernization @ 5c90420`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Move the `Vendor/` submodule pins to current stable release tags where that is low-risk, fixing the resulting API breaks.
