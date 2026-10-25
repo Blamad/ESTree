@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
 > or `superpowers:executing-plans`. Steps use checkbox (`- [ ]`) syntax.
 
-**Status:** in-progress · **Branch:** `task/T07-engine-adapter-switchover` · **Base:** `modernization @ 1bb4e50`
+**Status:** review · **Branch:** `task/T07-engine-adapter-switchover` · **Base:** `modernization @ 1bb4e50`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** `LindenmayerTree` becomes a thin adapter over `treegen::generateTree` that uploads into the existing
@@ -89,23 +89,42 @@ LindenmayerTree* generateTreeFromFile(const std::string& path, ... same tail ...
 
 ### Step group 1: conversion helpers (tests first)
 
-- [ ] **1.1** `tests/adapter/tree_adapter_tests.cpp` + CMake target; cases: vertex fields (position/normal/uv, color zero), index narrowing incl. `INT_MAX` ok and `INT_MAX+1` / `UINT32_MAX` refused, `checkedBufferSize` refusal, leaf matrices premultiplied by a world transform (non-commuting translate/rotate), seed rules (params > console > random, never 0, injected `fresh`), `tree file 15 seed 42` twice gives identical counts and arrays, every shipped rule file at `min(depth, 6)` through generateTree + conversions without exception.
-- [ ] **1.2** Run: expected FAIL (header missing). Implement `TreeMeshConversion.h`. Run: PASS. Commit `T07: add tree mesh conversion helpers and tests`.
+- [x] **1.1** `tests/adapter/tree_adapter_tests.cpp` + CMake target; cases: vertex fields (position/normal/uv, color zero), index narrowing incl. `INT_MAX` ok and `INT_MAX+1` / `UINT32_MAX` refused, `checkedBufferSize` refusal, leaf matrices premultiplied by a world transform (non-commuting translate/rotate), seed rules (params > console > random, never 0, injected `fresh`), `tree file 15 seed 42` twice gives identical counts and arrays, every shipped rule file at `min(depth, 6)` through generateTree + conversions without exception.
+- [x] **1.2** Run: expected FAIL (header missing). Implement `TreeMeshConversion.h`. Run: PASS. Commit `T07: add tree mesh conversion helpers and tests`.
 
 ### Step group 2: adapter, factory, console, scenes; delete the legacy pipeline
 
-- [ ] **2.1** Rewrite `LindenmayerTree`, factory; delete solver/interpreter/mesh generator/Segment/Params; update console and scenes; build Debug. Commit `T07: switch the engine to treegen::generateTree`.
-- [ ] **2.2** Fix `parametricTree2.l`, regenerate goldens (params + new solver d1..d3), update tests that expected the `RewriteError`. Commit `T07: fix parametricTree2.l`.
+- [x] **2.1** Rewrite `LindenmayerTree`, factory; delete solver/interpreter/mesh generator/Segment/Params; update console and scenes; build Debug. Commit `T07: switch the engine to treegen::generateTree`.
+- [x] **2.2** Fix `parametricTree2.l`, regenerate goldens (params + new solver d1..d3), update tests that expected the `RewriteError`. Commit `T07: fix parametricTree2.l`.
 
 ### Step group 3: legacy tests
 
-- [ ] **3.1** Map every legacy characterization case to a treegen test (table in the report); port the three missing ones (golden completeness, seed independence of deterministic files, stochastic alphabet/bracket balance) into `golden_data_tests.cpp`.
-- [ ] **3.2** Delete `tests/legacy_characterization`, `legacy_reference`, the two reference-based test files, the MSVC guard. Commit `T07: delete legacy characterization tests and frozen references`.
+- [x] **3.1** Map every legacy characterization case to a treegen test (table in the report); port the three missing ones (golden completeness, seed independence of deterministic files, stochastic alphabet/bracket balance) into `golden_data_tests.cpp`.
+- [x] **3.2** Delete `tests/legacy_characterization`, `legacy_reference`, the two reference-based test files, the MSVC guard. Commit `T07: delete legacy characterization tests and frozen references`.
 
 ### Step group 4: docs and verification
 
-- [ ] **4.1** overview.md, CLAUDE.md, tests/README.md, golden READMEs, D-017. Commit.
-- [ ] **4.2** Verify: Windows Debug+Release build + ctest, Docker Linux engine OFF tests + engine ON compile, greps, smoke launches of scenes 0-4. Set Status `review`.
+- [x] **4.1** overview.md, CLAUDE.md, tests/README.md, golden READMEs, D-017. Commit.
+- [x] **4.2** Verify: Windows Debug+Release build + ctest, Docker Linux engine OFF tests + engine ON compile, greps, smoke launches of scenes 0-4. Set Status `review`.
+
+## Verification evidence (2026-10-25, this machine)
+
+| Check | Result |
+|---|---|
+| Windows `ninja-msvc` Debug build + `ctest -C Debug` | exit 0; `100% tests passed, 0 tests failed out of 201` |
+| Windows Release build + `ctest -C Release` | exit 0; `100% tests passed out of 201` |
+| Docker Ubuntu 24.04 / GCC 13, engine OFF | `100% tests passed, 0 tests failed out of 188` (incl. `tree_adapter_tests`) |
+| Docker Ubuntu 24.04 / GCC 13, engine ON (CI package list) | `ESTree` linked; `100% tests passed, 0 tests failed out of 201`; no GCC warning in the files of this task |
+| Docker, engine ON without any Boost package | all `ESTree` objects compile (no `error:`); only the link fails with `cannot find -lboost_date_time` ... (the Boost libs named in `CMakeLists.txt`, T13) |
+| `grep -rni boost ESEngine/ESTree/Models/Tree` / `grep -rli boost ESEngine --include=*.h --include=*.cpp` | no matches / no matches |
+| `grep -rl Lindenmayer ESEngine` (outside TreeGen comments) | only `Models/Tree/{LindenmayerTree,LindenmayerTreeFactory,TreeMeshConversion}`, `ConsoleTreeCommand.*`, the three scenes |
+| MSVC `/W4` | no warning in the new/changed lines (the remaining ones in the scene files and the factory's local `factory` are in untouched lines) |
+| Smoke Debug, scenes 0-4 (`--scene N`, 12-14 s, `CloseMainWindow`) | alive after the wait, exit code 0, `Rendering started` ... `Quitting..`, `Generation finished. N tris. Time: Xms. Seed: S` for every tree, 0 Application Error events |
+| Smoke Release, scenes 0 and 2 | same |
+| Bad rule file (scene 0 with an invalid `parametricTernaryTreeB.json`, restored afterwards) | `Tree Tree skipped: rule A -> ...: unexpected ')' ...` logged by `LindenmayerTreeFactory`, scene keeps running |
+| Buffer sizing (scene 0 with `depth` 9 temporarily in `parametricTernaryTreeB.json`, restored) | `Generation finished. 629856 tris` (708 588 vertices, 7x the old cap), alive 30 s, clean close; ternary E depth 10 (2.1 M vertices) is converted in `tree_adapter_tests` |
+
+Not verifiable by an agent: the console (`tree ... seed`, `rtree`, `help`) and what is drawn; see the human checklist in the report.
 
 ## Review focus covered
 
