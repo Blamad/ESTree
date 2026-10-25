@@ -169,7 +169,9 @@ Skeleton interpret(const TreeParams& params, const ModuleString& modules, const 
 		case 'F': {
 			state.length = argument(module, state.length) * state.lengthScale;
 
-			const glm::quat rotation = glm::normalize(state.rotation);
+			// The frame uses the raw local rotation like the legacy code: `$` produces quaternions of norm < 1 whose
+			// mat4_cast the shipped trees were built with, normalising here would change them.
+			const glm::quat& rotation = state.rotation;
 			glm::mat4 frame = glm::translate(glm::mat4_cast(rotation), glm::vec3(0, state.length, 0));
 
 			SkeletonSegment segment{ current, skeleton.segments[current].model * frame, state.radius, state.roll, 0 };
@@ -179,6 +181,8 @@ Skeleton interpret(const TreeParams& params, const ModuleString& modules, const 
 
 			TurtleState next = state;
 			next.rotation = kIdentity;
+			// Only the accumulated rotation is renormalised (the legacy code never did): it is a product over the whole
+			// path and the heading used by `T` is read from it.
 			next.totalRotation = glm::normalize(state.totalRotation * rotation);
 			next.length = params.initialLength;
 			state = next;
