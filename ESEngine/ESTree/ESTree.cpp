@@ -10,7 +10,8 @@
 #include "ESTree/Console/ConsoleTreeCommand.h"
 #include "ESTree/Console/ConsoleCubeCommand.h"
 #include "ESTree/Console/ConsoleModelExportCommand.h"
-#include <boost/program_options.hpp>
+#include "ESTree/CommandLine.h"
+#include <iostream>
 
 #ifdef _WIN32
 // Ask hybrid-graphics drivers (NVIDIA Optimus / AMD PowerXpress) for the discrete GPU.
@@ -31,40 +32,21 @@ Logger logger("ESTree");
 Engine* initEngine(int width, int height, bool fullScreenMode);
 
 int main(int argc, char* argv[]) {
-	int width, height, scene = 0;
-	bool fullScreenMode = false;
-
-	try {
-		boost::program_options::options_description desc("Allowed options");
-		desc.add_options()
-			("help,h", "produce help message")
-			("width,W", boost::program_options::value<int>()->default_value(1366), "set window width")
-			("height,H", boost::program_options::value<int>()->default_value(768), "set window height")
-			("scene,s", boost::program_options::value<int>()->default_value(0), "load one of four scenes (0-3)")
-			("fullscreen,f", boost::program_options::bool_switch(&fullScreenMode), "launch application in fullscreen mode");
-
-		boost::program_options::variables_map vm;
-		store(parse_command_line(argc, argv, desc), vm);
-		boost::program_options::notify(vm);
-
-		if (vm.count("help")) {
-			std::cout << desc << "\n";
-			return 0;
-		}
-
-		width = vm["width"].as<int>();
-		height = vm["height"].as<int>();
-		scene = vm["scene"].as<int>();
-	}
-	catch (std::exception& e) {
-		std::cerr << "error: " << e.what() << "\n";
+	CommandLine::Result cli = CommandLine::parse(argc, argv);
+	if (!cli.ok) {
+		std::cerr << "error: " << cli.error << "\n\n" << CommandLine::helpText();
 		return 1;
 	}
-	catch (...) {
-		std::cerr << "Exception of unknown type!\n";
-		return 1;
+	if (cli.options.help) {
+		std::cout << CommandLine::helpText();
+		return 0;
 	}
-	
+
+	int width = cli.options.width;
+	int height = cli.options.height;
+	int scene = cli.options.scene;
+	bool fullScreenMode = cli.options.fullscreen;
+
 	logger.log(LOG_INFO, "Starting engine..");
 	Engine* engine = initEngine(width, height, fullScreenMode);
 	logger.log(LOG_INFO, "Creating scene..");

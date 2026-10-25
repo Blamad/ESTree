@@ -6,7 +6,6 @@
 #include "ClickEvent.h"
 #include "KeyEvent.h"
 
-#include <boost/foreach.hpp>
 
 class InputState {
 public:

@@ -4,8 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include <boost/foreach.hpp>
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include "Engine/GameObject/Mesh.h"
 #include "Engine/GameObject/InstancedMesh.h"
 #include "Engine/Core/Logger.h"

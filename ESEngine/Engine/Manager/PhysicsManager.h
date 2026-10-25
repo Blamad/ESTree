@@ -3,7 +3,7 @@
 
 #include <btBulletDynamicsCommon.h>
 
-#include <boost/uuid/uuid_io.hpp>
+#include "Engine/GameObject/Uuid.h"
 
 #include "Engine/GameObject/RigidBody.h"
 #include "Ray.h"

@@ -15,7 +15,6 @@
 #include <map>
 #include <glm/glm.hpp>
 #include <chrono>
-#include <boost/foreach.hpp>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

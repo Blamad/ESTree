@@ -2,7 +2,6 @@
 #define MOUSE_MANAGER_H
 
 #include <glm/glm.hpp>
-#include <boost/foreach.hpp>
 #include "PhysicsManager.h"
 #include "Engine/GameObject/CameraBehaviour.h"
 #include "Engine/GameObject/Camera.h"

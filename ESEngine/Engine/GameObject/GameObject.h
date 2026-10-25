@@ -1,16 +1,15 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
+#include "Uuid.h"
 #include <map>
 #include <memory>
+#include <string>
 #include <typeinfo>
+#include <vector>
 
 class Component;
 enum ComponentType;
-
-typedef boost::uuids::uuid Uuid;
 
 class GameObject {
 public:
@@ -29,8 +28,6 @@ public:
 	std::vector<std::shared_ptr<GameObject>> children;
 
 private:
-	static boost::uuids::random_generator uuidGenerator;
-	
 	std::vector<std::shared_ptr<Component>> components;
 };
 

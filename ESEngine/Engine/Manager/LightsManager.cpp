@@ -34,7 +34,7 @@ void LightsManager::prepareShadowBuffer(glm::vec3& viewPos, Renderer& renderer, 
 	depthBuffer->mountFrameBuffer();
 	depthBuffer->shader->setShaderSubroutine("shadowDepthPass");
 
-	BOOST_FOREACH(Light* light, lights[LIGHT_DIRECTIONAL]) {
+	for (Light* light : lights[LIGHT_DIRECTIONAL]) {
 		DirectionalLight* dLight = (DirectionalLight*)light;
 		glm::mat4 lightView = DirectionalLight::getViewMatrix(dLight);
 
