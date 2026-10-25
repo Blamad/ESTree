@@ -56,3 +56,14 @@ Allowed options:
 
 - The engine window/rendering (no GL context in the agent session): see `REPORT.md` → *Needs human verification*.
 - `ninja-msvc` Release and `vs2026`.
+
+## Update after T09 (2026-10-25): per-toolchain warning references
+
+Warning counts depend on the compiler. Same counting method (unique `file|line|code`, `Vendor/` excluded):
+
+| Toolchain | Code state | Unique project `/W4` warnings |
+|---|---|---|
+| `vs2019` (MSVC 14.29) | after T00 | 143 |
+| `ninja-msvc` (cl 19.51) | after T01 + T09 (merged `modernization` @ `8b2d9fc`) | 191 |
+
+Later tasks must not increase the number on the toolchain they use.
