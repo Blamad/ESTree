@@ -1,7 +1,7 @@
 # Architecture (final state of the modernization, T13, 2026-10-25)
 
 The engine layers below are the 2017-2020 design, cleaned up (ownership, casts, no Boost) but not redesigned. Tree generation lives in
-the engine-independent `treegen` library (section *Tree pipeline*). Around them: 250+ headless doctest cases (CTest), a CLI tool
+the engine-independent `treegen` library (section *Tree pipeline*). Around them: 232 CTest entries (doctest cases and CLI checks), a CLI tool
 (`tools/treegen_cli`), a GitHub Actions workflow (never run on GitHub yet) and CMake presets. Facts were read from the code and verified by
 builds/tests; what is drawn on screen is verified only by the owner.
 

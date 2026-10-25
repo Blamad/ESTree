@@ -64,7 +64,7 @@ configure on this machine: CMake can't see the VS 2026 Build Tools instance). Pr
 `CMakePresets.json`. Options: `ESTREE_BUILD_ENGINE` (default ON on Windows, OFF elsewhere; OFF builds only `treegen`,
 `treegen_cli` and the headless tests), `ESTREE_BUILD_TESTS`, `ESTREE_BUILD_TOOLS`, `ESTREE_SANITIZE`. A clean `vs2019` build takes ~5 min
 (Bullet is the long pole); incremental builds of the app target take seconds. Warning reference (`/W4`, unique file+line+code, `Vendor/`
-excluded, method in `docs/tasks/T00-build-baseline/notes/baseline.md`): **WARNCOUNT** on `ninja-msvc` Debug at the end of T13; history in
+excluded, method in `docs/tasks/T00-build-baseline/notes/baseline.md`): **109** on `ninja-msvc` Debug at the end of T13 (identical set to the pre-T13 tip); history in
 `docs/tasks/T13-modernization-gate/SUMMARY.md`. Don't add new ones.
 
 Agents cannot judge rendered images. They *can* smoke-launch the exe on the owner's desktop (see

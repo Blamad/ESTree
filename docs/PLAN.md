@@ -76,7 +76,7 @@ Size: S ≈ half a day, M ≈ 1–2 days, L ≈ 2–4 days of focused agent work
 ## Program status (T13, 2026-10-25)
 
 All tasks T00-T12 are merged into `modernization`; T13 is in review. The build is Boost-free, `treegen` is a standalone library with a
-headless CLI, 250+ headless tests pass on Windows (MSVC) and Linux (GCC 13), and the legacy `Lindenmayer*` pipeline is gone. Open items:
+headless CLI, 232 headless CTest entries pass on Windows (MSVC) and Linux (GCC 13), and the legacy `Lindenmayer*` pipeline is gone. Open items:
 the CI workflow has never run on GitHub, and the owner's visual/behavioural checklist (consolidated, with exact steps, in
 [`tasks/T13-modernization-gate/SUMMARY.md`](tasks/T13-modernization-gate/SUMMARY.md)) is only partly confirmed. `modernization` is not merged into `master`;
 that is the owner's decision.
