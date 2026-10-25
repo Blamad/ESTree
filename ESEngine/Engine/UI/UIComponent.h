@@ -5,6 +5,7 @@
 
 class UIComponent {
 public:
+	virtual ~UIComponent() = default;
 	virtual void init() = 0;
 	virtual void draw() = 0;
 	virtual void update(double &dt, InputState &inputState) = 0;

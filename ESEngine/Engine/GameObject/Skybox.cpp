@@ -37,13 +37,13 @@ void Skybox::draw(Renderer &renderer, Shader *shader) {
 }
 
 void Skybox::draw(Renderer& renderer) {
-	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
+	for (std::shared_ptr<Shader> shader : shaders) {
 		draw(renderer, shader.get());
 	}
 }
 
 void Skybox::setupSkybox() {
-	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
+	for (std::shared_ptr<Shader> shader : shaders) {
 		shader->registerMatriciesUBO();
 	}
 }

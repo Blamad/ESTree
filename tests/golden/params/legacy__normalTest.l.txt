@@ -1,0 +1,17 @@
+file=legacy/normalTest.l
+axiom=F
+depth=1
+initialLength=4
+initialRadius=3
+angle=0.610865235
+leafGrowthProb=1
+leavesAngleDiversity=0
+tropism=0,-1,0
+tropismBendingFactor=0.200000003
+customParameters.count=0
+symbols=F
+rules[F].count=1
+rules[F][0].production=+FF
+rules[F][0].probability=1
+rules[F][0].initialDepth=0
+rules[F][0].parameters=

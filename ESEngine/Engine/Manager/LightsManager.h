@@ -1,10 +1,10 @@
 #ifndef LIGHTSMANAGER_H
 #define LIGHTSMANAGER_H
 
+#include <functional>
 #include <map>
 #include <set>
 #include <memory>
-#include <boost/foreach.hpp>
 
 #include "ShaderManager.h"
 #include "GraphicEngine/Core/Renderer.h"

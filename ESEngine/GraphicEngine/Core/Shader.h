@@ -10,7 +10,6 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <boost\foreach.hpp>
 
 enum ShaderSubroutine {
 	RENDER_PASS, SHADOW_DEPTH_PASS, SINGLE_MESH_MODE, INSTANCED_MESH_MODE
@@ -46,8 +45,8 @@ public:
 	//	Model View Matricies
 	void registerMatriciesUBO();
 	static void initializeMatricesUBO();
-	static void updateProjectionMatrix(glm::mat4 &projection);
-	static void updateViewMatrix(glm::mat4 &view);
+	static void updateProjectionMatrix(const glm::mat4 &projection);
+	static void updateViewMatrix(const glm::mat4 &view);
 	//	Lights
 	void registerLightsUBO();
 

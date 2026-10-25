@@ -3,7 +3,7 @@
 Logger Mesh::logger("Mesh");
 
 void Mesh::draw(Renderer &renderer) {
-	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
+	for (std::shared_ptr<Shader> shader : shaders) {
 		draw(renderer, shader.get());
 	}
 	if (isNormalsShaderEnabled) {
@@ -20,13 +20,13 @@ void Mesh::draw(Renderer &renderer, Shader *shader) {
 		return;
 	}
 
-	BOOST_FOREACH(std::shared_ptr<GameObject> child, parent->children) {
+	for (std::shared_ptr<GameObject> child : parent->children) {
 		if (child->getComponent(RENDERABLE) != nullptr) {
-			((Renderable*)child->getComponent(RENDERABLE))->draw(renderer, shader);
+			child->getComponentAs<Renderable>(RENDERABLE)->draw(renderer, shader);
 		}
 	}
 
-	Transform *transform = (Transform*)this->getComponent(TRANSFORM);
+	Transform *transform = getComponentAs<Transform>(TRANSFORM);
 
 	shader->use();
 
@@ -119,7 +119,7 @@ Mesh::~Mesh() {
 }
 
 void Mesh::setupMeshes() {
-	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
+	for (std::shared_ptr<Shader> shader : shaders) {
 		setupMesh(shader);
 	}
 }

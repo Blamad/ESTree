@@ -3,7 +3,7 @@
 
 #include <btBulletDynamicsCommon.h>
 
-#include <boost/uuid/uuid_io.hpp>
+#include "Engine/GameObject/Uuid.h"
 
 #include "Engine/GameObject/RigidBody.h"
 #include "Ray.h"
@@ -21,7 +21,7 @@ public:
 	void reloadRigidBody(RigidBody* rigidBody);
 	void removeRigidBody(RigidBody * rigidBody);
 	void update(double deltaTime);
-	GameObject* raycast(Ray &ray);
+	GameObject* raycast(const Ray &ray);
 
 private:
 	btBroadphaseInterface* broadphase;

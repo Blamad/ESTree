@@ -2,7 +2,6 @@
 #define MOUSE_MANAGER_H
 
 #include <glm/glm.hpp>
-#include <boost/foreach.hpp>
 #include "PhysicsManager.h"
 #include "Engine/GameObject/CameraBehaviour.h"
 #include "Engine/GameObject/Camera.h"
@@ -34,6 +33,9 @@ public:
 	void setSelectedGameObject(GameObject *go) {
 		selectedGameObject = go;
 	}
+
+	// Must be called before a game object is destroyed: drops the picked/selected pointers to it.
+	void forgetGameObject(GameObject *go);
 
 private:
 	static Logger logger;

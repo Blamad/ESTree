@@ -4,14 +4,14 @@ LightsData LightsUtils::extractData(std::set<Light*> &pLights, std::set<Light*> 
 	LightsData data;
 	data.viewPos = glm::vec4(viewPos, 0);
 	for (const auto &node : pLights)
-		data.pointData[data.pointLength++] = extractData(((PointLight*)node));
+		data.pointData[data.pointLength++] = extractData(static_cast<PointLight*>(node));
 	for (const auto &node : dLights)
-		data.directionalData[data.directionalLength++] = extractData(((DirectionalLight*)node));
+		data.directionalData[data.directionalLength++] = extractData(static_cast<DirectionalLight*>(node));
 	return data;
 }
 
 PointLightData LightsUtils::extractData(PointLight *light) {
-	Transform *transform = (Transform*)light->getComponent(TRANSFORM);
+	Transform *transform = light->getComponentAs<Transform>(TRANSFORM);
 	PointLightData data;
 	data.position = glm::vec4(transform->getPosition(), 0);
 	data.ambient = glm::vec4(light->ambient, 0);

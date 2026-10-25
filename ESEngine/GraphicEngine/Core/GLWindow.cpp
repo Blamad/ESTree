@@ -7,7 +7,6 @@ Logger GLWindow::logger("GLWindow");
 
 GLWindow::~GLWindow() {
 	instance = nullptr;
-	inputState.release();
 	glfwTerminate();
 }
 
@@ -116,7 +115,7 @@ void GLWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action
 			return;
 		}
 
-		KeyState state;
+		KeyState state = RELEASED;
 		if (action == GLFW_REPEAT)
 			state = REPEAT;
 		if (action == GLFW_PRESS)

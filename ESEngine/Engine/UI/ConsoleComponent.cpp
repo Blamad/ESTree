@@ -1,5 +1,7 @@
 #include "ConsoleComponent.h"
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 Logger ConsoleComponent::logger("ConsoleComponent");
 
@@ -63,7 +65,7 @@ void ConsoleComponent::draw() {
 }
 
 void ConsoleComponent::update(double &dt, InputState &inputState) {
-	BOOST_FOREACH(auto keyEvent, inputState.getKeyboardEvents()) {
+	for (auto keyEvent : inputState.getKeyboardEvents()) {
 		if (keyEvent.key == GLFW_KEY_GRAVE_ACCENT && keyEvent.state == PRESSED) {
 			isFocused = !isFocused;
 			inputLine.clear();
@@ -80,12 +82,12 @@ void ConsoleComponent::update(double &dt, InputState &inputState) {
 			return;
 		}
 
-		BOOST_FOREACH(auto charEvent, inputState.getCharacterEvents()) {
+		for (auto charEvent : inputState.getCharacterEvents()) {
 			if (charEvent != GLFW_KEY_ENTER) {
 				registerInputChar(charEvent);
 			}
 		}
-		BOOST_FOREACH(auto keyEvent, inputState.getKeyboardEvents()) {
+		for (auto keyEvent : inputState.getKeyboardEvents()) {
 			if (keyEvent.key == GLFW_KEY_BACKSPACE && keyEvent.state != RELEASED) {
 				removeLastCharFromInput(keyEvent.key);
 			}
@@ -99,7 +101,7 @@ void ConsoleComponent::update(double &dt, InputState &inputState) {
 				inputLine = memory->getNextInput();
 			}
 		}
-		BOOST_FOREACH(auto scrollEvent, inputState.getMouseScrollEvents()) {
+		for (auto scrollEvent : inputState.getMouseScrollEvents()) {
 			if (scrollEvent.y > 0) {
 				scrollUp();
 			}

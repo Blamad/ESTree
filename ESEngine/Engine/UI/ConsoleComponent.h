@@ -13,12 +13,11 @@
 #include "ConsoleMemory.h"
 #include <memory>
 #include <map>
-#include <GLM\glm.hpp>
+#include <glm/glm.hpp>
 #include <chrono>
-#include <boost\foreach.hpp>
 
-#include <glad\glad.h>
-#include <GLFW\glfw3.h>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 struct Character {
 	GLuint  textureID;

@@ -1,12 +1,12 @@
 #include "GameObject.h"
 #include "Transform.h"
 
-boost::uuids::random_generator GameObject::uuidGenerator;
-
 GameObject::GameObject() {
-	this->id = uuidGenerator();
+	this->id = Uuid::generate();
 	addComponent(std::shared_ptr<Transform>(new Transform()));
 }
+
+GameObject::~GameObject() = default;
 
 std::vector<Component*> GameObject::getComponents(ComponentType type) {
 	std::vector<Component*> filteredComponents;

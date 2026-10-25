@@ -1,8 +1,8 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
-#include <GLM\glm.hpp>
-#include <GLFW\glfw3.h>
+#include <glm/glm.hpp>
+#include <GLFW/glfw3.h>
 #include "Component.h"
 
 enum LightType {

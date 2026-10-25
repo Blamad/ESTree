@@ -1,23 +1,28 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
+#include "Uuid.h"
 #include <map>
 #include <memory>
+#include <string>
 #include <typeinfo>
+#include <vector>
 
 class Component;
-enum ComponentType;
-
-typedef boost::uuids::uuid Uuid;
+enum ComponentType : int;
 
 class GameObject {
 public:
 	GameObject();
-	
+	virtual ~GameObject();
+
 	std::vector<Component*> getComponents(ComponentType componentType);
 	Component* getComponent(ComponentType componentType);
+
+	// Typed access: T must be the concrete class registered under componentType.
+	// Defined in Component.h (needs the complete Component type).
+	template<class T> T* getComponentAs(ComponentType componentType);
+	template<class T> std::vector<T*> getComponentsAs(ComponentType componentType);
 	void addComponent(std::shared_ptr<Component> component);
 
 	void addGameObject(std::shared_ptr<GameObject> go);
@@ -29,8 +34,6 @@ public:
 	std::vector<std::shared_ptr<GameObject>> children;
 
 private:
-	static boost::uuids::random_generator uuidGenerator;
-	
 	std::vector<std::shared_ptr<Component>> components;
 };
 

@@ -2,9 +2,9 @@
 #define RIGIDBODY_H
 
 #include <btBulletDynamicsCommon.h>
-#include <BulletCollision\CollisionShapes\btShapeHull.h>
+#include <BulletCollision/CollisionShapes/btShapeHull.h>
 
-#include <GLM\glm.hpp>
+#include <glm/glm.hpp>
 
 #include "Engine/Core/Logger.h"
 #include "Transform.h"
@@ -13,6 +13,12 @@
 class RigidBody : public Component {
 public:
 	RigidBody();
+	// Owns the Bullet body, its motion state and its shape. The body must already have been
+	// removed from the PhysicsManager's world (Scene does that before destroying a game object).
+	~RigidBody();
+	RigidBody(const RigidBody&) = delete;
+	RigidBody& operator=(const RigidBody&) = delete;
+
 	void initAsBox(double mass);
 	void initAsAHullShape(double mass);
 	void initAsAStaticPlane();

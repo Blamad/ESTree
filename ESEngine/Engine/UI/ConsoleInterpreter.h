@@ -1,9 +1,9 @@
 #ifndef CONSOLE_INTERPRETER_H
 #define CONSOLE_INTERPRETER_H
 
+#include <memory>
 #include <string>
 #include <vector>
-#include <boost/foreach.hpp>
 
 #include "Engine/Manager/Context.h"
 #include "ConsoleMemory.h"

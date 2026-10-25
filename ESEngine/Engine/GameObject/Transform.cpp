@@ -12,7 +12,7 @@ glm::mat4 Transform::getModelMatrix() {
 	}
 
 	if (parent->parent != nullptr) {
-		Transform* pTransform = (Transform*)parent->parent->getComponent(TRANSFORM);
+		Transform* pTransform = parent->parent->getComponentAs<Transform>(TRANSFORM);
 		return pTransform->getModelMatrix() * modelMatrix;
 	}
 
@@ -27,7 +27,7 @@ glm::mat3 Transform::getNormalModelMatrix() {
 	normalModelMatrix = glm::mat3(model);
 
 	if (parent->parent != nullptr) {
-		Transform* pTransform = (Transform*)parent->parent->getComponent(TRANSFORM);
+		Transform* pTransform = parent->parent->getComponentAs<Transform>(TRANSFORM);
 		normalModelMatrix = pTransform->getNormalModelMatrix() * normalModelMatrix;
 	}
 
@@ -37,7 +37,7 @@ glm::mat3 Transform::getNormalModelMatrix() {
 void Transform::updateNormalModelMatrix(glm::mat4 modelMatrix) {
 	normalModelMatrix = glm::mat3(modelMatrix);
 	if (parent->parent != nullptr) {
-		Transform* pTransform = (Transform*)parent->parent->getComponent(TRANSFORM);
+		Transform* pTransform = parent->parent->getComponentAs<Transform>(TRANSFORM);
 		normalModelMatrix = pTransform->getNormalModelMatrix() * normalModelMatrix;
 	}
 }

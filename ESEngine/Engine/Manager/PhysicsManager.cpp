@@ -19,7 +19,13 @@ PhysicsManager::PhysicsManager() {
 }
 
 PhysicsManager::~PhysicsManager() {
-	
+	// Reverse order of creation. The owner has to take all rigid bodies out of the world first:
+	// ~btCollisionWorld dereferences every body still registered.
+	delete dynamicsWorld;
+	delete solver;
+	delete dispatcher;
+	delete collisionConfiguration;
+	delete broadphase;
 }
 
 void PhysicsManager::addRigidBody(RigidBody *rigidBody) {
@@ -32,6 +38,8 @@ void PhysicsManager::reloadRigidBody(RigidBody *rigidBody) {
 }
 
 void PhysicsManager::removeRigidBody(RigidBody *rigidBody) {
+	if (rigidBody == nullptr || rigidBody->rigidBody == nullptr)
+		return;
 	dynamicsWorld->removeRigidBody(rigidBody->rigidBody);
 }
 
@@ -39,7 +47,7 @@ void PhysicsManager::update(double deltaTime) {
 	dynamicsWorld->stepSimulation(btScalar(deltaTime), 10);
 }
 
-GameObject* PhysicsManager::raycast(Ray &ray) {
+GameObject* PhysicsManager::raycast(const Ray &ray) {
 	btCollisionWorld::ClosestRayResultCallback RayCallback(
 		btVector3(ray.origin.x, ray.origin.y, ray.origin.z),
 		btVector3(ray.end.x, ray.end.y, ray.end.z)
@@ -52,7 +60,7 @@ GameObject* PhysicsManager::raycast(Ray &ray) {
 
 	if (RayCallback.hasHit()) {
 		GameObject *go = static_cast<GameObject*>(RayCallback.m_collisionObject->getUserPointer());
-		std::string name = go->name.length() > 0 ? go->name : boost::uuids::to_string(go->id);
+		std::string name = go->name.length() > 0 ? go->name : uuidToString(go->id);
 		
 		logger.log(LOG_INFO, "Object clicked: " + name);
 		Context::getConsoleMemory()->pushLine("Object clicked: " + name);

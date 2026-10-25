@@ -232,13 +232,13 @@ void Shader::initializeMatricesUBO() {
 	glBindBufferRange(GL_UNIFORM_BUFFER, matricesBlockBinding, matricesUBO, 0, 2 * sizeof(glm::mat4));
 }
 
-void Shader::updateProjectionMatrix(glm::mat4 &projection) {
+void Shader::updateProjectionMatrix(const glm::mat4 &projection) {
 	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void Shader::updateViewMatrix(glm::mat4 &view) {
+void Shader::updateViewMatrix(const glm::mat4 &view) {
 	glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
 	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);

@@ -6,6 +6,7 @@ void TreeScene::initialize() {
 
 	logger.log(LOG_INFO, "Starting scene");
 
+	LindenmayerTreeFactory &factory = LindenmayerTreeFactory::getInstance();
 	GameObject* go;
 	glm::vec3 position;
 	std::string paramsFileName;
@@ -15,67 +16,67 @@ void TreeScene::initialize() {
 
 	paramsFileName = "Resources/LindenmayerRules/parametricSympodialTreeA.json";
 	position = glm::vec3(20, 0, 20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Resources/Textures/leaves1.png"), "parametricSympodialTreeA", debug);
+	go = factory.generateTreeFromFile(paramsFileName, "parametricSympodialTreeA", Material::bark1(), Material::diffuseTextureOnly("Resources/Textures/leaves1.png"), position, 0, this, debug);
 
 	paramsFileName = "Resources/LindenmayerRules/parametricSympodialTreeB.json";
 	position = glm::vec3(20, 0, 7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Resources/Textures/leaves2.png"), "parametricSympodialTreeB", debug);
+	go = factory.generateTreeFromFile(paramsFileName, "parametricSympodialTreeB", Material::bark2(), Material::diffuseTextureOnly("Resources/Textures/leaves2.png"), position, 0, this, debug);
 
 	paramsFileName = "Resources/LindenmayerRules/advancedTree2.json";
 	position = glm::vec3(20, 0, -7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Resources/Textures/leaves3.png"), "advancedTree2", debug);
+	go = factory.generateTreeFromFile(paramsFileName, "advancedTree2", Material::bark3(), Material::diffuseTextureOnly("Resources/Textures/leaves3.png"), position, 0, this, debug);
 
 	paramsFileName = "Resources/LindenmayerRules/advancedTree2.json";
 	position = glm::vec3(20, 0, -20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Resources/Textures/leaves4.png"), "advancedTree2", debug);
+	go = factory.generateTreeFromFile(paramsFileName, "advancedTree2", Material::bark4(), Material::diffuseTextureOnly("Resources/Textures/leaves4.png"), position, 0, this, debug);
 
 	paramsFileName = "Resources/LindenmayerRules/parametricMonopodialTreeA.json";
 	position = glm::vec3(7.5, 0, 20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Resources/Textures/leaves2.png"), "parametricMonopodialTreeA", debug);
+	go = factory.generateTreeFromFile(paramsFileName, "parametricMonopodialTreeA", Material::bark2(), Material::diffuseTextureOnly("Resources/Textures/leaves2.png"), position, 0, this, debug);
 
 	paramsFileName = "Resources/LindenmayerRules/parametricMonopodialTreeB.json";
 	position = glm::vec3(7.5, 0, 7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark2(), Material::diffuseTextureOnly("Resources/Textures/leaves2.png"), "parametricMonopodialTreeB", debug);
+	go = factory.generateTreeFromFile(paramsFileName, "parametricMonopodialTreeB", Material::bark2(), Material::diffuseTextureOnly("Resources/Textures/leaves2.png"), position, 0, this, debug);
 
 	paramsFileName = "Resources/LindenmayerRules/parametricMonopodialTreeC.json";
 	position = glm::vec3(7.5, 0, -7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Resources/Textures/leaves3.png"), "parametricMonopodialTreeC", debug);
+	go = factory.generateTreeFromFile(paramsFileName, "parametricMonopodialTreeC", Material::bark3(), Material::diffuseTextureOnly("Resources/Textures/leaves3.png"), position, 0, this, debug);
 
 	paramsFileName = "Resources/LindenmayerRules/parametricMonopodialTreeD.json";
 	position = glm::vec3(7.5, 0, -20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Resources/Textures/leaves4.png"), "parametricMonopodialTreeD", debug);
+	go = factory.generateTreeFromFile(paramsFileName, "parametricMonopodialTreeD", Material::bark4(), Material::diffuseTextureOnly("Resources/Textures/leaves4.png"), position, 0, this, debug);
 	
 	paramsFileName = "Resources/LindenmayerRules/randomTree.json";
 	position = glm::vec3(-7.5, 0, 20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Resources/Textures/leaves5.png"), "randomTree");
+	go = factory.generateTreeFromFile(paramsFileName, "randomTree", Material::bark1(), Material::diffuseTextureOnly("Resources/Textures/leaves5.png"), position, 0, this, false);
 
 	paramsFileName = "Resources/LindenmayerRules/parametricTernaryTreeA.json";
 	position = glm::vec3(-7.5, 0, 7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves2(), "parametricTernaryTreeA");
+	go = factory.generateTreeFromFile(paramsFileName, "parametricTernaryTreeA", Material::bark5(), Material::leaves2(), position, 0, this, false);
 	
 	paramsFileName = "Resources/LindenmayerRules/symetricTree.json";
 	position = glm::vec3(-7.5, 0, -7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::diffuseTextureOnly("Resources/Textures/leaves4.png"), "symetricTree");
+	go = factory.generateTreeFromFile(paramsFileName, "symetricTree", Material::bark5(), Material::diffuseTextureOnly("Resources/Textures/leaves4.png"), position, 0, this, false);
 
 	paramsFileName = "Resources/LindenmayerRules/fibbonacciTree.json";
 	position = glm::vec3(-7.5, 0, -20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark5(), Material::leaves1(), "fibbonacciTree");
+	go = factory.generateTreeFromFile(paramsFileName, "fibbonacciTree", Material::bark5(), Material::leaves1(), position, 0, this, false);
 
 	paramsFileName = "Resources/LindenmayerRules/advancedTree2.json";
 	position = glm::vec3(-20, 0, 20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Resources/Textures/leaves3.png"), "advancedTree2");
+	go = factory.generateTreeFromFile(paramsFileName, "advancedTree2", Material::bark3(), Material::diffuseTextureOnly("Resources/Textures/leaves3.png"), position, 0, this, false);
 
 	paramsFileName = "Resources/LindenmayerRules/parametricTernaryTreeB.json";
 	position = glm::vec3(-20, 0, 7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark4(), Material::diffuseTextureOnly("Resources/Textures/leaves5.png"), "parametricTernaryTreeB");
+	go = factory.generateTreeFromFile(paramsFileName, "parametricTernaryTreeB", Material::bark4(), Material::diffuseTextureOnly("Resources/Textures/leaves5.png"), position, 0, this, false);
 
 	paramsFileName = "Resources/LindenmayerRules/parametricTernaryTreeE.json";
 	position = glm::vec3(-20, 0, -7.5);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark3(), Material::diffuseTextureOnly("Resources/Textures/leaves1.png"), "parametricTernaryTreeE");
+	go = factory.generateTreeFromFile(paramsFileName, "parametricTernaryTreeE", Material::bark3(), Material::diffuseTextureOnly("Resources/Textures/leaves1.png"), position, 0, this, false);
 
 	paramsFileName = "Resources/LindenmayerRules/parametricTernaryTreeD.json";
 	position = glm::vec3(-20, 0, -20);
-	go = createLindenmayerTree(paramsFileName, position, Material::bark1(), Material::diffuseTextureOnly("Resources/Textures/leaves3.png"), "parametricTernaryTreeD");
+	go = factory.generateTreeFromFile(paramsFileName, "parametricTernaryTreeD", Material::bark1(), Material::diffuseTextureOnly("Resources/Textures/leaves3.png"), position, 0, this, false);
 
 	generateTestBox(glm::vec3(0, 1, 0), glm::vec3(0.5, 0.5, 0.5));
 
@@ -89,22 +90,6 @@ void TreeScene::initialize() {
 	setActiveCamera(createCamera(glm::vec3(-20, 15, -35), 45, -10));
 
 	generateFrameBuffer();
-}
-
-GameObject* TreeScene::createLindenmayerTree(std::string paramsFileName, glm::vec3 &position, Material &material, Material &leavesMaterial, std::string name, bool debug) {
-	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
-
-	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, debug));
-	go->name = name;
-	Transform *transform = getTransform(go.get());
-	transform->translate(position);
-	((LindenmayerTree*)go.get())->generate();
-
-	std::shared_ptr<RigidBody> rigidBody = std::shared_ptr<RigidBody>(new RigidBody());
-	go->addComponent(rigidBody);
-	rigidBody->initAsAHullShape(0);
-
-	return addGameObject(move(go));
 }
 
 void TreeScene::generateTerrain() {

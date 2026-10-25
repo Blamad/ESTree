@@ -1,7 +1,7 @@
 #ifndef ENGINE_CONTEXT_H
 #define ENGINE_CONTEXT_H
 
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <chrono>
 
 class SceneManager;
 class MouseManager;
@@ -28,8 +28,9 @@ public:
 	static long getFrameCounterValue() { return frameCounter; }
 	static void clearFrameCounter() { frameCounter = 0; }
 
-	static void setStartTime() { startTime = boost::posix_time::microsec_clock::local_time(); }
-	static boost::posix_time::ptime getStartTime() { return startTime; }
+	typedef std::chrono::steady_clock::time_point TimePoint;
+	static void setStartTime() { startTime = std::chrono::steady_clock::now(); }
+	static TimePoint getStartTime() { return startTime; }
 
 private:
 	static ConsoleMemory *consoleMemory;
@@ -40,7 +41,7 @@ private:
 	static bool hdrToggle;
 
 	static long frameCounter;
-	static boost::posix_time::ptime startTime;
+	static TimePoint startTime;
 };
 
 #endif
