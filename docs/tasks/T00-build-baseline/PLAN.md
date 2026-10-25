@@ -1,6 +1,6 @@
 # T00 — Reproducible build baseline — Implementation Plan
 
-**Status:** in-progress · **Branch:** `task/T00-build-baseline` · **Base:** `modernization @ ec45198`
+**Status:** review · **Branch:** `task/T00-build-baseline` · **Base:** `modernization @ ec45198`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** the unchanged engine configures, builds (Debug+Release) and starts (`--help`) from presets with CMake 4.4.4 on this machine; baseline numbers recorded.
@@ -22,19 +22,19 @@
 
 ## Steps
 
-- [ ] 1. Fix `GLM` include case (sed), grep proves none left
-- [ ] 2. CMake: min 3.21, C++17, Boost vars, presets file
-- [ ] 3. Configure `vs2019`; fix until it succeeds
-- [ ] 4. Build Debug, then Release; record warnings/time
-- [ ] 5. Run `ESTree.exe --help`
-- [ ] 6. Try `ninja-msvc` and `vs2026`; keep what works
-- [ ] 7. `setup.bat`, README, CLAUDE.md, CLAUDE.local.md, `notes/baseline.md`, `REPORT.md`
-- [ ] 8. Commit per logical group (`T00: ...`)
+- [x] 1. Fix `GLM` include case (sed), grep proves none left
+- [x] 2. CMake: min 3.21, C++17, Boost vars, presets file
+- [x] 3. Configure `vs2019`; fix until it succeeds
+- [x] 4. Build Debug, then Release; record warnings/time
+- [x] 5. Run `ESTree.exe --help`
+- [x] 6. Try `ninja-msvc` and `vs2026`; keep what works
+- [x] 7. `setup.bat`, README, CLAUDE.md, CLAUDE.local.md, `notes/baseline.md`, `REPORT.md`
+- [x] 8. Commit per logical group (`T00: ...`)
 
 ## Deviations from the brief
 
-(none yet)
+See `REPORT.md`: `vs2026` preset does not configure on this machine (VS 2026 Build Tools instance not found by CMake); all backslash includes were normalized, not only `GLM`; `#include <string>` in `Texture.h` and `bcrypt` link were needed to build.
 
 ## Blockers
 
-(none yet)
+(none)
