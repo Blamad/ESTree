@@ -1,6 +1,7 @@
 #ifndef LIGHTSMANAGER_H
 #define LIGHTSMANAGER_H
 
+#include <functional>
 #include <map>
 #include <set>
 #include <memory>

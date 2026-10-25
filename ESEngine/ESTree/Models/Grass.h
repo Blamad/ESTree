@@ -6,7 +6,8 @@
 #include "Engine/GameObject/GameObject.h"
 #include "Engine/GameObject/Material.h"
 
-#include <boost/random.hpp>
+#include <ctime>
+#include <random>
 
 class Grass : public GameObject {
 public:
@@ -17,5 +18,11 @@ protected:
 	Vertex createVertex(glm::vec3 position, glm::vec3 normal, glm::vec2 texCoords);
 	std::shared_ptr<InstancedMesh> createMesh(std::shared_ptr<Shader> shader, std::vector<InstancedTransform> transforms);
 
-	static boost::variate_generator<boost::mt19937, boost::uniform_real<>> randomGenerator;
+	// Callable returning a uniform float in [-1, 1).
+	struct RandomGenerator {
+		std::mt19937 engine{ (unsigned int)time(0) };
+		std::uniform_real_distribution<float> distribution{ -1.0f, 1.0f };
+		float operator()() { return distribution(engine); }
+	};
+	static RandomGenerator randomGenerator;
 };

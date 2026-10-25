@@ -96,11 +96,11 @@ void ConsoleInterpreter::processInput(std::string &input) {
 		}
 
 		if (line.at(0) == "fps") {
-			boost::posix_time::ptime startTime = Context::getStartTime();
-			boost::posix_time::ptime endTime = boost::posix_time::microsec_clock::local_time();
+			Context::TimePoint startTime = Context::getStartTime();
+			Context::TimePoint endTime = std::chrono::steady_clock::now();
 			long frames = Context::getFrameCounterValue();
 
-			int milliseconds = (endTime - startTime).total_milliseconds();
+			int milliseconds = int(std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count());
 			float fps = float(frames) * 1000/ milliseconds;
 			ConsoleUtils::logToConsole("Current fps: '" + std::to_string(fps) + "'");
 

@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <boost/algorithm/string.hpp>
 #include <glm/glm.hpp>
 #include "Engine/Manager/Context.h"
 #include "ConsoleMemory.h"
@@ -16,8 +15,15 @@ public:
 	}
 
 	static std::vector<std::string> split(std::string &value, std::string by) {
+		// Splits on every character contained in `by`; empty tokens are kept.
 		std::vector<std::string> line;
-		boost::split(line, value, boost::is_any_of(by));
+		size_t start = 0;
+		size_t pos;
+		while ((pos = value.find_first_of(by, start)) != std::string::npos) {
+			line.push_back(value.substr(start, pos - start));
+			start = pos + 1;
+		}
+		line.push_back(value.substr(start));
 		return line;
 	}
 

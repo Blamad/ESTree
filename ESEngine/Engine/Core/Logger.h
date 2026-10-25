@@ -4,8 +4,7 @@
 #include <string>
 #include <iostream>
 #include <cmath>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/date_time/posix_time/posix_time_io.hpp>
+#include <sstream>
 
 enum LogLevel {
 	LOG_INFO, LOG_WARN, LOG_ERROR
