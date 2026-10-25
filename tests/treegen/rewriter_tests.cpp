@@ -1,6 +1,8 @@
 #include <doctest/doctest.h>
 
+#include <algorithm>
 #include <cmath>
+#include <filesystem>
 #include <set>
 #include <string>
 #include <vector>
@@ -350,4 +352,22 @@ TEST_CASE("rewrite: a broken rule that never becomes applicable is not reported"
 	TreeParams params = makeParams("A", 1);
 	addRule(params, 'A', "F(", {}, 1.0f, 9);
 	CHECK(run(params) == "A");
+}
+
+TEST_CASE("rewrite: shipped stochastic rule files are deterministic per seed and vary between seeds") {
+	const char* files[] = { "randomTree.json", "randomTree2.json", "fibbonacciTree.json", "advancedTree2.json", "parametricTernaryTreeD.json",
+		"legacy/randomTree.l", "legacy/randomTree2.l", "legacy/fibbonacciTree.l", "legacy/advancedTree2.l" };
+	for (const char* name : files) {
+		CAPTURE(name);
+		TreeParams params = treegen::loadTreeParams(std::filesystem::path(ESTREE_REPO_ROOT) / "Resources" / "LindenmayerRules" / name);
+		params.depth = std::min(params.depth, 6);
+		std::set<std::string> distinct;
+		for (uint32_t seed = 1; seed <= 8; ++seed) {
+			std::string once = run(params, seed);
+			CHECK(run(params, seed) == once);
+			CHECK_FALSE(once.empty());
+			distinct.insert(once);
+		}
+		CHECK(distinct.size() > 1);
+	}
 }
