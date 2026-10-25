@@ -216,3 +216,9 @@ if(ESTREE_BUILD_TESTS)
 	include(CTest)
 	add_subdirectory(tests)
 endif()
+
+# T08: headless tools. Independent of the engine (they only need treegen), so outside the ESTREE_BUILD_ENGINE gate.
+option(ESTREE_BUILD_TOOLS "Build command-line tools (treegen_cli)" ON)
+if(ESTREE_BUILD_TOOLS)
+	add_subdirectory(tools/treegen_cli)
+endif()
