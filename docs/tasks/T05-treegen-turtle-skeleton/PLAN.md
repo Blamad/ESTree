@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
 > or `superpowers:executing-plans`. Steps use checkbox (`- [x]`) syntax.
 
-**Status:** review · **Branch:** `task/T05-treegen-turtle-skeleton` · **Base:** `modernization @ 5853916` (T03 done)
+**Status:** done · **Branch:** `task/T05-treegen-turtle-skeleton` · **Base:** `modernization @ 5853916` (T03 done)
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** `treegen::interpret(params, modules, opts) -> Skeleton`: the legacy turtle as pure data (no GL, no

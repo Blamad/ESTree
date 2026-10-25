@@ -100,17 +100,18 @@ Full contract: `docs/architecture/treegen-design.md`. Current state: `docs/archi
 
 Fixed by the task named in brackets; leave them alone elsewhere.
 
-- `getNumericParameter` uses `-1` as "no parameter" sentinel, so a literal `-1` parameter is
-  ignored [T05]
-- Rewriting is regex over strings; expressions support one binary operator only [T04]
-- `std::regex_search` result is read after the loop ends (`res.suffix()` after a failed search) [T04]
-- RNG is a static `boost::variate_generator` seeded with `time(0)`; trees are not reproducible [T04, T05]
+Already fixed (rewriter, turtle, loader now live in `treegen`; see D-009, D-010, D-014): regex-based rewriting and loading,
+the `-1` parameter sentinel, `res.suffix()` after a failed search, time-seeded global RNGs (seeds are explicit now),
+`Scene::~Scene` `release()` leak and Engine C-casts (T10).
+
+Still open:
 - Fixed buffers: 100 000 vertices / 4 000 000 indices in `LindenmayerTree` ctor, no overflow check [T06]
-- `Scene::~Scene` calls `release()` on `unique_ptr`s (leak); many `(Type*)getComponent(...)` C-casts [T10]
-- Build still links prebuilt Boost 1.72 `vc140` libs (`BOOST_LIB`); removed by T09/T13. Linux
-  builds in Docker/GCC 13 (engine ON, 15 tests); the CI workflow `.github/workflows/ci.yml` has never run on GitHub (T11)
-- Legacy `LindenmayerTreeSolver`/`LindenmayerTreeParams` read `std::regex` results after a failed search; on libstdc++ this
-  drops the tail of every rewrite (8 of 26 golden cases fail on Linux), so `legacy_characterization_tests` is MSVC-only [T04]
+- Legacy `Lindenmayer*` classes remain as thin adapters/mesh generator until T07; `LindenmayerTreeParams.h` still pulls Boost [T07]
+- `legacy_characterization_tests` documents MSVC behavior of the old regex code and is built only for MSVC; delete with the legacy sources [T07]
+- Build still links prebuilt Boost 1.72 `vc140` libs (`BOOST_LIB`) because of `Models/Tree`; removed by T07/T13. Linux
+  builds in Docker/GCC 13 (engine ON); the CI workflow `.github/workflows/ci.yml` has never run on GitHub (T11)
+- `legacy/parametricTree2.l` has a typo (`[^+a)`, lost `(`) so `tree file legacy/parametricTree2.l` reports an error; fix the file in T07
+- Tropism `T` was a no-op in the shipped binary (zero-quaternion start with newer glm); `treegen` fixes it (D-010) — owner must accept the new look
 
 ## Working on a task
 

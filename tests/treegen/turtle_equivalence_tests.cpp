@@ -221,7 +221,9 @@ TEST_CASE("Turtle equivalence: every solver golden up to depth 4") {
 	          << "), vs verbatim legacy without T " << worstVerbatimNoT << ", with T " << worstVerbatimT << std::endl;
 	CHECK(compared >= 100);
 	CHECK(tropism >= 10);
-	CHECK(skipped.size() == notModuleStrings.size());
+	// T04 deleted these three goldens (its rewriter reports the typo instead of copying it), so none may be present;
+	// if they come back, the loop above has already asserted that they are not module strings.
+	CHECK(skipped.size() <= notModuleStrings.size());
 }
 
 // ---- what the shipped binary actually did (documented in D-010) -----------------------------------------------

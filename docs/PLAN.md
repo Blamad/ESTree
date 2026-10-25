@@ -61,7 +61,7 @@ Status is maintained by the orchestrating session only. Legend: `todo` · `in-pr
 | [T02](tasks/T02-characterization-tests/BRIEF.md) | Characterization (golden) tests of the legacy solver and params loader | T01 | M | done |
 | [T03](tasks/T03-treegen-scaffold-params/BRIEF.md) | `treegen` scaffold: CMake target, boundary check, `Module`, `TreeParams`, loaders | T02 | M | done |
 | [T04](tasks/T04-treegen-rewriter/BRIEF.md) | `treegen` rewriter: expression evaluator, seeded stochastic rewriting | T03 | L | done |
-| [T05](tasks/T05-treegen-turtle-skeleton/BRIEF.md) | `treegen` turtle interpreter → `Skeleton` | T03 | L | todo |
+| [T05](tasks/T05-treegen-turtle-skeleton/BRIEF.md) | `treegen` turtle interpreter → `Skeleton` | T03 | L | done (tropism change awaits owner OK) |
 | [T06](tasks/T06-treegen-geometry/BRIEF.md) | `treegen` geometry: `Skeleton` → `MeshData` + leaf transforms | T05 | L | todo |
 | [T07](tasks/T07-engine-adapter-switchover/BRIEF.md) | Engine adapter switch-over; delete legacy `Lindenmayer*` pipeline | T04, T06 | M | todo |
 | [T08](tasks/T08-treegen-cli-obj-export/BRIEF.md) | Headless `treegen_cli` + OBJ writer | T04, T06 | S | todo |
