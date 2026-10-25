@@ -16,7 +16,7 @@ CLI tests are CTest entries that run the exe and a second tiny C++ checker (`obj
 - Create: `tools/treegen_cli/{main.cpp,CMakeLists.txt,README.md}` â€” CLI target `treegen_cli`, links only `treegen`
 - Create: `tools/treegen_cli/tests/obj_check.cpp` â€” validator/comparator used by CTest (no doctest, no treegen)
 - Modify: root `CMakeLists.txt` (end): `option(ESTREE_BUILD_TOOLS ON)` + `add_subdirectory(tools/treegen_cli)`
-- Modify: `docs/DECISIONS.md` (append D-017)
+- Modify: `docs/DECISIONS.md` (append D-018)
 
 ## Interfaces
 
@@ -45,7 +45,7 @@ CLI tests are CTest entries that run the exe and a second tiny C++ checker (`obj
 
 ### Step group 3: verification
 - [x] 3.1 Windows full + engine OFF + ctest, `/W4` clean; Linux Docker; link line; stats for 3 rule files; ternaryE depth 10 time
-- [x] 3.2 D-017, PLAN status `review`
+- [x] 3.2 D-018, PLAN status `review`
 
 ## Review focus covered
 

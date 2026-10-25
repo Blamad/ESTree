@@ -10,7 +10,7 @@ re-verified the merged tree (results appended at the end).
 - `treegen/ObjWriter.h` + `src/ObjWriter.cpp`: `writeObj(file, trunk, leaves)`. Header `# treegen OBJ export`, object `trunk` (all `v`, then `vn`, then `vt`, then `f v/vt/vn` triangles, 1-based) and object `leaves` (each leaf is the engine's 8-vertex double-sided panel, positions transformed by the leaf matrix, normals by its cofactor matrix). Numbers via `std::to_chars` in fixed notation through a 1 MiB buffer; `-0` and NaN/Inf written as `0`. Creates parent directories; throws `treegen::Error` on open/write failure, on an out-of-range trunk index (detected before the file is opened) and on an index count that is not a multiple of 3. Empty objects omitted.
 - `tools/treegen_cli/` (`main.cpp`, `CMakeLists.txt`, `README.md`, `tests/obj_check.cpp`); links only `treegen`. Root `CMakeLists.txt`: `ESTREE_BUILD_TOOLS` block (default ON) at the end, outside the engine gate.
 - Tests: `tests/treegen/obj_tests.cpp` (10 cases: exact text, index base, normals under scale/mirror/singular matrices, C++ and C locale, `-0`/NaN, parent dirs, determinism, I/O failure, bad index) and 15 CTest entries `treegen_cli_*` driven by `obj_check` (no shell or PowerShell): help, bad args, missing file, bad JSON, unwritable output, generation, validation, same seed, thread-count independence, different seed.
-- D-017 in `docs/DECISIONS.md`; `treegen-design.md` unchanged.
+- D-018 in `docs/DECISIONS.md`; `treegen-design.md` unchanged.
 
 ## Acceptance criteria
 

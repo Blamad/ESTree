@@ -20,6 +20,13 @@ configure) and run through CTest. Tests are headless: never open a window or tou
   `treegen_boundary` (`boundary_check.cmake`) fails when a file under `ESEngine/TreeGen/` includes something outside the
   standard library, glm and rapidjson; `treegen_boundary_selftest` proves the check catches planted violations. Both run
   without the engine, so they and `treegen_tests` also run on the Linux and Windows CI jobs.
+- `tree_adapter_tests` (`tests/adapter/`, T07) tests the engine's tree adapter without GL: the pure helpers in
+  `ESEngine/ESTree/Models/Tree/TreeMeshConversion.h` (vertex/index/leaf conversion, seed rules) and the adapter path of every shipped rule file
+  through `treegen::generateTree`. It needs only `treegen` and glm, so it also runs with the engine OFF. The console command and the GL upload
+  are human-verified (see the T07 report).
+- `tests/golden/` holds the frozen reference data of the pre-treegen implementation (loader and solver output, `KNOWN_BUGS.md`); the
+  treegen tests compare against it (`loader_golden_tests`, `rewriter_golden_tests`, `golden_data_tests`). The legacy pipeline and its
+  characterization test are gone (T07).
 - Do not link GLFW/glad/Bullet/FreeType into test executables.
 
 ## Reproducing CI locally

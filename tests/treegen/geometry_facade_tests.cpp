@@ -176,7 +176,8 @@ TEST_CASE("generateTree: leaf settings change only the leaves") {
 }
 
 TEST_CASE("generateTree: errors of the stages reach the caller") {
-	treegen::TreeParams broken = loadRules("legacy/parametricTree2.l");
+	treegen::TreeParams broken = treegen::parseTreeParamsJson(
+		R"json({ "axiom": "A", "parameters": { "depth": 1 }, "rules": [ { "symbol": "A", "production": "F(1)[+(30)A)" } ] })json", "broken.json");
 	CHECK_THROWS_AS(treegen::generateTree(broken), treegen::RewriteError);
 
 	treegen::TreeParams unbalanced;

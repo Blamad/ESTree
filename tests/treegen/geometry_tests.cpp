@@ -554,12 +554,10 @@ TEST_CASE("buildGeometry: NaN scan over every shipped rule file at depth min(fil
 		}
 	}
 
-	// legacy/parametricTree2.l has a typo in its own rule (`[^+a)`, see D-010/D-014): the rewriter reports it.
-	// Every other file must generate; a new failure here is a regression, not something to hide.
+	// Every shipped file must generate (legacy/parametricTree2.l lost a '(' until T07, see D-017); a new failure
+	// here is a regression, not something to hide.
 	INFO("failures: " << (failures.empty() ? std::string("none") : failures.front()));
-	CHECK(failed == 1);
-	REQUIRE(failures.size() == 1);
-	CHECK(failures.front().find("parametricTree2.l") != std::string::npos);
-	CHECK(generated == files.size() - 1);
+	CHECK(failed == 0);
+	CHECK(generated == files.size());
 	CHECK(totalVertices > 100000);
 }

@@ -20,8 +20,8 @@ Reply to the user in **Polish**. Code, comments, commit messages and docs are in
 | `ESEngine/Engine/` | Engine layer: `Core`, `GameObject` (components), `Manager`, `Scene`, `UI` (in-game console) |
 | `ESEngine/GraphicEngine/` | Thin OpenGL layer: window (GLFW), renderer, shaders, VAO, framebuffers, input |
 | `ESEngine/ESTree/` | The application: `ESTree.cpp` (main), `Scenes/`, `Console/` commands, `Models/` |
-| `ESEngine/ESTree/Models/Tree/` | **Legacy** Lindenmayer pipeline (`Lindenmayer*` classes). Being replaced by `treegen` |
-| `ESEngine/TreeGen/` | **Target** engine-independent tree generator, static lib `treegen` (T03: `Error`, `Rng`, `Module`, `TreeParams`, loaders; rewriter/turtle/geometry follow in T04–T06) |
+| `ESEngine/ESTree/Models/Tree/` | Thin engine adapter over `treegen` (`LindenmayerTree`, `LindenmayerTreeFactory`, `TreeMeshConversion.h`); no generation logic |
+| `ESEngine/TreeGen/` | Engine-independent tree generator, static lib `treegen` (loaders, rewriter, turtle, geometry, `generateTree` facade) |
 | `Resources/` | Shaders, textures, fonts, `LindenmayerRules/*.json` (+ `legacy/*.l`) |
 | `Vendor/` | Git submodules: glfw, glad, glm, bullet3, freetype2, rapidjson, stb. **Do not edit** (only T12 may bump them) |
 | `docs/` | Plan, architecture notes, per-task directories (see below) |
@@ -75,8 +75,8 @@ GPU of the owner's Optimus laptop (the Intel iGPU driver crashes, see `docs/BACK
    `GLFW`, Bullet, FreeType, or `boost/`. T03 adds a CTest that greps for this; keep it green.
 2. **Dependency direction:** `ESTree` app → `Engine` → `GraphicEngine`; `ESTree/Models/Tree`
    (adapter) → `treegen`. `treegen` depends on nothing in the repo.
-3. **Strangler migration.** Old `Lindenmayer*` classes keep their public API and delegate to
-   `treegen` until T07 deletes them. Never leave the engine unbuildable between tasks.
+3. **Strangler migration (finished in T07).** The old `Lindenmayer*` generation classes are gone; `LindenmayerTree`
+   calls `treegen::generateTree`. Never leave the engine unbuildable between tasks.
 4. **Behavior-preserving unless the brief says otherwise.** Refactors must not change generated
    trees. Intentional changes (bug fixes) are listed in the task brief and logged in
    `docs/DECISIONS.md`.
@@ -100,17 +100,14 @@ Full contract: `docs/architecture/treegen-design.md`. Current state: `docs/archi
 
 Fixed by the task named in brackets; leave them alone elsewhere.
 
-Already fixed (rewriter, turtle, loader now live in `treegen`; see D-009, D-010, D-014): regex-based rewriting and loading,
+Already fixed (loader, rewriter, turtle, geometry live in `treegen`; see D-009, D-010, D-014, D-015): regex-based rewriting and loading,
 the `-1` parameter sentinel, `res.suffix()` after a failed search, time-seeded global RNGs (seeds are explicit now),
-`Scene::~Scene` `release()` leak and Engine C-casts (T10).
+`Scene::~Scene` `release()` leak and Engine C-casts (T10), the fixed 100 000 / 4 000 000 GL buffers (T07: sized from the output),
+the `legacy/parametricTree2.l` lost `(` (T07, D-017).
 
 Still open:
-- Fixed buffers: 100 000 vertices / 4 000 000 indices in `LindenmayerTree` ctor, no overflow check [T06]
-- Legacy `Lindenmayer*` classes remain as thin adapters/mesh generator until T07; `LindenmayerTreeParams.h` still pulls Boost [T07]
-- `legacy_characterization_tests` documents MSVC behavior of the old regex code and is built only for MSVC; delete with the legacy sources [T07]
-- Build still links prebuilt Boost 1.72 `vc140` libs (`BOOST_LIB`) because of `Models/Tree`; removed by T07/T13. Linux
+- Build still links prebuilt Boost 1.72 `vc140` libs (`BOOST_LIB`) although no source includes Boost any more; removed by T13. Linux
   builds in Docker/GCC 13 (engine ON); the CI workflow `.github/workflows/ci.yml` has never run on GitHub (T11)
-- `legacy/parametricTree2.l` has a typo (`[^+a)`, lost `(`) so `tree file legacy/parametricTree2.l` reports an error; fix the file in T07
 - (closed) Tropism `T` was a no-op in the shipped binary; `treegen` fixes it, accepted by the owner (D-010, D-016)
 
 ## Working on a task
