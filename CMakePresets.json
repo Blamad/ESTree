@@ -1,0 +1,47 @@
+{
+	"version": 3,
+	"cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+	"configurePresets": [
+		{
+			"name": "base",
+			"hidden": true,
+			"binaryDir": "${sourceDir}/build/${presetName}",
+			"warnings": { "dev": false },
+			"cacheVariables": {
+				"CMAKE_POLICY_VERSION_MINIMUM": "3.5"
+			}
+		},
+		{
+			"name": "vs2019",
+			"displayName": "Visual Studio 2019 (v142), x64",
+			"inherits": "base",
+			"generator": "Visual Studio 16 2019",
+			"architecture": "x64"
+		},
+		{
+			"name": "vs2026",
+			"displayName": "Visual Studio 2026 (v145), x64 - needs a registered VS 2026 instance (Build Tools only: use ninja-msvc)",
+			"inherits": "base",
+			"generator": "Visual Studio 18 2026",
+			"architecture": "x64"
+		},
+		{
+			"name": "ninja-msvc",
+			"displayName": "Ninja Multi-Config, MSVC from the current developer environment (wrap commands with scripts/msvc-env.cmd)",
+			"inherits": "base",
+			"generator": "Ninja Multi-Config",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "cl",
+				"CMAKE_CXX_COMPILER": "cl"
+			}
+		}
+	],
+	"buildPresets": [
+		{ "name": "vs2019-debug", "configurePreset": "vs2019", "configuration": "Debug" },
+		{ "name": "vs2019-release", "configurePreset": "vs2019", "configuration": "Release" },
+		{ "name": "vs2026-debug", "configurePreset": "vs2026", "configuration": "Debug" },
+		{ "name": "vs2026-release", "configurePreset": "vs2026", "configuration": "Release" },
+		{ "name": "ninja-msvc-debug", "configurePreset": "ninja-msvc", "configuration": "Debug" },
+		{ "name": "ninja-msvc-release", "configurePreset": "ninja-msvc", "configuration": "Release" }
+	]
+}

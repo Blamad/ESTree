@@ -27,9 +27,11 @@ Sample screenshots presenting current engine abilities regarding tree generation
  
  
  # Project setup
- To setup VS 14 project locally recursively clone repo and run __setup.bat__. Script will create __build__ directory which will contain project files. </br>
- Run __build/ESTree.sln__ and remember to mark __ESTree__ as startup project. </br>
- Project requires built x64 Boost linked via env variable (check __CMakeLists.txt__) and __freetype.dll__ which can be placed in either __Windows/System32__ or project build directory.
+ Requirements: Windows x64, Visual Studio 2019 (or newer) C++ toolset, __CMake 3.21+__ and prebuilt x64 Boost 1.72 (static `vc140` libs; the engine still uses it, it is being phased out). Set the env variable __BOOST_LIB__ to a directory containing `Includes/` and `Libs/`. </br>
+ Clone recursively (`git clone --recursive`), then configure with a preset from __CMakePresets.json__: </br>
+ `cmake --preset vs2019`, then `cmake --build --preset vs2019-debug` (or `ninja-msvc`: `scripts\msvc-env.cmd cmake --preset ninja-msvc`, which sets up the MSVC environment; `vs2026` needs a registered VS 2026 instance). </br>
+ __setup.bat [preset] [--clean]__ does the configure step and links `Resources` next to the binaries (`build/<preset>/Resources`). Run `build/<preset>/Debug/ESTree.exe` from `build/<preset>` (the working directory must contain `Resources`). </br>
+ FreeType is linked statically, so no extra `freetype.dll` is needed.
  
  # Usage
  Scene navigation: RMB + WSAD (Space and left alt to move vertically)<br/>
