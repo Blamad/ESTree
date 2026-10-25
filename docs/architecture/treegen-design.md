@@ -86,6 +86,13 @@ std::string substituteParameters(std::string_view text, const std::map<std::stri
 struct RewriteOptions { uint32_t seed = 0; };
 ModuleString rewrite(const TreeParams&, const RewriteOptions& = {});   // throws RewriteError
 
+// treegen/Expression.h  (T04, additive; used by the rewriter and tested on its own)
+class Expression {
+public:
+	static Expression parse(std::string_view text, const std::vector<std::string>& names);   // throws RewriteError
+	double evaluate(const double* args, std::size_t count) const;     // no NaN/Inf check: the rewriter does that
+};
+
 // treegen/Skeleton.h + Turtle.h  (T05)
 struct SkeletonSegment {
 	int       parent;                 // index into Skeleton::segments, -1 for the root
@@ -133,6 +140,18 @@ or a malformed rule symbol is always a `LoadError`, never a crash.
 - Old `.l` files may start with the bare-number header `depth`, `initialLength`, `initialRadius`, `angle` (degrees) before the
   axiom line. A UTF-8 BOM and `\r` are ignored.
 - The default `angle` is `radians(15)`; JSON/`.l` angles are degrees and stored as radians; `tropism` is normalized.
+
+## Rewriter behaviour (T04)
+
+- Per iteration `i` a module whose symbol has rules is replaced by the production of one candidate (rules of the symbol with
+  `initialDepth <= i`, declaration order); other modules pass through. One `uniform01()` of `Rng(seed).derive(1)` is drawn per
+  rewritten module; rule k is chosen when `sum(p[0..k-1]) <= u < sum(p[0..k])`, a draw past the sum keeps the module.
+- The chosen rule must declare exactly as many parameters as the module has (`RewriteError` naming symbol and rule otherwise).
+  Productions are compiled on first use into literal modules whose parameters are `Expression`s over the rule's parameter names.
+- Errors (`RewriteError`): arity mismatch, malformed production/expression, NaN/Inf/float overflow of an evaluated parameter,
+  more than `TreeParams::maxModules` modules.
+- Numeric model, kept for digit-identical legacy output (D-014): computed parameters are rounded to six decimals; an argument that
+  is the float nearest to a six-decimal number is evaluated as that decimal in double precision.
 
 ## Compatibility with the legacy pipeline
 

@@ -42,11 +42,21 @@ Legacy `.l`: `advancedTree`, `normalTest`, `parametricMonopodialTreeA..D`, `para
   `advancedTree.l`, depth 1 for the others; T03 fixed the loader, `KNOWN_BUGS.md` #11). The own depth is `d4` for
   `advancedTree.l` (new golden) and already covered by `d1` for the others.
 - `legacy/parametricTree2.l` contains rule-file mistakes (`[^+a)`, a rule with parameters applied to a bare `F`).
-  The golden freezes the resulting nonsense on purpose. Since T03 its axiom is substituted (`F(1.200000)` instead of
-  `F(startLength)`, `KNOWN_BUGS.md` #10), so `d0..d3` were regenerated.
+  The legacy golden froze the resulting nonsense. Since T03 its axiom is substituted (`F(1.200000)` instead of
+  `F(startLength)`, `KNOWN_BUGS.md` #10). Since T04 the stray `)` is a `treegen::RewriteError` (`KNOWN_BUGS.md` #14), so
+  only `d0` remains; `d1..d3` were deleted.
+
+## Who checks them
+
+- `tests/treegen/rewriter_golden_tests.cpp` (`treegen_tests`, every platform): `treegen::rewrite` against every golden.
+- `legacy_characterization_tests` (MSVC only): the same through the `LindenmayerTreeSolver` adapter.
+
+Both compare in the canonical number form, `toString(parseModules(golden))`: the legacy solver copied the literal numbers of a
+production as written (`+(45)`) and printed computed ones with `std::to_string` (`+(45.000000)`), while `ModuleString` prints
+every number the second way. Every digit is still compared, and the goldens were not rewritten. `--regenerate` writes the
+canonical form from now on.
 
 ## Platform note
 
-Goldens were produced with MSVC (Debug) and its `std::regex`. A different standard library may behave
-differently where the legacy code relies on unspecified behavior (`res.suffix()` after a failed `regex_search`,
-see `KNOWN_BUGS.md`); a golden mismatch on another toolchain is then a finding, not a reason to regenerate.
+Goldens were produced with MSVC (Debug) and the legacy `std::regex` solver. `treegen::rewrite` has no regex and matches
+them on MSVC and on Linux/GCC (T04). A golden mismatch is a finding, not a reason to regenerate.
