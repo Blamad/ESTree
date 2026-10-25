@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
 > or `superpowers:executing-plans`. Steps use checkbox (`- [ ]`) syntax.
 
-**Status:** review · **Branch:** `task/T07-engine-adapter-switchover` · **Base:** `modernization @ 1bb4e50`
+**Status:** done · **Branch:** `task/T07-engine-adapter-switchover` · **Base:** `modernization @ 1bb4e50`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** `LindenmayerTree` becomes a thin adapter over `treegen::generateTree` that uploads into the existing
