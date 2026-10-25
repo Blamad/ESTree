@@ -1,9 +1,10 @@
 # Golden data for the legacy characterization tests
 
-Produced by `legacy_characterization_tests` (`tests/legacy_characterization/`), which compiles
-`LindenmayerTreeParams.cpp` (since T03 an adapter over `treegen`) and the unchanged `LindenmayerTreeSolver.cpp`. They
-record what the legacy code does so that T03/T04 can prove a rewrite preserved it. The `params/` goldens are also checked,
-on every platform, against `treegen::loadTreeParams` by `tests/treegen/loader_golden_tests.cpp`.
+Produced by `legacy_characterization_tests` (`tests/legacy_characterization/`) from the original regex implementation. They
+record what the legacy code did so that T03/T04 can prove a rewrite preserved it; `LindenmayerTreeParams.cpp` (T03) and
+`LindenmayerTreeSolver.cpp` (T04) are now adapters over `treegen`. The `params/` goldens are also checked, on every platform,
+against `treegen::loadTreeParams` by `tests/treegen/loader_golden_tests.cpp`, the `solver/` goldens against `treegen::rewrite` by
+`tests/treegen/rewriter_golden_tests.cpp`.
 
 | Path | Content |
 |---|---|

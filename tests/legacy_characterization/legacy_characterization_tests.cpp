@@ -1,6 +1,7 @@
 // Characterization (golden) tests of the legacy Lindenmayer params loader and string rewriter.
-// Documents what the legacy solver does today, including its bugs (the solver is compiled unchanged; the params
-// loader is now an adapter over treegen, whose fixed loader defects are flipped to the correct expectations below).
+// Documents the legacy behavior. Since T03/T04 both the params loader and the solver are adapters over treegen;
+// the defects they fixed are flipped to the correct expectations below (tests/golden/KNOWN_BUGS.md). The goldens
+// still come from the original regex implementation.
 // Goldens: tests/golden/ (see tests/golden/README.md). Regenerate with `--regenerate`.
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
@@ -14,6 +15,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
+
+#include <treegen/Error.h>
+#include <treegen/Module.h>
 
 #include "ESTree/Models/Tree/LindenmayerTreeParams.h"
 #include "ESTree/Models/Tree/LindenmayerTreeSolver.h"
@@ -67,8 +71,16 @@ void writeFile(const fs::path& p, const std::string& content) {
 	out << content;
 }
 
+// Solver goldens come from the legacy solver, which kept the literal numbers of a production as written ("+(45)")
+// and printed computed ones with std::to_string ("+(45.000000)"). Since T04 the solver is an adapter over
+// treegen::rewrite and always prints the canonical form, so the golden is brought into the canonical form first
+// (every digit of every parameter is still compared).
+std::string canonicalModules(const std::string& text) {
+	return treegen::toString(treegen::parseModules(text));
+}
+
 // Compares with a golden file; with --regenerate it rewrites the golden instead.
-void checkGolden(const fs::path& goldenPath, const std::string& actual) {
+void checkGolden(const fs::path& goldenPath, const std::string& actual, bool canonicalizeExpected = false) {
 	if (g_regenerate) {
 		writeFile(goldenPath, actual);
 		return;
@@ -79,6 +91,8 @@ void checkGolden(const fs::path& goldenPath, const std::string& actual) {
 		FAIL_CHECK("missing golden file " << goldenPath.string() << " (run with --regenerate, review, commit)");
 		return;
 	}
+	if (canonicalizeExpected && expected.compare(0, 7, "length=") != 0)
+		expected = canonicalModules(expected);
 	if (expected == actual) {
 		CHECK(true);
 		return;
@@ -155,6 +169,12 @@ std::string dumpParams(const RuleFile& f, LindenmayerTreeParams& p) {
 		}
 	}
 	return o.str();
+}
+
+// legacy/parametricTree2.l contains a rule with a stray ')' ("[^+a)"). The legacy solver copied it into its output;
+// the rewriter reports a RewriteError (D-014), so only its depth 0 has a golden.
+bool hasMalformedRule(const RuleFile& f) {
+	return f.id == "legacy__parametricTree2.l";
 }
 
 // Deterministic = every symbol has exactly one production and it is always chosen (probability 1).
@@ -274,20 +294,24 @@ TEST_CASE("solver: deterministic rule files match goldens at depth 0..3 and own 
 		if (definesDepth(f)) depths.insert(probe.depth);
 		for (int d : depths) {
 			CAPTURE(d);
+			if (hasMalformedRule(f) && d > 0) {
+				CHECK_THROWS_AS(produce(f, d), treegen::RewriteError);
+				continue;
+			}
 			std::string product = produce(f, d);
-			checkGolden(kGoldenDir / "solver" / (f.id + ".d" + std::to_string(d) + ".txt"), solverGoldenText(product));
+			checkGolden(kGoldenDir / "solver" / (f.id + ".d" + std::to_string(d) + ".txt"), solverGoldenText(product), true);
 		}
 	}
 	CHECK(deterministicFiles == 34);
 }
 
-TEST_CASE("solver: deterministic output does not depend on the time-seeded static RNG") {
-	// The generator is seeded from time(0) at static init; deterministic rules draw from it but the
-	// outcome is fixed because probability 1 always wins (value - 1 <= 0). Repeat in-process to show it.
+TEST_CASE("solver: deterministic output does not depend on the random seed") {
+	// Without params.seed the solver picks a fresh random seed per call; deterministic rules draw from it but the
+	// outcome is fixed because probability 1 always wins. Repeat in-process to show it.
 	for (const RuleFile& f : shippedRuleFiles()) {
 		CAPTURE(f.id);
 		LindenmayerTreeParams probe(f.path.string());
-		if (!isDeterministic(probe)) continue;
+		if (!isDeterministic(probe) || hasMalformedRule(f)) continue;
 		std::string first = produce(f, 2);
 		for (int i = 0; i < 3; ++i) CHECK(produce(f, 2) == first);
 	}
@@ -349,10 +373,11 @@ TEST_CASE("solver: initialDepth gates a rule by iteration index") {
 }
 
 TEST_CASE("solver: depth 0 returns the axiom unchanged") {
-	CHECK(solve("A(1)B", 0, { Rule("A", "C(l)") }) == "A(1)B");
+	// the axiom is returned in the canonical form (std::to_string numbers) since T04
+	CHECK(solve("A(1)B", 0, { Rule("A", "C(l)") }) == "A(1.000000)B");
 }
 
-TEST_CASE("solver: expression folding handles one binary operator") {
+TEST_CASE("solver: expressions with one binary operator") {
 	CHECK(solve("A(2)", 1, { Rule("A", "F(l*3)", 1.0f, 0, { "l" }) }) == "F(6.000000)");
 	CHECK(solve("A(2)", 1, { Rule("A", "F(l+3)", 1.0f, 0, { "l" }) }) == "F(5.000000)");
 	CHECK(solve("A(2)", 1, { Rule("A", "F(l/4)", 1.0f, 0, { "l" }) }) == "F(0.500000)");
@@ -365,7 +390,7 @@ TEST_CASE("params: custom parameters are substituted as std::to_string(float)") 
 	CHECK(p.fillRuleWithVariables("F(a)", vars) == "F(0.500000)");
 }
 
-// ---- known bugs: these assert the CURRENT, WRONG behavior (see tests/golden/KNOWN_BUGS.md) -------------
+// ---- former known bugs: the tests pin the corrected behavior (see tests/golden/KNOWN_BUGS.md) ----------
 
 TEST_CASE("params: substitution replaces the second of two adjacent identical parameters") {
 	// Was KNOWN BUG 1 (fixed in T03): each match used to consume its closing delimiter, so in "(a1,a1)" the ','
@@ -392,44 +417,49 @@ TEST_CASE("params: substitution keeps the text after the last match") {
 	CHECK(p.fillRuleWithVariables("[v(a1)B]C", vars) == "[v(35.000000)B]C");
 }
 
-TEST_CASE("KNOWN BUG: solver substitution skips the second of two adjacent identical parameters") {
-	// Same defect in LindenmayerTreeSolver::fillRuleWithParameters. Correct: "F(2,2)". Owner: T04.
-	CHECK(solve("A(2)", 1, { Rule("A", "F(x,x)", 1.0f, 0, { "x" }) }) == "F(2,x)");
+TEST_CASE("solver: substitution replaces the second of two adjacent identical parameters") {
+	// Was KNOWN BUG 2 (fixed in T04): the legacy solver gave "F(2,x)".
+	CHECK(solve("A(2)", 1, { Rule("A", "F(x,x)", 1.0f, 0, { "x" }) }) == "F(2.000000,2.000000)");
 }
 
-TEST_CASE("KNOWN BUG: expression with a leading minus is mis-evaluated") {
-	// "(-5*2" is split at the first operator char '-': left "" -> 0, right "5*2" -> atof 5 => 0 - 5.
-	// Correct: F(-10.000000). Owner: T04.
-	CHECK(solve("A", 1, { Rule("A", "F(-5*2)") }) == "F(-5.000000)");
+TEST_CASE("solver: an expression with a leading minus is evaluated") {
+	// Was KNOWN BUG 4 (fixed in T04): "(-5*2" was split at the first operator char '-' (left "" -> 0) => 0 - 5.
+	CHECK(solve("A", 1, { Rule("A", "F(-5*2)") }) == "F(-10.000000)");
 }
 
-TEST_CASE("KNOWN BUG: a negative parameter value in an expression is mis-evaluated") {
-	// l = -2 gives "F(-2*3)" which hits the leading-minus defect. Correct: F(-6.000000). Owner: T04.
-	CHECK(solve("A(-2)", 1, { Rule("A", "F(l*3)", 1.0f, 0, { "l" }) }) == "F(-2.000000)");
+TEST_CASE("solver: a negative parameter value in an expression is evaluated") {
+	// Was KNOWN BUG 5 (fixed in T04): l = -2 gave "F(-2*3)" which hit the leading-minus defect.
+	CHECK(solve("A(-2)", 1, { Rule("A", "F(l*3)", 1.0f, 0, { "l" }) }) == "F(-6.000000)");
 }
 
-TEST_CASE("KNOWN BUG: chained operators are not evaluated") {
-	// Split at the first operator: left 2, right "3*4" -> atof 3 => 2*3. Correct: F(24.000000). Owner: T04.
-	CHECK(solve("A", 1, { Rule("A", "F(2*3*4)") }) == "F(6.000000)");
-	// No precedence: 1+2*3 is read as 1 + atof("2*3") = 3. Correct: F(7.000000).
-	CHECK(solve("A", 1, { Rule("A", "F(1+2*3)") }) == "F(3.000000)");
+TEST_CASE("solver: chained operators are evaluated with precedence") {
+	// Was KNOWN BUG 6 (fixed in T04): only the first operator was used (2*3*4 -> 6, 1+2*3 -> 3).
+	CHECK(solve("A", 1, { Rule("A", "F(2*3*4)") }) == "F(24.000000)");
+	CHECK(solve("A", 1, { Rule("A", "F(1+2*3)") }) == "F(7.000000)");
 }
 
-TEST_CASE("KNOWN BUG: a rule that rewrites everything to the empty string is ignored") {
-	// `if (newProduct.length() > 0) product = newProduct;` keeps the old product. Correct: "". Owner: T04.
-	CHECK(solve("A", 1, { Rule("A", "") }) == "A");
+TEST_CASE("solver: a rule that rewrites everything to the empty string gives the empty string") {
+	// Was KNOWN BUG 7 (fixed in T04): `if (newProduct.length() > 0)` kept the old product ("A").
+	CHECK(solve("A", 1, { Rule("A", "") }) == "");
 }
 
-TEST_CASE("KNOWN BUG: rule symbols that are regex metacharacters make the solver throw") {
-	// generateSymbolRegex() concatenates symbols unescaped: "(+|A)" is an invalid ECMAScript regex.
-	// '+' '^' '*' etc. are valid turtle symbols. Correct: they can be rewritten. Owner: T04.
-	CHECK_THROWS_AS(solve("A", 1, { Rule("+", "A"), Rule("A", "B") }), std::regex_error);
+TEST_CASE("solver: rule symbols that are regex metacharacters can be rewritten") {
+	// Was KNOWN BUG 8 (fixed in T04): generateSymbolRegex() concatenated the symbols unescaped, "(+|A)" threw regex_error.
+	CHECK(solve("A+", 1, { Rule("+", "A"), Rule("A", "B") }) == "BA");
 }
 
-TEST_CASE("KNOWN BUG: a rule with parameters applied to a symbol without arguments leaves the names in place") {
-	// Arity mismatch: no value list, so `l` is never substituted and the expression is not folded.
-	// Correct: a typed error naming rule and symbol (docs/PLAN.md Review Focus 4). Owner: T04.
-	CHECK(solve("A", 1, { Rule("A", "F(l*2)", 1.0f, 0, { "l" }) }) == "F(l*2)");
+TEST_CASE("solver: a rule with parameters applied to a symbol without arguments is a RewriteError") {
+	// Was KNOWN BUG 9 (fixed in T04): the names stayed in place ("F(l*2)"). Now a typed error naming symbol and rule
+	// (docs/PLAN.md Review Focus 4).
+	try {
+		solve("A", 1, { Rule("A", "F(l*2)", 1.0f, 0, { "l" }) });
+		FAIL("expected a treegen::RewriteError");
+	}
+	catch (const treegen::RewriteError& e) {
+		std::string message = e.what();
+		CHECK(message.find("'A'") != std::string::npos);
+		CHECK(message.find("rule A(l)") != std::string::npos);
+	}
 }
 
 TEST_CASE("params: custom parameters are substituted into the axiom") {
