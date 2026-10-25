@@ -17,7 +17,10 @@ add_library(treegen::treegen ALIAS treegen)
 # Drop whatever include directories the parent directory had collected.
 set_property(TARGET treegen PROPERTY INCLUDE_DIRECTORIES "")
 
+find_package(Threads REQUIRED)   # buildGeometry computes large meshes with std::thread
+
 target_compile_features(treegen PUBLIC cxx_std_17)
+target_link_libraries(treegen PUBLIC Threads::Threads)
 target_include_directories(treegen PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
 target_include_directories(treegen SYSTEM PUBLIC ${TREEGEN_GLM_DIR})
 target_include_directories(treegen SYSTEM PRIVATE ${TREEGEN_RAPIDJSON_DIR})
