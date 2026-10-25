@@ -43,6 +43,9 @@ increase the count on the toolchain they use.
 
 ## Needs human verification
 
+*Status 2026-10-25: owner reported "everything works as it should" after the T10 checks, but did not go through this list
+item by item — treat as unconfirmed.*
+
 1. Scene 0: console (`~`) `export x`, compare `models/x.obj` and `.mtl` with a pre-T09 build.
 2. Console `fps` and `fps clr`.
 3. Light and cube commands; click an object that has no name.

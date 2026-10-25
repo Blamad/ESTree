@@ -45,11 +45,12 @@ Typed accessor on `GameObject`/`Component` (D-006), virtual destructors on engin
 - `vs2019-asan` configure hit "Filename too long" in the deep worktree path; needed `-DFETCHCONTENT_SOURCE_DIR_DOCTEST`.
 - MSVC ASan has no leak detector → leaks (Bullet etc.) are verified by reading code and use-after-free experiments, not by LSan.
 
-## Needs human verification
+## Human verification (owner, 2026-10-25)
 
-1. Close the window with the X button **and** with Esc on scenes 0–4 (the orchestrator verified only `CloseMainWindow`).
-2. Scene 1: pick up a crate with LMB and let it fall.
-3. Select an object, run `rm` twice, then `normals on`: no crash. `rtree` still regenerates.
+1. Window closes cleanly — **confirmed by the owner**.
+2. Scene 1: picking up / moving a crate — **confirmed**.
+3. Select an object, `rm` twice, then `normals on`: no crash — **confirmed**.
+4. `rtree` regeneration of a selected tree — **not checked** by the owner (optional).
 
 ## Follow-ups
 
