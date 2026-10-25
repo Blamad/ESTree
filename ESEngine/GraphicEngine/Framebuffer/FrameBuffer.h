@@ -9,6 +9,8 @@
 
 class FrameBuffer {
 public:
+	virtual ~FrameBuffer() = default;
+
 	GLuint FBO;
 	GLuint quadVAO;
 	std::shared_ptr<Shader> shader;
