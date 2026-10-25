@@ -42,4 +42,4 @@ re-verified the merged tree (results appended at the end).
 ## Follow-ups
 
 - OBJ files are huge for deep trees (352 MB for ternaryE depth 10); a later task could weld vertices or add a binary format (glTF is in `docs/BACKLOG.md`).
-- Optional human check: open a generated `.obj` in Blender or MeshLab (the shape was not judged).
+- Human check done by the owner (2026-10-25): `ternaryB_seed42.obj` opened in a 3D viewer and "looks good".
