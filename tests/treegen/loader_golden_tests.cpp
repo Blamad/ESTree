@@ -1,7 +1,7 @@
 // The params goldens of tests/golden/params were produced by the legacy loader (T02). treegen's loader has to
 // reproduce them byte for byte, on every platform; the few intentional differences were regenerated with a
-// DECISIONS.md entry (see tests/golden/KNOWN_BUGS.md). The legacy_characterization_tests (MSVC only) compare
-// the same files through the LindenmayerTreeParams adapter.
+// DECISIONS.md entry (see tests/golden/KNOWN_BUGS.md). The legacy pipeline that produced them
+// was deleted in T07.
 #include <doctest/doctest.h>
 
 #include <algorithm>
@@ -82,7 +82,7 @@ std::string join(const std::vector<std::string>& v, const char* sep) {
 	return s;
 }
 
-// Exactly the format of dumpParams() in legacy_characterization_tests.cpp.
+// The format of the dump the legacy characterization test wrote (T02).
 std::string dumpParams(const RuleFile& f, const treegen::TreeParams& p) {
 	std::ostringstream o;
 	o << "file=" << (f.legacyL ? "legacy/" : "") << f.path.filename().string() << "\n";

@@ -1,6 +1,6 @@
 # Solver goldens
 
-`<id>.dN.txt` holds `LindenmayerTreeSolver::generateTreeProduction` output for the rule file `<id>` with
+`<id>.dN.txt` holds the production string of the (deleted) legacy solver `LindenmayerTreeSolver::generateTreeProduction` for the rule file `<id>` with
 `params.depth` forced to `N`. `<id>` is the path under `Resources/LindenmayerRules/` with `/` written as `__`
 (`legacy__test.l`). `N` is 0, 1, 2, 3 and, when the file defines it, the file's own depth (so `d8` for a
 depth-8 file). The file content is the product string verbatim (no trailing newline). If the product is longer
@@ -41,22 +41,22 @@ Legacy `.l`: `advancedTree`, `normalTest`, `parametricMonopodialTreeA..D`, `para
 - `legacy/advancedTree.l`, `testX.l`, `testY.l`, `testZ.l` set their depth with a bare-number header line (depth 4 for
   `advancedTree.l`, depth 1 for the others; T03 fixed the loader, `KNOWN_BUGS.md` #11). The own depth is `d4` for
   `advancedTree.l` (new golden) and already covered by `d1` for the others.
-- `legacy/parametricTree2.l` contains rule-file mistakes (`[^+a)`, a rule with parameters applied to a bare `F`).
-  The legacy golden froze the resulting nonsense. Since T03 its axiom is substituted (`F(1.200000)` instead of
-  `F(startLength)`, `KNOWN_BUGS.md` #10). Since T04 the stray `)` is a `treegen::RewriteError` (`KNOWN_BUGS.md` #14), so
-  only `d0` remains; `d1..d3` were deleted.
+- `legacy/parametricTree2.l` had a rule-file mistake (`[^+a)`, a lost `(`; a rule with parameters applied to a bare `F` is fine). The legacy golden
+  froze the resulting nonsense. Since T03 its axiom is substituted (`F(1.200000)` instead of `F(startLength)`, `KNOWN_BUGS.md` #10). Since T04 the stray
+  `)` was a `treegen::RewriteError` (#14) and `d1..d3` were deleted. T07 restored the `(` (`[^+(a)`, #15, D-017) and wrote `d1..d3` again **with
+  `treegen`** (canonical form, seed 7), so these three are not legacy output; `d0` is the original golden.
 
 ## Who checks them
 
 - `tests/treegen/rewriter_golden_tests.cpp` (`treegen_tests`, every platform): `treegen::rewrite` against every golden.
-- `legacy_characterization_tests` (MSVC only): the same through the `LindenmayerTreeSolver` adapter.
+- `tests/treegen/golden_data_tests.cpp`: the directory holds exactly `d0..d3` and the own depth of every deterministic file, no stale files.
 
-Both compare in the canonical number form, `toString(parseModules(golden))`: the legacy solver copied the literal numbers of a
+The golden test compares in the canonical number form, `toString(parseModules(golden))`: the legacy solver copied the literal numbers of a
 production as written (`+(45)`) and printed computed ones with `std::to_string` (`+(45.000000)`), while `ModuleString` prints
-every number the second way. Every digit is still compared, and the goldens were not rewritten. `--regenerate` writes the
-canonical form from now on.
+every number the second way. Every digit is still compared, and the goldens were not rewritten. The
+files of the legacy solver are in the legacy form, the three regenerated ones in the canonical form.
 
 ## Platform note
 
-Goldens were produced with MSVC (Debug) and the legacy `std::regex` solver. `treegen::rewrite` has no regex and matches
+Goldens (except `legacy__parametricTree2.l.d1..d3`) were produced with MSVC (Debug) and the legacy `std::regex` solver. `treegen::rewrite` has no regex and matches
 them on MSVC and on Linux/GCC (T04). A golden mismatch is a finding, not a reason to regenerate.

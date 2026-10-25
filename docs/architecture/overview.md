@@ -24,35 +24,41 @@ GraphicEngine (ESEngine/GraphicEngine)   GLWindow (GLFW), GLRenderer, Shader, GL
 - `Scene` stores `std::unordered_map<Uuid, std::unique_ptr<GameObject>>`; no culling, no render sorting. Up to 10 point + 10 directional lights.
 - Physics: Bullet (`RigidBody`, `PhysicsManager`), used for mouse picking and the block-tower scene. Trees get a hull `RigidBody`.
 - Text/UI console: FreeType; commands are registered in `ESTree.cpp` (`tree`, `rtree`, cube commands, model export).
-- Scenes (`--scene N`): 0 `SingleTreeScene`, 1 `PhysicsScene`, 2 `ForestScene`, 3 `TestScene`, 4 `TreeScene`. Each tree scene duplicates a private `createLindenmayerTree(...)` helper.
+- Scenes (`--scene N`): 0 `SingleTreeScene`, 1 `PhysicsScene`, 2 `ForestScene`, 3 `TestScene`, 4 `TreeScene`. The tree scenes create their trees with `LindenmayerTreeFactory` (T07).
 
 ## Build
 
 - `CMakeLists.txt` (cmake_minimum_required 3.0) globs `ESEngine/*`, links `glfw`, `BulletDynamics/BulletCollision/LinearMath`, `freetype`, and **Boost** `date_time` + `thread` (hard-coded `vc140-x64-1_72` names), plus Boost headers from `$ENV{BOOST_LIB}`.
 - `setup.bat` generates a "Visual Studio 14 Win64" solution into `build/` and symlinks `Resources`.
-- Boost is used for: `random`, `thread`, `date_time` (timing), `foreach`, `filesystem` (`ModelExporter`), `program_options` (`ESTree.cpp`), `algorithm/string` (split). All replaceable by C++17 std.
+- Boost was used for: `random`, `thread`, `date_time` (timing), `foreach`, `filesystem` (`ModelExporter`), `program_options` (`ESTree.cpp`), `algorithm/string` (split). No `#include <boost/...>` is left in `ESEngine/` (T07, T09); only the build files still link the Boost libraries (T13 removes that).
 - Non-portable bits: `#include <GLM\common.hpp>` (backslash, 15 occurrences of `GLM/` in upper case), Windows-only build script.
 
-## Legacy tree pipeline (`ESEngine/ESTree/Models/Tree/`)
+## Tree pipeline (`ESEngine/ESTree/Models/Tree/` over `ESEngine/TreeGen/`)
+
+Since T07 the engine holds no generation logic; `treegen` (pure C++17, contract: `treegen-design.md`) does all of it.
 
 ```
 Resources/LindenmayerRules/*.json | legacy/*.l
-        │  LindenmayerTreeParams(filePath)      JSON via rapidjson, .l via ifstream; custom parameters are
-        ▼                                       textually substituted into productions (regex, std::to_string(float))
-LindenmayerTreeParams {axiom, depth, initialLength, initialRadius, angle, leafGrowthProb, leavesAngleDiversity,
-        │               tropism, tropismBendingFactor, customParameters, rules: map<symbol, vector<Rule>>}
-        │  LindenmayerTreeSolver::generateTreeProduction(params)  -> std::string
-        ▼   regex rewriting, depth times; static RNG seeded time(0); expression folding via regex (one binary op)
-product string, e.g. "F(2)T+(45)A(...)[...]"
-        │  LindenmayerTreeInterpreter::generateMeshData(params, product, meshGenerator)
-        ▼   turtle; creates Segment tree + enqueues ring vertices in the mesh generator
-vector<shared_ptr<Segment>> + LindenmayerTreeMeshGenerator (ring data)
-        │  meshGenerator->generateMesh()   (boost::thread split of ring-point computation)
+        │  treegen::loadTreeParams(path)                 → TreeParams (+ optional "seed")
         ▼
-Mesh (trunk)  +  generateInstancedLeaves(): one cross-quad InstancedMesh at every terminal segment
+        │  treegen::generateTree(params, {seed, ringDensity})
+        ▼    rewrite (seeded, std::mt19937) → interpret (turtle → Skeleton) → buildGeometry (threads above 50 000 vertices)
+TreeModel { geometry.trunk: MeshData (MeshVertex + uint32 indices), geometry.leafTransforms: vector<mat4> }
+        │  LindenmayerTree::generate()   (the adapter, Models/Tree/TreeMeshConversion.h holds the pure conversions)
+        ▼
+Mesh (trunk, GL buffers sized from the output)  +  InstancedMesh (leaf cross-quad, one instance per leaf, in a child GameObject)
 ```
 
-`LindenmayerTree : GameObject` orchestrates this (`generate()`), `LindenmayerTreeFactory::generateTree` also adds a hull `RigidBody` and registers the object with the scene. `ConsoleTreeCommand` (`tree`, `rtree`) and the tree scenes are the callers.
+- `LindenmayerTree : GameObject` is the adapter: constructor takes `treegen::TreeParams` (and an optional console seed), `generate()` runs
+  the pipeline and uploads. The seed is `TreeParams::seed` (JSON `"seed"`) if non-zero, else the console `seed <n>`, else a fresh random
+  value; it is logged with the generation time (`Generation finished. N tris. Time: Xms. Seed: S`) and kept in `getSeed()`.
+- Conversions (`treeadapter::` in `TreeMeshConversion.h`, no GL, tested headless): `MeshVertex` → `Vertex` (color zero), `uint32_t` → `int`
+  indices (refused above `INT_MAX`), leaf matrices → `InstancedTransform` premultiplied by the tree's world matrix.
+- GL buffers are created with exactly the generated sizes (`Mesh(vertices, indices, shader, vBufferSize, iBufferSize, GL_STREAM_DRAW)`); there is no
+  vertex/index cap any more (ternary E at depth 10 is 2.1 M vertices).
+- `LindenmayerTreeFactory::generateTree` / `generateTreeFromFile` build the tree, give it the hull `RigidBody` and register it with a scene (the
+  scenes pass themselves, the console uses the active scene). `ConsoleTreeCommand` (`tree`, `rtree`, parameter `seed <n>`) catches `treegen::Error`
+  and prints one line to the in-game console; a scene that cannot load or generate a tree logs it and skips that tree.
 
 ### Rule syntax (as implemented)
 
@@ -78,14 +84,14 @@ Mesh (trunk)  +  generateInstancedLeaves(): one cross-quad InstancedMesh at ever
   After a segment is drawn the turtle's local rotation resets to identity (the cumulative rotation lives in `totalRotation`), length resets to `initialLength`, while `radius`, `angle`, `lengthScale` persist. Unknown characters are ignored.
 - Angles in rule files are degrees; parameters in `getNumericParameter` are converted with `toRadians`.
 
-### Geometry (as implemented)
+### Geometry (as implemented; now `treegen::buildGeometry`)
 
 - Each `F` creates **two rings** of `ringDensity` (= 9) vertices: a copy of the parent's top ring (rotated by the roll difference, UV v=0) and the new top ring (v=1); 16 triangles per segment. The 9th ring vertex duplicates the 1st for the UV seam.
 - Ring point: `(radius·cos(θ)/2, 0, radius·sin(θ)/2)` in the segment's local frame, so the **stored `radius` is a diameter** (the geometric radius is half). Keep this in mind when porting.
 - Normals are radial (no smoothing across segments), so joints show seams.
 - Leaves: every segment with no children (`isLastStem`) gets a double-sided 2×2 quad, instanced, optional random angle ± `leavesAngleDiversity`, kept with probability `leafGrowthProb`.
 
-### Suspected defects *(verify in T02/T04/T05)*
+### Defects of the former pipeline (all fixed or gone: D-009, D-010, D-014, D-015, T07)
 
 - `fillRuleWithVariables` consumes the delimiter after a match, so two occurrences sharing one delimiter (`(a1,a1)`) may leave the second unreplaced.
 - `LindenmayerTreeSolver::applyRule` splits an expression at the *first* operator character, so a leading minus (`(-5*2`) is likely mis-evaluated (left side `""` → 0, giving `0 - 5` instead of `-10`); precedence/associativity of chained operators is not handled.
