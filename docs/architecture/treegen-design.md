@@ -112,12 +112,15 @@ struct MeshData {
 	std::vector<MeshVertex> vertices;
 	std::vector<uint32_t>   indices;           // triangle list
 };
-struct GeometryOptions { int ringDensity = 9; uint32_t seed = 0; };
-struct TreeGeometry { MeshData trunk; std::vector<glm::mat4> leafTransforms; };
+struct GeometryOptions { int ringDensity = 9; uint32_t seed = 0; unsigned threads = 0; };   // threads: 0 auto (> 50 000 vertices), 1 never, n exactly n; result is bit-identical (D-015)
+struct GeometryStats { size_t segments, emittedSegments, skippedZeroRadius, skippedInvalidFrame, skippedLeaves; };   // D-015
+struct TreeGeometry { MeshData trunk; std::vector<glm::mat4> leafTransforms; GeometryStats stats; };
+// Exact sizing (2*ringDensity vertices and 6*(ringDensity-1) indices per emitted segment), no NaN/Inf, degenerate segments
+// skipped and counted. Throws Error for ringDensity < 3, a broken parent link, or > 2^32-1 vertices. radius is a DIAMETER.
 TreeGeometry buildGeometry(const Skeleton&, const TreeParams&, const GeometryOptions& = {});
 
 // treegen/TreeGenerator.h  (T06)
-struct GenerateOptions { uint32_t seed = 0; int ringDensity = 9; };
+struct GenerateOptions { uint32_t seed = 0; int ringDensity = 9; unsigned threads = 0; };   // seed 0 = params.seed; threads as in GeometryOptions
 struct TreeModel { Skeleton skeleton; TreeGeometry geometry; ModuleString modules; };
 TreeModel generateTree(const TreeParams&, const GenerateOptions& = {});
 
