@@ -5,7 +5,7 @@
 #include "Engine/Scene/Scene.h"
 #include "ESTree/Models/Cube.h"
 #include "ESTree/Models/LampCube.h"
-#include "ESTree/Models/Tree/LindenmayerTree.h"
+#include "ESTree/Models/Tree/LindenmayerTreeFactory.h"
 #include "Engine/GameObject/Material.h"
 #include "Engine/GameObject/Camera.h"
 #include "Engine/GameObject/CameraBehaviour.h"
@@ -20,8 +20,6 @@ public:
 	};
 
 	void initialize();
-
-	GameObject* createLindenmayerTree(std::string configurationFileName, glm::vec3 &position, const Material &material, const Material &leavesMaterial, std::string name, bool debug = false);
 
 	GameObject* createWhiteLampCube(glm::vec3 position, PointLightStrength str);
 	GameObject* createDirectionalLight(glm::vec3 position, glm::vec3 direction);
