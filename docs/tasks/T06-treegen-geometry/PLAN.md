@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
 > or `superpowers:executing-plans`. Steps use checkbox (`- [ ]`) syntax.
 
-**Status:** in-progress · **Branch:** `task/T06-treegen-geometry` · **Base:** `modernization @ 9c59d75`
+**Status:** review · **Branch:** `task/T06-treegen-geometry` · **Base:** `modernization @ 9c59d75`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Turn a `Skeleton` into render-ready CPU data (`MeshData` trunk + leaf transforms) without any engine type, and
@@ -61,37 +61,37 @@ TreeModel generateTree(const TreeParams&, const GenerateOptions& = {});
 
 ### Step group 1: types and the failing tests
 
-- [ ] **1.1** Create `MeshData.h`, `Geometry.h` (declarations), `TreeGenerator.h`; stub `Geometry.cpp`/`TreeGenerator.cpp` that compile (bodies throw).
-- [ ] **1.2** Write `geometry_tests.cpp`: `buildGeometry: single F(1) gives 18 vertices and 48 indices`, chain of N=5 (`2*rd*N` / `6*(rd-1)*N`), other ring densities (3, 5, 9, 16), root alone emits nothing, UV range and `v` 0/1 per ring, seam duplicates, unit normals, indices `<` vertex count and in the legacy order. Run -> FAIL.
-- [ ] **1.3** Commit: `T06: add geometry interfaces and failing tests`.
+- [x] **1.1** Create `MeshData.h`, `Geometry.h` (declarations), `TreeGenerator.h`; stub `Geometry.cpp`/`TreeGenerator.cpp` that compile (bodies throw).
+- [x] **1.2** Write `geometry_tests.cpp`: `buildGeometry: single F(1) gives 18 vertices and 48 indices`, chain of N=5 (`2*rd*N` / `6*(rd-1)*N`), other ring densities (3, 5, 9, 16), root alone emits nothing, UV range and `v` 0/1 per ring, seam duplicates, unit normals, indices `<` vertex count and in the legacy order. Run -> FAIL.
+- [x] **1.3** Commit: `T06: add geometry interfaces and failing tests`.
 
 ### Step group 2: trunk geometry
 
-- [ ] **2.1** Implement the classification pre-pass, exact sizing, the per-segment fill (ring table of `sin/2`, `cos/2` precomputed per ring density with the same `theta*j` argument as the legacy code), the thread split and `GeometryStats`.
-- [ ] **2.2** Run `treegen_tests -tc="buildGeometry*"` -> PASS. Commit: `T06: implement trunk geometry`.
+- [x] **2.1** Implement the classification pre-pass, exact sizing, the per-segment fill (ring table of `sin/2`, `cos/2` precomputed per ring density with the same `theta*j` argument as the legacy code), the thread split and `GeometryStats`.
+- [x] **2.2** Run `treegen_tests -tc="buildGeometry*"` -> PASS. Commit: `T06: implement trunk geometry`.
 
 ### Step group 3: parity against the frozen legacy math
 
-- [ ] **3.1** Write `legacy_reference/LegacyGeometryReference.h` (banner "frozen reference, deleted in T07"; plain `RefSegment{parent, model, radius, roll}`; verbatim `enqueueGenerationData`, `createIndiciesForSegment`, `computeRingPoint`, adapter replay loop).
-- [ ] **3.2** `geometry_parity_tests.cpp`: for `parametricTernaryTreeE.json`, `parametricSympodialTreeA.json`, `parametricMonopodialTreeA.json`, `symetricTree.json`, `legacy/advancedTree.l` at depth <= 3..4: compare positions, normals, UVs (1e-4) and indices (identical). Also a hand-made skeleton with non-zero roll differences. Run -> PASS. Commit: `T06: add legacy geometry reference and parity tests`.
+- [x] **3.1** Write `legacy_reference/LegacyGeometryReference.h` (banner "frozen reference, deleted in T07"; plain `RefSegment{parent, model, radius, roll}`; verbatim `enqueueGenerationData`, `createIndiciesForSegment`, `computeRingPoint`, adapter replay loop).
+- [x] **3.2** `geometry_parity_tests.cpp`: for `parametricTernaryTreeE.json`, `parametricSympodialTreeA.json`, `parametricMonopodialTreeA.json`, `symetricTree.json`, `legacy/advancedTree.l` at depth <= 3..4: compare positions, normals, UVs (1e-4) and indices (identical). Also a hand-made skeleton with non-zero roll differences. Run -> PASS. Commit: `T06: add legacy geometry reference and parity tests`.
 
 ### Step group 4: determinism, threads, leaves, robustness
 
-- [ ] **4.1** Tests: same seed -> identical bytes (`memcmp` of vertices, indices, leaves), threads 1 vs 2 vs 4 vs 7 vs 0 byte-identical on a >50000-vertex tree (forced single vs forced multi, plus the automatic path), `leafGrowthProb=0.5` different seeds -> different leaf set, leaf count == tips at prob 1, 0 -> empty, diversity rotation is a Y rotation within `[-d, d]`, leaf model with diversity 0 equals the tip model.
-- [ ] **4.2** Robustness tests: zero radius, negative radius, NaN radius, NaN/Inf model, huge model, singular frame, zero parent radius, bad parent index throws, ringDensity < 3 throws; every vertex scanned for NaN/Inf; stats counters asserted.
-- [ ] **4.3** NaN sweep over every `*.json`/`*.l` in `Resources/LindenmayerRules` at `min(file depth, 5)` (count and require expected `RewriteError`/`LoadError`/`InterpretError` files, never a NaN). Run -> PASS. Commit: `T06: leaves, threads and robustness tests`.
+- [x] **4.1** Tests: same seed -> identical bytes (`memcmp` of vertices, indices, leaves), threads 1 vs 2 vs 4 vs 7 vs 0 byte-identical on a >50000-vertex tree (forced single vs forced multi, plus the automatic path), `leafGrowthProb=0.5` different seeds -> different leaf set, leaf count == tips at prob 1, 0 -> empty, diversity rotation is a Y rotation within `[-d, d]`, leaf model with diversity 0 equals the tip model.
+- [x] **4.2** Robustness tests: zero radius, negative radius, NaN radius, NaN/Inf model, huge model, singular frame, zero parent radius, bad parent index throws, ringDensity < 3 throws; every vertex scanned for NaN/Inf; stats counters asserted.
+- [x] **4.3** NaN sweep over every `*.json`/`*.l` in `Resources/LindenmayerRules` at `min(file depth, 5)` (count and require expected `RewriteError`/`LoadError`/`InterpretError` files, never a NaN). Run -> PASS. Commit: `T06: leaves, threads and robustness tests`.
 
 ### Step group 5: facade
 
-- [ ] **5.1** `geometry_facade_tests.cpp`: end-to-end on `parametricTernaryTreeE.json` (counts consistent with the skeleton, modules non-empty, no NaN, deterministic), seed 0 uses `params.seed`, explicit seed beats it, stages independent (changing `leafGrowthProb` changes leaves only, trunk bytes and skeleton unchanged), and `geometry_header_tests.cpp` self-containment.
-- [ ] **5.2** Implement `generateTree`. Commit: `T06: add generateTree facade`.
+- [x] **5.1** `geometry_facade_tests.cpp`: end-to-end on `parametricTernaryTreeE.json` (counts consistent with the skeleton, modules non-empty, no NaN, deterministic), seed 0 uses `params.seed`, explicit seed beats it, stages independent (changing `leafGrowthProb` changes leaves only, trunk bytes and skeleton unchanged), and `geometry_header_tests.cpp` self-containment.
+- [x] **5.2** Implement `generateTree`. Commit: `T06: add generateTree facade`.
 
 ### Step group 6: platform checks and docs
 
-- [ ] **6.1** Link `Threads::Threads`; Windows Debug full build + `ctest`; Release `treegen_tests` + a timing test program (not committed; measured through a doctest case guarded by an env var is not allowed — use a throwaway scratch exe outside the repo).
-- [ ] **6.2** Linux check in Docker (engine OFF); `/W4` and `-Wall -Wextra -Wpedantic` clean.
-- [ ] **6.3** Build the full `ESTree` target and smoke launch `ESTree.exe --scene 0`.
-- [ ] **6.4** Update `treegen-design.md`, append D-015 to `DECISIONS.md`, set this plan's status to `review`. Commit: `T06: docs and decision log`.
+- [x] **6.1** Link `Threads::Threads`; Windows Debug full build + `ctest`; Release `treegen_tests` + a timing test program (a throwaway scratch exe outside the repo, not committed).
+- [x] **6.2** Linux check in Docker (engine OFF); `/W4` and `-Wall -Wextra -Wpedantic` clean.
+- [x] **6.3** Build the full `ESTree` target and smoke launch `ESTree.exe --scene 0`.
+- [x] **6.4** Update `treegen-design.md`, append D-015 to `DECISIONS.md`, set this plan's status to `review`. Commit: `T06: docs and decision log`.
 
 ## Review focus covered
 
