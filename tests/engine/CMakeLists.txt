@@ -1,15 +1,10 @@
-# These tests compile engine sources and need Bullet and the prebuilt Boost libs.
+# These tests compile engine sources and need Bullet.
 if(NOT ESTREE_BUILD_ENGINE)
 	return()
 endif()
 
 # Headless tests of the engine's ownership code (no window, no OpenGL context).
 set(ENGINE_DIR ${PROJECT_SOURCE_DIR}/ESEngine)
-set(ENGINE_SYSTEM_LIBS "")
-if(WIN32)
-	# boost::uuids (GameObject ids) uses the Windows CNG random provider
-	set(ENGINE_SYSTEM_LIBS bcrypt)
-endif()
 
 estree_add_test(engine_gameobject_tests
 	SOURCES
@@ -17,7 +12,7 @@ estree_add_test(engine_gameobject_tests
 		${ENGINE_DIR}/Engine/GameObject/GameObject.cpp
 		${ENGINE_DIR}/Engine/GameObject/Transform.cpp
 	# GNU ld (unlike MSVC) needs Bullet's out-of-line symbols that GameObject.h's includes reference
-	LIBS BulletDynamics BulletCollision LinearMath ${BOOST_LIBRARIES} ${ENGINE_SYSTEM_LIBS})
+	LIBS BulletDynamics BulletCollision LinearMath Threads::Threads)
 
 estree_add_test(engine_input_tests
 	SOURCES
@@ -35,4 +30,4 @@ estree_add_test(engine_physics_tests
 		${ENGINE_DIR}/Engine/Manager/PhysicsManager.cpp
 		${ENGINE_DIR}/Engine/Manager/Context.cpp
 		${ENGINE_DIR}/Engine/Core/Logger.cpp
-	LIBS BulletDynamics BulletCollision LinearMath ${BOOST_LIBRARIES} ${ENGINE_SYSTEM_LIBS})
+	LIBS BulletDynamics BulletCollision LinearMath Threads::Threads)
