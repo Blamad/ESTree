@@ -13,7 +13,11 @@ function(estree_add_test name)
 	add_executable(${name} ${ARG_SOURCES})
 	target_link_libraries(${name} PRIVATE doctest::doctest ${ARG_LIBS})
 	target_compile_definitions(${name} PRIVATE ESTREE_REPO_ROOT="${PROJECT_SOURCE_DIR}")
+	if(COMMAND estree_asan_runtime) # ESTREE_SANITIZE on MSVC; must precede test discovery, which runs the exe
+		estree_asan_runtime(${name})
+	endif()
 	doctest_discover_tests(${name} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 endfunction()
 
 estree_add_test(smoke_tests SOURCES smoke/smoke_tests.cpp)
+add_subdirectory(engine)

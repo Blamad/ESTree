@@ -34,6 +34,22 @@
 				"CMAKE_C_COMPILER": "cl",
 				"CMAKE_CXX_COMPILER": "cl"
 			}
+		},
+		{
+			"name": "ninja-msvc-asan",
+			"displayName": "ninja-msvc with AddressSanitizer (ESTREE_SANITIZE); needs a toolset that ships the x64 ASan runtime: set VCVARS64 to the VS 2019 Build Tools vcvars64.bat (VS 18 here only has the x86 runtime)",
+			"inherits": "ninja-msvc",
+			"cacheVariables": {
+				"ESTREE_SANITIZE": "ON"
+			}
+		},
+		{
+			"name": "vs2019-asan",
+			"displayName": "Visual Studio 2019 (v142), x64 with AddressSanitizer (ESTREE_SANITIZE)",
+			"inherits": "vs2019",
+			"cacheVariables": {
+				"ESTREE_SANITIZE": "ON"
+			}
 		}
 	],
 	"buildPresets": [
@@ -42,6 +58,8 @@
 		{ "name": "vs2026-debug", "configurePreset": "vs2026", "configuration": "Debug" },
 		{ "name": "vs2026-release", "configurePreset": "vs2026", "configuration": "Release" },
 		{ "name": "ninja-msvc-debug", "configurePreset": "ninja-msvc", "configuration": "Debug" },
-		{ "name": "ninja-msvc-release", "configurePreset": "ninja-msvc", "configuration": "Release" }
+		{ "name": "ninja-msvc-release", "configurePreset": "ninja-msvc", "configuration": "Release" },
+		{ "name": "ninja-msvc-asan-debug", "configurePreset": "ninja-msvc-asan", "configuration": "Debug" },
+		{ "name": "vs2019-asan-debug", "configurePreset": "vs2019-asan", "configuration": "Debug" }
 	]
 }
