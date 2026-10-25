@@ -47,7 +47,7 @@ bool isFinite(const glm::mat4& m) {
 	return true;
 }
 
-// sin/cos of the ring angles, already halved like the legacy code (`sinf(arg) / 2`).
+// sin/cos of the ring angles, already halved like the original generator (`sinf(arg) / 2`).
 struct RingTable {
 	std::vector<float> halfSin, halfCos;
 	float textureXStep;
@@ -67,7 +67,7 @@ RingTable makeRingTable(int ringDensity) {
 	return table;
 }
 
-// The operation order is that of LindenmayerTreeMeshGenerator::computeRingPoint, so one platform gives the same bits.
+// The operation order is the one of the original ring-point computation (kept since the pre-treegen generator, now deleted), so one platform gives the same bits.
 void writeRing(const RingTable& table, int ringDensity, const glm::mat4& transform, float radius, float v, MeshVertex* out) {
 	const glm::mat3 rotation(transform);
 	for (int j = 0; j < ringDensity; ++j) {
@@ -149,7 +149,7 @@ TreeGeometry buildGeometry(const Skeleton& skeleton, const TreeParams& params, c
 				const std::size_t bottomOffset = k * verticesPerSegment;
 				const std::size_t topOffset = bottomOffset + ringDensity;
 
-				// The bottom ring is the parent's top ring turned to the new roll, as the legacy adapter did.
+				// The bottom ring is the parent's top ring turned to the new roll, as the original generator did.
 				const float roll = segment.roll - parent.roll;
 				const glm::mat4 alignment = parent.model * glm::mat4_cast(glm::quat(glm::vec3(0, roll, 0)));
 				writeRing(table, options.ringDensity, alignment, parent.radius, 0.0f, vertices + bottomOffset);
