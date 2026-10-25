@@ -22,6 +22,9 @@ Reply to the user in **Polish**. Code, comments, commit messages and docs are in
 | `ESEngine/ESTree/` | The application: `ESTree.cpp` (main), `Scenes/`, `Console/` commands, `Models/` |
 | `ESEngine/ESTree/Models/Tree/` | Thin engine adapter over `treegen` (`LindenmayerTree`, `LindenmayerTreeFactory`, `TreeMeshConversion.h`); no generation logic |
 | `ESEngine/TreeGen/` | Engine-independent tree generator, static lib `treegen` (loaders, rewriter, turtle, geometry, `generateTree` facade) |
+| `tools/treegen_cli/` | Headless command-line tool: rule file -> OBJ (links only `treegen`) |
+| `tests/` | doctest suites (`treegen/`, `adapter/`, `engine/`, `smoke/`), `golden/` reference data of the pre-treegen implementation |
+| `scripts/` | `msvc-env.cmd` (runs a command inside the MSVC x64 environment) |
 | `Resources/` | Shaders, textures, fonts, `LindenmayerRules/*.json` (+ `legacy/*.l`) |
 | `Vendor/` | Git submodules: glfw, glad, glm, bullet3, freetype2, rapidjson, stb. **Do not edit** (only T12 may bump them) |
 | `docs/` | Plan, architecture notes, per-task directories (see below) |
@@ -33,16 +36,16 @@ Resource paths are relative to the working directory (`Resources/...`); `setup.b
 
 ## Build and test
 
-Requires CMake ≥ 3.21 and `BOOST_LIB` (env) pointing at Boost 1.72 (`Includes/`, `Libs/`) until
-Boost is removed (T09/T13). Machine-specific paths (CMake/Ninja location, compilers, Boost) are in
-`CLAUDE.local.md` (git-ignored). Verified in T00 (preset `vs2019`, MSVC v142, CMake 4.4.4):
+Requires CMake ≥ 3.21 and an MSVC toolchain (v142 or newer) on Windows. **No Boost and no environment
+variable are needed** (Boost left the build in T13). Machine-specific paths (CMake/Ninja location,
+compilers) are in `CLAUDE.local.md` (git-ignored). Verified (preset `vs2019`, MSVC v142, CMake 4.4.4):
 
 ```bash
 cmake --preset vs2019                      # configure into build/vs2019
 cmake --build --preset vs2019-debug --parallel     # or vs2019-release
 # run (working directory must contain Resources/; setup.bat links it)
 cd build/vs2019 && ./Debug/ESTree.exe --help
-# tests (exist from T01 on)
+# tests (headless, no GL)
 ctest --test-dir build/vs2019 -C Debug --output-on-failure
 ```
 
@@ -53,13 +56,16 @@ environment, so wrap each command with `scripts\msvc-env.cmd` (set `VCVARS64` to
 ```bash
 cmd //c "scripts\\msvc-env.cmd cmake --preset ninja-msvc"
 cmd //c "scripts\\msvc-env.cmd cmake --build --preset ninja-msvc-debug"
+cmd //c "scripts\\msvc-env.cmd ctest --test-dir build\\ninja-msvc -C Debug -j4 --output-on-failure"
 ```
 
-Presets: `vs2019` (verified Debug+Release), `ninja-msvc` (verified Debug), `vs2026` (does not
+Presets: `vs2019`, `ninja-msvc` (both verified Debug+Release), `ninja-msvc-asan` / `vs2019-asan` (D-007), `vs2026` (does not
 configure on this machine: CMake can't see the VS 2026 Build Tools instance). Preset names are in
-`CMakePresets.json`. A clean `vs2019` build takes ~5 min (Bullet is the long pole); incremental
-builds of the app target take seconds. Baseline numbers: `docs/tasks/T00-build-baseline/notes/baseline.md`
-(143 unique `/W4` project warnings — don't add new ones).
+`CMakePresets.json`. Options: `ESTREE_BUILD_ENGINE` (default ON on Windows, OFF elsewhere; OFF builds only `treegen`,
+`treegen_cli` and the headless tests), `ESTREE_BUILD_TESTS`, `ESTREE_BUILD_TOOLS`, `ESTREE_SANITIZE`. A clean `vs2019` build takes ~5 min
+(Bullet is the long pole); incremental builds of the app target take seconds. Warning reference (`/W4`, unique file+line+code, `Vendor/`
+excluded, method in `docs/tasks/T00-build-baseline/notes/baseline.md`): **109** on `ninja-msvc` Debug at the end of T13 (identical set to the pre-T13 tip); history in
+`docs/tasks/T13-modernization-gate/SUMMARY.md`. Don't add new ones.
 
 Agents cannot judge rendered images. They *can* smoke-launch the exe on the owner's desktop (see
 `CLAUDE.local.md`: `Start-Process`, wait ~20 s, expect "still running", no crash event, expected log
@@ -105,10 +111,16 @@ the `-1` parameter sentinel, `res.suffix()` after a failed search, time-seeded g
 `Scene::~Scene` `release()` leak and Engine C-casts (T10), the fixed 100 000 / 4 000 000 GL buffers (T07: sized from the output),
 the `legacy/parametricTree2.l` lost `(` (T07, D-017).
 
-Still open:
-- Build still links prebuilt Boost 1.72 `vc140` libs (`BOOST_LIB`) although no source includes Boost any more; removed by T13. Linux
-  builds in Docker/GCC 13 (engine ON); the CI workflow `.github/workflows/ci.yml` has never run on GitHub (T11)
-- (closed) Tropism `T` was a no-op in the shipped binary; `treegen` fixes it, accepted by the owner (D-010, D-016)
+Also closed: Boost is gone from sources and build (T09, T07, T13); tropism `T` was a no-op in the shipped binary, `treegen` fixes it,
+accepted by the owner (D-010, D-016).
+
+Still open (details in `docs/BACKLOG.md` and `docs/tasks/T13-modernization-gate/SUMMARY.md`):
+- The CI workflow `.github/workflows/ci.yml` has never run on GitHub (neither the Windows engine build nor the Linux jobs); only its
+  commands were run locally.
+- The engine crashes the Intel HD 530 OpenGL driver (`ig9icd64.dll`); it runs on the NVIDIA GPU only.
+- 26 C-style casts remain in `ESEngine/ESTree`; removing the active camera is unguarded; static `Context` pointers outlive their
+  objects; GL objects are never deleted (`glDelete*`); leaf sway may pause while the camera moves (unreproduced).
+- Visual verification of the last changes (T09, T12 and parts of T07) is still on the owner's checklist.
 
 ## Working on a task
 

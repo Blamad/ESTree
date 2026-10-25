@@ -63,15 +63,23 @@ Status is maintained by the orchestrating session only. Legend: `todo` · `in-pr
 | [T04](tasks/T04-treegen-rewriter/BRIEF.md) | `treegen` rewriter: expression evaluator, seeded stochastic rewriting | T03 | L | done |
 | [T05](tasks/T05-treegen-turtle-skeleton/BRIEF.md) | `treegen` turtle interpreter → `Skeleton` | T03 | L | done |
 | [T06](tasks/T06-treegen-geometry/BRIEF.md) | `treegen` geometry: `Skeleton` → `MeshData` + leaf transforms | T05 | L | done |
-| [T07](tasks/T07-engine-adapter-switchover/BRIEF.md) | Engine adapter switch-over; delete legacy `Lindenmayer*` pipeline | T04, T06 | M | done (owner checklist pending) |
+| [T07](tasks/T07-engine-adapter-switchover/BRIEF.md) | Engine adapter switch-over; delete legacy `Lindenmayer*` pipeline | T04, T06 | M | done (owner checks 5-8 unconfirmed, see SUMMARY.md) |
 | [T08](tasks/T08-treegen-cli-obj-export/BRIEF.md) | Headless `treegen_cli` + OBJ writer | T04, T06 | S | done |
 | [T09](tasks/T09-drop-boost-engine/BRIEF.md) | Remove Boost from engine code outside `Models/Tree` | T00 | M | done |
 | [T10](tasks/T10-ownership-and-sanitizers/BRIEF.md) | Ownership fixes, casts, ASan/UBSan pass over the engine | T00 | M | done |
 | [T11](tasks/T11-ci-and-linux-build/BRIEF.md) | GitHub Actions CI (Windows + Linux), headless tests | T01 | M | done (CI not yet run on GitHub) |
 | [T12](tasks/T12-dependency-refresh/BRIEF.md) | Bump submodule pins (GLFW, glm, Bullet, FreeType, stb, rapidjson) | T07, T09, T10 | M | done |
-| [T13](tasks/T13-modernization-gate/BRIEF.md) | Final gate: Boost removed from CMake, docs, README, acceptance run | all | S | todo |
+| [T13](tasks/T13-modernization-gate/BRIEF.md) | Final gate: Boost removed from CMake, docs, README, acceptance run | all | S | review |
 
 Size: S ≈ half a day, M ≈ 1–2 days, L ≈ 2–4 days of focused agent work.
+
+## Program status (T13, 2026-10-25)
+
+All tasks T00-T12 are merged into `modernization`; T13 is in review. The build is Boost-free, `treegen` is a standalone library with a
+headless CLI, 232 headless CTest entries pass on Windows (MSVC) and Linux (GCC 13), and the legacy `Lindenmayer*` pipeline is gone. Open items:
+the CI workflow has never run on GitHub, and the owner's visual/behavioural checklist (consolidated, with exact steps, in
+[`tasks/T13-modernization-gate/SUMMARY.md`](tasks/T13-modernization-gate/SUMMARY.md)) is only partly confirmed. `modernization` is not merged into `master`;
+that is the owner's decision.
 
 ## Dependency graph
 

@@ -36,7 +36,7 @@ struct TreeGeometry {
 	GeometryStats stats;
 };
 
-// Builds the trunk like the legacy LindenmayerTreeMeshGenerator, without its fixed buffers:
+// Builds the trunk as the original (pre-treegen, since deleted) mesh generator did, without its fixed buffers:
 //   - every non-root segment emits a bottom ring (the parent's frame rotated about Y by segment.roll - parent.roll,
 //     the parent's radius, v = 0) and a top ring (the segment's frame and radius, v = 1), `ringDensity` vertices
 //     each, then 2 * (ringDensity - 1) triangles joining them. The root emits nothing by itself.
@@ -48,7 +48,7 @@ struct TreeGeometry {
 //   - segments with a radius <= 0 (own or the parent's) or with non-finite/singular frames are skipped: no
 //     vertices, no indices, counted in TreeGeometry::stats. The mesh never contains NaN or Inf.
 //   - the vertex and index counts are exact: 2*ringDensity and 6*(ringDensity-1) per emitted segment.
-// Leaves: every tip (isTip, root included, as in the legacy loop) is kept with probability params.leafGrowthProb
+// Leaves: every tip (isTip, root included, as in the original leaf loop) is kept with probability params.leafGrowthProb
 // (u <= leafGrowthProb, u from Rng(options.seed).derive(3)); with params.leavesAngleDiversity > 0 the transform is
 // `segment.model * rotation about Y by a uniform angle in [-d, d]`. leafGrowthProb <= 0 gives no leaves.
 //

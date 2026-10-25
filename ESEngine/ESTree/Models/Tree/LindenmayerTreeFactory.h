@@ -11,7 +11,7 @@
 #include "Engine/GameObject/GameObject.h"
 #include "LindenmayerTree.h"
 #include "Engine/Manager/SceneManager.h"
-#include "Engine/GameObject/Rigidbody.h"
+#include "Engine/GameObject/RigidBody.h"
 #include "Engine/Manager/Context.h"
 
 class LindenmayerTreeFactory {

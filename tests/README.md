@@ -32,18 +32,15 @@ configure) and run through CTest. Tests are headless: never open a window or tou
 ## Reproducing CI locally
 
 CI is `.github/workflows/ci.yml`. The root option `ESTREE_BUILD_ENGINE` (default ON on Windows, OFF
-elsewhere) decides whether the engine executable and its dependencies (GLFW, Bullet, FreeType, Boost libs)
-are configured. With OFF only the standalone targets and tests are built; `BOOST_LIB` is not needed.
+elsewhere) decides whether the engine executable and its dependencies (GLFW, Bullet, FreeType)
+are configured. With OFF only the standalone targets and tests are built. There is no Boost anywhere.
 
-- **Windows jobs** (MSVC, Debug and Release) run with the engine OFF, because GitHub runners lack the
-  prebuilt vc140 Boost libs. Boost *headers* come from `-DBOOST_INCLUDEDIR=<dir containing boost/>`
-  (CI downloads the Boost 1.72.0 headers once and caches them). Locally:
-  `cmake -S . -B build/ci -DESTREE_BUILD_ENGINE=OFF`, `cmake --build build/ci --config Debug`,
-  `ctest --test-dir build/ci -C Debug --output-on-failure`. The full engine build stays local:
-  set `BOOST_LIB` and use the presets (see `CLAUDE.md`).
+- **Windows jobs** (MSVC, Debug and Release) build the full engine (`-DESTREE_BUILD_ENGINE=ON`; the exe is compiled and linked,
+  never started on the runner). No generator is named, so CMake takes the newest Visual Studio of the runner image. Locally:
+  `cmake -S . -B build/ci -A x64 -DESTREE_BUILD_ENGINE=ON`, `cmake --build build/ci --config Debug --parallel`,
+  `ctest --test-dir build/ci -C Debug --output-on-failure` (or use the presets, see `CLAUDE.md`).
 - **Linux jobs** (GCC, Release): engine ON needs `ninja-build libgl1-mesa-dev libx11-dev libxrandr-dev
-  libxinerama-dev libxcursor-dev libxi-dev libxext-dev` plus the `libboost-*-dev` packages listed in the
-  workflow (system Boost instead of `BOOST_LIB`); it only compiles and links, nothing is run with a display.
+  libxinerama-dev libxcursor-dev libxi-dev libxext-dev`; it only compiles and links, nothing is run with a display.
   `cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DESTREE_BUILD_ENGINE=ON`, then
   `cmake --build build --parallel`, `ctest --test-dir build --output-on-failure`.
   The engine-OFF Linux entry is the same without the packages, using `-DESTREE_BUILD_ENGINE=OFF`.
