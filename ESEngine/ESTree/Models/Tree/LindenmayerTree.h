@@ -23,7 +23,7 @@
 
 class LindenmayerTree : public GameObject {
 public:
-	LindenmayerTree(LindenmayerTreeParams &params, Material &material = Material::bark5(), Material &leavesMaterial = Material::leaves2(), bool useMeshWiring = false, bool normalVisualisation = false);
+	LindenmayerTree(LindenmayerTreeParams &params, const Material &material = Material::bark5(), const Material &leavesMaterial = Material::leaves2(), bool useMeshWiring = false, bool normalVisualisation = false);
 	void generate();
 	bool meshWiring;
 	bool normalVisualisation;

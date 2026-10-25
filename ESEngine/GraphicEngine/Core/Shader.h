@@ -45,8 +45,8 @@ public:
 	//	Model View Matricies
 	void registerMatriciesUBO();
 	static void initializeMatricesUBO();
-	static void updateProjectionMatrix(glm::mat4 &projection);
-	static void updateViewMatrix(glm::mat4 &view);
+	static void updateProjectionMatrix(const glm::mat4 &projection);
+	static void updateViewMatrix(const glm::mat4 &view);
 	//	Lights
 	void registerLightsUBO();
 

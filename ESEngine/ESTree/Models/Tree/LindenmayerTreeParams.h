@@ -50,8 +50,8 @@ public:
 
 	std::map<std::string, float> customParameters;
 
-	void addRule(Rule &rule);
-	std::vector<Rule> getRules(std::string &symbol);
+	void addRule(const Rule &rule);
+	std::vector<Rule> getRules(const std::string &symbol);
 	std::vector<std::string> getAvailableRules();
 	double radians(double angle);
 

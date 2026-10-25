@@ -5,7 +5,7 @@ boost::variate_generator<boost::mt19937, boost::uniform_real<> > LindenmayerTree
 
 Logger LindenmayerTree::logger("LindenmayerTree");
 
-LindenmayerTree::LindenmayerTree(LindenmayerTreeParams &params, Material &material, Material &leavesMaterial, bool useMeshWiring, bool normalVisualisation) : params(params), barkMaterial(material), leavesMaterial(leavesMaterial), meshWiring(useMeshWiring), normalVisualisation(normalVisualisation), GameObject() {
+LindenmayerTree::LindenmayerTree(LindenmayerTreeParams &params, const Material &material, const Material &leavesMaterial, bool useMeshWiring, bool normalVisualisation) : params(params), barkMaterial(material), leavesMaterial(leavesMaterial), meshWiring(useMeshWiring), normalVisualisation(normalVisualisation), GameObject() {
 	this->vBufferSize = 100000;
 	this->iBufferSize = 4000000;
 	this->ringDensity = 9;

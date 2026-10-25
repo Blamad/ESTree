@@ -175,11 +175,11 @@ void LindenmayerTreeParams::readLFile(std::string filePath) {
 	}
 }
 
-void LindenmayerTreeParams::addRule(Rule &rule) {
+void LindenmayerTreeParams::addRule(const Rule &rule) {
 	rules[rule.symbol].push_back(rule);
 }
 
-std::vector<Rule> LindenmayerTreeParams::getRules(std::string &symbol) {
+std::vector<Rule> LindenmayerTreeParams::getRules(const std::string &symbol) {
 	return rules[symbol];
 }
 

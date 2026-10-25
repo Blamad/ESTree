@@ -9,7 +9,7 @@
 #include <vector>
 
 class Component;
-enum ComponentType;
+enum ComponentType : int;
 
 class GameObject {
 public:

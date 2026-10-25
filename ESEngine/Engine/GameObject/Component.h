@@ -8,7 +8,7 @@
 #include <iomanip>
 #include "GameObject.h"
 
-enum ComponentType {
+enum ComponentType : int {
 	RENDERABLE, TRANSFORM, CAMERA, BEHAVIOUR, LIGHT, RIGIDBODY
 };
 

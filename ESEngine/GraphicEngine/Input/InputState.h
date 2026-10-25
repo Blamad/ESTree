@@ -15,11 +15,11 @@ public:
 	bool isKeyPressed(int key);
 	bool isKeyReleased(int key);
 	
-	const std::vector<Point2d> InputState::getMousePositionEvents();
-	const std::vector<Point2d> InputState::getMouseScrollEvents();
-	const std::vector<ClickEvent> InputState::getMouseClickEvents();
-	const std::vector<KeyEvent> InputState::getKeyboardEvents();
-	const std::vector<char> InputState::getCharacterEvents();
+	const std::vector<Point2d> getMousePositionEvents();
+	const std::vector<Point2d> getMouseScrollEvents();
+	const std::vector<ClickEvent> getMouseClickEvents();
+	const std::vector<KeyEvent> getKeyboardEvents();
+	const std::vector<char> getCharacterEvents();
 
 	const Point2d getLastMousePosition();
 

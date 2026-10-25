@@ -1,4 +1,6 @@
 # ESTree
+[![CI](https://github.com/Blamad/ESTree/actions/workflows/ci.yml/badge.svg)](https://github.com/Blamad/ESTree/actions/workflows/ci.yml)
+
 Simple game engine capable of rendering scene, performing physics simulations and generating tree models using Lindenmayer sytem formal grammar.
 Created as a part of masters dissertation.
 

@@ -78,7 +78,7 @@ void SingleTreeScene::initialize() {
 	generateFrameBuffer();
 }
 
-GameObject* SingleTreeScene::createLindenmayerTree(std::string paramsFileName, glm::vec3 &position, Material &material, Material &leavesMaterial, bool meshWiring, bool normalVisualisation) {
+GameObject* SingleTreeScene::createLindenmayerTree(std::string paramsFileName, glm::vec3 &position, const Material &material, const Material &leavesMaterial, bool meshWiring, bool normalVisualisation) {
 	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
 
 	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, meshWiring, normalVisualisation));
