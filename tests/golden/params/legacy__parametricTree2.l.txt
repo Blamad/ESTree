@@ -1,5 +1,5 @@
 file=legacy/parametricTree2.l
-axiom=B(1)F(startLength)+(45)A
+axiom=B(1)F(1.200000)+(45)A
 depth=3
 initialLength=1.5
 initialRadius=0.600000024
