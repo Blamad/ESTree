@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
 > or `superpowers:executing-plans`. Steps use checkbox (`- [x]`) syntax.
 
-**Status:** review · **Branch:** `task/T04-treegen-rewriter` · **Base:** `modernization @ 5853916`
+**Status:** done · **Branch:** `task/T04-treegen-rewriter` · **Base:** `modernization @ 5853916`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Replace the regex/string rewriting with a typed, seeded rewriting engine
