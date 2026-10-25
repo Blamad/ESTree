@@ -31,6 +31,7 @@ GraphicEngine (ESEngine/GraphicEngine)   GLWindow (GLFW), GLRenderer, Shader, GL
 - `CMakeLists.txt` (cmake_minimum_required 3.0) globs `ESEngine/*`, links `glfw`, `BulletDynamics/BulletCollision/LinearMath`, `freetype`, and **Boost** `date_time` + `thread` (hard-coded `vc140-x64-1_72` names), plus Boost headers from `$ENV{BOOST_LIB}`.
 - `setup.bat` generates a "Visual Studio 14 Win64" solution into `build/` and symlinks `Resources`.
 - Boost was used for: `random`, `thread`, `date_time` (timing), `foreach`, `filesystem` (`ModelExporter`), `program_options` (`ESTree.cpp`), `algorithm/string` (split). No `#include <boost/...>` is left in `ESEngine/` (T07, T09); only the build files still link the Boost libraries (T13 removes that).
+- Vendored libraries (T12, 2026-10-25), all git submodules in `Vendor/`: GLFW `3.4`, glm `1.0.3`, Bullet `3.25`, FreeType `VER-2-15-0`, rapidjson master `24b5e7a` (no tag since v1.1.0), stb master `003501f`, glad branch `c` `5bf3eda` (unchanged). Verified on `ninja-msvc` Debug+Release and Linux GCC 13 (treegen); no source edits were needed for the bumps (D-019).
 - Non-portable bits: `#include <GLM\common.hpp>` (backslash, 15 occurrences of `GLM/` in upper case), Windows-only build script.
 
 ## Tree pipeline (`ESEngine/ESTree/Models/Tree/` over `ESEngine/TreeGen/`)

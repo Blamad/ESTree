@@ -1,6 +1,6 @@
 # T12 — Dependency refresh — Implementation Plan
 
-**Status:** in-progress  ·  **Branch:** `task/T12-dependency-refresh`  ·  **Base:** `modernization @ 5c90420`
+**Status:** review  ·  **Branch:** `task/T12-dependency-refresh`  ·  **Base:** `modernization @ 5c90420`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** Move the `Vendor/` submodule pins to current stable release tags where that is low-risk, fixing the resulting API breaks.
@@ -31,13 +31,13 @@ stb master, rapidjson master, freetype2 `VER-2-15-0`, glfw `3.4`, bullet3 `3.25`
 ## Steps
 
 - [x] Baseline: build Debug, 232 ctest pass, scene-0 smoke OK (121 warnings)
-- [ ] stb, rapidjson, FreeType, GLFW, Bullet, glm bumps (one commit each, verify each)
-- [ ] Linux Docker run (219 tests), Release build + ctest, final smoke
-- [ ] Docs: overview.md Build, DECISIONS.md; status `review`
+- [x] stb, rapidjson, FreeType, GLFW, Bullet, glm bumps (one commit each, verify each)
+- [x] Linux Docker run (219 tests), Release build + ctest, final smoke
+- [x] Docs: overview.md Build, DECISIONS.md; status `review`
 
 ## Deviations from the brief
 
-(none yet)
+(none)
 
 ## Blockers
 

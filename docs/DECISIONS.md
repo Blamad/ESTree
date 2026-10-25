@@ -113,3 +113,8 @@ CLI: `treegen_cli <rules> --out FILE [--seed N] [--depth D] [--ring R] [--thread
 Differences from `ModelExporter.cpp`: UVs are written as stored for trunk and leaves (the engine exporter flips `v` for leaves only), faces are triangles (the exporter writes quads), no MTL/`usemtl`.
 Why: brief T08; a verifiable end-to-end artifact that proves the module is engine-free.
 Consequences: CTest entries `treegen_cli_*` (helper `obj_check`, no shell scripts) run on Windows and Linux. OBJ files of deep trees are large (ternaryE depth 10: 2.1 M vertices, 352 MB, ~2.3 s Release) because the format repeats the three attribute blocks per vertex; welding or binary export is a possible later task.
+
+## D-019 — Dependency refresh: pins moved, no source edits (2026-10-25, T12)
+Decision: Submodule pins moved to GLFW 3.4, glm 1.0.3, Bullet 3.25, FreeType VER-2-15-0, rapidjson master `24b5e7a`, stb master `003501f`; glad stays on branch `c`. One commit per bump. No engine, CMake or test edit and no `GLM_*` define was needed, so no golden was regenerated.
+Why: glm 1.0 changes the `glm::quat()` default construction, but `treegen` initialises its quaternions explicitly (D-010) and the engine only builds quaternions from components; the golden/parity tests stay bit-identical on Windows (MSVC) and Linux (GCC 13). The repo uses no `glm/gtx` header.
+Consequences: GLFW 3.5.1 exists but the brief asks for 3.4. Unique `/W4` project warnings on `ninja-msvc` Debug (full build): 121 before and after. Rendering with the new GLFW/Bullet/FreeType needs the human check from the brief (scenes 0, 1, 2, picking, console text).
