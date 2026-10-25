@@ -5,45 +5,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-option(GLFW_BUILD_DOCS OFF)
-option(GLFW_BUILD_EXAMPLES OFF)
-option(GLFW_BUILD_TESTS OFF)
-add_subdirectory(Vendor/glfw)
-
-option(BUILD_BULLET2_DEMOS OFF)
-option(BUILD_CPU_DEMOS OFF)
-option(BUILD_EXTRAS OFF)
-option(BUILD_OPENGL3_DEMOS OFF)
-option(BUILD_UNIT_TESTS OFF)
-add_subdirectory(Vendor/bullet3)
-
-add_subdirectory(Vendor/freetype2)
-
-# Boost 1.72 is still used by the engine and the legacy tree pipeline (removed by T09/T13).
-# BOOST_LIB must point at a directory with Includes/ and Libs/ (prebuilt vc140 x64 static libs).
-if(DEFINED ENV{BOOST_LIB})
-	set(BOOST_LIB "$ENV{BOOST_LIB}" CACHE PATH "Boost root (Includes/, Libs/)")
-else()
-	set(BOOST_LIB "" CACHE PATH "Boost root (Includes/, Libs/)")
-endif()
-if(NOT BOOST_LIB)
-	message(FATAL_ERROR "Set BOOST_LIB (env or -DBOOST_LIB=...) to a directory containing Includes/ and Libs/ of Boost 1.72")
-endif()
-link_directories(${BOOST_LIB}/Libs/)
-
-if(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
-    if(NOT WIN32)
-        set(GLAD_LIBRARIES dl)
-    endif()
-endif()
-
 option(ESTREE_SANITIZE "Instrument ESTree and its tests with AddressSanitizer (plus UBSan on GCC/Clang)" OFF)
 if(ESTREE_SANITIZE)
 	if(MSVC)
-		# Applies to targets defined below (ESTree, tests); the vendored libraries stay uninstrumented.
+		# Applies to every target defined below, the vendored libraries (Bullet, GLFW, FreeType) included, so that
+		# ASan also sees accesses made inside Bullet.
 		# ASan is incompatible with /RTC* and /ZI; the annotation macros avoid LNK2038 mismatches.
 		add_compile_options(/fsanitize=address)
 		add_compile_definitions(_DISABLE_VECTOR_ANNOTATION _DISABLE_STRING_ANNOTATION)
@@ -93,6 +59,41 @@ if(ESTREE_SANITIZE)
 		add_compile_options(-fsanitize=address,undefined -fno-omit-frame-pointer)
 		add_link_options(-fsanitize=address,undefined)
 	endif()
+endif()
+
+option(GLFW_BUILD_DOCS OFF)
+option(GLFW_BUILD_EXAMPLES OFF)
+option(GLFW_BUILD_TESTS OFF)
+add_subdirectory(Vendor/glfw)
+
+option(BUILD_BULLET2_DEMOS OFF)
+option(BUILD_CPU_DEMOS OFF)
+option(BUILD_EXTRAS OFF)
+option(BUILD_OPENGL3_DEMOS OFF)
+option(BUILD_UNIT_TESTS OFF)
+add_subdirectory(Vendor/bullet3)
+
+add_subdirectory(Vendor/freetype2)
+
+# Boost 1.72 is still used by the engine and the legacy tree pipeline (removed by T09/T13).
+# BOOST_LIB must point at a directory with Includes/ and Libs/ (prebuilt vc140 x64 static libs).
+if(DEFINED ENV{BOOST_LIB})
+	set(BOOST_LIB "$ENV{BOOST_LIB}" CACHE PATH "Boost root (Includes/, Libs/)")
+else()
+	set(BOOST_LIB "" CACHE PATH "Boost root (Includes/, Libs/)")
+endif()
+if(NOT BOOST_LIB)
+	message(FATAL_ERROR "Set BOOST_LIB (env or -DBOOST_LIB=...) to a directory containing Includes/ and Libs/ of Boost 1.72")
+endif()
+link_directories(${BOOST_LIB}/Libs/)
+
+if(MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
+    if(NOT WIN32)
+        set(GLAD_LIBRARIES dl)
+    endif()
 endif()
 
 include_directories(ESEngine/
