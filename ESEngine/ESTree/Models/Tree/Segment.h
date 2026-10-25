@@ -55,7 +55,7 @@ public:
 	//Transform matrix
 	glm::mat4 modelMatrix = glm::mat4(1);
 
-	float roll;
+	float roll = 0;
 };
 
 #endif
