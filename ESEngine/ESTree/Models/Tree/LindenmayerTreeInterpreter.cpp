@@ -51,8 +51,8 @@ std::vector<std::shared_ptr<Segment>> LindenmayerTreeInterpreter::generateMeshDa
 		meshGenerator->enqueueGenerationData(parent->radius, alignmentTransform, 0);
 
 		std::shared_ptr<Segment> stem = std::shared_ptr<Segment>(new Segment(parent));
-		stem->indiciesOffset = meshGenerator->getIndicesLength();
-		stem->verticiesOffset = meshGenerator->getVerticesLength();
+		stem->indiciesOffset = static_cast<int>(meshGenerator->getIndicesLength());
+		stem->verticiesOffset = static_cast<int>(meshGenerator->getVerticesLength());
 		stem->modelMatrix = source.model;
 		stem->radius = source.radius;
 		stem->roll = source.roll;
