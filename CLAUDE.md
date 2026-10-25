@@ -33,16 +33,16 @@ Resource paths are relative to the working directory (`Resources/...`); `setup.b
 
 ## Build and test
 
-Requires CMake ≥ 3.21 and `BOOST_LIB` (env) pointing at Boost 1.72 (`Includes/`, `Libs/`) until
-Boost is removed (T09/T13). Machine-specific paths (CMake/Ninja location, compilers, Boost) are in
-`CLAUDE.local.md` (git-ignored). Verified in T00 (preset `vs2019`, MSVC v142, CMake 4.4.4):
+Requires CMake ≥ 3.21 and an MSVC toolchain (v142 or newer) on Windows. **No Boost and no environment
+variable are needed** (Boost left the build in T13). Machine-specific paths (CMake/Ninja location,
+compilers) are in `CLAUDE.local.md` (git-ignored). Verified (preset `vs2019`, MSVC v142, CMake 4.4.4):
 
 ```bash
 cmake --preset vs2019                      # configure into build/vs2019
 cmake --build --preset vs2019-debug --parallel     # or vs2019-release
 # run (working directory must contain Resources/; setup.bat links it)
 cd build/vs2019 && ./Debug/ESTree.exe --help
-# tests (exist from T01 on)
+# tests (headless, no GL)
 ctest --test-dir build/vs2019 -C Debug --output-on-failure
 ```
 
@@ -53,13 +53,16 @@ environment, so wrap each command with `scripts\msvc-env.cmd` (set `VCVARS64` to
 ```bash
 cmd //c "scripts\\msvc-env.cmd cmake --preset ninja-msvc"
 cmd //c "scripts\\msvc-env.cmd cmake --build --preset ninja-msvc-debug"
+cmd //c "scripts\\msvc-env.cmd ctest --test-dir build\\ninja-msvc -C Debug -j4 --output-on-failure"
 ```
 
-Presets: `vs2019` (verified Debug+Release), `ninja-msvc` (verified Debug), `vs2026` (does not
+Presets: `vs2019`, `ninja-msvc` (both verified Debug+Release), `ninja-msvc-asan` / `vs2019-asan` (D-007), `vs2026` (does not
 configure on this machine: CMake can't see the VS 2026 Build Tools instance). Preset names are in
-`CMakePresets.json`. A clean `vs2019` build takes ~5 min (Bullet is the long pole); incremental
-builds of the app target take seconds. Baseline numbers: `docs/tasks/T00-build-baseline/notes/baseline.md`
-(143 unique `/W4` project warnings — don't add new ones).
+`CMakePresets.json`. Options: `ESTREE_BUILD_ENGINE` (default ON on Windows, OFF elsewhere; OFF builds only `treegen`,
+`treegen_cli` and the headless tests), `ESTREE_BUILD_TESTS`, `ESTREE_BUILD_TOOLS`, `ESTREE_SANITIZE`. A clean `vs2019` build takes ~5 min
+(Bullet is the long pole); incremental builds of the app target take seconds. Warning reference (`/W4`, unique file+line+code, `Vendor/`
+excluded, method in `docs/tasks/T00-build-baseline/notes/baseline.md`): **WARNCOUNT** on `ninja-msvc` Debug at the end of T13; history in
+`docs/tasks/T13-modernization-gate/SUMMARY.md`. Don't add new ones.
 
 Agents cannot judge rendered images. They *can* smoke-launch the exe on the owner's desktop (see
 `CLAUDE.local.md`: `Start-Process`, wait ~20 s, expect "still running", no crash event, expected log
