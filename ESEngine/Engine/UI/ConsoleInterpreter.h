@@ -3,7 +3,6 @@
 
 #include <string>
 #include <vector>
-#include <boost/foreach.hpp>
 
 #include "Engine/Manager/Context.h"
 #include "ConsoleMemory.h"

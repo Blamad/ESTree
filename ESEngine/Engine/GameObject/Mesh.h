@@ -4,7 +4,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
 #include <memory>
-#include <boost/foreach.hpp>
 
 #include "Engine/Manager/ShaderManager.h"
 #include "Renderable.h"

@@ -36,7 +36,7 @@ GameObject* MouseManager::raycastClickToGameObject(Point2d mousePos) {
 }
 
 void MouseManager::updatePickedObject(double dt, InputState& inputState) {
-	BOOST_FOREACH (Point2d const& mousePos, inputState.getMousePositionEvents()) {
+	for (Point2d const& mousePos : inputState.getMousePositionEvents()) {
 		if (lastXPos != NULL && lastYPos != NULL)
 			moveGameObject(pickedGameObject, mousePos.x - lastXPos, mousePos.y - lastYPos);
 		lastXPos = mousePos.x;
@@ -98,7 +98,7 @@ void MouseManager::updateCameraBehaviour(double dt, InputState &inputState) {
 }
 
 bool MouseManager::checkIfMouseRightClickEventHappened(InputState& inputState, bool pressed) {
-	BOOST_FOREACH(ClickEvent const& click, inputState.getMouseClickEvents()) {
+	for (ClickEvent const& click : inputState.getMouseClickEvents()) {
 		if (click.button == MOUSE_BUTTON_RIGHT && click.pressed == pressed)
 			return true;
 	}

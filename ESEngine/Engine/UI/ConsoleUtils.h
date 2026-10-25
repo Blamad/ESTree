@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
 #include <glm/glm.hpp>
 #include "Engine/Manager/Context.h"

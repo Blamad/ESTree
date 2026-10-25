@@ -114,7 +114,7 @@ void ConsoleInterpreter::processInput(std::string &input) {
 			return;
 		}
 
-		BOOST_FOREACH(auto& command, customConsoleCommands) {
+		for (auto& command : customConsoleCommands) {
 			if (command->processCommandLine(line)) {
 				return;
 			}
@@ -149,7 +149,7 @@ void ConsoleInterpreter::displayHelp() {
 	ConsoleUtils::logToConsole(" - mv <vec3>");
 	ConsoleUtils::logToConsole("    translate selected object by given vector");
 
-	BOOST_FOREACH(auto& command, customConsoleCommands) {
+	for (auto& command : customConsoleCommands) {
 		command->printHelpText();
 	}
 }
