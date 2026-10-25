@@ -27,3 +27,6 @@ Ideas that came up during analysis. Not scheduled; promote to a task only on the
 - 26 remaining C-style casts in `ESEngine/ESTree`; typed `getComponent<T>()` migration there.
 - Removal of the active camera is unguarded; static `Context` pointers outlive their objects.
 - GL objects are never deleted (`glDelete*`), fine at exit, wrong if scenes are ever reloaded.
+
+## Observations from owner testing
+- Leaf sway seems to stop while the camera moves (owner, 2026-10-25, after T07). Not reproduced by code reading: sway is a pure function of the `time` uniform (`Context::setTime(glfwGetTime())` once per frame in `Engine::renderingLoop`, `GenericShader.vert` `calcMove`), none of which changed since the original commit (`git diff c30a23c HEAD` shows only destructor order in `Engine.cpp`), and the camera code only moves the camera. Probably pre-existing or perceptual (slow, low-frequency sway); to check: hold RMB without moving, move with keys only, and compare with the pre-modernization build `build/Debug/ESTree.exe` (needs the NVIDIA GPU set in Windows graphics settings).

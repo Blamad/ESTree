@@ -30,6 +30,11 @@ The implementing subagent could not write this file; the orchestrator wrote it f
 
 - Changed T04/T06 test files (`geometry_tests`, `geometry_facade_tests` — a synthetic broken input replaces `parametricTree2.l` — and `rewriter_golden_tests`); factory signature changed; `ConsoleTreeCommand.h` gained a private method. `tree_adapter_tests` was written header-first, not strict TDD.
 
+## Human verification result (owner, 2026-10-25)
+
+Items 1-4 confirmed: branches droop as intended and the model is coherent (1), trees render and exits are clean (2), the seed is present (3), seeded regeneration works (4).
+Items 5-8 were not confirmed one by one ("the rest probably works too"). New observation (not a T07 regression, see BACKLOG): leaf sway appears to pause while the camera moves.
+
 ## Needs human verification (owner checklist — blocking for sign-off)
 
 Run `build\ninja-msvc\Debug\ESTree.exe --scene N` from `build\ninja-msvc` (Resources linked).
