@@ -23,17 +23,6 @@ estree_add_test(smoke_tests SOURCES smoke/smoke_tests.cpp)
 add_subdirectory(engine)
 add_subdirectory(treegen)
 
-# T02: golden tests of the unchanged legacy params loader + solver (Boost headers only, no engine/GL code).
-# MSVC only: the legacy solver reads std::regex results after a failed search (match_results::suffix()),
-# which is unspecified; with libstdc++ it loses the tail of every rewritten production (8 of 26 cases fail
-# on Linux, verified in Docker/GCC 13). The goldens document MSVC behavior; the portable replacement
-# (treegen, T03/T04) must pass its own tests on every platform. Remove this guard together with the legacy sources.
-if(MSVC)
-	estree_add_test(legacy_characterization_tests
-		SOURCES
-			legacy_characterization/legacy_characterization_tests.cpp
-			${PROJECT_SOURCE_DIR}/ESEngine/ESTree/Models/Tree/LindenmayerTreeParams.cpp
-			${PROJECT_SOURCE_DIR}/ESEngine/ESTree/Models/Tree/LindenmayerTreeSolver.cpp
-		LIBS treegen) # LindenmayerTreeParams is an adapter over treegen since T03
-endif()
+# T07: the engine's tree adapter (pure conversion helpers and seed rules). Headless: needs only treegen and glm.
+estree_add_test(tree_adapter_tests SOURCES adapter/tree_adapter_tests.cpp LIBS treegen)
 
