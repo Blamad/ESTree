@@ -92,3 +92,8 @@ Intentional differences from the legacy generator:
 Additive API beyond the T03-T05 design text: `GeometryOptions::threads`, `GenerateOptions::threads`, `GeometryStats`, `TreeGeometry::stats` (documented in `treegen-design.md`). `generateTree` passes one seed (`options.seed`, or `params.seed` when 0) to all three stages; they derive streams 1/2/3 from it themselves.
 Why: Review Focus 5 (geometry half), the "growth" focus (fixed GL buffer capacities) and the determinism rule (no time-seeded RNGs, thread-count independent output).
 Consequences: T07 must size the GL buffers from `trunk.vertices.size()` / `trunk.indices.size()` (convert `uint32_t` to `int` indices only below 2^31), recreate them per generated tree and keep the Boost-free build. Trees with a zero-radius segment (`=(0)`) lose that segment's triangles; before they showed black NaN artefacts.
+
+## D-016 — Owner accepts the working tropism (2026-10-25, owner decision on D-010)
+Decision: The identity-quaternion start of `treegen::interpret` stays: tropism `T` bends branches towards `tropism` as designed. No compatibility switch for the old "T is a no-op" look is added.
+Why: In the shipped binary `T` was a no-op only because of an uninitialised/zero `glm::quat()` after the 2020 glm update; the thesis, the README clips and `images/ternaryTreeE.PNG` show the intended behavior. Accepted by the owner on 2026-10-25 (the decision was taken from the description, scene 0 had not been compared pixel by pixel).
+Consequences: Trees using `T` (ternary A–E, scene 0's `parametricTernaryTreeB.json`) look different from the pre-modernization binary. T07 calls `generateTree` directly and needs no compatibility code.

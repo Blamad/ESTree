@@ -28,7 +28,7 @@ The implementing subagent could not write this file; the orchestrator wrote it f
 T04 deleted the goldens `solver/legacy__parametricTree2.l.d1..d3`, which the T05 sweep expected to *skip*. The test
 `Turtle equivalence: every solver golden up to depth 4` therefore failed after the merge (`0 == 3`). Changed the last check to `skipped.size() <= notModuleStrings.size()`; all 189 tests pass.
 
-## DECISION for the owner: tropism (D-010)
+## DECISION for the owner: tropism (D-010) — ACCEPTED by the owner on 2026-10-25 (D-016)
 
 In the shipped binary the legacy interpreter starts from `glm::quat()`, which with the pinned glm (0.9.9.8, no `GLM_FORCE_CTOR_INIT`) is the **zero** quaternion. Rotations before the first `F` are lost and the
 accumulated rotation stays zero, so **`T` (tropism) bends nothing** in the current binary (older glm initialised `quat()` to identity; the glm update was the last change of 2020-04). `treegen` starts from the identity quaternion,

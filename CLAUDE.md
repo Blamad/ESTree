@@ -111,7 +111,7 @@ Still open:
 - Build still links prebuilt Boost 1.72 `vc140` libs (`BOOST_LIB`) because of `Models/Tree`; removed by T07/T13. Linux
   builds in Docker/GCC 13 (engine ON); the CI workflow `.github/workflows/ci.yml` has never run on GitHub (T11)
 - `legacy/parametricTree2.l` has a typo (`[^+a)`, lost `(`) so `tree file legacy/parametricTree2.l` reports an error; fix the file in T07
-- Tropism `T` was a no-op in the shipped binary (zero-quaternion start with newer glm); `treegen` fixes it (D-010) — owner must accept the new look
+- (closed) Tropism `T` was a no-op in the shipped binary; `treegen` fixes it, accepted by the owner (D-010, D-016)
 
 ## Working on a task
 
