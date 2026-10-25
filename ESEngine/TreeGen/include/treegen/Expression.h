@@ -18,10 +18,12 @@ public:
 	// identifier or nesting deeper than maxDepth.
 	static Expression parse(std::string_view text, const std::vector<std::string>& names);
 
-	double evaluate(const float* args, std::size_t count) const;
-	double evaluate(const std::vector<float>& args) const { return evaluate(args.data(), args.size()); }
+	double evaluate(const double* args, std::size_t count) const;
+	double evaluate(const std::vector<float>& args) const;   // widens the arguments, mainly for tests
 
 	bool isConstant() const { return constant; }
+	// A single literal or a single identifier (no operator): its value is passed through unchanged.
+	bool isTrivial() const { return program.size() == 1; }
 	const std::string& text() const { return source; }
 
 	static constexpr std::size_t maxDepth = 64;

@@ -152,14 +152,14 @@ private:
 	}
 
 	void number() {
-		float value = 0.0f;
+		double value = 0.0;
 		const char* begin = text.data() + pos;
 		const char* end = text.data() + text.size();
 		std::from_chars_result result = std::from_chars(begin, end, value);
 		if (result.ec != std::errc() || result.ptr == begin)
 			fail("malformed number");
 		pos += static_cast<std::size_t>(result.ptr - begin);
-		emit(Expression::Op::Literal, 0, static_cast<double>(value));
+		emit(Expression::Op::Literal, 0, value);
 	}
 
 	void identifier() {
@@ -186,7 +186,12 @@ Expression Expression::parse(std::string_view text, const std::vector<std::strin
 	return expression;
 }
 
-double Expression::evaluate(const float* args, std::size_t count) const {
+double Expression::evaluate(const std::vector<float>& args) const {
+	std::vector<double> widened(args.begin(), args.end());
+	return evaluate(widened.data(), widened.size());
+}
+
+double Expression::evaluate(const double* args, std::size_t count) const {
 	if (count < paramCount)
 		throw RewriteError("expression \"" + source + "\": " + std::to_string(paramCount) + " argument(s) expected, got " + std::to_string(count));
 
@@ -198,7 +203,7 @@ double Expression::evaluate(const float* args, std::size_t count) const {
 			values[top++] = instruction.value;
 			break;
 		case Op::Param:
-			values[top++] = static_cast<double>(args[instruction.index]);
+			values[top++] = args[instruction.index];
 			break;
 		case Op::Negate:
 			values[top - 1] = -values[top - 1];

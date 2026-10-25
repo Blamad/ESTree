@@ -131,30 +131,50 @@ std::string describeModule(const Module& module) {
 		std::to_string(limit) + " (reached " + std::to_string(wouldBe) + " modules)");
 }
 
-float evaluateParameter(const Expression& expression, const CompiledRule& rule, const Module& module) {
-	double value = expression.evaluate(module.params);
+// The legacy solver kept every computed value as std::to_string text (six decimals) between iterations and
+// computed with the double value of that text. To keep its output (the goldens) digit for digit, a computed
+// value is rounded to six decimals, and an argument that is the float nearest to a six-decimal number is
+// evaluated as that decimal number. Other values (more digits, tiny or huge) are used as they are.
+double sixDecimals(double value) {
+	if (!(std::fabs(value) < 1.0e9))
+		return value;
+	return std::nearbyint(value * 1.0e6) / 1.0e6;
+}
+
+double argumentValue(float value) {
+	double decimal = sixDecimals(static_cast<double>(value));
+	return static_cast<float>(decimal) == value ? decimal : static_cast<double>(value);
+}
+
+float evaluateParameter(const Expression& expression, const CompiledRule& rule, const Module& module, const std::vector<double>& args) {
+	double value = expression.evaluate(args.data(), args.size());
 	float result = static_cast<float>(value);
 	if (!std::isfinite(value) || !std::isfinite(result)) {
 		throw RewriteError("rewrite: " + rule.label + ": expression \"" + expression.text() + "\" evaluated to " +
 			(std::isnan(value) ? "NaN" : "an infinite or out-of-range value") + " for module " + describeModule(module));
 	}
+	if (!expression.isTrivial())
+		result = static_cast<float>(sixDecimals(static_cast<double>(result)));
 	return result;
 }
 
-void apply(const CompiledRule& rule, const Module& module, ModuleString& out) {
+void apply(const CompiledRule& rule, const Module& module, ModuleString& out, std::vector<double>& args) {
 	const Rule& source = *rule.rule;
 	if (module.params.size() != source.paramNames.size()) {
 		throw RewriteError("rewrite: arity mismatch for symbol '" + std::string(1, module.symbol) + "': module " +
 			describeModule(module) + " has " + std::to_string(module.params.size()) + " parameter(s), " + rule.label +
 			" declares " + std::to_string(source.paramNames.size()));
 	}
+	args.clear();
+	for (float value : module.params)
+		args.push_back(argumentValue(value));
 	for (const TemplateModule& t : rule.modules) {
 		Module produced;
 		produced.symbol = t.symbol;
 		produced.randomized = t.randomized;
 		produced.params.reserve(t.params.size());
 		for (const Expression& expression : t.params)
-			produced.params.push_back(evaluateParameter(expression, rule, module));
+			produced.params.push_back(evaluateParameter(expression, rule, module, args));
 		out.push_back(std::move(produced));
 	}
 }
@@ -169,6 +189,7 @@ ModuleString rewrite(const TreeParams& params, const RewriteOptions& options) {
 	Rng rng = Rng(options.seed).derive(1);
 	std::map<const Rule*, std::unique_ptr<CompiledRule>> compiled;
 	std::array<std::vector<const CompiledRule*>, 256> candidates;
+	std::vector<double> args;
 
 	for (int iteration = 0; iteration < params.depth; ++iteration) {
 		for (auto& list : candidates)
@@ -205,7 +226,7 @@ ModuleString rewrite(const TreeParams& params, const RewriteOptions& options) {
 			if (next.size() + added > params.maxModules)
 				growthError(static_cast<size_t>(iteration), next.size() + added, params.maxModules);
 			if (chosen)
-				apply(*chosen, module, next);
+				apply(*chosen, module, next, args);
 			else
 				next.push_back(std::move(module));
 		}
