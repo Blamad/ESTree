@@ -105,3 +105,9 @@ endif()
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
+
+option(ESTREE_BUILD_TESTS "Build unit tests (doctest)" ON)
+if(ESTREE_BUILD_TESTS)
+	include(CTest)
+	add_subdirectory(tests)
+endif()

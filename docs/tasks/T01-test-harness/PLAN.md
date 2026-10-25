@@ -1,6 +1,6 @@
 # T01 — Test harness (doctest + CTest) — Implementation Plan
 
-**Status:** in-progress · **Branch:** `task/T01-test-harness` · **Base:** `modernization @ 3e1cbf1`
+**Status:** review · **Branch:** `task/T01-test-harness` · **Base:** `modernization @ 3e1cbf1`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** A `tests/` tree with a doctest runner wired into CTest, two passing smoke tests, and a documented way to add test executables.
@@ -28,11 +28,11 @@
 
 ## Steps
 
-- [ ] 1 Write smoke test + CMake; configure, build, run `ctest` -> expect 2 passed
-- [ ] 2 Break an assertion -> ctest fails; revert
-- [ ] 3 Configure with `-DESTREE_BUILD_TESTS=OFF` in a separate build dir; confirm no doctest fetch
-- [ ] 4 Check link line of smoke test has no glfw/glad/Bullet/FreeType
-- [ ] 5 README, REPORT, status `review`
+- [x] 1 Write smoke test + CMake; configure, build, run `ctest` -> expect 2 passed
+- [x] 2 Break an assertion -> ctest fails; revert
+- [x] 3 Configure with `-DESTREE_BUILD_TESTS=OFF` in a separate build dir; confirm no doctest fetch
+- [x] 4 Check link line of smoke test has no glfw/glad/Bullet/FreeType
+- [x] 5 README, REPORT, status `review`
 
 ## Review focus covered
 
@@ -40,7 +40,7 @@ Headless tests, repo-relative resources (via `ESTREE_REPO_ROOT`).
 
 ## Deviations from the brief
 
-(none yet)
+- `doctest_discover_tests` instead of plain `add_test`; `SYSTEM` on the FetchContent declare (silences doctest C5285 under /W4).
 
 ## Blockers
 
