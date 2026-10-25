@@ -15,14 +15,7 @@ void LightsManager::addLight(Light* light) {
 }
 
 void LightsManager::removeLight(Light* light) {
-	Light* removedLight;
-	for (auto & l : lights[light->lightType]) {
-		if (light == l) {
-			removedLight = l;
-			break;
-		}
-	}
-	lights[light->lightType].erase(removedLight);
+	lights[light->lightType].erase(light);
 }
 
 void LightsManager::prepareShadowBuffer(glm::vec3& viewPos, Renderer& renderer, std::function<void(Renderer&, Shader*)> renderObjectsFunction) {
@@ -35,7 +28,7 @@ void LightsManager::prepareShadowBuffer(glm::vec3& viewPos, Renderer& renderer, 
 	depthBuffer->shader->setShaderSubroutine("shadowDepthPass");
 
 	BOOST_FOREACH(Light* light, lights[LIGHT_DIRECTIONAL]) {
-		DirectionalLight* dLight = (DirectionalLight*)light;
+		DirectionalLight* dLight = static_cast<DirectionalLight*>(light);
 		glm::mat4 lightView = DirectionalLight::getViewMatrix(dLight);
 
 		Shader::updateViewMatrix(lightView);
