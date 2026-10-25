@@ -2,9 +2,9 @@
 #define RIGIDBODY_H
 
 #include <btBulletDynamicsCommon.h>
-#include <BulletCollision\CollisionShapes\btShapeHull.h>
+#include <BulletCollision/CollisionShapes/btShapeHull.h>
 
-#include <GLM\glm.hpp>
+#include <glm/glm.hpp>
 
 #include "Engine/Core/Logger.h"
 #include "Transform.h"

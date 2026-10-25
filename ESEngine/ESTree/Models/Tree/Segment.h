@@ -4,8 +4,8 @@
 #include <vector>
 #include <memory>
 
-#include <GLM/glm.hpp>
-#include <GLM/gtc/quaternion.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 enum SegmentType {
 	STEM, SPLIT

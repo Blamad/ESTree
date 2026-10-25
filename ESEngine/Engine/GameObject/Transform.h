@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <GLM/gtc/quaternion.hpp>
+#include <glm/gtc/quaternion.hpp>
 #include <btBulletDynamicsCommon.h>
 #include "Component.h"
 
