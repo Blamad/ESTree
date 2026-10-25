@@ -106,11 +106,20 @@ TEST_CASE("rewrite goldens: every deterministic rule file reproduces its solver 
 	CHECK(filesSeen.size() == 34);
 }
 
-TEST_CASE("rewrite goldens: legacy/parametricTree2.l has a malformed production and is a RewriteError") {
-	// Its rule for A contains "[^+a)": after substitution "[^+18.950001)", a ')' without '('. The legacy solver
-	// copied the stray ')' into its output (the solver goldens d1..d3 of this file were deleted, see D-014); the
-	// rewriter reports it, naming the rule.
-	treegen::TreeParams params = treegen::loadTreeParams(ruleFilePath("legacy__parametricTree2.l"));
+TEST_CASE("rewrite goldens: legacy/parametricTree2.l generates now that its lost parenthesis is back, the old text is a RewriteError") {
+	// Until T07 the rule for A of this file contained "[^+a)": after substitution "[^+18.950001)", a ')' without '('.
+	// The legacy solver copied the stray ')' into its output (D-014), the rewriter reports it, naming the rule.
+	// T07 restored the '(' (D-017) and regenerated the solver goldens d1..d3 with treegen; the shipped file is checked by
+	// the golden test above, the old text is rebuilt here to keep the error pinned on a real-world rule.
+	const std::string fixedText = readFile(ruleFilePath("legacy__parametricTree2.l"));
+	REQUIRE(fixedText.find("[^+(a)F(startLength)A]") != std::string::npos);
+	treegen::TreeParams fixed = treegen::loadTreeParams(ruleFilePath("legacy__parametricTree2.l"));
+	fixed.depth = 3;
+	CHECK_NOTHROW(treegen::rewrite(fixed));
+
+	std::string brokenText = fixedText;
+	brokenText.replace(brokenText.find("[^+(a)"), 6, "[^+a)");
+	treegen::TreeParams params = treegen::parseTreeParamsLegacy(brokenText, "parametricTree2.l (old text)");
 	params.depth = 0;
 	std::string axiom = readFile(kSolverGoldenDir / "legacy__parametricTree2.l.d0.txt");
 	CHECK(treegen::toString(treegen::rewrite(params)) == treegen::toString(treegen::parseModules(axiom)));
