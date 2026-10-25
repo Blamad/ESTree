@@ -269,3 +269,5 @@ _deps
 #DLLS, libs
 lib/
 *.dll
+# Claude Code local instructions
+CLAUDE.local.md

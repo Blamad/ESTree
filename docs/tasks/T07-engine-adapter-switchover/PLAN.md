@@ -1,0 +1,9 @@
+# T07 — Engine adapter switch-over; delete the legacy pipeline — Implementation Plan
+
+**Status:** not-started  ·  **Branch:** `task/T07-engine-adapter-switchover`  ·  **Base:** _(fill in)_
+**Brief:** [BRIEF.md](BRIEF.md)
+
+> **STUB.** The agent taking this task writes the real plan here **before touching code**.
+> Copy the structure of [`../_templates/PLAN.template.md`](../_templates/PLAN.template.md),
+> keep this header, and set `Status: in-progress`. When finished, create `REPORT.md`
+> from [`../_templates/REPORT.template.md`](../_templates/REPORT.template.md) and set `Status: review`.
