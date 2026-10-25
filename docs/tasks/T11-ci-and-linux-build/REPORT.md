@@ -51,3 +51,13 @@ tested on Linux too, so this CI will catch regressions of that kind.
 
 - Restrict Bullet to the 3 libs actually used to cut CI time.
 - Drop the MSVC guard on the legacy tests when the legacy sources are deleted (T07).
+
+## First real GitHub run (owner, 2026-10-25) — three jobs failed, two workflow bugs, fixed
+
+- **Windows (Debug and Release):** `cmake ... -DCMAKE_POLICY_VERSION_MINIMUM=3.5` in a PowerShell step: PowerShell splits an unquoted `-DNAME=3.5` at the dot into `-DNAME=3` and `.5`
+  ("Ignoring extra path `.5`", "Invalid CMAKE_POLICY_VERSION_MINIMUM value `3`"). Reproduced locally; every `-D` argument in the Windows step is now quoted.
+  (The runner image has VS 18 / MSVC 19.51 and CMake 4.4, so the engine configure otherwise got as far as the vendored `cmake_minimum_required` checks.)
+- **Linux (engine OFF):** the OFF job configured without `-G Ninja` (Unix Makefiles) while the ON job used Ninja, both with the same cache key and `FETCHCONTENT_BASE_DIR`; the restored
+  `doctest-subbuild` belonged to the other generator ("Does not match the generator used previously"). Both Linux jobs now use Ninja (installed in both) and the cache keys carry the
+  generator/config/engine setting (`fetchcontent-<os>-ninja-engine-<ON|OFF>-...`, `fetchcontent-<os>-vs-<config>-...`).
+- Lesson: the earlier local/Docker runs used `-G Ninja` everywhere and never shared a cache directory between configurations, so neither bug could show up before a real run.
