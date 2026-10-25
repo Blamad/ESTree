@@ -1,7 +1,9 @@
-# Current architecture (as of 2026-10-25, before modernization)
+# Architecture (final state of the modernization, T13, 2026-10-25)
 
-Facts below were read from the code at commit `c30a23c`. Anything marked *(verify)* was inferred
-from reading, not from running. ~8.5k lines of C++ in `ESEngine/`, no tests, no CI, 153 commits (2017-04 → 2020-04).
+The engine layers below are the 2017-2020 design, cleaned up (ownership, casts, no Boost) but not redesigned. Tree generation lives in
+the engine-independent `treegen` library (section *Tree pipeline*). Around them: 250+ headless doctest cases (CTest), a CLI tool
+(`tools/treegen_cli`), a GitHub Actions workflow (never run on GitHub yet) and CMake presets. Facts were read from the code and verified by
+builds/tests; what is drawn on screen is verified only by the owner.
 
 ## Engine
 
@@ -19,20 +21,21 @@ GraphicEngine (ESEngine/GraphicEngine)   GLWindow (GLFW), GLRenderer, Shader, GL
 
 - OpenGL **4.3 core** via glad; GLSL uses `std140, binding=1` UBOs and `subroutine`s. macOS (GL ≤ 4.1) cannot run it.
 - `Engine::renderingLoop`: poll input → `Scene::update` (physics, UI, mouse picking, behaviours) → `Scene::renderFrame` (shadow-map pass in `LightsManager::prepareShadowBuffer`, forward Blinn-Phong pass with PCF shadows, skybox, optional HDR/post-effect framebuffer, UI).
-- A `GameObject` holds typed components (`getComponent(TRANSFORM|RENDERABLE|RIGIDBODY|LIGHT|BEHAVIOUR|CAMERA)` returns `Component*`; callers C-cast to the concrete type).
-- `Mesh` keeps CPU `std::vector<Vertex> vertices` and `std::vector<int> indices`, uploads with `updateMesh()`; buffers are allocated with fixed capacities (`vBufferSize`, `iBufferSize`) and `GL_STREAM_DRAW` for generated trees.
-- `Scene` stores `std::unordered_map<Uuid, std::unique_ptr<GameObject>>`; no culling, no render sorting. Up to 10 point + 10 directional lights.
+- A `GameObject` holds typed components (`getComponent(TRANSFORM|RENDERABLE|RIGIDBODY|LIGHT|BEHAVIOUR|CAMERA)` returns `Component*`; `getComponentAs<T>(TYPE)` is the typed accessor with a Debug `dynamic_cast` assert, D-006; the engine layer uses it, `ESEngine/ESTree` still has C-casts).
+- `Mesh` keeps CPU `std::vector<Vertex> vertices` and `std::vector<int> indices`, uploads with `updateMesh()`; buffers are allocated with explicit capacities (`vBufferSize`, `iBufferSize`) and `GL_STREAM_DRAW` for generated trees (the tree adapter sizes them from the generated output).
+- `Scene` stores `std::unordered_map<Uuid, std::unique_ptr<GameObject>>` (`Uuid` is the small `std::mt19937_64`-based type in `Engine/GameObject/Uuid.h`); no culling, no render sorting. Up to 10 point + 10 directional lights.
 - Physics: Bullet (`RigidBody`, `PhysicsManager`), used for mouse picking and the block-tower scene. Trees get a hull `RigidBody`.
 - Text/UI console: FreeType; commands are registered in `ESTree.cpp` (`tree`, `rtree`, cube commands, model export).
 - Scenes (`--scene N`): 0 `SingleTreeScene`, 1 `PhysicsScene`, 2 `ForestScene`, 3 `TestScene`, 4 `TreeScene`. The tree scenes create their trees with `LindenmayerTreeFactory` (T07).
 
 ## Build
 
-- `CMakeLists.txt` (cmake_minimum_required 3.0) globs `ESEngine/*`, links `glfw`, `BulletDynamics/BulletCollision/LinearMath`, `freetype`, and **Boost** `date_time` + `thread` (hard-coded `vc140-x64-1_72` names), plus Boost headers from `$ENV{BOOST_LIB}`.
-- `setup.bat` generates a "Visual Studio 14 Win64" solution into `build/` and symlinks `Resources`.
-- Boost was used for: `random`, `thread`, `date_time` (timing), `foreach`, `filesystem` (`ModelExporter`), `program_options` (`ESTree.cpp`), `algorithm/string` (split). No `#include <boost/...>` is left in `ESEngine/` (T07, T09); only the build files still link the Boost libraries (T13 removes that).
+- `CMakeLists.txt` (CMake >= 3.21, C++17, extensions off) globs `ESEngine/*` (without `ESEngine/TreeGen`, its own library), links `glfw`, `BulletDynamics/BulletCollision/LinearMath`, `freetype` and `treegen`. No Boost, no environment variable, `Threads::Threads` comes through `treegen`. Options: `ESTREE_BUILD_ENGINE` (GLFW/Bullet/FreeType/`ESTree`, default ON only on Windows), `ESTREE_BUILD_TESTS`, `ESTREE_BUILD_TOOLS`, `ESTREE_SANITIZE`.
+- `CMakePresets.json`: `vs2019`, `vs2026`, `ninja-msvc`, `*-asan`; `setup.bat [preset]` configures and links `Resources`; `scripts/msvc-env.cmd` wraps commands in the MSVC environment for the Ninja preset.
+- CI: `.github/workflows/ci.yml` (Windows MSVC Debug/Release with the engine, Linux GCC 13 engine ON and OFF); verified command by command locally and in Docker, never executed on GitHub.
+- Boost (random, thread, date_time, foreach, filesystem, program_options, algorithm/string, uuids) was replaced by `<random>`, `<thread>`, `<chrono>`, range-for, `<filesystem>`, `CommandLine.h`, `ConsoleUtils::split`, `Uuid.h` (T07, T09) and its build lines were removed in T13.
 - Vendored libraries (T12, 2026-10-25), all git submodules in `Vendor/`: GLFW `3.4`, glm `1.0.3`, Bullet `3.25`, FreeType `VER-2-15-0`, rapidjson master `24b5e7a` (no tag since v1.1.0), stb master `003501f`, glad branch `c` `5bf3eda` (unchanged). Verified on `ninja-msvc` Debug+Release and Linux GCC 13 (treegen); no source edits were needed for the bumps (D-019).
-- Non-portable bits: `#include <GLM\common.hpp>` (backslash, 15 occurrences of `GLM/` in upper case), Windows-only build script.
+- Portability: the engine compiles and links with GCC 13 on Linux (CI); it needs OpenGL 4.3 and a display to run. Include paths are normalized to forward slashes and lower case (T00).
 
 ## Tree pipeline (`ESEngine/ESTree/Models/Tree/` over `ESEngine/TreeGen/`)
 
@@ -64,8 +67,8 @@ Mesh (trunk, GL buffers sized from the output)  +  InstancedMesh (leaf cross-qua
 ### Rule syntax (as implemented)
 
 - Symbols are **single characters**; parameters in parentheses: `F(len)`, `A(l,w)`.
-- Production strings reference custom parameters (from `"parameters"`) and rule-local parameters; numeric expressions inside parentheses support `+ - * /` with one binary operator (e.g. `l*lr`).
-- Rule fields: `symbol`, `production`, optional `probability` (default 1.0; rules for one symbol are tried in order, `value -= probability`), optional `initialDepth` (rule only applies once iteration index ≥ it).
+- Production strings reference custom parameters (from `"parameters"`, substituted as whole words) and rule-local parameters; numeric expressions inside parentheses support `+ - * /`, unary signs and parentheses with standard precedence (e.g. `l*lr`, `-5*2`; D-014).
+- Rule fields: `symbol`, `production`, optional `probability` (default 1.0; rules for one symbol are tried in order against one seeded draw per module, D-014), optional `initialDepth` (rule only applies once iteration index ≥ it).
 - Interpreter alphabet (turtle looks along **+Y**):
 
 | Symbol | Meaning | Default parameter |
@@ -92,7 +95,7 @@ Mesh (trunk, GL buffers sized from the output)  +  InstancedMesh (leaf cross-qua
 - Normals are radial (no smoothing across segments), so joints show seams.
 - Leaves: every segment with no children (`isLastStem`) gets a double-sided 2×2 quad, instanced, optional random angle ± `leavesAngleDiversity`, kept with probability `leafGrowthProb`.
 
-### Defects of the former pipeline (all fixed or gone: D-009, D-010, D-014, D-015, T07)
+### Historical: defects of the former pipeline (all fixed or gone: D-009, D-010, D-014, D-015, T07)
 
 - `fillRuleWithVariables` consumes the delimiter after a match, so two occurrences sharing one delimiter (`(a1,a1)`) may leave the second unreplaced.
 - `LindenmayerTreeSolver::applyRule` splits an expression at the *first* operator character, so a leading minus (`(-5*2`) is likely mis-evaluated (left side `""` → 0, giving `0 - 5` instead of `-10`); precedence/associativity of chained operators is not handled.

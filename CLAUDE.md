@@ -22,6 +22,9 @@ Reply to the user in **Polish**. Code, comments, commit messages and docs are in
 | `ESEngine/ESTree/` | The application: `ESTree.cpp` (main), `Scenes/`, `Console/` commands, `Models/` |
 | `ESEngine/ESTree/Models/Tree/` | Thin engine adapter over `treegen` (`LindenmayerTree`, `LindenmayerTreeFactory`, `TreeMeshConversion.h`); no generation logic |
 | `ESEngine/TreeGen/` | Engine-independent tree generator, static lib `treegen` (loaders, rewriter, turtle, geometry, `generateTree` facade) |
+| `tools/treegen_cli/` | Headless command-line tool: rule file -> OBJ (links only `treegen`) |
+| `tests/` | doctest suites (`treegen/`, `adapter/`, `engine/`, `smoke/`), `golden/` reference data of the pre-treegen implementation |
+| `scripts/` | `msvc-env.cmd` (runs a command inside the MSVC x64 environment) |
 | `Resources/` | Shaders, textures, fonts, `LindenmayerRules/*.json` (+ `legacy/*.l`) |
 | `Vendor/` | Git submodules: glfw, glad, glm, bullet3, freetype2, rapidjson, stb. **Do not edit** (only T12 may bump them) |
 | `docs/` | Plan, architecture notes, per-task directories (see below) |
@@ -108,10 +111,16 @@ the `-1` parameter sentinel, `res.suffix()` after a failed search, time-seeded g
 `Scene::~Scene` `release()` leak and Engine C-casts (T10), the fixed 100 000 / 4 000 000 GL buffers (T07: sized from the output),
 the `legacy/parametricTree2.l` lost `(` (T07, D-017).
 
-Still open:
-- Build still links prebuilt Boost 1.72 `vc140` libs (`BOOST_LIB`) although no source includes Boost any more; removed by T13. Linux
-  builds in Docker/GCC 13 (engine ON); the CI workflow `.github/workflows/ci.yml` has never run on GitHub (T11)
-- (closed) Tropism `T` was a no-op in the shipped binary; `treegen` fixes it, accepted by the owner (D-010, D-016)
+Also closed: Boost is gone from sources and build (T09, T07, T13); tropism `T` was a no-op in the shipped binary, `treegen` fixes it,
+accepted by the owner (D-010, D-016).
+
+Still open (details in `docs/BACKLOG.md` and `docs/tasks/T13-modernization-gate/SUMMARY.md`):
+- The CI workflow `.github/workflows/ci.yml` has never run on GitHub (neither the Windows engine build nor the Linux jobs); only its
+  commands were run locally.
+- The engine crashes the Intel HD 530 OpenGL driver (`ig9icd64.dll`); it runs on the NVIDIA GPU only.
+- 26 C-style casts remain in `ESEngine/ESTree`; removing the active camera is unguarded; static `Context` pointers outlive their
+  objects; GL objects are never deleted (`glDelete*`); leaf sway may pause while the camera moves (unreproduced).
+- Visual verification of the last changes (T09, T12 and parts of T07) is still on the owner's checklist.
 
 ## Working on a task
 
