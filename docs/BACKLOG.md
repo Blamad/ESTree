@@ -17,6 +17,7 @@ Ideas that came up during analysis. Not scheduled; promote to a task only on the
 - Python bindings (pybind11) for procedural-content pipelines.
 
 ## Engine
+- Intel iGPU compatibility: `ESTree.exe` crashes inside `ig9icd64.dll` (Intel HD 530, driver 31.0.101.2111) at a deterministic call; works on NVIDIA. Find the offending GL call (KHR_debug, bisect scene setup) — see T00 REPORT.
 - PBR materials + IBL, cascaded shadow maps, frustum culling, render queue sorting.
 - Replace subroutines/`std140 binding=1` with a GL 3.3/4.1-compatible path (macOS), or a Vulkan/WebGPU backend behind `Renderer`.
 - Dear ImGui instead of the hand-written console UI for parameter editing.

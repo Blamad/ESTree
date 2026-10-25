@@ -12,6 +12,14 @@
 #include "ESTree/Console/ConsoleModelExportCommand.h"
 #include <boost/program_options.hpp>
 
+#ifdef _WIN32
+// Ask hybrid-graphics drivers (NVIDIA Optimus / AMD PowerXpress) for the discrete GPU.
+extern "C" {
+	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+#endif
+
 void testScene(SceneManager *sceneManager);
 void treeScene(SceneManager *sceneManager);
 void physicsScene(SceneManager *sceneManager);

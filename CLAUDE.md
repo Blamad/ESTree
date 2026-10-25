@@ -61,9 +61,12 @@ configure on this machine: CMake can't see the VS 2026 Build Tools instance). Pr
 builds of the app target take seconds. Baseline numbers: `docs/tasks/T00-build-baseline/notes/baseline.md`
 (143 unique `/W4` project warnings — don't add new ones).
 
-Agents cannot open a GL window and cannot judge rendered images. Anything that needs the running
-engine is **"needs human verification"**: say so explicitly in `REPORT.md` and give the exact
-steps (scene number, console command) the user should run. Never claim visual correctness.
+Agents cannot judge rendered images. They *can* smoke-launch the exe on the owner's desktop (see
+`CLAUDE.local.md`: `Start-Process`, wait ~20 s, expect "still running", no crash event, expected log
+lines), which catches crashes and hangs. Anything about what is drawn is **"needs human
+verification"**: say so explicitly in `REPORT.md` and give the exact steps (scene number, console
+command) the user should run. Never claim visual correctness. The engine only works on the NVIDIA
+GPU of the owner's Optimus laptop (the Intel iGPU driver crashes, see `docs/BACKLOG.md`).
 
 ## Architecture rules (enforced)
 

@@ -38,13 +38,34 @@ None (build files only). New repo requirement: **CMake ≥ 3.21** (documented in
 - Extra: besides `GLM`, all backslash includes (`GLFW`, `glad`, `BulletCollision`, `boost`) were normalized (needed for Linux in T11).
 - Extra: `#include <string>` in `Texture.h` and `bcrypt` link were required for the unchanged engine to build with the newer toolset (not in the brief's list).
 
-## Needs human verification
+## Human verification — result and a pre-existing driver crash
 
-1. Start the engine: from `build\vs2019` (after `setup.bat vs2019` or the junction step in `CLAUDE.local.md`) run `Debug\ESTree.exe --scene 0`; expect the single-tree scene to render (needs OpenGL 4.3 on the GTX 960M / Intel HD 530). Check the console toggle (`~`) opens.
-2. Optionally run `Release\ESTree.exe --scene 2` (forest) and quit normally.
+The owner ran `Debug\ESTree.exe --scene 0` from `build\vs2019`: one frame, then the process
+vanished without the final `Quitting..` log line. Investigation (same session, processes started
+by the agent on the same desktop):
+
+- Windows Application log: **access violation `0xC0000005` in `ig9icd64.dll`** (Intel HD Graphics 530
+  OpenGL driver 31.0.101.2111, fault offset `0x9c490`) — for the new vs2019 Debug, the new Release
+  **and the original 2020 VS14 binary** (`build\Debug\ESTree.exe`) alike. So it is **not a regression**
+  of T00. On this Optimus laptop Windows starts the exe on the Intel iGPU by default.
+- Fix applied (commit after T00): `ESTree.cpp` exports `NvOptimusEnablement` /
+  `AmdPowerXpressRequestHighPerformance` so hybrid-graphics drivers pick the discrete GPU.
+  With it, `Debug\ESTree.exe --scene 0` stayed alive for the full 30 s test window and the log shows
+  mouse picking events (`Object clicked: CrateCube`, `Rigidbody picked/released`), i.e. the
+  render/update loop and input work on the GTX 960M.
+- Not fixed: the engine still crashes the Intel HD 530 driver at the same call (deterministic).
+  Likely an unsupported or strictly validated GL feature (the shaders use GLSL 4.30 subroutines and
+  `std140 binding=` UBOs) — see Follow-ups.
+
+Remaining optional checks for the owner: console toggle `~`, `--scene 2` (forest), normal quit
+(window close should log `Quitting..`).
 
 ## Follow-ups
 
+- Intel HD 530 (and probably other Intel iGPUs) crash in `ig9icd64.dll`; find the offending GL call
+  (e.g. with `glDebugMessageCallback`/KHR_debug and bisecting scene setup) if Intel support matters.
+  Out of scope for the current plan; add to `docs/BACKLOG.md` if wanted.
+- `GLWindow.cpp:127` warning C4701 (`state` possibly uninitialized) — worth a look in T10.
 - T09 should fix the `--help` text (`scenes 0-3` → `0-4`).
 - 143 unique `/W4` warnings remain (C4244 ×40, C4239 ×29, C4267 ×19, C4458 ×19, …); candidates for a cleanup task later.
 - The first `build/` directory content from 2017–2020 (VS14 cache, `build/Debug/ESTree.exe`) is still on disk and git-ignored; safe to delete once nobody needs the reference exe.
