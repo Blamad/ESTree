@@ -1,4 +1,5 @@
 #include "ConsoleTreeCommand.h"
+#include <sys/stat.h>
 
 bool ConsoleTreeCommand::processCommandLine(std::vector<std::string> line)  {
 	if (line.at(0) != "rtree" && line.at(0) != "tree") {

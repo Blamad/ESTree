@@ -1,0 +1,155 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+      - 'images/**'
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+      - 'images/**'
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  BOOST_VERSION: 1.72.0
+
+jobs:
+  windows:
+    name: Windows MSVC ${{ matrix.config }}
+    runs-on: windows-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        config: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # The engine target is not built here: it links prebuilt vc140 Boost libs that GitHub runners do not have
+      # (see ESTREE_BUILD_ENGINE in CMakeLists.txt). Only Boost headers are fetched, for tests that include them.
+      - name: Cache Boost headers
+        id: boost-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.boost
+          key: boost-headers-${{ env.BOOST_VERSION }}
+
+      - name: Fetch Boost headers
+        if: steps.boost-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          v=${BOOST_VERSION//./_}
+          curl -fsSL --retry 3 -o boost.tar.gz "https://archives.boost.io/release/${BOOST_VERSION}/source/boost_${v}.tar.gz"
+          tar -xzf boost.tar.gz "boost_${v}/boost"
+          mkdir -p .boost
+          mv "boost_${v}/boost" .boost/boost
+
+      - name: Cache FetchContent downloads
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.fetchcontent
+          key: fetchcontent-${{ runner.os }}-${{ hashFiles('tests/CMakeLists.txt') }}
+
+      - name: Configure
+        run: cmake -S . -B build -A x64 -DESTREE_BUILD_ENGINE=OFF "-DFETCHCONTENT_BASE_DIR=${{ github.workspace }}/.fetchcontent" "-DBOOST_INCLUDEDIR=${{ github.workspace }}/.boost" -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+
+      - name: Build
+        run: cmake --build build --config ${{ matrix.config }} --parallel
+
+      - name: Test
+        run: ctest --test-dir build -C ${{ matrix.config }} --output-on-failure
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-windows-${{ matrix.config }}
+          path: |
+            build/Testing/Temporary/*.log
+            build/CMakeFiles/CMakeConfigureLog.yaml
+            build/CMakeFiles/CMakeOutput.log
+            build/CMakeFiles/CMakeError.log
+          if-no-files-found: ignore
+
+  linux:
+    name: Linux GCC Release (engine ${{ matrix.engine }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        # ON: the full engine executable is compiled and linked (never run: no display) against system Boost.
+        # OFF: only the standalone targets, as on a machine without engine dependencies.
+        engine: ['ON', 'OFF']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install engine dependencies
+        if: matrix.engine == 'ON'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ninja-build libgl1-mesa-dev libx11-dev libxrandr-dev             libxinerama-dev libxcursor-dev libxi-dev libxext-dev libboost-date-time-dev libboost-thread-dev             libboost-chrono-dev libboost-system-dev libboost-atomic-dev libboost-filesystem-dev             libboost-program-options-dev
+
+      - name: Cache Boost headers
+        if: matrix.engine == 'OFF'
+        id: boost-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.boost
+          key: boost-headers-${{ env.BOOST_VERSION }}
+
+      - name: Fetch Boost headers
+        if: matrix.engine == 'OFF' && steps.boost-cache.outputs.cache-hit != 'true'
+        run: |
+          set -euo pipefail
+          v=${BOOST_VERSION//./_}
+          curl -fsSL --retry 3 -o boost.tar.gz "https://archives.boost.io/release/${BOOST_VERSION}/source/boost_${v}.tar.gz"
+          tar -xzf boost.tar.gz "boost_${v}/boost"
+          mkdir -p .boost
+          mv "boost_${v}/boost" .boost/boost
+
+      - name: Cache FetchContent downloads
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.fetchcontent
+          key: fetchcontent-${{ runner.os }}-${{ hashFiles('tests/CMakeLists.txt') }}
+
+      - name: Configure (engine ON)
+        if: matrix.engine == 'ON'
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++ -DESTREE_BUILD_ENGINE=ON "-DFETCHCONTENT_BASE_DIR=${{ github.workspace }}/.fetchcontent" -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+
+      - name: Configure (engine OFF)
+        if: matrix.engine == 'OFF'
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++ -DESTREE_BUILD_ENGINE=OFF "-DFETCHCONTENT_BASE_DIR=${{ github.workspace }}/.fetchcontent" "-DBOOST_INCLUDEDIR=${{ github.workspace }}/.boost" -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-linux-engine-${{ matrix.engine }}
+          path: |
+            build/Testing/Temporary/*.log
+            build/CMakeFiles/CMakeConfigureLog.yaml
+            build/CMakeFiles/CMakeOutput.log
+            build/CMakeFiles/CMakeError.log
+          if-no-files-found: ignore

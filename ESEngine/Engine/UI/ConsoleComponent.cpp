@@ -1,5 +1,7 @@
 #include "ConsoleComponent.h"
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 Logger ConsoleComponent::logger("ConsoleComponent");
 

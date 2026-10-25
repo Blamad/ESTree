@@ -21,7 +21,7 @@ public:
 	void reloadRigidBody(RigidBody* rigidBody);
 	void removeRigidBody(RigidBody * rigidBody);
 	void update(double deltaTime);
-	GameObject* raycast(Ray &ray);
+	GameObject* raycast(const Ray &ray);
 
 private:
 	btBroadphaseInterface* broadphase;

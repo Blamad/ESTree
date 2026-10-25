@@ -1,6 +1,6 @@
 # T11 — CI (Windows + Linux) and headless Linux build — Implementation Plan
 
-**Status:** in-progress · **Branch:** `task/T11-ci-and-linux-build` · **Base:** `modernization @ fc539f2`
+**Status:** review · **Branch:** `task/T11-ci-and-linux-build` · **Base:** `modernization @ fc539f2`
 **Brief:** [BRIEF.md](BRIEF.md)
 
 **Goal:** GitHub Actions that build and test on `windows-latest` (MSVC) and `ubuntu-latest` (GCC) on every push/PR, and prove the non-engine targets build headless on Linux.
@@ -26,15 +26,24 @@
 ## Steps
 
 - [x] Setup worktree, junction Vendor
-- [ ] CMake option + gating; verify Windows engine ON (unchanged) and OFF (with/without BOOST_LIB)
-- [ ] Workflow + actionlint
-- [ ] Docker Linux run (engine OFF), then engine ON attempt
-- [ ] Docs, report
+- [x] CMake option + gating; Windows engine ON (unchanged) and OFF (without BOOST_LIB) verified
+- [x] Workflow + actionlint (exit 0)
+- [x] Docker Linux: engine OFF and engine ON (ESTree links, 15/15 tests) with the workflow's commands
+- [x] Docs (README badge, tests/README, D-008)
+
+## Linux portability edits under `ESEngine/` (all behavior-neutral)
+
+- `Engine/GameObject/{GameObject.h,Component.h}`, `GraphicEngine/Core/TextureBuffer.h`, `Engine/Core/Texture.h`: opaque enum declarations need an underlying type (`: int`, MSVC default).
+- `GraphicEngine/Input/InputState.h`: removed extra `InputState::` qualification.
+- `Engine/UI/ConsoleInterpreter.h`: `#include <memory>`; `Engine/UI/ConsoleComponent.cpp`: `windows.h` under `_WIN32`; `ESTree/Console/ConsoleTreeCommand.cpp`: `<sys/stat.h>`.
+- Rvalue bound to non-const reference (MSVC extension) changed to `const&`: `InstancedTransform::translateModel`, `Shader::update{Projection,View}Matrix`, `PhysicsManager::raycast`, `SegmentTransform` ctor, `LindenmayerTreeParams::{addRule,getRules}`, `Material` parameters of `LindenmayerTree`, `LindenmayerTreeFactory::generateTree`, `{Forest,SingleTree,Tree}Scene::createLindenmayerTree`.
+- `tests/engine/CMakeLists.txt`: skipped when the engine is OFF; `engine_gameobject_tests` also links Bullet/Boost libs (GNU ld needs them).
 
 ## Deviations from the brief
 
-(none yet)
+- Windows CI runs with the engine OFF (cannot build it on a runner). Linux builds the engine ON (compile+link only), which exceeded the brief's best-effort expectation.
+- `tests/engine/CMakeLists.txt` edited (not in the owned list) to honour the option.
 
 ## Blockers
 
-(none yet)
+(none)

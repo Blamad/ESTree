@@ -9,7 +9,7 @@ public:
 	glm::mat4 modelMatrix = glm::mat4(1);
 	//mat4 normalModelMatrix;
 
-	void translateModel(glm::vec3 &position) {
+	void translateModel(const glm::vec3 &position) {
 		modelMatrix = translate(modelMatrix, position);
 	}
 

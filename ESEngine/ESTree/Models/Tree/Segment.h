@@ -13,7 +13,7 @@ enum SegmentType {
 
 class SegmentTransform {
 public:
-	SegmentTransform(glm::quat &rotation, glm::quat &totalRotation, float length, float radius, float angle, float lengthScale = 1, float roll = 0) : rotation(rotation), totalRotation(totalRotation), length(length), radius(radius), lengthScale(lengthScale), roll(roll), angle(angle) {};
+	SegmentTransform(const glm::quat &rotation, const glm::quat &totalRotation, float length, float radius, float angle, float lengthScale = 1, float roll = 0) : rotation(rotation), totalRotation(totalRotation), length(length), radius(radius), lengthScale(lengthScale), roll(roll), angle(angle) {};
 	float length;
 	float lengthScale;
 	float radius;

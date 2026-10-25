@@ -5,7 +5,7 @@ LindenmayerTreeFactory& LindenmayerTreeFactory::getInstance() {
 	return factory;
 }
 
-GameObject* LindenmayerTreeFactory::generateTree(LindenmayerTreeParams &params, std::string &name, Material &bark, Material &leaves, glm::vec3 &position) {
+GameObject* LindenmayerTreeFactory::generateTree(LindenmayerTreeParams &params, std::string &name, const Material &bark, const Material &leaves, glm::vec3 &position) {
 	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new LindenmayerTree(params, bark, leaves, false, false));
 	go->name = name;
 	Transform *transform = (Transform*)go->getComponent(TRANSFORM);

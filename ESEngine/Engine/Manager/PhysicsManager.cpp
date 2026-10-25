@@ -47,7 +47,7 @@ void PhysicsManager::update(double deltaTime) {
 	dynamicsWorld->stepSimulation(btScalar(deltaTime), 10);
 }
 
-GameObject* PhysicsManager::raycast(Ray &ray) {
+GameObject* PhysicsManager::raycast(const Ray &ray) {
 	btCollisionWorld::ClosestRayResultCallback RayCallback(
 		btVector3(ray.origin.x, ray.origin.y, ray.origin.z),
 		btVector3(ray.end.x, ray.end.y, ray.end.z)

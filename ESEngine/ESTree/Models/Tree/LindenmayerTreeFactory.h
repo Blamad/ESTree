@@ -19,7 +19,7 @@ public:
 	LindenmayerTreeFactory(LindenmayerTreeFactory const&) = delete;
 	~LindenmayerTreeFactory() {}
 	
-	GameObject* generateTree(LindenmayerTreeParams &params, std::string &name, Material &bark, Material &leaves, glm::vec3 &position);
+	GameObject* generateTree(LindenmayerTreeParams &params, std::string &name, const Material &bark, const Material &leaves, glm::vec3 &position);
 
 private:
 	static LindenmayerTreeFactory factory;

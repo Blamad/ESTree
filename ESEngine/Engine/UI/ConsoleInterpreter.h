@@ -1,6 +1,7 @@
 #ifndef CONSOLE_INTERPRETER_H
 #define CONSOLE_INTERPRETER_H
 
+#include <memory>
 #include <string>
 #include <vector>
 
