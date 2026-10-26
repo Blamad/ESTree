@@ -1,0 +1,4 @@
+{
+  "axiom": "A",
+  "rules": [
+    { "symbol": "A", "production": "AB" }

@@ -1,0 +1,172 @@
+# `treegen` — target design and API contract
+
+`treegen` is the engine-independent tree generator. It is the part of ESTree that may someday be
+shipped on its own (CLI, plugin core, WASM). This document is the **contract between tasks
+T03–T08**: when two tasks run in parallel they code against these names. If a task must change a
+signature, it edits this file in the same commit and appends a `docs/DECISIONS.md` entry.
+
+## Boundaries
+
+- Location: `ESEngine/TreeGen/` — headers `include/treegen/*.h`, sources `src/*.cpp`, own `CMakeLists.txt`.
+- CMake target: `treegen` (STATIC), alias `treegen::treegen`. Public include dir: `ESEngine/TreeGen/include`.
+- Namespace: `treegen`. Consumers write `#include <treegen/Xxx.h>`.
+- Allowed dependencies: C++17 standard library, `glm`, `rapidjson` (header-only, via `Vendor/`).
+- Forbidden: anything under `Engine/`, `GraphicEngine/`, `ESTree/`, `glad`, `GLFW`, Bullet, FreeType, stb, `boost/`, `<windows.h>`.
+- The target's include path contains only `treegen`'s own include dir, `glm`, `rapidjson`, so a forbidden include fails to compile; a CTest (`treegen_boundary`) additionally greps the sources.
+- Errors: exceptions derived from `treegen::Error : std::runtime_error` (`LoadError`, `RewriteError`, `InterpretError`). No `exit()`, no `std::cout` in the library; diagnostics go through return values/exceptions.
+- Determinism: same `TreeParams` + same `seed` ⇒ bit-identical output on one platform. RNG is `std::mt19937` seeded from the explicit seed; draw order is part of the contract (rewriter draws first, then turtle `~` randomness, then leaf selection — each from its own derived stream, see `Rng`).
+- Thread safety: all free functions are reentrant; no hidden statics.
+
+## Pipeline
+
+```
+loadTreeParams(path)            → TreeParams
+rewrite(params, opts)           → ModuleString
+interpret(params, modules, opts)→ Skeleton
+buildGeometry(skel, params, opts)→ TreeGeometry { MeshData trunk; vector<glm::mat4> leaves; }
+generateTree(params, opts)      → TreeModel   (facade = the three steps above)
+```
+
+## Headers and signatures (v1 — T03 creates the first three, later tasks add the rest)
+
+```cpp
+// treegen/Error.h  (T03)
+struct Error      : std::runtime_error { using std::runtime_error::runtime_error; };
+struct LoadError      : Error { using Error::Error; };
+struct RewriteError   : Error { using Error::Error; };
+struct InterpretError : Error { using Error::Error; };
+
+// treegen/Rng.h  (T03)
+class Rng {                       // thin wrapper over std::mt19937
+public:
+	explicit Rng(uint32_t seed);
+	Rng derive(uint32_t streamId) const;     // independent stream, e.g. 1=rewrite, 2=turtle, 3=leaves
+	float uniform01();                       // [0,1)
+};
+
+// treegen/Module.h  (T03)
+struct Module {                   // one symbol + its numeric parameters
+	char symbol = 0;
+	std::vector<float> params;
+	bool randomized = false;      // symbol followed by '~' : first param is an upper bound
+};
+using ModuleString = std::vector<Module>;
+ModuleString parseModules(std::string_view text);   // "F(2)T+(45)A" ; throws RewriteError on malformed text
+std::string  toString(const ModuleString&);         // canonical: params via std::to_string(float), joined by ','
+
+// treegen/TreeParams.h  (T03)
+struct Rule {
+	char symbol;                              // single character
+	std::vector<std::string> paramNames;      // formal parameters, e.g. {"l","w"}
+	std::string production;                   // production text, custom parameters already substituted
+	float probability = 1.0f;
+	int   initialDepth = 0;                   // rule applies when iteration index >= initialDepth
+};
+struct TreeParams {
+	std::string name;                         // source path / label
+	std::string axiom;
+	int   depth = 0;
+	float initialLength = 1.0f, initialRadius = 1.0f;
+	float angle = glm::radians(15.0f);        // radians
+	float leafGrowthProb = 1.0f;
+	float leavesAngleDiversity = 0.0f;        // radians
+	glm::vec3 tropism{0, -1, 0};              // normalized when loaded from JSON
+	float tropismBendingFactor = 0.2f;
+	std::map<std::string, float> customParameters;
+	std::map<char, std::vector<Rule>> rules;  // declaration order preserved per symbol
+	uint32_t seed = 0;                        // optional "seed" key; 0 = caller decides
+	std::size_t maxModules = 5'000'000;       // optional "maxModules" key
+};
+TreeParams loadTreeParams(const std::filesystem::path& file);   // .json or .l ; throws LoadError
+TreeParams parseTreeParamsJson(std::string_view json, std::string name = {});   // for tests
+TreeParams parseTreeParamsLegacy(std::string_view text, std::string name = {}); // .l text, for tests (added in T03)
+std::string substituteParameters(std::string_view text, const std::map<std::string, float>& values); // (added in T03)
+
+// treegen/Rewriter.h  (T04)
+struct RewriteOptions { uint32_t seed = 0; };
+ModuleString rewrite(const TreeParams&, const RewriteOptions& = {});   // throws RewriteError
+
+// treegen/Expression.h  (T04, additive; used by the rewriter and tested on its own)
+class Expression {
+public:
+	static Expression parse(std::string_view text, const std::vector<std::string>& names);   // throws RewriteError
+	double evaluate(const double* args, std::size_t count) const;     // no NaN/Inf check: the rewriter does that
+};
+
+// treegen/Skeleton.h + Turtle.h  (T05)
+struct SkeletonSegment {
+	int       parent;                 // index into Skeleton::segments, -1 for the root
+	glm::mat4 model;                  // frame at the segment's END (same as legacy Segment::modelMatrix)
+	float     radius;                 // legacy "radius" semantics (a DIAMETER in geometry, see overview.md)
+	float     roll;                   // accumulated roll, radians
+	int       childCount = 0;
+};
+struct Skeleton { std::vector<SkeletonSegment> segments; };   // segments[0] is the root (zero-length)
+struct InterpretOptions { uint32_t seed = 0; };
+Skeleton interpret(const TreeParams&, const ModuleString&, const InterpretOptions& = {});  // throws InterpretError
+inline bool isTip(const SkeletonSegment& s) { return s.childCount == 0; }
+
+// treegen/MeshData.h + Geometry.h  (T06)
+struct MeshVertex { glm::vec3 position, normal; glm::vec2 uv; };
+struct MeshData {
+	std::vector<MeshVertex> vertices;
+	std::vector<uint32_t>   indices;           // triangle list
+};
+struct GeometryOptions { int ringDensity = 9; uint32_t seed = 0; unsigned threads = 0; };   // threads: 0 auto (> 50 000 vertices), 1 never, n exactly n; result is bit-identical (D-015)
+struct GeometryStats { size_t segments, emittedSegments, skippedZeroRadius, skippedInvalidFrame, skippedLeaves; };   // D-015
+struct TreeGeometry { MeshData trunk; std::vector<glm::mat4> leafTransforms; GeometryStats stats; };
+// Exact sizing (2*ringDensity vertices and 6*(ringDensity-1) indices per emitted segment), no NaN/Inf, degenerate segments
+// skipped and counted. Throws Error for ringDensity < 3, a broken parent link, or > 2^32-1 vertices. radius is a DIAMETER.
+TreeGeometry buildGeometry(const Skeleton&, const TreeParams&, const GeometryOptions& = {});
+
+// treegen/TreeGenerator.h  (T06)
+struct GenerateOptions { uint32_t seed = 0; int ringDensity = 9; unsigned threads = 0; };   // seed 0 = params.seed; threads as in GeometryOptions
+struct TreeModel { Skeleton skeleton; TreeGeometry geometry; ModuleString modules; };
+TreeModel generateTree(const TreeParams&, const GenerateOptions& = {});
+
+// treegen/ObjWriter.h  (T08)
+void writeObj(const std::filesystem::path& file, const MeshData& trunk, const std::vector<glm::mat4>& leaves);
+```
+
+## Loader behaviour (T03)
+
+The extension `.l` (case-insensitive) selects the legacy parser, anything else is read as JSON. A `LoadError` message is
+`<path>[:<line>[:<col>]]: <reason>`; a missing file, invalid JSON, a missing or mistyped `axiom`/`rules`, a wrongly typed value
+or a malformed rule symbol is always a `LoadError`, never a crash.
+
+- JSON: `axiom` (string) and `rules` (array) are required, `parameters` is optional. The optional keys `seed` (integer
+  0..2^32-1) and `maxModules` (integer >= 1) are read at the top level or inside `parameters` (top level wins; in `.l`:
+  `define seed N`, `define maxModules N`) and are not substitution parameters.
+- Custom parameters are substituted (whole words, `[A-Za-z0-9]` boundaries, `std::to_string(float)`) into the axiom and every
+  production after the whole file has been read (`substituteParameters`).
+- Rule symbols are one character, optionally followed by `(names)`; `.l` files also accept `A{n}` (initialDepth).
+- Old `.l` files may start with the bare-number header `depth`, `initialLength`, `initialRadius`, `angle` (degrees) before the
+  axiom line. A UTF-8 BOM and `\r` are ignored.
+- The default `angle` is `radians(15)`; JSON/`.l` angles are degrees and stored as radians; `tropism` is normalized.
+
+## Rewriter behaviour (T04)
+
+- Per iteration `i` a module whose symbol has rules is replaced by the production of one candidate (rules of the symbol with
+  `initialDepth <= i`, declaration order); other modules pass through. One `uniform01()` of `Rng(seed).derive(1)` is drawn per
+  rewritten module; rule k is chosen when `sum(p[0..k-1]) <= u < sum(p[0..k])`, a draw past the sum keeps the module.
+- The chosen rule must declare exactly as many parameters as the module has (`RewriteError` naming symbol and rule otherwise).
+  Productions are compiled on first use into literal modules whose parameters are `Expression`s over the rule's parameter names.
+- Errors (`RewriteError`): arity mismatch, malformed production/expression, NaN/Inf/float overflow of an evaluated parameter,
+  more than `TreeParams::maxModules` modules.
+- Numeric model, kept for digit-identical legacy output (D-014): computed parameters are rounded to six decimals; an argument that
+  is the float nearest to a six-decimal number is evaluated as that decimal in double precision.
+
+## Compatibility with the legacy pipeline
+
+- `ModuleString` text form must reproduce the legacy production string for deterministic rules
+  (T02 golden tests). Float formatting is `std::to_string(float)` (six decimals), same as legacy.
+- Interpreter semantics are the table in `docs/architecture/overview.md`; the only intentional
+  differences are listed in `docs/DECISIONS.md` (bug fixes: literal `-1`, leading-minus
+  expressions, unbalanced brackets → error).
+- Engine adapter (T07) converts `MeshVertex` → engine `Vertex` (color left default) and
+  `uint32_t` indices → `int` indices for the existing `Mesh`, and `leafTransforms` →
+  `InstancedTransform::modelMatrix` (premultiplied by the tree's world transform, as today).
+
+## Not in v1 (see `BACKLOG.md`)
+
+Context-sensitive rules, conditions (`A(x) : x > 3`), glTF export, LOD, shared-joint smooth meshes, wind data.

@@ -2,10 +2,11 @@
 #define TEXTURE_H
 
 #include <memory>
+#include <string>
 
 #include "GraphicEngine/Core/TextureBuffer.h"
 
-enum TextureType {
+enum TextureType : int {
 	DIFFUSE,
 	SPECULAR,
 	AMBIENT,

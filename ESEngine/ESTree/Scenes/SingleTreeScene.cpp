@@ -43,6 +43,7 @@ void SingleTreeScene::initialize() {
 		"arrow.png"
 	};
 
+	LindenmayerTreeFactory &factory = LindenmayerTreeFactory::getInstance();
 	GameObject* go;
 	Material barkMaterial;
 	glm::vec3 position = glm::vec3(-0,0,0);
@@ -59,7 +60,7 @@ void SingleTreeScene::initialize() {
 
 	
 	position = glm:: vec3(0, 0, 0);
-	go = createLindenmayerTree(paramsFileName, position, barkMaterial, Material::diffuseTextureOnly(leavesTextureName), meshWiring, normalVisualisation);
+	go = factory.generateTreeFromFile(paramsFileName, "Tree", barkMaterial, Material::diffuseTextureOnly(leavesTextureName), position, 0, this, meshWiring, normalVisualisation);
 
 	generateTestBox(glm::vec3(8, 2, 8), glm::vec3(0.5, 0.5, 0.5));
 	generateTestBox(glm::vec3(8, 4, 8), glm::vec3(0.5, 0.5, 0.5));
@@ -76,22 +77,6 @@ void SingleTreeScene::initialize() {
 	setActiveCamera(createCamera(glm::vec3(0, 5, 20), -90, 2));
 
 	generateFrameBuffer();
-}
-
-GameObject* SingleTreeScene::createLindenmayerTree(std::string paramsFileName, glm::vec3 &position, Material &material, Material &leavesMaterial, bool meshWiring, bool normalVisualisation) {
-	LindenmayerTreeParams params = LindenmayerTreeParams(paramsFileName);
-
-	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new LindenmayerTree(params, material, leavesMaterial, meshWiring, normalVisualisation));
-	go->name = "Tree";
-	Transform *transform = getTransform(go.get());
-	transform->translate(position);
-	((LindenmayerTree*)go.get())->generate();
-
-	std::shared_ptr<RigidBody> rigidBody = std::shared_ptr<RigidBody>(new RigidBody());
-	go->addComponent(rigidBody);
-	rigidBody->initAsAHullShape(0);
-
-	return addGameObject(move(go));
 }
 
 void SingleTreeScene::generateGrass() {

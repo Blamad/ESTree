@@ -4,7 +4,7 @@
 #include <memory>
 #include <map>
 #include <functional>
-#include <GLM/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "Engine/GameObject/GameObject.h"
 #include "GraphicEngine/Input/InputState.h"
@@ -21,11 +21,12 @@
 #include "Engine/GameObject/Skybox.h"
 #include "GraphicEngine/Framebuffer/DepthFrameBuffer.h"
 #include "Engine/Manager/UIManager.h"
+#include "Engine/Core/Logger.h"
 
 class Scene {
 public:
 	Scene();
-	~Scene();
+	virtual ~Scene();
 
 	void update(double &dt, InputState &inputState);
 	void renderObjectsUsingShader(Renderer &renderer, Shader *shader);
@@ -42,6 +43,8 @@ public:
 	void setFrameBuffer(std::unique_ptr<FrameBuffer> frameBuffer);
 
 private:
+	static Logger logger;
+
 	Camera *activeCamera = nullptr;
 	std::unique_ptr<Skybox> skybox;
 	std::unique_ptr<MouseManager> mouseManager;
@@ -51,6 +54,7 @@ private:
 	std::map<Uuid, std::unique_ptr<GameObject>> gameObjects;
 	std::unique_ptr<FrameBuffer> sceneFrameBuffer;
 
+	void unregisterFromManagers(GameObject &gameObject);
 	void renderSkybox(Renderer &renderer);
 
 	std::function<void(Renderer&, Shader*)> prepareDrawObjectsCall();

@@ -13,6 +13,10 @@ public:
 
 	bool processCommandLine(std::vector<std::string> commandLine) override;
 	void printHelpText() override;
+
+private:
+	// The body of `tree` / `rtree`; may throw (treegen::Error, std::exception), processCommandLine reports it in the console.
+	bool generateFromCommandLine(std::vector<std::string> &line);
 };
 
 #endif

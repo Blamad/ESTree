@@ -3,7 +3,7 @@
 Logger InstancedMesh::logger("InstancedMesh");
 
 void InstancedMesh::draw(Renderer &renderer) {
-	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
+	for (std::shared_ptr<Shader> shader : shaders) {
 		draw(renderer, shader.get());
 	}
 }
@@ -95,7 +95,7 @@ void InstancedMesh::updateMesh() {
 }
 
 void InstancedMesh::setupMesh() {
-	BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
+	for (std::shared_ptr<Shader> shader : shaders) {
 		vertexArray->setInstancedVertexArray(vertices, indices, instanceMatricies);
 		shader->registerMatriciesUBO();
 		shader->registerLightsUBO();

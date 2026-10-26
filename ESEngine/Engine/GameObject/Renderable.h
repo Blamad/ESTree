@@ -5,7 +5,6 @@
 #include "GraphicEngine/Core/Renderer.h"
 #include "GraphicEngine/Core/Shader.h"
 
-#include <boost/foreach.hpp>
 
 class Renderable : public Component {
 public:
@@ -21,7 +20,7 @@ protected:
 	};
 
 	Renderable(std::vector<std::shared_ptr<Shader>> shaders) : Component(RENDERABLE) {
-		BOOST_FOREACH(std::shared_ptr<Shader> shader, shaders) {
+		for (std::shared_ptr<Shader> shader : shaders) {
 			this->shaders.push_back(shader);
 		}
 	};

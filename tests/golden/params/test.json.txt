@@ -1,0 +1,17 @@
+file=test.json
+axiom=fa
+depth=3
+initialLength=4.5
+initialRadius=0.5
+angle=0.785398185
+leafGrowthProb=1
+leavesAngleDiversity=0
+tropism=0,-1,0
+tropismBendingFactor=0.200000003
+customParameters.count=0
+symbols=a
+rules[a].count=1
+rules[a][0].production=[^+$fa][<$fa][>$fa][v-$fa]
+rules[a][0].probability=1
+rules[a][0].initialDepth=0
+rules[a][0].parameters=

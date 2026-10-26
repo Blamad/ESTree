@@ -1,5 +1,7 @@
 #include "Scene.h"
 
+Logger Scene::logger("Scene");
+
 Scene::Scene() {
 	lightsManager.reset(new LightsManager());
 	physicsManager.reset(new PhysicsManager());
@@ -8,20 +10,18 @@ Scene::Scene() {
 }
 
 Scene::~Scene() {
-	skybox.reset();
-	mouseManager.reset();
-	lightsManager.reset();
-	physicsManager.reset();
-	uiManager.reset();
-	sceneFrameBuffer.reset();
+	// Managers keep raw pointers into the objects' components, and the Bullet world dereferences every
+	// body still registered when it is destroyed. So: unregister, destroy the objects while the managers
+	// are still alive, and let the remaining members die in reverse declaration order.
 	for (auto &node : gameObjects) {
-		node.second.release();
+		unregisterFromManagers(*node.second);
 	}
+	gameObjects.clear();
 }
 
 void Scene::setActiveCamera(GameObject *gameObject) {
-	activeCamera = (Camera*)gameObject->getComponent(CAMERA);
-	mouseManager->setCamera((CameraBehaviour*)gameObject->getComponent(BEHAVIOUR), activeCamera);
+	activeCamera = gameObject->getComponentAs<Camera>(CAMERA);
+	mouseManager->setCamera(gameObject->getComponentAs<CameraBehaviour>(BEHAVIOUR), activeCamera);
 }
 
 Camera* Scene::getActiveCamera() {
@@ -33,30 +33,44 @@ void Scene::setSkybox(std::unique_ptr<Skybox> skybox) {
 }
 
 GameObject* Scene::addGameObject(std::unique_ptr<GameObject> go) {
-	Uuid uuid = go->id;
-	gameObjects[uuid] = std::move(go);
-	if (gameObjects[uuid]->getComponent(RIGIDBODY) != nullptr)
-		physicsManager->addRigidBody((RigidBody*)gameObjects[uuid]->getComponent(RIGIDBODY));
-	if (gameObjects[uuid]->getComponent(LIGHT) != nullptr)
-		lightsManager->addLight((Light*)gameObjects[uuid]->getComponent(LIGHT));
-	return gameObjects[uuid].get();
+	GameObject *added = go.get();
+	gameObjects[added->id] = std::move(go);
+
+	if (RigidBody *rigidBody = added->getComponentAs<RigidBody>(RIGIDBODY))
+		physicsManager->addRigidBody(rigidBody);
+	if (Light *light = added->getComponentAs<Light>(LIGHT))
+		lightsManager->addLight(light);
+	return added;
 }
 
 GameObject* Scene::createGameObject() {
 	std::unique_ptr<GameObject> go = std::unique_ptr<GameObject>(new GameObject());
-	Uuid uuid = go->id;
-	gameObjects[uuid] = std::move(go);
-	return gameObjects[uuid].get();
+	GameObject *created = go.get();
+	gameObjects[created->id] = std::move(go);
+	return created;
 }
 
 void Scene::removeGameObject(GameObject *gameObject) {
-	Uuid uuid = gameObject->id;
+	if (gameObject == nullptr)
+		return;
 
-	if (gameObjects[uuid]->getComponent(LIGHT) != nullptr)
-		lightsManager->removeLight((Light*) gameObjects[uuid]->getComponent(LIGHT));
-	if (gameObjects[uuid]->getComponent(RIGIDBODY) != nullptr)
-		physicsManager->removeRigidBody((RigidBody*)gameObjects[uuid]->getComponent(RIGIDBODY));
-	gameObjects.erase(uuid);
+	auto node = gameObjects.find(gameObject->id);
+	if (node == gameObjects.end()) {
+		logger.log(LOG_WARN, "removeGameObject: object does not belong to this scene");
+		return;
+	}
+
+	// Drop every raw pointer to the object before it dies.
+	mouseManager->forgetGameObject(gameObject);
+	unregisterFromManagers(*node->second);
+	gameObjects.erase(node);
+}
+
+void Scene::unregisterFromManagers(GameObject &gameObject) {
+	if (Light *light = gameObject.getComponentAs<Light>(LIGHT))
+		lightsManager->removeLight(light);
+	if (RigidBody *rigidBody = gameObject.getComponentAs<RigidBody>(RIGIDBODY))
+		physicsManager->removeRigidBody(rigidBody);
 }
 
 void Scene::setFrameBuffer(std::unique_ptr<FrameBuffer> frameBuffer) {
@@ -70,10 +84,10 @@ void Scene::update(double &dt, InputState &inputState) {
 
 	for(const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
-		if (go->getComponent(CAMERA) != NULL)
+		if (go->getComponent(CAMERA) != nullptr)
 			continue;
-		
-		RigidBody *rigidBody = (RigidBody*)go->getComponent(RIGIDBODY);
+
+		RigidBody *rigidBody = go->getComponentAs<RigidBody>(RIGIDBODY);
 		if (rigidBody != nullptr) {
 			if (rigidBody->needsReload) {
 				physicsManager->reloadRigidBody(rigidBody);
@@ -81,9 +95,9 @@ void Scene::update(double &dt, InputState &inputState) {
 			}
 			rigidBody->update();
 		}
-		
-		for (auto & behaviour : go->getComponents(BEHAVIOUR)) {
-			((Behaviour*)behaviour)->update(dt, inputState);
+
+		for (Behaviour *behaviour : go->getComponentsAs<Behaviour>(BEHAVIOUR)) {
+			behaviour->update(dt, inputState);
 		}
 	}
 }
@@ -91,8 +105,8 @@ void Scene::update(double &dt, InputState &inputState) {
 void Scene::renderObjects(Renderer &renderer) {
 	for (const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
-		for (auto & renderable : go->getComponents(RENDERABLE)) {
-			((Renderable*)renderable)->draw(renderer);
+		for (Renderable *renderable : go->getComponentsAs<Renderable>(RENDERABLE)) {
+			renderable->draw(renderer);
 		}
 	}
 }
@@ -100,8 +114,8 @@ void Scene::renderObjects(Renderer &renderer) {
 void Scene::renderObjectsUsingShader(Renderer &renderer, Shader *shader) {
 	for (const auto &node : gameObjects) {
 		GameObject *go = node.second.get();
-		for (auto & renderable : go->getComponents(RENDERABLE)) {
-			((Renderable*)renderable)->draw(renderer, shader);
+		for (Renderable *renderable : go->getComponentsAs<Renderable>(RENDERABLE)) {
+			renderable->draw(renderer, shader);
 		}
 	}
 }
@@ -127,7 +141,7 @@ void Scene::renderFrame(Renderer &renderer) {
 
 	renderObjects(renderer);
 	renderSkybox(renderer);
-	
+
 	postSceneRenderRoutine(renderer);
 
 	renderUI();

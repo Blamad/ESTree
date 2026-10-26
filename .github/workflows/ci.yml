@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+      - 'images/**'
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+      - 'images/**'
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    name: Windows MSVC ${{ matrix.config }} (engine ON)
+    runs-on: windows-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        config: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Cache FetchContent downloads
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.fetchcontent
+          key: fetchcontent-${{ runner.os }}-vs-${{ matrix.config }}-${{ hashFiles('tests/CMakeLists.txt') }}
+
+      # The engine is compiled and linked (never started: the runner has no GPU or display). No generator is
+      # named, so CMake picks the newest Visual Studio installed on the runner image.
+      # PowerShell splits an unquoted -DNAME=3.5 at the dot ("-DNAME=3" and ".5"), so every -D argument is quoted.
+      - name: Configure
+        run: cmake -S . -B build -A x64 "-DESTREE_BUILD_ENGINE=ON" "-DFETCHCONTENT_BASE_DIR=${{ github.workspace }}/.fetchcontent" "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+
+      - name: Build
+        run: cmake --build build --config ${{ matrix.config }} --parallel
+
+      - name: Test
+        run: ctest --test-dir build -C ${{ matrix.config }} --output-on-failure
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-windows-${{ matrix.config }}
+          path: |
+            build/Testing/Temporary/*.log
+            build/CMakeFiles/CMakeConfigureLog.yaml
+            build/CMakeFiles/CMakeOutput.log
+            build/CMakeFiles/CMakeError.log
+          if-no-files-found: ignore
+
+  linux:
+    name: Linux GCC Release (engine ${{ matrix.engine }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        # ON: the full engine executable is compiled and linked (never run: no display).
+        # OFF: only the standalone targets (treegen, treegen_cli) and their tests.
+        engine: ['ON', 'OFF']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ninja-build
+
+      - name: Install engine dependencies
+        if: matrix.engine == 'ON'
+        run: sudo apt-get install -y --no-install-recommends libgl1-mesa-dev libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev
+
+      # The FetchContent sub-build directory is generator specific: both Linux jobs use Ninja, and the key still
+      # carries the engine setting so no job ever restores a directory written by a different configuration.
+      - name: Cache FetchContent downloads
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.fetchcontent
+          key: fetchcontent-${{ runner.os }}-ninja-engine-${{ matrix.engine }}-${{ hashFiles('tests/CMakeLists.txt') }}
+
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++ -DESTREE_BUILD_ENGINE=${{ matrix.engine }} "-DFETCHCONTENT_BASE_DIR=${{ github.workspace }}/.fetchcontent" -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-linux-engine-${{ matrix.engine }}
+          path: |
+            build/Testing/Temporary/*.log
+            build/CMakeFiles/CMakeConfigureLog.yaml
+            build/CMakeFiles/CMakeOutput.log
+            build/CMakeFiles/CMakeError.log
+          if-no-files-found: ignore

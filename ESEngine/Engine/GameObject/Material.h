@@ -4,7 +4,7 @@
 #include "Engine/Core/Texture.h"
 #include "Engine/Manager/TextureManager.h"
 
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <memory>
 

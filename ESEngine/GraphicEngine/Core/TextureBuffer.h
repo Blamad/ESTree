@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include <vector>
 
-enum TextureType;
+enum TextureType : int;
 
 class TextureBuffer {
 public:

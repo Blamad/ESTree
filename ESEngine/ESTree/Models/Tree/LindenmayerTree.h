@@ -1,97 +1,58 @@
 #ifndef LINDENMAYER_TREE_H
 #define LINDENMAYER_TREE_H
 
-#include <string>
+#include <cstdint>
+#include <memory>
 #include <vector>
 
-#include <time.h>
-#include <boost/generator_iterator.hpp>
-#include <boost/foreach.hpp>
-#include <boost/thread/thread.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <treegen/TreeGenerator.h>
 
-#include "Engine/Manager/ShaderManager.h"
-#include "Segment.h"
-#include "Engine/GameObject/Mesh.h"
+#include "Engine/GameObject/GameObject.h"
 #include "Engine/GameObject/InstancedMesh.h"
-#include "LindenmayerTreeParams.h"
-#include "LindenmayerTreeSolver.h"
-#include "LindenmayerTreeMeshGenerator.h"
-#include "LindenmayerTreeInterpreter.h"
+#include "Engine/GameObject/Material.h"
+#include "Engine/GameObject/Mesh.h"
+#include "Engine/Manager/ShaderManager.h"
 
 #include "Engine/Core/Logger.h"
 
+// Engine adapter over treegen: generate() runs treegen::generateTree and uploads the result into a Mesh (trunk)
+// and an InstancedMesh (leaves, in a child object). The GL buffers are sized from the generated data.
 class LindenmayerTree : public GameObject {
 public:
-	LindenmayerTree(LindenmayerTreeParams &params, Material &material = Material::bark5(), Material &leavesMaterial = Material::leaves2(), bool useMeshWiring = false, bool normalVisualisation = false);
+	// requestedSeed is the console's `seed <n>` (0 = none). The seed used is params.seed when that is non-zero,
+	// else requestedSeed, else a fresh random one (see treeadapter::chooseSeed); it is logged and kept in getSeed().
+	LindenmayerTree(const treegen::TreeParams &params, const Material &material = Material::bark5(), const Material &leavesMaterial = Material::leaves2(), bool useMeshWiring = false, bool normalVisualisation = false, uint32_t requestedSeed = 0);
+
+	// Throws treegen::Error (RewriteError, InterpretError, ...) and std::length_error (mesh beyond the engine's int
+	// limits); the object is left without a mesh then.
 	void generate();
+
 	bool meshWiring;
 	bool normalVisualisation;
 
-	LindenmayerTreeParams getTreeParams() { return params; }
+	treegen::TreeParams getTreeParams() { return params; }
 	Material getBarkMaterial() { return barkMaterial; };
 	Material getLeavesMaterial() { return leavesMaterial; }
+	uint32_t getSeed() const { return seed; }
 
 protected:
 	Material barkMaterial;
 	Material leavesMaterial;
-	LindenmayerTreeParams params;
+	treegen::TreeParams params;
 
 	std::shared_ptr<Mesh> mesh;
-	std::vector<std::shared_ptr<Segment>> segmentsVec;
 
-	int vBufferSize = 1000;
-	int iBufferSize = 4000;
-	const float branchLeafOverlappingFactor = .8f;
-	
-	int ringDensity;
+	int ringDensity = 9;
 
 private:
 	static Logger logger;
 
-	std::unique_ptr<LindenmayerTreeMeshGenerator> meshGenerator;
-	std::string product;
+	uint32_t requestedSeed = 0;
+	uint32_t seed = 0;
 
-	static boost::variate_generator<boost::mt19937, boost::uniform_real<>> randomGenerator;
-
-	void generateTree();
-
-	//Parsing l-data
-	void generateMeshDescription();
-	
-	//Creating mesh generation data
-	void generateMeshData();
-	
-	//Mesh and vertices stuff
-	void generateTreeMesh();
-	void createMeshComponent();
-	
-	void generateLeaves();
-	std::shared_ptr<Mesh> generateLeaf();
-
-	//Leaves generation
-	void generateInstancedLeaves();
+	void createMeshComponent(const treegen::MeshData &trunk);
+	void createInstancedLeaves(const std::vector<glm::mat4> &leafTransforms);
 	std::shared_ptr<InstancedMesh> createInstancedLeavesPanelMesh(std::vector<InstancedTransform> &instancedTransforms);
-	
-	//Stuff
-	std::string number(float val) {
-		if (val < 0.001 && val > -0.001)
-			return "0";
-		else
-			return std::to_string(val);
-	}
-
-	void printVec3(glm::vec3 val) {
-		std::cout << number(val.x) + " " + number(val.y) + " " + number(val.z) << std::endl;
-	}
-
-	void printMat4(glm::mat4 val) {
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++)
-				std::cout << number(val[j][i]) << " ";
-			std::cout << std::endl;
-		}
-	}
 };
 
 #endif

@@ -7,6 +7,8 @@
 
 class Window {
 public:
+	virtual ~Window() = default;
+
 	Window(int width, int height, bool fullScreenMode) : width(width), height(height), fullScreenMode(fullScreenMode) {
 		aspectRatio = width / height;
 	};

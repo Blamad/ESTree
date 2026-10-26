@@ -7,6 +7,7 @@
 
 class VertexArray {
 public:
+	virtual ~VertexArray() = default;
 	virtual void setVertexArray(const std::vector<Vertex> & vertices, const std::vector<int> & indices) = 0;
 	virtual void updateVertexArray(const std::vector<Vertex> &vertices, const std::vector<int> &indices) = 0;
 	virtual void setInstancedVertexArray(const std::vector<Vertex> &vertices, const std::vector<int> &indices, const std::vector<InstancedTransform> &instanceTransforms) = 0;

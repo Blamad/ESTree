@@ -1,0 +1,27 @@
+file=parametricSympodialTreeB.json
+axiom=F(1)=(0.9)A(3,1)
+depth=7
+initialLength=4
+initialRadius=0.800000012
+angle=0.599869668
+leafGrowthProb=1
+leavesAngleDiversity=0.261799395
+tropism=0,-1,0
+tropismBendingFactor=0.200000003
+customParameters.count=5
+customParameters.a1=10
+customParameters.a2=60
+customParameters.r1=0.899999976
+customParameters.r2=0.699999988
+customParameters.wr=0.707000017
+symbols=A B
+rules[A].count=1
+rules[A][0].production==(w)F(l)[v(10.000000)B(l*0.900000,0.707000)]+(180)[v(60.000000)B(l*0.700000,0.707000)]
+rules[A][0].probability=1
+rules[A][0].initialDepth=0
+rules[A][0].parameters=l,w
+rules[B].count=1
+rules[B][0].production==(w)F(l)[<(10.000000)$B(l*0.900000,0.707000)][>(60.000000)$B(l*0.700000,0.707000)]
+rules[B][0].probability=1
+rules[B][0].initialDepth=0
+rules[B][0].parameters=l,w

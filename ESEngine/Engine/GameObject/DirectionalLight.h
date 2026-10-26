@@ -15,7 +15,7 @@ public:
 	DirectionalLight(glm::vec3 direction = glm::vec3(0,-1, 1), glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3 diffuse = glm::vec3(0.4f, 0.4f, 0.4f), glm::vec3 specular = glm::vec3(0.5f, 0.5f, 0.5f)) : directory(directory), ambient(ambient), diffuse(diffuse), specular(specular), Light(LIGHT_DIRECTIONAL) { };
 
 	static glm::mat4 getViewMatrix(DirectionalLight* dLight) {
-		Transform *transform = (Transform*)dLight->getComponent(TRANSFORM);
+		Transform *transform = dLight->getComponentAs<Transform>(TRANSFORM);
 
 		return lookAt(transform->getPosition(),
 			dLight->directory,
